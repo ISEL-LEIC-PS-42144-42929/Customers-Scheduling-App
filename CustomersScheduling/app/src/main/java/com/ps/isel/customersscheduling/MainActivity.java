@@ -1,20 +1,12 @@
 package com.ps.isel.customersscheduling;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.graphics.Color;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,10 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-
-import android.widget.RelativeLayout;
 import android.support.v7.widget.SearchView;
 
 
@@ -69,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         lv = (ListView) findViewById(R.id.alreadySubToList);
         listViewCode();
 
-        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){
+        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){      //RTL to LTR
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
@@ -88,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void searchBarCode() {
+    protected void searchBarCode() {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -155,5 +144,12 @@ public class MainActivity extends AppCompatActivity
 
         // DataBind ListView with items from ArrayAdapter
         lv.setAdapter(adapter);
+    }
+
+
+    public void goToFilterActivity(View v)
+    {
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
     }
 }
