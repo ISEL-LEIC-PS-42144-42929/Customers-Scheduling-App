@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Customers Scheduling</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="customersScheduling">Customers Scheduling</string>
+    <string name="title">Customers Scheduling</string>
+    <string name="registerBusiness"> + Registar Negócio</string>
+    <string name="pendentRequests">Pendent Requests</string>
+    <string name="definitions">Definitions</string>
+    <string name="favourites">Favourites</string>
+    <string name="menu_search">Search</string>
+    <string name="filter">Filter</string>
 </resources>

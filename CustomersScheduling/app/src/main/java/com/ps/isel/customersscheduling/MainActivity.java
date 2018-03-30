@@ -2,14 +2,19 @@ package com.ps.isel.customersscheduling;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,23 +25,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+import android.support.v7.widget.SearchView;
 
-
-
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-    private MaterialSearchView searchView;
-    private ListView lv;
     private Toolbar toolbar;
-    private Button buttonOpenTab;
-    private String[] subbedBusiness = new String[]{
+    private SearchView searchView;
+
+    private ArrayAdapter<String> adapter;
+    private ListView lv;
+
+    private String[] subbedBusiness = new String[]
+            {
             "A tasca do Manel",
             "CUF",
             "Barbeiro do Bairro",
@@ -51,38 +53,89 @@ public class MainActivity extends AppCompatActivity
             "Bom vinho",
             "A tabaqueira",
             "O SPA do Fausto"
-    };
+            };
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lv = (ListView) findViewById(R.id.alreadySubToList);
-        buttonOpenTab = (Button) findViewById(R.id.buttonOpenTab);
-        buttonCode();
-        listViewCode();
-        searchBarCode();
 
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
+
+        lv = (ListView) findViewById(R.id.alreadySubToList);
+        listViewCode();
+
+        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){
+            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
 
-        return true;
+        MenuItem item = menu.findItem(R.id.menu_search);
+        searchView = (SearchView) item.getActionView();
+        searchBarCode();
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void searchBarCode() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                //when user submits what he wrote
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //called every time user writes a word
+
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId())
+        {
+            // TODO later(which menu item)
+            case (R.id.registerBusiness):
+                //Registar Negócio
+                break;
+            case (R.id.pendentRequests):
+                //Pedidos Pendentes
+                break;
+            case (R.id.definitions):
+                //Definições
+                break;
+            case (R.id.Favorites):
+                //Favoritos
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void listViewCode()
     {
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1, subbedBusiness)
+        adapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                subbedBusiness)
         {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -101,71 +154,6 @@ public class MainActivity extends AppCompatActivity
         };
 
         // DataBind ListView with items from ArrayAdapter
-        lv.setAdapter(arrayAdapter);
+        lv.setAdapter(adapter);
     }
-
-    private void searchBarCode()
-    {
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Search");
-        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-
-        searchView = findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener()
-        {
-            @Override
-            public boolean onQueryTextSubmit(String s)
-            {
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s)
-            {
-                System.out.println("escrevi o " + s);
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-      searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener()
-      {
-          @Override
-          public void onSearchViewShown()
-          {
-              Toast.makeText(getApplicationContext(),"asasas",Toast.LENGTH_SHORT).show();
-          }
-
-          @Override
-          public void onSearchViewClosed()
-          {
-              Toast.makeText(getApplicationContext(),"asasas",Toast.LENGTH_SHORT).show();
-              lv = (ListView) findViewById(R.id.alreadySubToList);
-              ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,
-                      android.R.layout.simple_list_item_1,
-                      subbedBusiness);
-              lv.setAdapter(arrayAdapter);
-
-          }
-      });
-    }
-
-
-    private void buttonCode()
-    {
-        buttonOpenTab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-
-            }
-        });
-    }
-
-
-
 }
