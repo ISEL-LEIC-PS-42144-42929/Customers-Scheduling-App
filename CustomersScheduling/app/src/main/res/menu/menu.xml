@@ -22,7 +22,6 @@
         android:title="@string/favourites">
     </item>
 
-
     <item
         android:id="@+id/menu_search"
         android:title="Pesquisar"

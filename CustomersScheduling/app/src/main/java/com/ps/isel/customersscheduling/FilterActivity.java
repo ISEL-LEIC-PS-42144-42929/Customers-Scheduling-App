@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Filter;
 
 public class FilterActivity extends AppCompatActivity
 {
@@ -83,7 +84,10 @@ public class FilterActivity extends AppCompatActivity
 
         resultsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -91,7 +95,7 @@ public class FilterActivity extends AppCompatActivity
 
 
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {

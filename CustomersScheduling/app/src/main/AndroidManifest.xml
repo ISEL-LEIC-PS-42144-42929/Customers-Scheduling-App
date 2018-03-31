@@ -17,9 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SpinnerActivity" />
-        <activity android:name=".FilterActivity">
-
-        </activity>
+        <activity android:name=".FilterActivity" />
+        <activity android:name=".SearchResultsActivity"></activity>
     </application>
 
 </manifest>
