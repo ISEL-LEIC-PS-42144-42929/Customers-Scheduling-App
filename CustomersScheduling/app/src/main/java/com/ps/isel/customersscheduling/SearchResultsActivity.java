@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 public class SearchResultsActivity extends AppCompatActivity
 {
-    private ArrayAdapter<String> adapter;
+    private CustomAdapter adapter;
     private ListView lv;
 
     private Toolbar toolbar;
@@ -66,12 +66,10 @@ public class SearchResultsActivity extends AppCompatActivity
             }
         });
 
-        CustomAdapter adapter = new CustomAdapter(this, resultsBusiness, scoreReview);
+        adapter = new CustomAdapter(this, resultsBusiness, scoreReview);
 
         lv = (ListView) findViewById(R.id.alreadySubToList);
         lv.setAdapter(adapter);
-        //listViewCode();
-
 
     }
 }

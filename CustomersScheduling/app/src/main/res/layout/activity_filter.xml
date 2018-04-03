@@ -10,7 +10,6 @@
         android:id="@+id/filter_toolbar"
         layout="@layout/filter_toolbar"></include>
 
-
     <Button
         android:id="@+id/buttonLocal"
         android:layout_width="match_parent"

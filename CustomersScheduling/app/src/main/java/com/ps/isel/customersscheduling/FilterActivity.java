@@ -34,8 +34,8 @@ public class FilterActivity extends AppCompatActivity
         brickViewBtn = findViewById(R.id.bricksViewSelected);
         listViewBtn = findViewById(R.id.listViewSelected);
         resultsBtn = findViewById(R.id.results);
-
         addListenersToButtons();
+
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         setSupportActionBar(toolbar);
@@ -54,35 +54,44 @@ public class FilterActivity extends AppCompatActivity
 
     private void addListenersToButtons()
     {
-        locationChosenBtn.setOnClickListener(new View.OnClickListener() {
+        locationChosenBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
+                //TODO...
             }
         });
 
-        categoryChosenBtn.setOnClickListener(new View.OnClickListener() {
+        categoryChosenBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
+                //TODO...
             }
         });
 
-        brickViewBtn.setOnClickListener(new View.OnClickListener() {
+        brickViewBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
+                //TODO...
             }
         });
 
-        listViewBtn.setOnClickListener(new View.OnClickListener() {
+        listViewBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
+                //TODO...
             }
         });
 
-        resultsBtn.setOnClickListener(new View.OnClickListener() {
+        resultsBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
@@ -91,9 +100,6 @@ public class FilterActivity extends AppCompatActivity
 
             }
         });
-
-
-
     }
 
     @Override
@@ -109,19 +115,24 @@ public class FilterActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void searchBarCode() {
+    private void searchBarCode()
+    {
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String s)
+            {
+                //TODO...
                 //when user submits what he wrote
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(String s)
+            {
+                //TODO...
                 //called every time user writes a word
-
                 return false;
             }
         });

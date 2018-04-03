@@ -13,9 +13,7 @@
         android:id="@+id/app_bar">
     </include>
 
-
     <RelativeLayout
-
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +35,9 @@
             android:paddingBottom="50dp"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
-            tools:ignore="NotSibling"></ListView>
+            tools:ignore="NotSibling">
+
+        </ListView>
 
     </RelativeLayout>
 

@@ -79,17 +79,21 @@ public class MainActivity extends AppCompatActivity
 
     protected void searchBarCode() {
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String s)
+            {
+                //TODO...
                 //when user submits what he wrote
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(String s)
+            {
+                //TODO...
                 //called every time user writes a word
-
                 return false;
             }
         });

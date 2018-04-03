@@ -21,21 +21,28 @@ import java.util.function.ToLongBiFunction;
 public class CustomAdapter extends BaseAdapter
 {
     private Activity context;
-    private String[] titles;
+    private String[] businessNames;
     private float[] scoreReview;
 
+    private TextView title;
+    private TextView reviewScore;
 
-    public CustomAdapter(Activity context, String[] text1, float[] scoreReview)
+    private View row;
+    private ImageView imageView;
+    private ClipDrawable drawable;
+
+
+    public CustomAdapter(Activity context, String[] businessNames, float[] scoreReview)
     {
         this.context = context;
-        this.titles = text1;
+        this.businessNames = businessNames;
         this.scoreReview = scoreReview;
     }
 
     @Override
     public int getCount()
     {
-        return titles.length;
+        return businessNames.length;
     }
 
     @Override
@@ -55,22 +62,17 @@ public class CustomAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
-        View row;
-
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.row, parent, false);
 
-        TextView title;
-        TextView reviewScore;
-
         title = (TextView) row.findViewById(R.id.storeName);
+        title.setText(businessNames[position]);
 
-        ImageView imageView = row.findViewById(R.id.imgIcon);
-        ClipDrawable drawable = (ClipDrawable) imageView.getDrawable();
+        imageView = row.findViewById(R.id.imgIcon);
+        drawable = (ClipDrawable) imageView.getDrawable();
         drawable.setLevel(drawable.getLevel() + (int)(2000 * scoreReview[position]));
-        reviewScore = (TextView) row.findViewById(R.id.scoreReview);
 
-        title.setText(titles[position]);
+        reviewScore = (TextView) row.findViewById(R.id.scoreReview);
         reviewScore.setText(scoreReview[position]+"");
 
         return (row);

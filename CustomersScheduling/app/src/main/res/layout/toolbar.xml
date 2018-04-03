@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/filter"
             android:layout_width="wrap_content"
@@ -18,5 +19,7 @@
             android:onClick="goToFilterActivity"
             android:layout_gravity="right"
             tools:ignore="OnClick" />
+
 </RelativeLayout>
+
 </android.support.v7.widget.Toolbar>
