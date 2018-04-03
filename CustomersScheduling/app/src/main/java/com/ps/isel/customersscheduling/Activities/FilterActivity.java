@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Filter;
+
+import com.ps.isel.customersscheduling.R;
 
 public class FilterActivity extends AppCompatActivity
 {

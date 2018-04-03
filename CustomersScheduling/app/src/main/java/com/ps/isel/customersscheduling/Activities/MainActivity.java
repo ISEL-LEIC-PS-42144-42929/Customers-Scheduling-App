@@ -1,6 +1,5 @@
-package com.ps.isel.customersscheduling;
+package com.ps.isel.customersscheduling.Activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,11 +10,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
+
+import com.ps.isel.customersscheduling.CustomAdapter;
+import com.ps.isel.customersscheduling.R;
 
 
 public class MainActivity extends AppCompatActivity
@@ -23,8 +24,10 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private SearchView searchView;
 
-    private ArrayAdapter<String> adapter;
+    private CustomAdapter adapter;
     private ListView lv;
+
+    private Button filterBtn;
 
     private String[] subbedBusiness = new String[]
             {
@@ -44,6 +47,24 @@ public class MainActivity extends AppCompatActivity
             "O SPA do Fausto"
             };
 
+    private float[] scoreReview = new float[]
+            {
+                    3.2f,
+                    3.7f,
+                    2.7f,
+                    4.1f,
+                    1.8f,
+                    4.8f,
+                    5.0f,
+                    2.3f,
+                    1.0f,
+                    3.4f,
+                    0.8f,
+                    2.5f,
+                    1.8f,
+                    4.3f
+            };
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,13 +76,24 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        lv = (ListView) findViewById(R.id.alreadySubToList);
-        listViewCode();
+        filterBtn = findViewById(R.id.filter);
+        filterBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                goToActivity(FilterActivity.class);
+            }
+        });
 
-        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){      //RTL to LTR
+        lv = (ListView) findViewById(R.id.alreadySubToList);
+        adapter = new CustomAdapter(this, subbedBusiness, scoreReview);
+        lv.setAdapter(adapter);
+
+        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
+        {      //RTL to LTR
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-
     }
 
     @Override
@@ -106,16 +138,16 @@ public class MainActivity extends AppCompatActivity
         {
             // TODO later(which menu item)
             case (R.id.registerBusiness):
-                //Registar Negócio
+                goToActivity(RegisterBusinessActivity.class);
                 break;
             case (R.id.pendentRequests):
-                //Pedidos Pendentes
+                goToActivity(PendentRequestsActivity.class);
                 break;
             case (R.id.definitions):
-                //Definições
+                goToActivity(DefinitionsActivity.class);
                 break;
             case (R.id.Favorites):
-                //Favoritos
+                goToActivity(FavouritesActivity.class);
                 break;
 
         }
@@ -123,37 +155,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void listViewCode()
+    public void goToActivity(Class c)
     {
-        adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                subbedBusiness)
-        {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent)
-            {
-                /// Get the Item from ListView
-                View view = super.getView(position, convertView, parent);
-
-                // Set the border of View (ListView Item)
-                view.setBackground(getContext().getDrawable(R.drawable.listview_item_border));
-
-                // Return the view
-                return view;
-            }
-        };
-
-        // DataBind ListView with items from ArrayAdapter
-        lv.setAdapter(adapter);
-    }
-
-
-    public void goToFilterActivity(View v)
-    {
-        Intent intent = new Intent(this, FilterActivity.class);
+        Intent intent = new Intent(this, c);
         startActivity(intent);
     }
 }

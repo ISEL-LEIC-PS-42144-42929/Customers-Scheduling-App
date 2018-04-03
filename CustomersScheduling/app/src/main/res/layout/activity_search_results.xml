@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ps.isel.customersscheduling.SearchResultsActivity">
+    tools:context="com.ps.isel.customersscheduling.Activities.SearchResultsActivity">
 
     <include
         android:id="@+id/filter_toolbar"
-        layout="@layout/filter_toolbar"></include>
+        layout="@layout/toolbarwithbackarrow"></include>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:padding="50dp">
 
         <ListView
-            android:id="@+id/alreadySubToList"
+            android:id="@+id/resultsSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"

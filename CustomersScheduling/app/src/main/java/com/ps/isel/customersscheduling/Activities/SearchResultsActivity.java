@@ -1,17 +1,15 @@
-package com.ps.isel.customersscheduling;
+package com.ps.isel.customersscheduling.Activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.ps.isel.customersscheduling.Activities.FilterActivity;
+import com.ps.isel.customersscheduling.CustomAdapter;
+import com.ps.isel.customersscheduling.R;
 
 public class SearchResultsActivity extends AppCompatActivity
 {
@@ -33,17 +31,17 @@ public class SearchResultsActivity extends AppCompatActivity
             };
 
     private float[] scoreReview = new float[]
-            {
-                    3.2f,
-                    3.7f,
-                    2.7f,
-                    4.1f,
-                    1.8f,
-                    4.8f,
-                    5.0f,
-                    2.3f
+        {
+                3.2f,
+                3.7f,
+                2.7f,
+                4.1f,
+                1.8f,
+                4.8f,
+                5.0f,
+                2.3f
 
-            };
+        };
 
 
     @Override
@@ -68,7 +66,7 @@ public class SearchResultsActivity extends AppCompatActivity
 
         adapter = new CustomAdapter(this, resultsBusiness, scoreReview);
 
-        lv = (ListView) findViewById(R.id.alreadySubToList);
+        lv = (ListView) findViewById(R.id.resultsSearch);
         lv.setAdapter(adapter);
 
     }

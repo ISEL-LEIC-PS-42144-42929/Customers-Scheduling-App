@@ -6,9 +6,9 @@
     <string name="customersScheduling">Customers Scheduling</string>
     <string name="title">Customers Scheduling</string>
     <string name="registerBusiness"> + Registar Negócio</string>
-    <string name="pendentRequests">Pendent Requests</string>
-    <string name="definitions">Definitions</string>
-    <string name="favourites">Favourites</string>
-    <string name="menu_search">Search</string>
-    <string name="filter">Filter</string>
+    <string name="pendentRequests">Pedidos pendentes</string>
+    <string name="definitions">Definições</string>
+    <string name="favourites">Favoritos</string>
+    <string name="menu_search">Procurar</string>
+    <string name="filter">Filtro</string>
 </resources>

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ps.isel.customersscheduling.FilterActivity">
+    tools:context="com.ps.isel.customersscheduling.Activities.FilterActivity">
 
     <include
         android:id="@+id/filter_toolbar"
-        layout="@layout/filter_toolbar"></include>
+        layout="@layout/toolbarwithbackarrow"></include>
 
     <Button
         android:id="@+id/buttonLocal"
