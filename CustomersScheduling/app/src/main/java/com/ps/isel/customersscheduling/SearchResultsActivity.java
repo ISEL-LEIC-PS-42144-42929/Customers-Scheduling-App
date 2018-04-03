@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 public class SearchResultsActivity extends AppCompatActivity
@@ -21,15 +22,29 @@ public class SearchResultsActivity extends AppCompatActivity
 
     private String[] resultsBusiness = new String[]
             {
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E",
-                    "F",
-                    "G",
-                    "H"
+                    "A monstra",
+                    "O barbeiro",
+                    "CUF",
+                    "A andorinha",
+                    "Não Caias",
+                    "Junta de motards",
+                    "O Pendura",
+                    "Azia"
             };
+
+    private float[] scoreReview = new float[]
+            {
+                    3.2f,
+                    3.7f,
+                    2.7f,
+                    4.1f,
+                    1.8f,
+                    4.8f,
+                    5.0f,
+                    2.3f
+
+            };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,36 +66,12 @@ public class SearchResultsActivity extends AppCompatActivity
             }
         });
 
+        CustomAdapter adapter = new CustomAdapter(this, resultsBusiness, scoreReview);
+
         lv = (ListView) findViewById(R.id.alreadySubToList);
-        listViewCode();
-
-
-    }
-
-    private void listViewCode()
-    {
-        adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                resultsBusiness)
-        {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent)
-            {
-                /// Get the Item from ListView
-                View view = super.getView(position, convertView, parent);
-
-                // Set the border of View (ListView Item)
-                view.setBackground(getContext().getDrawable(R.drawable.listview_item_border));
-
-                // Return the view
-                return view;
-            }
-        };
-
-        // DataBind ListView with items from ArrayAdapter
         lv.setAdapter(adapter);
+        //listViewCode();
+
+
     }
 }

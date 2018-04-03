@@ -10,15 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".FilterActivity" />
+        <activity android:name=".SearchResultsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SpinnerActivity" />
-        <activity android:name=".FilterActivity" />
-        <activity android:name=".SearchResultsActivity"></activity>
     </application>
 
 </manifest>
