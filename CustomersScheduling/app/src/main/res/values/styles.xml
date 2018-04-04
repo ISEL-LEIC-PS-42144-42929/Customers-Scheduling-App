@@ -2,10 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        
-    </style>
         <!-- Customize your theme here. -->
-<<<<<<< HEAD
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!--   your app branding color for the app bar -->
@@ -14,15 +11,14 @@
         <item name="colorPrimaryDark">#303F9F</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#FF4081</item>
-=======
+    </style>
+
     <style name="CustomToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <!-- Pop-up Style. -->
     <style name="PopUpStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@color/colorAccent</item>
->>>>>>> ca099cfbd8345afa27df2145710981c790894163
     </style>
 
 
