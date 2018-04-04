@@ -22,7 +22,11 @@ package="com.ps.isel.customersscheduling">
     </activity>
     <activity android:name=".Activities.FilterActivity" />
     <activity android:name=".Activities.SearchResultsActivity" />
-    <activity android:name=".Activities.DefinitionsActivity" />
+    <activity android:name=".Activities.DefinitionsActivity" >
+
+
+    </activity>
+
     <activity android:name=".Activities.FavouritesActivity" />
     <activity android:name=".Activities.RegisterBusinessActivity" />
     <activity android:name=".Activities.PendentRequestsActivity"></activity>
