@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv = (ListView) findViewById(R.id.alreadySubToList);
-        buttonOpenTab = (Button) findViewById(R.id.buttonOpenTab);
+        buttonOpenTab = (Button) findViewById(R.id.button);
         buttonCode();
         listViewCode();
         searchBarCode();
