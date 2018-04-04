@@ -1,7 +1,9 @@
-package com.ps.isel.customersscheduling;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.ps.isel.customersscheduling.R;
 
 public class BusinessRegistrationActivity extends AppCompatActivity {
 

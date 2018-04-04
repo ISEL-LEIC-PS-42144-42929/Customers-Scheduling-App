@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Customers Scheduling</string>
+<<<<<<< HEAD
     <string name="title_activity_business_registration">BusinessRegistrationActivity</string>
     <string name="title_activity_business_schedule">BusinessScheduleActivity</string>
+=======
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="customersScheduling">Customers Scheduling</string>
+    <string name="title">Customers Scheduling</string>
+    <string name="registerBusiness"> + Registar Negócio</string>
+    <string name="pendentRequests">Pedidos pendentes</string>
+    <string name="definitions">Definições</string>
+    <string name="favourites">Favoritos</string>
+    <string name="menu_search">Procurar</string>
+    <string name="filter">Filtro</string>
+>>>>>>> ca099cfbd8345afa27df2145710981c790894163
 </resources>

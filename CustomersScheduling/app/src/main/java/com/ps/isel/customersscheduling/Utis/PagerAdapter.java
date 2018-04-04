@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling;
+package com.ps.isel.customersscheduling.Utis;
 
 
 import android.support.v4.app.Fragment;

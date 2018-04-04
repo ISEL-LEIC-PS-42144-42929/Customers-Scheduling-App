@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ps.isel.customersscheduling.Activities.FilterActivity">
+
+    <include
+        android:id="@+id/filter_toolbar"
+        layout="@layout/toolbarwithbackarrow"></include>
+
+    <Button
+        android:id="@+id/buttonLocal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:text="Escolher Localização" />
+
+    <Button
+        android:id="@+id/buttonCateg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/buttonLocal"
+        android:layout_marginTop="40dp"
+        android:text="Escolher Categoria" />
+
+    <Button
+        android:id="@+id/listViewSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bricksViewSelected"
+        android:layout_alignBottom="@+id/bricksViewSelected"
+        android:layout_toEndOf="@+id/results"
+        android:layout_toRightOf="@+id/results"
+        android:background="@android:drawable/ic_menu_sort_by_size"
+        android:backgroundTint="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/bricksViewSelected"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonCateg"
+        android:layout_marginTop="62dp"
+        android:layout_toLeftOf="@+id/results"
+        android:layout_toStartOf="@+id/results"
+        android:background="@android:drawable/ic_dialog_dialer"
+        android:backgroundTint="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="Resultados" />
+
+</RelativeLayout>
+

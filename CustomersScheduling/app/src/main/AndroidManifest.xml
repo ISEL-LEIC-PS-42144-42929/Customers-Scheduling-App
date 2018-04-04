@@ -8,17 +8,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".SpinnerActivity" />
         <activity android:name=".BusinessRegistrationActivity" />
         <activity android:name=".BusinessScheduleActivity">
+=======
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Activities.MainActivity">
+>>>>>>> ca099cfbd8345afa27df2145710981c790894163
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
+        <activity android:name=".Activities.FilterActivity" />
+        <activity android:name=".Activities.SearchResultsActivity" />
+        <activity android:name=".Activities.DefinitionsActivity" />
+        <activity android:name=".Activities.FavouritesActivity" />
+        <activity android:name=".Activities.RegisterBusinessActivity" />
+        <activity android:name=".Activities.PendentRequestsActivity"></activity>
+>>>>>>> ca099cfbd8345afa27df2145710981c790894163
     </application>
 
 </manifest>
