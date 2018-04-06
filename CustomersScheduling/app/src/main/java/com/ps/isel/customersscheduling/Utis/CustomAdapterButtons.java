@@ -1,6 +1,7 @@
 package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,15 @@ import java.util.ArrayList;
 
 public class CustomAdapterButtons extends BaseAdapter
 {
+    private Class[] goToOnClick;
     private String[] buttonsName;
     private Context context;
 
-    public CustomAdapterButtons(String[] buttonsName, Context context)
+    public CustomAdapterButtons(String[] buttonsName, Context context, Class[] goToOnClick)
     {
         this.buttonsName = buttonsName;
         this.context = context;
+        this.goToOnClick = goToOnClick;
     }
 
 
@@ -58,14 +61,17 @@ public class CustomAdapterButtons extends BaseAdapter
         Button defName= (Button)view.findViewById(R.id.btn);
         defName.setText(buttonsName[position]);
 
-        defName.setOnClickListener(new View.OnClickListener(){
+        defName.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                //do something
-
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context, goToOnClick[position]);
+                context.startActivity(intent);
             }
         });
 
         return view;
     }
+
 }

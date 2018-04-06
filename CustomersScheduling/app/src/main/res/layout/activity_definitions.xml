@@ -5,16 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ps.isel.customersscheduling.Activities.DefinitionsActivity">
-
-    <include
-        android:id="@+id/filter_toolbar"
-        layout="@layout/toolbarwithbackarrow"></include>
-
-    <ListView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/listButtons"
-        android:paddingTop="80dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 </RelativeLayout>

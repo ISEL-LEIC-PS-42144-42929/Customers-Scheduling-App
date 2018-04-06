@@ -12,11 +12,6 @@ import com.ps.isel.customersscheduling.R;
 
 public class SearchResultsActivity extends AppCompatActivity
 {
-    private CustomAdapter adapter;
-    private ListView lv;
-
-    private Toolbar toolbar;
-
     private String[] resultsBusiness = new String[]
             {
                     "A monstra",
@@ -42,6 +37,9 @@ public class SearchResultsActivity extends AppCompatActivity
 
         };
 
+    private ListView lv;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,10 +61,8 @@ public class SearchResultsActivity extends AppCompatActivity
             }
         });
 
-        adapter = new CustomAdapter(this, resultsBusiness, scoreReview);
-
         lv = (ListView) findViewById(R.id.resultsSearch);
-        lv.setAdapter(adapter);
+        lv.setAdapter(new CustomAdapter(this, resultsBusiness, scoreReview));
 
     }
 }
