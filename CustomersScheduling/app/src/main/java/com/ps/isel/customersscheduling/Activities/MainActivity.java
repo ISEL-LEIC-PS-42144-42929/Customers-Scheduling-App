@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
@@ -94,6 +94,17 @@ public class MainActivity extends AppCompatActivity
         {      //RTL to LTR
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getApplicationContext(), BusinessScheduleActivity.class);
+                intent.putExtra("businessName", subbedBusiness[position]);
+                intent.putExtra("scoreReview",scoreReview[position]);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -149,9 +160,7 @@ public class MainActivity extends AppCompatActivity
             case (R.id.Favorites):
                 goToActivity(FavouritesActivity.class);
                 break;
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -29,14 +29,15 @@
         android:layout_marginTop="40dp"
         android:text="Escolher Categoria" />
 
+
     <Button
         android:id="@+id/listViewSelected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/bricksViewSelected"
-        android:layout_alignBottom="@+id/bricksViewSelected"
-        android:layout_toEndOf="@+id/results"
-        android:layout_toRightOf="@+id/results"
+        android:layout_below="@+id/buttonCateg"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="60dp"
+        android:layout_alignParentRight="true"
         android:background="@android:drawable/ic_menu_sort_by_size"
         android:backgroundTint="@android:color/darker_gray" />
 
@@ -45,9 +46,9 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonCateg"
-        android:layout_marginTop="62dp"
-        android:layout_toLeftOf="@+id/results"
-        android:layout_toStartOf="@+id/results"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="60dp"
+        android:layout_alignParentLeft="true"
         android:background="@android:drawable/ic_dialog_dialer"
         android:backgroundTint="@android:color/darker_gray" />
 
@@ -55,10 +56,24 @@
         android:id="@+id/results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="Resultados" />
+        android:layout_below="@+id/bricksViewSelected"
+        android:layout_marginLeft="60dp"
+        android:layout_alignParentLeft="true"
+        android:text="Resultados"
+        android:layout_marginTop="80dp"
+        />
+
+    <Button
+        android:id="@+id/saveFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/results"
+        android:layout_alignBottom="@+id/results"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_toEndOf="@+id/results"
+        android:layout_toRightOf="@+id/results"
+        android:background="@android:drawable/btn_star_big_on" />
 
 </RelativeLayout>
 

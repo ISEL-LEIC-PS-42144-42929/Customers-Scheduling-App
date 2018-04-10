@@ -16,11 +16,11 @@ public class RegisterBusinessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_register_business);
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Registar Negócio");
+        getSupportActionBar().setTitle("Business Registration");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

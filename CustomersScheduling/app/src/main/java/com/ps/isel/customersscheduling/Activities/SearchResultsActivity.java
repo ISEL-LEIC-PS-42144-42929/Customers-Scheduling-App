@@ -34,7 +34,6 @@ public class SearchResultsActivity extends AppCompatActivity
                 4.8f,
                 5.0f,
                 2.3f
-
         };
 
     private ListView lv;

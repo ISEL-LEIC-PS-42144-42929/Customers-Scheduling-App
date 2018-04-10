@@ -33,6 +33,8 @@ public class CustomAdapter extends BaseAdapter
     private ImageView imageView;
     private ClipDrawable drawable;
 
+    private float proporcionToDraw;
+    private int finalLevelToDraw;
 
     public CustomAdapter(Activity context, String[] businessNames, float[] scoreReview)
     {
@@ -72,7 +74,10 @@ public class CustomAdapter extends BaseAdapter
 
         imageView = row.findViewById(R.id.imgIcon);
         drawable = (ClipDrawable) imageView.getDrawable();
-        drawable.setLevel(drawable.getLevel() + (int)(2000 * scoreReview[position]));
+
+        proporcionToDraw = (scoreReview[position] * 100) / 5;
+        finalLevelToDraw = (int)(proporcionToDraw * 10000)/100;
+        drawable.setLevel(finalLevelToDraw);
 
         reviewScore = (TextView) row.findViewById(R.id.scoreReview);
         reviewScore.setText(scoreReview[position]+"");

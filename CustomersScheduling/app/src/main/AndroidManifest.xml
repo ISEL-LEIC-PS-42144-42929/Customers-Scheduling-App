@@ -16,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.BusinessRegistrationActivity" />
         <activity android:name=".Activities.BusinessScheduleActivity" />
         <activity android:name=".Activities.FilterActivity" />
         <activity android:name=".Activities.SearchResultsActivity" />

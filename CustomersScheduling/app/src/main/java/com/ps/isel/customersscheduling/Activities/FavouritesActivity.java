@@ -9,7 +9,7 @@ import com.ps.isel.customersscheduling.R;
 
 public class FavouritesActivity extends BaseActivityWithOnlyBackArrow
 {
-    ArrayAdapter<String> adapter;
+    private ListView lv;
 
     private String[] favSearches = new String[]
             {
@@ -19,16 +19,12 @@ public class FavouritesActivity extends BaseActivityWithOnlyBackArrow
                     "Spa em Lisboa",
             };
 
-
-    private ListView lv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("Favourites");
        lv = (ListView) findViewById(R.id.listButtons);
-       adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,favSearches);
        lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favSearches) );
 
     }

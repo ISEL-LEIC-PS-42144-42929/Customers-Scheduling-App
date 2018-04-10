@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.ps.isel.customersscheduling.R;
 
@@ -23,6 +25,7 @@ public class FilterActivity extends AppCompatActivity
     private Button brickViewBtn;
     private Button listViewBtn;
     private Button resultsBtn;
+    private Button saveFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +38,7 @@ public class FilterActivity extends AppCompatActivity
         brickViewBtn = findViewById(R.id.bricksViewSelected);
         listViewBtn = findViewById(R.id.listViewSelected);
         resultsBtn = findViewById(R.id.results);
+        saveFilter = findViewById(R.id.saveFilter);
         addListenersToButtons();
 
 
@@ -101,6 +105,16 @@ public class FilterActivity extends AppCompatActivity
 
             }
         });
+
+        saveFilter.setOnClickListener(new View.OnClickListener()
+       {
+           @Override
+           public void onClick(View v)
+           {
+               Intent intent = new Intent(getApplicationContext(), FavouritesActivity.class);
+               startActivity(intent);
+           }
+       });
     }
 
     @Override
