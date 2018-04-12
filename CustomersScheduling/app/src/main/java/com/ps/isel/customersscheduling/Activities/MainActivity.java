@@ -1,6 +1,10 @@
 package com.ps.isel.customersscheduling.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -14,13 +18,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
-
+import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Utis.CustomAdapter;
 import com.ps.isel.customersscheduling.R;
+import java.io.ByteArrayOutputStream;
+
 
 
 public class MainActivity extends AppCompatActivity
 {
+    private Context ctx;
+
     private Toolbar toolbar;
     private SearchView searchView;
 
@@ -29,41 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private Button filterBtn;
 
-    private String[] subbedBusiness = new String[]
-            {
-            "A tasca do Manel",
-            "CUF",
-            "Barbeiro do Bairro",
-            "A piriquita",
-            "Bom vinho",
-            "A tabaqueira",
-            "O SPA do Fausto",
-            "A tasca do Manel",
-            "CUF",
-            "Barbeiro do Bairro",
-            "A piriquita",
-            "Bom vinho",
-            "A tabaqueira",
-            "O SPA do Fausto"
-            };
-
-    private float[] scoreReview = new float[]
-            {
-                    3.2f,
-                    3.7f,
-                    2.7f,
-                    4.1f,
-                    1.8f,
-                    4.8f,
-                    5.0f,
-                    2.3f,
-                    1.0f,
-                    3.4f,
-                    0.8f,
-                    2.5f,
-                    1.8f,
-                    4.3f
-            };
+    private Business[] subbedBusiness;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -86,8 +60,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        subbedBusiness = initializeHardCodedData();
+
         lv = (ListView) findViewById(R.id.alreadySubToList);
-        adapter = new CustomAdapter(this, subbedBusiness, scoreReview);
+        adapter = new CustomAdapter(this, subbedBusiness);
+
         lv.setAdapter(adapter);
 
         if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
@@ -100,11 +77,71 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Intent intent = new Intent(getApplicationContext(), BusinessScheduleActivity.class);
-                intent.putExtra("businessName", subbedBusiness[position]);
-                intent.putExtra("scoreReview",scoreReview[position]);
+                intent.putExtra("nif", subbedBusiness[position]);
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    private Business[] initializeHardCodedData()
+    {
+        ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+        BitmapFactory.decodeResource(this.getResources(), R.drawable.images).compress(Bitmap.CompressFormat.PNG, 10, bStream);
+        byte[] byteArray = bStream.toByteArray();
+
+        return new Business[]
+                {
+                        new Business(
+                                12345,
+                                "O Barbas",
+                                "rua do velho",
+                                91111111,
+                                "loja do barbas",
+                                3.2f,
+null),
+                        new Business(
+                                12345,
+                                "CUF",
+                                "rua do a",
+                                91111111,
+                                "loja do cuf",
+                                2.7f,
+                                null),
+                        new Business(
+                                12345,
+                                "Barbeir",
+                                "rua do b",
+                                91111111,
+                                "loja do b",
+                                3.7f,
+                                null),
+                        new Business(
+                                12345,
+                                "O spa da patri",
+                                "rua do velho",
+                                91111111,
+                                "loja do barbas",
+                                4.2f,
+                                null),
+                        new Business(
+                                12345,
+                                "a tasca",
+                                "rua do a",
+                                91111111,
+                                "loja do cuf",
+                                4.8f,
+                                null),
+                        new Business(
+                                12345,
+                                "Bokmm asa",
+                                "rua do b",
+                                91111111,
+                                "loja do b",
+                                1.3f,
+                                null),
+                };
     }
 
     @Override

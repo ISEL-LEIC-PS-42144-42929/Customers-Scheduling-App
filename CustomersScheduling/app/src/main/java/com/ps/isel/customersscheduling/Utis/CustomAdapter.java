@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
 import java.util.function.ToLongBiFunction;
@@ -23,8 +24,7 @@ import java.util.function.ToLongBiFunction;
 public class CustomAdapter extends BaseAdapter
 {
     private Activity context;
-    private String[] businessNames;
-    private float[] scoreReview;
+    private Business[] businessNames;
 
     private TextView title;
     private TextView reviewScore;
@@ -36,11 +36,10 @@ public class CustomAdapter extends BaseAdapter
     private float proporcionToDraw;
     private int finalLevelToDraw;
 
-    public CustomAdapter(Activity context, String[] businessNames, float[] scoreReview)
+    public CustomAdapter(Activity context, Business[] businessNames)
     {
         this.context = context;
         this.businessNames = businessNames;
-        this.scoreReview = scoreReview;
     }
 
     @Override
@@ -70,17 +69,17 @@ public class CustomAdapter extends BaseAdapter
         row = inflater.inflate(R.layout.row, parent, false);
 
         title = (TextView) row.findViewById(R.id.storeName);
-        title.setText(businessNames[position]);
+        title.setText(businessNames[position].getName());
 
         imageView = row.findViewById(R.id.imgIcon);
         drawable = (ClipDrawable) imageView.getDrawable();
 
-        proporcionToDraw = (scoreReview[position] * 100) / 5;
+        proporcionToDraw = (businessNames[position].getScoreReview() * 100) / 5;
         finalLevelToDraw = (int)(proporcionToDraw * 10000)/100;
         drawable.setLevel(finalLevelToDraw);
 
         reviewScore = (TextView) row.findViewById(R.id.scoreReview);
-        reviewScore.setText(scoreReview[position]+"");
+        reviewScore.setText(businessNames[position].getScoreReview() + "");
 
         return (row);
     }

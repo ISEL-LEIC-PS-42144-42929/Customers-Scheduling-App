@@ -1,40 +1,71 @@
 package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Utis.CustomAdapter;
 import com.ps.isel.customersscheduling.R;
 
 public class SearchResultsActivity extends AppCompatActivity
 {
-    private String[] resultsBusiness = new String[]
+    private Business[] resultsBusiness = new Business[]
             {
-                    "A monstra",
-                    "O barbeiro",
-                    "CUF",
-                    "A andorinha",
-                    "Não Caias",
-                    "Junta de motards",
-                    "O Pendura",
-                    "Azia"
+                    new Business(
+                            12345,
+                            "O Barbas",
+                            "rua do velho",
+                            91111111,
+                            "loja do barbas",
+                            3.2f,
+                            null)
+                    ,
+                    new Business(
+                            12345,
+                            "CUF",
+                            "rua do a",
+                            91111111,
+                            "loja do cuf",
+                            2.7f,
+                            null),
+                    new Business(
+                            12345,
+                            "Barbeir",
+                            "rua do b",
+                            91111111,
+                            "loja do b",
+                            3.7f,
+                            null),
+                    new Business(
+                            12345,
+                            "O spa da patri",
+                            "rua do velho",
+                            91111111,
+                            "loja do barbas",
+                            4.2f,
+                            null),
+                    new Business(
+                            12345,
+                            "a tasca",
+                            "rua do a",
+                            91111111,
+                            "loja do cuf",
+                            4.8f,
+                            null),
+                    new Business(
+                            12345,
+                            "Bokmm asa",
+                            "rua do b",
+                            91111111,
+                            "loja do b",
+                            1.3f,
+                            null),
             };
-
-    private float[] scoreReview = new float[]
-        {
-                3.2f,
-                3.7f,
-                2.7f,
-                4.1f,
-                1.8f,
-                4.8f,
-                5.0f,
-                2.3f
-        };
 
     private ListView lv;
     private Toolbar toolbar;
@@ -61,7 +92,7 @@ public class SearchResultsActivity extends AppCompatActivity
         });
 
         lv = (ListView) findViewById(R.id.resultsSearch);
-        lv.setAdapter(new CustomAdapter(this, resultsBusiness, scoreReview));
+        lv.setAdapter(new CustomAdapter(this, resultsBusiness));
 
     }
 }

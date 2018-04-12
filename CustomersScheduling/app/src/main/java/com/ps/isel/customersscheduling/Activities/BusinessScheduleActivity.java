@@ -15,24 +15,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Utis.CustomAdapter;
 import com.ps.isel.customersscheduling.Utis.PagerAdapter;
 import com.ps.isel.customersscheduling.R;
 
 public class BusinessScheduleActivity extends AppCompatActivity
 {
-
-   // private TextView titleBox;
-    //private ImageView backBtn;
-   // private final Context ctx = this;
-
     private ListView lv;
-
-    ArrayAdapter<String> adapter;
-
     private Toolbar toolbar;
-
     private Button signInBtn;
+    private TextView name;
+    private TextView address;
+    private TextView contact;
+    private TextView description;
+
+    Business business;
+
     private boolean isUserSigned;
 
     private float score;
@@ -64,12 +63,23 @@ public class BusinessScheduleActivity extends AppCompatActivity
         setContentView(R.layout.activity_business_schedule);
 
         intent = getIntent();
+        business = (Business) intent.getSerializableExtra("nif");
+
+        name= (TextView) findViewById(R.id.name);
+        address= (TextView) findViewById(R.id.address);
+        contact= (TextView) findViewById(R.id.contact);
+        description= (TextView) findViewById(R.id.description);
+
+        name.setText("Nome: " + business.getName());
+        address.setText("Address: " + business.getAddress());
+        contact.setText("Contact: " + business.getContact()+ "");
+        description.setText("Description: " + business.getDescription());
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(intent.getStringExtra("businessName"));
+        getSupportActionBar().setTitle(business.getName());
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,12 +90,20 @@ public class BusinessScheduleActivity extends AppCompatActivity
         });
 
         signInBtn = findViewById(R.id.signIn);
-        signInBtn.setVisibility(!isUserSigned? View.VISIBLE: View.INVISIBLE ); //change condition to without "!"
+        signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE ); //change condition to without "!"
 
         lv = (ListView) findViewById(R.id.services);
         lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, services) );
 
+        intent = getIntent();
 
+        constructRatingStars();
+
+
+    }
+
+    public void constructRatingStars()
+    {
         score = intent.getFloatExtra("scoreReview",0);
         floatingPoint = score % 1;
         numberStars =(int)Math.ceil(score);
@@ -109,52 +127,5 @@ public class BusinessScheduleActivity extends AppCompatActivity
                 starDrawable.setLevel(finalLevelToDraw);
             }
         }
-
-
-
-       // titleBox = findViewById(R.id.TitleTextView);
-        //String name = savedInstanceState.getString("business_name");
-    //    titleBox.setText("A Piriquita" /*name*/);
-        //make request to API
-    //   ImageView mainImage = findViewById(R.id.businessMainImageView);
-    //   //mainImage.setImageBitmap(/*resource from API*/);
-    //   backBtn = findViewById(R.id.backBtnImageView);
-    //   backBtn.setOnClickListener(new View.OnClickListener() {
-    //       @Override
-    //       public void onClick(View view) {
-    //           Intent intent = new Intent(ctx, MainActivity.class);
-    //           startActivity(intent);
-    //       }
-    //   });
-
-   //     Toolbar toolbar = findViewById(R.id.toolbar);
-   //     setSupportActionBar(toolbar);
-//
-   //     TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-   //     tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-   //     tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-   //     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-     //   final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-     //   final PagerAdapter adapter = new PagerAdapter
-     //           (getSupportFragmentManager(), tabLayout.getTabCount());
-     //   viewPager.setAdapter(adapter);
-     //   viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-     //   tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-     //       @Override
-     //       public void onTabSelected(TabLayout.Tab tab) {
-     //           viewPager.setCurrentItem(tab.getPosition());
-     //       }
-//
-     //       @Override
-     //       public void onTabUnselected(TabLayout.Tab tab) {
-//
-     //       }
-//
-     //       @Override
-     //       public void onTabReselected(TabLayout.Tab tab) {
-//
-     //       }
-     //   });
     }
 }
