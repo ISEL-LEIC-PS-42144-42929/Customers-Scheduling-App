@@ -1,19 +1,30 @@
 package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Utis.CustomAdapter;
+import com.ps.isel.customersscheduling.Model.Service;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.R;
 
 public class SearchResultsActivity extends AppCompatActivity
 {
+    private Service[] services = new Service[]
+            {
+                    new Service(3.90f, "Corte de cabelo à tesoura"),
+                    new Service(3.90f, "Corte de barba à máquina"),
+                    new Service(3.90f, "Corte de barba à lamina"),
+                    new Service(3.90f, "Colorir cabelo"),
+                    new Service(3.90f, "Massagem facial")
+            };
+
+
     private Business[] resultsBusiness = new Business[]
             {
                     new Business(
@@ -23,8 +34,8 @@ public class SearchResultsActivity extends AppCompatActivity
                             91111111,
                             "loja do barbas",
                             3.2f,
-                            null)
-                    ,
+                            null,
+                            services),
                     new Business(
                             12345,
                             "CUF",
@@ -32,7 +43,8 @@ public class SearchResultsActivity extends AppCompatActivity
                             91111111,
                             "loja do cuf",
                             2.7f,
-                            null),
+                            null,
+                            services),
                     new Business(
                             12345,
                             "Barbeir",
@@ -40,7 +52,8 @@ public class SearchResultsActivity extends AppCompatActivity
                             91111111,
                             "loja do b",
                             3.7f,
-                            null),
+                            null,
+                            services),
                     new Business(
                             12345,
                             "O spa da patri",
@@ -48,7 +61,8 @@ public class SearchResultsActivity extends AppCompatActivity
                             91111111,
                             "loja do barbas",
                             4.2f,
-                            null),
+                            null,
+                            services),
                     new Business(
                             12345,
                             "a tasca",
@@ -56,7 +70,8 @@ public class SearchResultsActivity extends AppCompatActivity
                             91111111,
                             "loja do cuf",
                             4.8f,
-                            null),
+                            null,
+                            services),
                     new Business(
                             12345,
                             "Bokmm asa",
@@ -64,7 +79,8 @@ public class SearchResultsActivity extends AppCompatActivity
                             91111111,
                             "loja do b",
                             1.3f,
-                            null),
+                            null,
+                            services),
             };
 
     private ListView lv;
@@ -92,7 +108,17 @@ public class SearchResultsActivity extends AppCompatActivity
         });
 
         lv = (ListView) findViewById(R.id.resultsSearch);
-        lv.setAdapter(new CustomAdapter(this, resultsBusiness));
+        lv.setAdapter(new CustomAdapterBusiness(this, resultsBusiness));
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getApplicationContext(), BusinessScheduleActivity.class);
+                intent.putExtra("nif", resultsBusiness[position]);
+                startActivity(intent);
+            }
+        });
 
     }
 }

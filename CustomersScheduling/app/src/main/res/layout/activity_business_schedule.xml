@@ -169,7 +169,19 @@
         android:textSize="20dp"
         android:clickable="false"
         android:text="@string/services"
-        android:id="@+id/textView3" />
+        android:id="@+id/serv" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/serv"
+        android:layout_alignBottom="@+id/serv"
+        android:layout_alignEnd="@+id/signIn"
+        android:layout_alignRight="@+id/signIn"
+        android:clickable="false"
+        android:text="@string/price"
+        android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

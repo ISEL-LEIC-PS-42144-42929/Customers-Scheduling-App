@@ -1,27 +1,29 @@
 package com.ps.isel.customersscheduling.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ClipDrawable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Utis.CustomAdapter;
-import com.ps.isel.customersscheduling.Utis.PagerAdapter;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
 public class BusinessScheduleActivity extends AppCompatActivity
 {
+    private int MAXLEVEL = 10000;
+    private int MAXPERCENT = 100;
+    private String NAME = "Nome: ";
+    private String ADDRESS = "Address: ";
+    private String CONTACT = "Contact: ";
+    private String DESCRIPTION = "Description: ";
+
     private ListView lv;
     private Toolbar toolbar;
     private Button signInBtn;
@@ -29,32 +31,19 @@ public class BusinessScheduleActivity extends AppCompatActivity
     private TextView address;
     private TextView contact;
     private TextView description;
-
-    Business business;
-
-    private boolean isUserSigned;
-
-    private float score;
-    private int numberStars;
     private ImageView star;
     private ClipDrawable starDrawable;
     private String idOfImage = "imgIcon";
+
+    private Business business;
+    private boolean isUserSigned;
+    private float score;
+    private int numberStars;
     private float proporcionToDraw;
     private int finalLevelToDraw;
     private float floatingPoint;
-    private int MAXLEVEL = 10000;
 
     private Intent intent;
-
-    private String[] services = new String[]
-            {
-                    "Corte de cabelo à máquina",
-                    "Corte de cabelo à tesoura",
-                    "Corte de barba à máquina",
-                    "Corte de barba à lamina",
-                    "Colorir cabelo",
-                    "Massagem facial"
-            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,19 +52,28 @@ public class BusinessScheduleActivity extends AppCompatActivity
         setContentView(R.layout.activity_business_schedule);
 
         intent = getIntent();
-        business = (Business) intent.getSerializableExtra("nif");
+        business = (Business) intent.getSerializableExtra("business");
 
         name= (TextView) findViewById(R.id.name);
         address= (TextView) findViewById(R.id.address);
         contact= (TextView) findViewById(R.id.contact);
         description= (TextView) findViewById(R.id.description);
 
-        name.setText("Nome: " + business.getName());
-        address.setText("Address: " + business.getAddress());
-        contact.setText("Contact: " + business.getContact()+ "");
-        description.setText("Description: " + business.getDescription());
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+
+        signInBtn = (Button)findViewById(R.id.signIn);
+
+        lv = (ListView) findViewById(R.id.services);
+
+        constructTextViews();
+        constructToolbarAndAddListeners();
+        constructButtonsAndAddListeners();
+        constructListViewAndAddListeners();
+    }
+
+    private void constructToolbarAndAddListeners()
+    {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -88,23 +86,31 @@ public class BusinessScheduleActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        signInBtn = findViewById(R.id.signIn);
-        signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE ); //change condition to without "!"
-
-        lv = (ListView) findViewById(R.id.services);
-        lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, services) );
-
-        intent = getIntent();
-
-        constructRatingStars();
-
-
     }
 
-    public void constructRatingStars()
+    private void constructTextViews()
     {
-        score = intent.getFloatExtra("scoreReview",0);
+        name.setText(NAME + business.getName());
+        address.setText(ADDRESS + business.getAddress());
+        contact.setText(CONTACT + business.getContact()+ "");
+        description.setText(DESCRIPTION + business.getDescription());
+    }
+
+    private void constructButtonsAndAddListeners()
+    {
+        signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE );   //change condition to without "!"
+        //add Listener to button
+    }
+
+    private void constructListViewAndAddListeners()
+    {
+        lv.setAdapter(new CustomAdapterServices(this, business.getServices()));
+        constructRatingStars();
+    }
+
+    private void constructRatingStars()
+    {
+        score = business.getScoreReview();
         floatingPoint = score % 1;
         numberStars =(int)Math.ceil(score);
 
@@ -122,8 +128,8 @@ public class BusinessScheduleActivity extends AppCompatActivity
 
             else
             {
-                proporcionToDraw = floatingPoint * 100;
-                finalLevelToDraw = (int)(proporcionToDraw * MAXLEVEL)/100;
+                proporcionToDraw = floatingPoint * MAXPERCENT;
+                finalLevelToDraw = (int)(proporcionToDraw * MAXLEVEL)/MAXPERCENT;
                 starDrawable.setLevel(finalLevelToDraw);
             }
         }

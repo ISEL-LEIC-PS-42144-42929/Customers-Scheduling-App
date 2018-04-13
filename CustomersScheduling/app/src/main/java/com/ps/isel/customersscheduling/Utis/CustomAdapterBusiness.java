@@ -3,25 +3,21 @@ package com.ps.isel.customersscheduling.Utis;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
-
-import java.util.function.ToLongBiFunction;
 
 /**
  * Created by Colapso on 31/03/18.
  */
 
-public class CustomAdapter extends BaseAdapter
+public class CustomAdapterBusiness extends BaseAdapter
 {
     private Activity context;
     private Business[] businessNames;
@@ -36,7 +32,7 @@ public class CustomAdapter extends BaseAdapter
     private float proporcionToDraw;
     private int finalLevelToDraw;
 
-    public CustomAdapter(Activity context, Business[] businessNames)
+    public CustomAdapterBusiness(Activity context, Business[] businessNames)
     {
         this.context = context;
         this.businessNames = businessNames;
@@ -66,7 +62,7 @@ public class CustomAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        row = inflater.inflate(R.layout.row, parent, false);
+        row = inflater.inflate(R.layout.rowofbusiness, parent, false);
 
         title = (TextView) row.findViewById(R.id.storeName);
         title.setText(businessNames[position].getName());

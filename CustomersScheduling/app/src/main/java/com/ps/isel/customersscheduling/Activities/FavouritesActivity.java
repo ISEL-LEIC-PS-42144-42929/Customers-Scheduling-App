@@ -24,8 +24,8 @@ public class FavouritesActivity extends BaseActivityWithOnlyBackArrow
     {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("Favourites");
-       lv = (ListView) findViewById(R.id.listButtons);
-       lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favSearches) );
+        lv = (ListView) findViewById(R.id.listButtons);
+        lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favSearches) );
 
     }
 }

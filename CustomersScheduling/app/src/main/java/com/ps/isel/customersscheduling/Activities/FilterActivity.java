@@ -10,8 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.ps.isel.customersscheduling.R;
 
@@ -39,22 +37,11 @@ public class FilterActivity extends AppCompatActivity
         listViewBtn = findViewById(R.id.listViewSelected);
         resultsBtn = findViewById(R.id.results);
         saveFilter = findViewById(R.id.saveFilter);
+
         addListenersToButtons();
+        toolBarCode();
 
 
-        toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Filtros");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void addListenersToButtons()
@@ -149,6 +136,23 @@ public class FilterActivity extends AppCompatActivity
                 //TODO...
                 //called every time user writes a word
                 return false;
+            }
+        });
+    }
+
+    private void toolBarCode()
+    {
+        toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Filtros");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
             }
         });
     }

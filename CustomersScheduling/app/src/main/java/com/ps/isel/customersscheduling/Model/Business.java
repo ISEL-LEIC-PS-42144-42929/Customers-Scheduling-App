@@ -17,10 +17,11 @@ public class Business implements Serializable
    private long contact;
    private String description;
    private float scoreReview;
+   private Service[] services;
    private Bitmap businessImage;
 
 
-    public Business(int nif, String name, String address, long contact, String description, float scoreReview, Bitmap businessImage)
+    public Business(int nif, String name, String address, long contact, String description, float scoreReview, Bitmap businessImage, Service[] services)
     {
         this.nif = nif;
         this.name = name;
@@ -29,11 +30,18 @@ public class Business implements Serializable
         this.description = description;
         this.scoreReview = scoreReview;
         this.businessImage = businessImage;
+        this.services = services;
     }
 
     public int getNif()
     {
         return nif;
+    }
+
+
+
+    public void setServices(Service[] services) {
+        this.services = services;
     }
 
     public String getName()
@@ -56,6 +64,9 @@ public class Business implements Serializable
         return description;
     }
 
+    public Service[] getServices() {
+        return services;
+    }
 
     public float getScoreReview() {
         return scoreReview;
