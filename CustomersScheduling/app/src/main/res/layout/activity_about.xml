@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ps.isel.customersscheduling.Activities.AboutActivity">
+
+    <include
+        android:id="@+id/filter_toolbar"
+        layout="@layout/toolbarwithbackarrow"></include>
+
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_toolbar"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="31dp"
+        android:layout_toEndOf="@+id/relativeLayout2"
+        android:layout_toRightOf="@+id/relativeLayout2"
+        tools:ignore="UnknownId" />
+
+
+</RelativeLayout>

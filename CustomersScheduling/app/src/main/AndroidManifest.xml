@@ -27,7 +27,8 @@
         <activity android:name=".Activities.DefinitionsActivities.EditProfileActivity" />
         <activity android:name=".Activities.DefinitionsActivities.ChangeEmailActivity" />
         <activity android:name=".Activities.DefinitionsActivities.ChangePasswordActivity" />
-        <activity android:name=".Activities.DefinitionsActivities.EditNotificationsActivity"></activity>
+        <activity android:name=".Activities.DefinitionsActivities.EditNotificationsActivity" />
+        <activity android:name=".Activities.AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -26,10 +26,6 @@
         app:showAsAction="always"
         ></item>
     <item
-        android:id="@+id/personalData"
-        android:title="@string/personalData">
-    </item>
-    <item
         android:id="@+id/About"
         android:title="@string/about">
     </item>

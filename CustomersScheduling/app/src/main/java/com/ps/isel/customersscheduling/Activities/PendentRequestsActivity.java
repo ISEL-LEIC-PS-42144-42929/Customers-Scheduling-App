@@ -5,31 +5,61 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.Model.User;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
 
 public class PendentRequestsActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private ListView lv;
+    private User user ;
+    private User[] pendentRequests = new User[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_pendent_requests);
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+        lv = (ListView) findViewById(R.id.pendentRequests);
+
+        user = new User("Gonçalo", this.findViewById(R.id.userPhoto)); //hardcodeddata
+
+        pendentRequests[0] = user;      //hardcodeddata
+        pendentRequests[1] = user;      //hardcodeddata
+        pendentRequests[2] = user;      //hardcodeddata
+        pendentRequests[3] = user;      //hardcodeddata
+
+        constructToolbarAndAddListeners();
+        constructListViewAndAddListeners();
+
+    }
+
+    private void constructToolbarAndAddListeners()
+    {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Pedidos Pendentes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Pendent Requests");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    private void constructListViewAndAddListeners()
+    {
+
+        lv.setAdapter(new CustomAdapterUsers(this, pendentRequests));
     }
 }

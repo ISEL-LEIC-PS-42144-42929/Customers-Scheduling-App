@@ -161,6 +161,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.Favorites):
                 goToActivity(FavouritesActivity.class);
                 break;
+            case (R.id.About):
+                goToActivity(AboutActivity.class);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
