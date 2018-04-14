@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.Model.User;
@@ -15,6 +16,7 @@ public class PendentRequestsActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ListView lv;
+
     private User user ;
     private User[] pendentRequests = new User[4];
 
@@ -27,6 +29,7 @@ public class PendentRequestsActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         lv = (ListView) findViewById(R.id.pendentRequests);
 
+
         user = new User("Gonçalo", this.findViewById(R.id.userPhoto)); //hardcodeddata
 
         pendentRequests[0] = user;      //hardcodeddata
@@ -36,7 +39,6 @@ public class PendentRequestsActivity extends AppCompatActivity {
 
         constructToolbarAndAddListeners();
         constructListViewAndAddListeners();
-
     }
 
     private void constructToolbarAndAddListeners()
@@ -59,7 +61,6 @@ public class PendentRequestsActivity extends AppCompatActivity {
 
     private void constructListViewAndAddListeners()
     {
-
         lv.setAdapter(new CustomAdapterUsers(this, pendentRequests));
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,12 +27,15 @@ public class CustomAdapterUsers extends BaseAdapter
     private Activity context;
     private ImageView imageView;
     private ClipDrawable drawable;
+    private Button acceptBtn;
+    private Button rejectBtn;
 
     public CustomAdapterUsers(Activity context, User[] users)
     {
         this.users = users;
         this.name = name;
         this.context = context;
+
     }
 
     @Override
@@ -53,7 +57,7 @@ public class CustomAdapterUsers extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(int position, final View convertView, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofusers, parent, false);
@@ -61,13 +65,53 @@ public class CustomAdapterUsers extends BaseAdapter
         name = (TextView) row.findViewById(R.id.userName);
         name.setText(users[position].getName());
 
+        acceptBtn = (Button) row.findViewById(R.id.accept);
+        rejectBtn = (Button) row.findViewById(R.id.reject);
+
         imageView = row.findViewById(R.id.userPhoto);
         drawable = (ClipDrawable) imageView.getDrawable();
         drawable.setLevel(10000);
 
-        //price = (TextView) row.findViewById(R.id.servicePrice);
-        //price.setText(services[position].getPrice()+ "");
+        acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        addListenersToButtons();
 
         return (row);
+    }
+
+    private void addListenersToButtons()
+    {
+        acceptBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Todo Enviar ao servidor resposta positiva ao request
+
+                //Refresh Activity
+                context.finish();
+                context.startActivity(context.getIntent());
+
+            }
+        });
+
+        rejectBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Todo Enviar ao servidor resposta positiva ao request
+
+                //Refresh Activity
+                context.finish();
+                context.startActivity(context.getIntent());
+
+            }
+        });
     }
 }
