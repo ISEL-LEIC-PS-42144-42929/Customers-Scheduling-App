@@ -115,7 +115,7 @@ public class SearchResultsActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Intent intent = new Intent(getApplicationContext(), BusinessScheduleActivity.class);
-                intent.putExtra("nif", resultsBusiness[position]);
+                intent.putExtra("business", resultsBusiness[position]);
                 startActivity(intent);
             }
         });

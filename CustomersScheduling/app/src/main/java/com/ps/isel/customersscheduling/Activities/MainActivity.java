@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         filterBtn = findViewById(R.id.filter);
+        lv = (ListView) findViewById(R.id.alreadySubToList);
 
         toolBarCode();
         listViewCode();
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void listViewCode()
     {
-        lv = (ListView) findViewById(R.id.alreadySubToList);
+
         lv.setAdapter(new CustomAdapterBusiness(this, subbedBusiness));
 
         if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
