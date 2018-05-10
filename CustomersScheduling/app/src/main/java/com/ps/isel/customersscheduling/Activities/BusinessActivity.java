@@ -15,7 +15,7 @@ import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
-public class BusinessScheduleActivity extends AppCompatActivity
+public class BusinessActivity extends AppCompatActivity
 {
     private int MAXLEVEL = 10000;
     private int MAXPERCENT = 100;
@@ -104,7 +104,7 @@ public class BusinessScheduleActivity extends AppCompatActivity
 
     private void constructListViewAndAddListeners()
     {
-        lv.setAdapter(new CustomAdapterServices(this, business.getServices()));
+        lv.setAdapter(new CustomAdapterServices(this, business.getServices(),ServicesActivity.class));
         constructRatingStars();
     }
 

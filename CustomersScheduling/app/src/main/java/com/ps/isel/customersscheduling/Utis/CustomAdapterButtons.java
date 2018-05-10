@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.R;
 
 import java.util.ArrayList;
@@ -22,12 +23,14 @@ public class CustomAdapterButtons extends BaseAdapter
     private Class[] goToOnClick;
     private String[] buttonsName;
     private Context context;
+    private CustomersSchedulingApp customersSchedulingApp;
 
-    public CustomAdapterButtons(String[] buttonsName, Context context, Class[] goToOnClick)
+    public CustomAdapterButtons(String[] buttonsName, Context context, Class[] goToOnClick, CustomersSchedulingApp customersSchedulingApp)
     {
         this.buttonsName = buttonsName;
         this.context = context;
         this.goToOnClick = goToOnClick;
+        this.customersSchedulingApp = customersSchedulingApp;
     }
 
 
@@ -67,6 +70,7 @@ public class CustomAdapterButtons extends BaseAdapter
             public void onClick(View v)
             {
                 Intent intent = new Intent(context, goToOnClick[position]);
+                intent.putExtra("app", customersSchedulingApp);
                 context.startActivity(intent);
             }
         });

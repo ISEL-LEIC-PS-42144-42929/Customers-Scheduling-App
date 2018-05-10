@@ -2,12 +2,16 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.Activities.BusinessActivity;
+import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
+import com.ps.isel.customersscheduling.Activities.ServicesActivity;
 import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 
@@ -24,10 +28,13 @@ public class CustomAdapterServices extends BaseAdapter
     private TextView title;
     private TextView price;
 
-    public CustomAdapterServices(Activity context, Service[] services)
+    private Class serviceActivity;
+
+    public CustomAdapterServices(Activity context, Service[] services, Class c)
     {
         this.context = context;
         this.services = services;
+        this.serviceActivity = c;
     }
 
     @Override
@@ -57,6 +64,24 @@ public class CustomAdapterServices extends BaseAdapter
         price = (TextView) row.findViewById(R.id.servicePrice);
         price.setText(services[position].getPrice()+ "");
 
-        return (row);
+        addListenersToListView(position);
+
+        return row;
+    }
+
+    public void addListenersToListView(final int position)
+    {
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context, ServicesActivity.class);
+                intent.putExtra("service", services[position]);
+                context.startActivity(intent);
+            }
+        });
+
+
+
     }
 }

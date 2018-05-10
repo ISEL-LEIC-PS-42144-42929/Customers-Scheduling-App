@@ -1,8 +1,6 @@
 package com.ps.isel.customersscheduling.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -16,22 +14,24 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
+
+import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
+import com.ps.isel.customersscheduling.HttpRequest;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Service;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
 
 public class MainActivity extends AppCompatActivity
 {
-    private Context ctx;
+    private CustomersSchedulingApp customersSchedulingApp;
 
     private Toolbar toolbar;
     private SearchView searchView;
-
-    private CustomAdapterBusiness adapter;
     private ListView lv;
-
     private Button filterBtn;
 
     private Service[] services = new Service[]
@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity
                             services)};
 
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -104,10 +105,16 @@ public class MainActivity extends AppCompatActivity
         filterBtn = findViewById(R.id.filter);
         lv = (ListView) findViewById(R.id.alreadySubToList);
 
-        toolBarCode();
-        listViewCode();
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(new HttpRequest(Volley.newRequestQueue(getApplicationContext()))));
 
+        toolBarCode();
+        listViewCode(subbedBusiness);
+      //  customersSchedulingApp
+      //          .getUserRegisteredBusiness(
+      //                  (business -> listViewCode(business)));
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -185,10 +192,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode()
+    private void listViewCode(Business[] businesses)
     {
 
-        lv.setAdapter(new CustomAdapterBusiness(this, subbedBusiness));
+        lv.setAdapter(new CustomAdapterBusiness(this, businesses));
 
         if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
         {      //RTL to LTR
@@ -199,8 +206,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent = new Intent(getApplicationContext(), BusinessScheduleActivity.class);
-                intent.putExtra("business", subbedBusiness[position]);
+                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
+                intent.putExtra("business", businesses[position]);
                 startActivity(intent);
             }
         });
@@ -209,6 +216,8 @@ public class MainActivity extends AppCompatActivity
     private void goToActivity(Class c)
     {
         Intent intent = new Intent(this, c);
+        intent.putExtra("app", customersSchedulingApp);
         startActivity(intent);
     }
+
 }

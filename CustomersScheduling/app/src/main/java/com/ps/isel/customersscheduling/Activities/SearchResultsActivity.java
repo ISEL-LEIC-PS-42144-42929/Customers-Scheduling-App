@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Service;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.R;
 
 public class SearchResultsActivity extends AppCompatActivity
@@ -25,63 +23,63 @@ public class SearchResultsActivity extends AppCompatActivity
             };
 
 
-    private Business[] resultsBusiness = new Business[]
-            {
-                    new Business(
-                            12345,
-                            "O Barbas",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            3.2f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "CUF",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            2.7f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "Barbeir",
-                            "rua do b",
-                            91111111,
-                            "loja do b",
-                            3.7f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "O spa da patri",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            4.2f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "a tasca",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            4.8f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "Bokmm asa",
-                            "rua do b",
-                            91111111,
-                            "loja do b",
-                            1.3f,
-                            null,
-                            services),
-            };
+   // private Business[] resultsBusiness = new Business[]
+   //         {
+   //                 new Business(
+   //                         12345,
+   //                         "O Barbas",
+   //                         "rua do velho",
+   //                         91111111,
+   //                         "loja do barbas",
+   //                         3.2f,
+   //                         null,
+   //                         services),
+   //                 new Business(
+   //                         12345,
+   //                         "CUF",
+   //                         "rua do a",
+   //                         91111111,
+   //                         "loja do cuf",
+   //                         2.7f,
+   //                         null,
+   //                         services),
+   //                 new Business(
+   //                         12345,
+   //                         "Barbeir",
+   //                         "rua do b",
+   //                         91111111,
+   //                         "loja do b",
+   //                         3.7f,
+   //                         null,
+   //                         services),
+   //                 new Business(
+   //                         12345,
+   //                         "O spa da patri",
+   //                         "rua do velho",
+   //                         91111111,
+   //                         "loja do barbas",
+   //                         4.2f,
+   //                         null,
+   //                         services),
+   //                 new Business(
+   //                         12345,
+   //                         "a tasca",
+   //                         "rua do a",
+   //                         91111111,
+   //                         "loja do cuf",
+   //                         4.8f,
+   //                         null,
+   //                         services),
+   //                 new Business(
+   //                         12345,
+   //                         "Bokmm asa",
+   //                         "rua do b",
+   //                         91111111,
+   //                         "loja do b",
+   //                         1.3f,
+   //                         null,
+   //                         services),
+   //         };
 
     private ListView lv;
     private Toolbar toolbar;
@@ -95,7 +93,7 @@ public class SearchResultsActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Resultados");
+        getSupportActionBar().setTitle("Results");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -108,14 +106,14 @@ public class SearchResultsActivity extends AppCompatActivity
         });
 
         lv = (ListView) findViewById(R.id.resultsSearch);
-        lv.setAdapter(new CustomAdapterBusiness(this, resultsBusiness));
+       // lv.setAdapter(new CustomAdapterBusiness(this, resultsBusiness));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent = new Intent(getApplicationContext(), BusinessScheduleActivity.class);
-                intent.putExtra("business", resultsBusiness[position]);
+                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
+              //  intent.putExtra("business", resultsBusiness[position]);
                 startActivity(intent);
             }
         });

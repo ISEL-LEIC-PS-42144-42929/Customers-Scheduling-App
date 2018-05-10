@@ -8,6 +8,7 @@ import com.ps.isel.customersscheduling.Activities.DefinitionsActivities.ChangeEm
 import com.ps.isel.customersscheduling.Activities.DefinitionsActivities.ChangePasswordActivity;
 import com.ps.isel.customersscheduling.Activities.DefinitionsActivities.EditNotificationsActivity;
 import com.ps.isel.customersscheduling.Activities.DefinitionsActivities.EditProfileActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterButtons;
 
@@ -33,13 +34,15 @@ public class DefinitionsActivity extends BaseActivityWithOnlyBackArrow
 
     private ListView lv;
 
+    private CustomersSchedulingApp customersSchedulingApp;
+
    @Override
    protected void onCreate(Bundle savedInstanceState)
    {
        super.onCreate(savedInstanceState);
        getSupportActionBar().setTitle("Definitions");
        lv = (ListView) findViewById(R.id.listButtons);
-       lv.setAdapter(new CustomAdapterButtons(subbedBusiness, this, goToOnClick) );
+       lv.setAdapter(new CustomAdapterButtons(subbedBusiness, this, goToOnClick, customersSchedulingApp) );
 
    }
 

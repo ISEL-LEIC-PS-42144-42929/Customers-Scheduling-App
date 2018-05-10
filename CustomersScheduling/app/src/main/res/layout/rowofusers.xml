@@ -12,12 +12,10 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="27dp"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="54dp"
-            android:layout_toEndOf="@+id/userPhoto"
-            android:layout_toRightOf="@+id/userPhoto"
+            android:layout_above="@+id/accept"
+            android:layout_alignLeft="@+id/accept"
+            android:layout_alignStart="@+id/accept"
+            android:layout_marginBottom="11dp"
             android:paddingTop="5dp"
             android:textColor="@android:color/background_dark" />
 
@@ -38,23 +36,22 @@
             android:id="@+id/accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/reject"
-            android:layout_alignBottom="@+id/reject"
-            android:layout_marginEnd="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@+id/reject"
-            android:layout_toStartOf="@+id/reject"
+
+            android:layout_alignBottom="@+id/userPhoto"
+            android:layout_centerHorizontal="true"
             android:text="@string/accept" />
 
         <Button
             android:id="@+id/reject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/userPhoto"
-            android:layout_marginEnd="11dp"
-            android:layout_marginRight="11dp"
+
+            android:layout_alignBaseline="@+id/accept"
+            android:layout_alignBottom="@+id/accept"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/accept"
+            android:layout_toRightOf="@+id/accept"
             android:text="@string/reject" />
 
     </RelativeLayout>
