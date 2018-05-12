@@ -25,4 +25,5 @@
     <string name="reject">Reject</string>
     <string name="delete">Delete</string>
     <string name="goTo">Go</string>
+    <string name="chooseEmployee">Choose Employee</string>
 </resources>

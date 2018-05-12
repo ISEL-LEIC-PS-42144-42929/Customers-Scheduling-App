@@ -1,14 +1,9 @@
 package com.ps.isel.customersscheduling;
 
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 

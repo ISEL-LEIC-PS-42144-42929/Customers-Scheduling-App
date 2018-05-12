@@ -23,6 +23,7 @@ public class CustomAdapterServices extends BaseAdapter
 {
     private Activity context;
     private Service[] services;
+    private String businessName;
 
     private View row;
     private TextView title;
@@ -30,11 +31,12 @@ public class CustomAdapterServices extends BaseAdapter
 
     private Class serviceActivity;
 
-    public CustomAdapterServices(Activity context, Service[] services, Class c)
+    public CustomAdapterServices(Activity context, String businessName, Service[] services, Class c)
     {
         this.context = context;
         this.services = services;
         this.serviceActivity = c;
+        this.businessName = businessName;
     }
 
     @Override
@@ -77,6 +79,8 @@ public class CustomAdapterServices extends BaseAdapter
             {
                 Intent intent = new Intent(context, ServicesActivity.class);
                 intent.putExtra("service", services[position]);
+                intent.putExtra("businessName", businessName);
+                intent.putExtra("serviceName", services[position].getName());
                 context.startActivity(intent);
             }
         });

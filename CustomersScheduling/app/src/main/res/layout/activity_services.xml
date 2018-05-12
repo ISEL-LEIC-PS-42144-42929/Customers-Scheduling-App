@@ -1,24 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ps.isel.customersscheduling.Activities.ServicesActivity">
-    
+
+    <include
+        android:id="@+id/filter_toolbar"
+        layout="@layout/toolbarwithbackarrow"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/filter_toolbar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout4">
+
+        <TextView
+            android:id="@+id/serviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textSize="20dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="14dp" />
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/employeesDropDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/chooseEmployee"
+            android:textColorHint="#05ab9a">
+
+        </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:background="#FFF">
+        android:layout_height="220dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/linearLayout2">
 
-        <CalendarView
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="61dp">
+        </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
-        </CalendarView>
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/relativelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignEnd="@+id/linearLayout2"
+        android:layout_alignRight="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout2"
+        tools:context="com.android_examples.horizontalrecyclerview_android_examplescom.MainActivity">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/hrlist_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scrollbars="horizontal" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/reserveButton"
+        android:layout_width="175dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/relativelayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="Register"
+        android:textSize="20dp"></Button>
+
+</RelativeLayout>
