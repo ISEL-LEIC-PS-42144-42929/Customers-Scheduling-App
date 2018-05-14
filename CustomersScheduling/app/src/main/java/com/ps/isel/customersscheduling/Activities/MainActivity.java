@@ -16,18 +16,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 
-import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
-import com.ps.isel.customersscheduling.HttpRequest;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
-import com.ps.isel.customersscheduling.java.dto.BusinessDto;
-import com.ps.isel.customersscheduling.testRequestAlternative.GetRequest;
 
 
 public class MainActivity extends AppCompatActivity

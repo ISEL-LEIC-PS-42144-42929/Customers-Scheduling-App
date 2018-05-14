@@ -1,7 +1,4 @@
-package com.ps.isel.customersscheduling.testRequestAlternative;
-
-import android.support.annotation.NonNull;
-import android.widget.Button;
+package com.ps.isel.customersscheduling.HttpUtils;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
@@ -9,8 +6,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 
 
 import java.io.IOException;
