@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ps.isel.customersscheduling.Activities.BusinessActivity;
 import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.Activities.ServicesActivity;
+import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 
@@ -23,7 +24,7 @@ public class CustomAdapterServices extends BaseAdapter
 {
     private Activity context;
     private Service[] services;
-    private String businessName;
+    private Business business;
 
     private View row;
     private TextView title;
@@ -31,12 +32,12 @@ public class CustomAdapterServices extends BaseAdapter
 
     private Class serviceActivity;
 
-    public CustomAdapterServices(Activity context, String businessName, Service[] services, Class c)
+    public CustomAdapterServices(Activity context, Business business, Service[] services, Class c)
     {
         this.context = context;
         this.services = services;
         this.serviceActivity = c;
-        this.businessName = businessName;
+        this.business = business;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class CustomAdapterServices extends BaseAdapter
             {
                 Intent intent = new Intent(context, ServicesActivity.class);
                 intent.putExtra("service", services[position]);
-                intent.putExtra("businessName", businessName);
+                intent.putExtra("business", business);
                 intent.putExtra("serviceName", services[position].getName());
                 context.startActivity(intent);
             }

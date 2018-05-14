@@ -104,7 +104,7 @@ public class BusinessActivity extends AppCompatActivity
 
     private void constructListViewAndAddListeners()
     {
-        lv.setAdapter(new CustomAdapterServices(this, business.getName(), business.getServices(),ServicesActivity.class));
+        lv.setAdapter(new CustomAdapterServices(this, business, business.getServices(),ServicesActivity.class));
         constructRatingStars();
     }
 

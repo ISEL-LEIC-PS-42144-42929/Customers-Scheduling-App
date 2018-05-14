@@ -10,53 +10,39 @@
         android:id="@+id/filter_toolbar"
         layout="@layout/toolbarwithbackarrow"></include>
 
-    <Button
-        android:id="@+id/buttonLocal"
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/filter_toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:text="Escolher Localização" />
+        android:layout_marginTop="49dp"
+        android:hint="@string/location"
+        android:textColorHint="#05ab9a">
 
-    <Button
-        android:id="@+id/buttonCateg"
+    </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/buttonLocal"
-        android:layout_marginTop="40dp"
-        android:text="Escolher Categoria" />
+        android:layout_below="@+id/location"
+        android:layout_marginTop="35dp"
+        android:hint="@string/category"
+        android:textColorHint="#05ab9a">
+
+    </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
 
-    <Button
-        android:id="@+id/listViewSelected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonCateg"
-        android:layout_marginTop="120dp"
-        android:layout_marginRight="60dp"
-        android:layout_alignParentRight="true"
-        android:background="@android:drawable/ic_menu_sort_by_size"
-        android:backgroundTint="@android:color/darker_gray" />
 
-    <Button
-        android:id="@+id/bricksViewSelected"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonCateg"
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="60dp"
-        android:layout_alignParentLeft="true"
-        android:background="@android:drawable/ic_dialog_dialer"
-        android:backgroundTint="@android:color/darker_gray" />
 
     <Button
         android:id="@+id/results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bricksViewSelected"
+        android:layout_below="@+id/category"
         android:layout_marginLeft="60dp"
         android:layout_alignParentLeft="true"
         android:text="Resultados"

@@ -2,6 +2,7 @@ package com.ps.isel.customersscheduling;
 
 import android.app.Application;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
@@ -10,6 +11,7 @@ import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
@@ -36,7 +38,8 @@ public class CustomersSchedulingApp extends Application implements Serializable
     @Override
     public void onCreate() {
         super.onCreate();
-        // Required initialization logic here!
+
+        SystemClock.sleep(TimeUnit.SECONDS.toMillis(3));
     }
 
 

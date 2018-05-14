@@ -160,6 +160,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.registerBusiness):
                 goToActivity(RegisterBusinessActivity.class);
                 break;
+            case (R.id.scheduled):
+                goToActivity(SchedulesActivity.class);
+                break;
             case (R.id.pendentRequests):
                 goToActivity(PendentRequestsActivity.class);
                 break;
@@ -216,7 +219,7 @@ public class MainActivity extends AppCompatActivity
     private void goToActivity(Class c)
     {
         Intent intent = new Intent(this, c);
-        intent.putExtra("app", customersSchedulingApp);
+    //    intent.putExtra("app", customersSchedulingApp);
         startActivity(intent);
     }
 

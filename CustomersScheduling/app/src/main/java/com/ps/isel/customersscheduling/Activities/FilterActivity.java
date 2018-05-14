@@ -9,21 +9,29 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class FilterActivity extends AppCompatActivity
 {
     private Toolbar toolbar;
     private SearchView searchView;
 
-    private Button locationChosenBtn;
-    private Button categoryChosenBtn;
-    private Button brickViewBtn;
-    private Button listViewBtn;
+    private MaterialBetterSpinner locationChosen;
+    private MaterialBetterSpinner categoryChosen;
+
     private Button resultsBtn;
     private Button saveFilter;
+
+    private String[] hardcodedLocations = {"Lisbon", "Porto", "Sesimbra", "Algarve"};
+    private String[] hardcodedCategorys= {"Health", "Restauration", "Hair", "Nails","Cofee"};
+
+    private String location;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,57 +39,53 @@ public class FilterActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        locationChosenBtn = findViewById(R.id.buttonLocal);
-        categoryChosenBtn = findViewById(R.id.buttonCateg);
-        brickViewBtn = findViewById(R.id.bricksViewSelected);
-        listViewBtn = findViewById(R.id.listViewSelected);
+        locationChosen = findViewById(R.id.location);
+        categoryChosen = findViewById(R.id.category);
         resultsBtn = findViewById(R.id.results);
         saveFilter = findViewById(R.id.saveFilter);
 
+        constructDropdowns();
         addListenersToButtons();
         toolBarCode();
 
 
     }
 
+    private void constructDropdowns()
+    {
+        ArrayAdapter<String> adapterLocations = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                hardcodedLocations);
+
+        locationChosen.setAdapter(adapterLocations);
+
+        locationChosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                location = hardcodedLocations[position];
+            }
+        });
+
+        ArrayAdapter<String> adapterCategorys = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                hardcodedCategorys);
+
+        categoryChosen.setAdapter(adapterLocations);
+
+        categoryChosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                location = hardcodedLocations[position];
+            }
+        });
+
+
+    }
+
     private void addListenersToButtons()
     {
-        locationChosenBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //TODO...
-            }
-        });
-
-        categoryChosenBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //TODO...
-            }
-        });
-
-        brickViewBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //TODO...
-            }
-        });
-
-        listViewBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //TODO...
-            }
-        });
-
         resultsBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override

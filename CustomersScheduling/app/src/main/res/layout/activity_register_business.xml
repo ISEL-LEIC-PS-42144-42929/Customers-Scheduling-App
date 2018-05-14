@@ -9,5 +9,81 @@
     <include
         android:id="@+id/filter_toolbar"
         layout="@layout/toolbarwithbackarrow"></include>
+    <RelativeLayout
+        android:id="@+id/editTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_toolbar">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/editTextLayout"
+            android:layout_marginTop="23dp"
+            android:cursorVisible="false"
+            android:hint="insert name" />
+
+    <EditText
+        android:id="@+id/businessDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="40dp"
+        android:cursorVisible="false"
+        android:hint="insert description"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/editTextLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout6">
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/insertExisting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/takePicture"
+        android:layout_alignBottom="@+id/takePicture"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Open Existing Image" />
+
+    <Button
+        android:id="@+id/takePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout6"
+        android:layout_marginTop="92dp"
+        android:layout_toEndOf="@+id/relativeLayout6"
+        android:layout_toRightOf="@+id/relativeLayout6"
+        android:text="Take New Photo"
+ />
+
+    <Button
+        android:id="@+id/registerBusiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="Register Business"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/registerBusiness"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
 
 </RelativeLayout>

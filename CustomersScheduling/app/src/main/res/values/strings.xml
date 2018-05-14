@@ -26,4 +26,7 @@
     <string name="delete">Delete</string>
     <string name="goTo">Go</string>
     <string name="chooseEmployee">Choose Employee</string>
+    <string name="scheduled">Scheduled</string>
+    <string name="location">Chose Location</string>
+    <string name="category">Chose Category</string>
 </resources>

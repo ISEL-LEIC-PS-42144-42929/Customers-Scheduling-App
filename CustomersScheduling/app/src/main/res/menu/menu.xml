@@ -10,6 +10,10 @@
         android:title="@string/pendentRequests">
     </item>
     <item
+        android:id="@+id/scheduled"
+        android:title="@string/scheduled">
+    </item>
+    <item
         android:id="@+id/definitions"
         android:title="@string/definitions">
     </item>

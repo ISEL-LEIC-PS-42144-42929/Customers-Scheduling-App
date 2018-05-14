@@ -3,6 +3,7 @@
     package="com.ps.isel.customersscheduling">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".CustomersSchedulingApp"
@@ -13,11 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activities.BusinessActivity" />
         <activity android:name=".Activities.FilterActivity" />
@@ -32,7 +28,16 @@
         <activity android:name=".Activities.DefinitionsActivities.ChangePasswordActivity" />
         <activity android:name=".Activities.DefinitionsActivities.EditNotificationsActivity" />
         <activity android:name=".Activities.AboutActivity" />
-        <activity android:name=".Activities.ServicesActivity"></activity>
+        <activity android:name=".Activities.ServicesActivity" />
+        <activity android:name=".Activities.SchedulesActivity" />
+        <activity android:name=".Activities.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
