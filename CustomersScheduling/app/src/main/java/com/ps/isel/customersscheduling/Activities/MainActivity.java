@@ -1,5 +1,6 @@
 package com.ps.isel.customersscheduling.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 
+import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.HttpRequest;
@@ -23,6 +26,8 @@ import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
+import com.ps.isel.customersscheduling.java.dto.BusinessDto;
+import com.ps.isel.customersscheduling.testRequestAlternative.GetRequest;
 
 
 public class MainActivity extends AppCompatActivity
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity
     private SearchView searchView;
     private ListView lv;
     private Button filterBtn;
+
+    private ProgressDialog dialog;
 
     private Service[] services = new Service[]
             {
@@ -94,6 +101,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,20 +109,29 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dialog = new ProgressDialog(MainActivity.this);
+        dialog.setTitle("Fancy App");
+        dialog.setMessage("Loading...Please wait...");
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
+        dialog.setCancelable(false);
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         filterBtn = findViewById(R.id.filter);
         lv = (ListView) findViewById(R.id.alreadySubToList);
 
         customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(new HttpRequest(Volley.newRequestQueue(getApplicationContext()))));
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
 
         toolBarCode();
         listViewCode(subbedBusiness);
       //  customersSchedulingApp
       //          .getUserRegisteredBusiness(
       //                  (business -> listViewCode(business)));
-    }
 
+
+        this.dialog.hide();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -219,7 +236,7 @@ public class MainActivity extends AppCompatActivity
     private void goToActivity(Class c)
     {
         Intent intent = new Intent(this, c);
-    //    intent.putExtra("app", customersSchedulingApp);
+      //  intent.putExtra("app", customersSchedulingApp);
         startActivity(intent);
     }
 
