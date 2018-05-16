@@ -40,17 +40,14 @@ public class ServicesActivity extends AppCompatActivity {
     private RecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
-
     private Date currentTime;
     private Calendar maxDate;
     private Business business;
     private String servName;
     private String[] hardcodedEmployesNames = {"Any", "Paulo", "João", "Francisco"};
     private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
-
     private String service;
     private String employee;
-
     private String temporaryday;
     private String dateSchedule;
     private String temporaryHour;
@@ -62,10 +59,10 @@ public class ServicesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_services);
 
         calendarView       = findViewById(R.id.calendarView);
-        toolbar            = (Toolbar) findViewById(R.id.filter_toolbar);
-        serviceName        = (TextView) findViewById(R.id.serviceName);
-        mRecyclerView      = (RecyclerView) findViewById(R.id.hrlist_recycler_view);
-        registerRequestBtn = (Button) findViewById(R.id.reserveButton);
+        toolbar            = findViewById(R.id.filter_toolbar);
+        serviceName        = findViewById(R.id.serviceName);
+        mRecyclerView      = findViewById(R.id.hrlist_recycler_view);
+        registerRequestBtn = findViewById(R.id.reserveButton);
         spinner            = findViewById(R.id.employeesDropDown);
 
         intent = getIntent();
@@ -89,7 +86,7 @@ public class ServicesActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewAdapter(hardcodedHoursAvaiable);
+        mAdapter       = new RecyclerViewAdapter(hardcodedHoursAvaiable);
 
         mRecyclerView.setAdapter(mAdapter);
 

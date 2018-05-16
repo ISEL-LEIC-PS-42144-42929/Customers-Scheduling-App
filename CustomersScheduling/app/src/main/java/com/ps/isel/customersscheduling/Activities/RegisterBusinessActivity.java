@@ -8,13 +8,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.R;
@@ -45,17 +43,16 @@ public class RegisterBusinessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_business);
 
-        toolbar     = (Toolbar) findViewById(R.id.filter_toolbar);
-        name        = findViewById(R.id.name);
-        description = findViewById(R.id.businessDescription);
-        registerBusiness = findViewById(R.id.registerBusiness);
+        toolbar                  = (Toolbar) findViewById(R.id.filter_toolbar);
+        name                     = findViewById(R.id.name);
+        description              = findViewById(R.id.businessDescription);
+        registerBusiness         = findViewById(R.id.registerBusiness);
         insertExistingPictureBtn = findViewById(R.id.insertExisting);
-        takeNewPicture = findViewById(R.id.takePicture);
-        img = findViewById(R.id.imageView);
+        takeNewPicture           = findViewById(R.id.takePicture);
+        img                      = findViewById(R.id.imageView);
 
         toolBarCode();
         addListenertoButton();
-
 
     }
 

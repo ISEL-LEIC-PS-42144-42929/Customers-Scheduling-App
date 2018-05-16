@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
-
 import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
@@ -104,20 +103,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dialog = new ProgressDialog(MainActivity.this);
-        dialog.setTitle("Fancy App");
-        dialog.setMessage("Loading...Please wait...");
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.show();
-        dialog.setCancelable(false);
-
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar   = findViewById(R.id.app_bar);
         filterBtn = findViewById(R.id.filter);
-        lv = (ListView) findViewById(R.id.alreadySubToList);
+        lv        = findViewById(R.id.alreadySubToList);
 
         customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
 
+        progressDialogCode();
         toolBarCode();
         listViewCode(subbedBusiness);
       //  customersSchedulingApp
@@ -128,13 +121,22 @@ public class MainActivity extends AppCompatActivity
         this.dialog.hide();
     }
 
+    private void progressDialogCode() {
+        dialog = new ProgressDialog(MainActivity.this);
+        dialog.setTitle("Fancy App");
+        dialog.setMessage("Loading...Please wait...");
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
+        dialog.setCancelable(false);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
         MenuItem item = menu.findItem(R.id.menu_search);
+
         searchView = (SearchView) item.getActionView();
         searchBarCode();
 

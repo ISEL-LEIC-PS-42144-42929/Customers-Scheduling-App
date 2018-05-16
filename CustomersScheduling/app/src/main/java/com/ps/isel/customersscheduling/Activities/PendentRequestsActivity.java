@@ -5,20 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Model.User;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
+import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
 public class PendentRequestsActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ListView lv;
 
-    private User user ;
-    private User[] pendentRequests = new User[4];
+    private ClientDto user ;
+    private ClientDto[] pendentRequests = new ClientDto[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,10 +26,9 @@ public class PendentRequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pendent_requests);
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
-        lv = (ListView) findViewById(R.id.pendentRequests);
+        lv      = (ListView) findViewById(R.id.pendentRequests);
 
-
-        user = new User("Gonçalo", this.findViewById(R.id.userPhoto)); //hardcodeddata
+        user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
 
         pendentRequests[0] = user;      //hardcodeddata
         pendentRequests[1] = user;      //hardcodeddata
@@ -39,6 +37,7 @@ public class PendentRequestsActivity extends AppCompatActivity {
 
         constructToolbarAndAddListeners();
         constructListViewAndAddListeners();
+
     }
 
     private void constructToolbarAndAddListeners()

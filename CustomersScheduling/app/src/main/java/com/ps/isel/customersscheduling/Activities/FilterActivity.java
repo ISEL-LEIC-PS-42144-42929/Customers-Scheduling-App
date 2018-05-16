@@ -41,14 +41,12 @@ public class FilterActivity extends AppCompatActivity
 
         locationChosen = findViewById(R.id.location);
         categoryChosen = findViewById(R.id.category);
-        resultsBtn = findViewById(R.id.results);
-        saveFilter = findViewById(R.id.saveFilter);
+        resultsBtn     = findViewById(R.id.results);
+        saveFilter     = findViewById(R.id.saveFilter);
 
         constructDropdowns();
         addListenersToButtons();
         toolBarCode();
-
-
     }
 
     private void constructDropdowns()
@@ -113,9 +111,9 @@ public class FilterActivity extends AppCompatActivity
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
         MenuItem item = menu.findItem(R.id.menu_search);
-        searchView = (SearchView) item.getActionView();
+
+        searchView    = (SearchView) item.getActionView();
         searchBarCode();
 
         return super.onCreateOptionsMenu(menu);

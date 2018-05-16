@@ -94,6 +94,29 @@ public class SearchResultsActivity extends AppCompatActivity
         setContentView(R.layout.activity_search_results);
 
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+        lv      = (ListView) findViewById(R.id.resultsSearch);
+
+        toolbarCode();
+        listviewCode();
+    }
+
+    private void listviewCode()
+    {
+
+        lv.setAdapter(new CustomAdapterBusiness(this, resultsBusiness));
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
+                intent.putExtra("business", resultsBusiness[position]);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void toolbarCode() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Results");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -106,19 +129,5 @@ public class SearchResultsActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        lv = (ListView) findViewById(R.id.resultsSearch);
-        lv.setAdapter(new CustomAdapterBusiness(this, resultsBusiness));
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-                intent.putExtra("business", resultsBusiness[position]);
-                startActivity(intent);
-            }
-        });
-
     }
 }

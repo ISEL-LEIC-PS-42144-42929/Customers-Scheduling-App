@@ -6,7 +6,6 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
-import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 
@@ -22,10 +21,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
 {
 
     private RequestQueue queue;
-    private IRequest req;
     private CustomersSchedulingWebApi api;
-
-
 
     public CustomersSchedulingWebApi getApi() {
         return api;
@@ -47,25 +43,19 @@ public class CustomersSchedulingApp extends Application implements Serializable
         return queue;
     }
 
-    public IRequest getReq() {
-        return req;
-    }
 
     public void setQueue(RequestQueue queue) {
         this.queue = queue;
     }
 
-    public void setReq(IRequest req) {
-        this.req = req;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getUserRegisteredBusiness(Consumer<Business> cons)
     {
-        api.getUserRegisteredBusiness(cons,(businessDto -> parseBusiness((BusinessDto)businessDto)));
+        api.getUserRegisteredBusiness(cons,(businessDto -> parseBusiness((Business)businessDto)));
     }
 
-    public Business parseBusiness(BusinessDto dto)
+    public Business parseBusiness(Business dto)
     {
        // Business[] business = new Business[dto.length];
        // for (int i = 0; i < dto.length; i++)

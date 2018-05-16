@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Model.User;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
 /**
  * Created by Colapso on 13/04/18.
@@ -20,7 +20,7 @@ import com.ps.isel.customersscheduling.R;
 
 public class CustomAdapterUsers extends BaseAdapter
 {
-    private User[] users;
+    private ClientDto[] users;
 
     private View row;
     private TextView name;
@@ -30,7 +30,7 @@ public class CustomAdapterUsers extends BaseAdapter
     private Button acceptBtn;
     private Button rejectBtn;
 
-    public CustomAdapterUsers(Activity context, User[] users)
+    public CustomAdapterUsers(Activity context, ClientDto[] users)
     {
         this.users = users;
         this.name = name;

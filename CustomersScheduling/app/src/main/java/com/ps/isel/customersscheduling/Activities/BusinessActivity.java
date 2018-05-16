@@ -51,20 +51,16 @@ public class BusinessActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_schedule);
 
-        intent = getIntent();
-        business = (Business) intent.getSerializableExtra("business");
+        intent      = getIntent();
+        business    = (Business) intent.getSerializableExtra("business");
 
-        name= (TextView) findViewById(R.id.name);
-        address= (TextView) findViewById(R.id.address);
-        contact= (TextView) findViewById(R.id.contact);
-        description= (TextView) findViewById(R.id.description);
-
-
-        toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
-
-        signInBtn = (Button)findViewById(R.id.signIn);
-
-        lv = (ListView) findViewById(R.id.services);
+        name        = (TextView) findViewById(R.id.name);
+        address     = (TextView) findViewById(R.id.address);
+        contact     = (TextView) findViewById(R.id.contact);
+        description = (TextView) findViewById(R.id.description);
+        toolbar     = (Toolbar) findViewById(R.id.filter_toolbar);
+        signInBtn   = (Button)findViewById(R.id.signIn);
+        lv          = (ListView) findViewById(R.id.services);
 
         constructTextViews();
         constructToolbarAndAddListeners();

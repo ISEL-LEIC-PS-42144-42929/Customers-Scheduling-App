@@ -10,55 +10,32 @@ import com.ps.isel.customersscheduling.Model.Service;
 
 public class BusinessDto
 {
-    private int nif;
     private String name;
-    private String address; //Store
-    private long contact;   //Store
-    private String description;
-    private float scoreReview; //Store
-    private Service[] services; //Stone
-    private Bitmap businessImage;   //lista ou array
+    private int nif;
+    private OwnerDto owner;
+    private StoreDto[] stores;
 
-    public BusinessDto(int nif, String name, String address, long contact, String description, float scoreReview, Service[] services, Bitmap businessImage) {
-        this.nif = nif;
+    public BusinessDto(String name, int nif, OwnerDto owner, StoreDto[] stores)
+    {
         this.name = name;
-        this.address = address;
-        this.contact = contact;
-        this.description = description;
-        this.scoreReview = scoreReview;
-        this.services = services;
-        this.businessImage = businessImage;
-    }
-
-    public int getNif() {
-        return nif;
+        this.nif = nif;
+        this.owner = owner;
+        this.stores = stores;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getAddress() {
-        return address;
+    public int getNif() {
+        return nif;
     }
 
-    public long getContact() {
-        return contact;
+    public OwnerDto getOwner() {
+        return owner;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public float getScoreReview() {
-        return scoreReview;
-    }
-
-    public Service[] getServices() {
-        return services;
-    }
-
-    public Bitmap getBusinessImage() {
-        return businessImage;
+    public StoreDto[] getStores() {
+        return stores;
     }
 }
