@@ -174,6 +174,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.registerBusiness):
                 goToActivity(RegisterBusinessActivity.class);
                 break;
+            case (R.id.myBusiness):
+                goToActivity(MyBusinessActivity.class);
+                break;
             case (R.id.scheduled):
                 goToActivity(SchedulesActivity.class);
                 break;

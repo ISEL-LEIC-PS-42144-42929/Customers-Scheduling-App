@@ -29,4 +29,8 @@
     <string name="scheduled">Scheduled</string>
     <string name="location">Chose Location</string>
     <string name="category">Chose Category</string>
+    <string name="myBusiness">My Business</string>
+    <string name="editBusinessInfo">Edit</string>
+
+    editBusinessInfo
 </resources>

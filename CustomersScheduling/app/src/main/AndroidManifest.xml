@@ -35,7 +35,8 @@
         <activity android:name=".Activities.AboutActivity" />
         <activity android:name=".Activities.ServicesActivity" />
         <activity android:name=".Activities.SchedulesActivity" />
-        <activity android:name=".Activities.AddStoreToBusinessActivity"></activity>
+        <activity android:name=".Activities.AddStoreToBusinessActivity" />
+        <activity android:name=".Activities.MyBusinessActivity"></activity>
     </application>
 
 </manifest>

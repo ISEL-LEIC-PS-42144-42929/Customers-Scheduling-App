@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.ps.isel.customersscheduling.Activities.MyBusinessActivity">
+
+    <include
+        android:id="@+id/filter_toolbar"
+        layout="@layout/toolbarwithbackarrow"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="70dp">
+
+        <include
+            android:id="@+id/myBusiness"
+            layout="@layout/listview"></include>
+        
+    </LinearLayout>
+</RelativeLayout>
