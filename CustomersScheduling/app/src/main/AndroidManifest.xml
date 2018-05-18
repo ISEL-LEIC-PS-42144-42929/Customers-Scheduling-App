@@ -25,7 +25,7 @@
         <activity android:name=".Activities.SearchResultsActivity" />
         <activity android:name=".Activities.DefinitionsActivity" />
         <activity android:name=".Activities.FavouritesActivity" />
-        <activity android:name=".Activities.RegisterBusinessActivity" />
+        <activity android:name=".Activities.RegisterStoreActivity" />
         <activity android:name=".Activities.PendentRequestsActivity" />
         <activity android:name=".Activities.BaseLayoutsActivities.BaseActivityWithOnlyBackArrow" />
         <activity android:name=".Activities.DefinitionsActivities.EditProfileActivity" />
@@ -35,8 +35,8 @@
         <activity android:name=".Activities.AboutActivity" />
         <activity android:name=".Activities.ServicesActivity" />
         <activity android:name=".Activities.SchedulesActivity" />
-        <activity android:name=".Activities.AddStoreToBusinessActivity" />
-        <activity android:name=".Activities.MyBusinessActivity"></activity>
+        <activity android:name=".Activities.MyBusinessActivity" />
+        <activity android:name=".Activities.AddStaffActivity"></activity>
     </application>
 
 </manifest>

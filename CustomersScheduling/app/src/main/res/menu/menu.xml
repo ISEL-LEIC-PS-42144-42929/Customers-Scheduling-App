@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/registerBusiness"
-        android:title="@string/registerBusiness">
+        android:id="@+id/registerStore"
+        android:title="@string/registerStore">
     </item>
     <item
-        android:id="@+id/myBusiness"
-        android:title="@string/myBusiness">
+        android:id="@+id/myStores"
+        android:title="@string/myStores">
     </item>
     <item
         android:id="@+id/pendentRequests"

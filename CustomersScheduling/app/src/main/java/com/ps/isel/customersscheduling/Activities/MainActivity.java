@@ -171,10 +171,10 @@ public class MainActivity extends AppCompatActivity
         switch(item.getItemId())
         {
             // TODO later(which menu item)
-            case (R.id.registerBusiness):
-                goToActivity(RegisterBusinessActivity.class);
+            case (R.id.registerStore):
+                goToActivity(RegisterStoreActivity.class);
                 break;
-            case (R.id.myBusiness):
+            case (R.id.myStores):
                 goToActivity(MyBusinessActivity.class);
                 break;
             case (R.id.scheduled):

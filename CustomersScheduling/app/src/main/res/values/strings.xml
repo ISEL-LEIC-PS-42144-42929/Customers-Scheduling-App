@@ -8,7 +8,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="customersScheduling">Customers Scheduling</string>
     <string name="title">Customers Scheduling</string>
-    <string name="registerBusiness"> + Register Business</string>
+    <string name="registerStore"> + Register Store</string>
     <string name="pendentRequests">Pendent Requests</string>
     <string name="definitions">Definitions</string>
     <string name="favourites">Favourites</string>
@@ -29,8 +29,7 @@
     <string name="scheduled">Scheduled</string>
     <string name="location">Chose Location</string>
     <string name="category">Chose Category</string>
-    <string name="myBusiness">My Business</string>
+    <string name="myStores">My Stores</string>
     <string name="editBusinessInfo">Edit</string>
-
-    editBusinessInfo
+    <string name="chooseCategory">Chose category</string>
 </resources>

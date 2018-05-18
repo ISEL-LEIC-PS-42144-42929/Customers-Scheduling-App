@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ps.isel.customersscheduling.Activities.RegisterBusinessActivity">
+    tools:context="com.ps.isel.customersscheduling.Activities.RegisterStoreActivity">
 
     <include
         android:id="@+id/filter_toolbar"
@@ -21,21 +21,51 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/editTextLayout"
             android:layout_marginTop="23dp"
             android:cursorVisible="false"
             android:hint="insert name" />
 
-    <EditText
-        android:id="@+id/businessDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/name"
-        android:layout_marginTop="40dp"
-        android:cursorVisible="false"
-        android:hint="insert description"/>
+        <EditText
+            android:id="@+id/storeNif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/name"
+            android:cursorVisible="false"
+            android:hint="insert Nif" />
+
+        <EditText
+            android:id="@+id/storeContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/storeNif"
+            android:cursorVisible="false"
+            android:hint="insert Contact" />
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/categoryDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/storeContact"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/chooseCategory"
+            android:textColorHint="#05ab9a">
+
+        </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+
+        <EditText
+            android:id="@+id/storeAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:cursorVisible="false"
+            android:layout_below="@+id/categoryDropDown"
+            android:hint="insert Address" />
 
     </RelativeLayout>
 
@@ -51,6 +81,7 @@
         android:id="@+id/insertExisting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_alignBaseline="@+id/takePicture"
         android:layout_alignBottom="@+id/takePicture"
         android:layout_alignParentEnd="true"
@@ -61,12 +92,10 @@
         android:id="@+id/takePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout6"
-        android:layout_marginTop="92dp"
-        android:layout_toEndOf="@+id/relativeLayout6"
-        android:layout_toRightOf="@+id/relativeLayout6"
-        android:text="Take New Photo"
- />
+        android:layout_above="@+id/registerBusiness"
+        android:layout_marginBottom="11dp"
+
+        android:text="Take New Photo" />
 
     <Button
         android:id="@+id/registerBusiness"
@@ -74,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="21dp"
         android:text="Register Business"
         android:textSize="20dp" />
 
@@ -82,8 +111,10 @@
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/registerBusiness"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp" />
+        android:layout_above="@+id/insertExisting"
+        android:layout_centerHorizontal="true" />
+
+
+
 
 </RelativeLayout>

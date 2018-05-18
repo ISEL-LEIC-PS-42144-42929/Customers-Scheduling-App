@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:hint="@string/chooseEmployee"
+            android:hint="@string/chooseCategory"
             android:textColorHint="#05ab9a">
 
         </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>

@@ -57,11 +57,13 @@ public class MyBusinessActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_business);
 
-        toolbar   = findViewById(R.id.app_bar);
+        toolbar   = findViewById(R.id.filter_toolbar);
         lv        = findViewById(R.id.myBusiness);
 
+        toolBarCode();
         listViewCode(subbedBusiness);
     }
+
 
     private void listViewCode(Business[] businesses)
     {
@@ -74,6 +76,23 @@ public class MyBusinessActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
                 intent.putExtra("business", businesses[position]);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void toolBarCode()
+    {
+        toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("My Stores");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }
         });

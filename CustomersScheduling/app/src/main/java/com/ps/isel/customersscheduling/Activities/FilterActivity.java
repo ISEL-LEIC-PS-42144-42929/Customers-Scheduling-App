@@ -146,7 +146,7 @@ public class FilterActivity extends AppCompatActivity
     {
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Filtros");
+        getSupportActionBar().setTitle("Filters");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

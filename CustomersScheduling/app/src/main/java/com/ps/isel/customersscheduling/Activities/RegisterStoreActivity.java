@@ -10,29 +10,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class RegisterBusinessActivity extends AppCompatActivity {
+public class RegisterStoreActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private EditText name;
-    private EditText description;
+
+    private EditText storeName;
+    private EditText storeNif;
+    private EditText storeContact;
+    private MaterialBetterSpinner choseCategory;
+    private EditText storeAddress;
+
     private Button registerBusiness;
     private Button insertExistingPictureBtn;
     private Button takeNewPicture;
     private ImageView img;
 
-    private String businessName;
-    private String businessDescription;
+    private String storeNameText;
+    private String storeNifText;
+    private String storeContactText;
+    private String choseCategoryText;
+    private String storeAddressText;
+
+    private String[] hardcodedCategory = {"Saude", "Restauraçao", "Beleza", ""};
+
     private final int IMAGE_REQUEST_CODE = 20;
     private final int CAMERA_REQUEST = 10;
 
@@ -44,14 +58,20 @@ public class RegisterBusinessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_business);
 
         toolbar                  = (Toolbar) findViewById(R.id.filter_toolbar);
-        name                     = findViewById(R.id.name);
-        description              = findViewById(R.id.businessDescription);
+
+        storeName                = findViewById(R.id.name);
+        storeNif                 = findViewById(R.id.storeNif);
+        storeContact             = findViewById(R.id.storeContact);
+        choseCategory            = findViewById(R.id.categoryDropDown);
+        storeAddress             = findViewById(R.id.storeAddress);
+
         registerBusiness         = findViewById(R.id.registerBusiness);
         insertExistingPictureBtn = findViewById(R.id.insertExisting);
         takeNewPicture           = findViewById(R.id.takePicture);
         img                      = findViewById(R.id.imageView);
 
         toolBarCode();
+        dropDownButtonCode();
         addListenertoButton();
 
     }
@@ -59,7 +79,7 @@ public class RegisterBusinessActivity extends AppCompatActivity {
     private void toolBarCode()
     {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Business Registration");
+        getSupportActionBar().setTitle("Store Registration");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -72,6 +92,23 @@ public class RegisterBusinessActivity extends AppCompatActivity {
         });
     }
 
+    private void dropDownButtonCode()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                hardcodedCategory);
+
+        choseCategory.setAdapter(adapter);
+
+        choseCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                choseCategoryText = hardcodedCategory[position];
+            }
+        });
+    }
+
 
     private void addListenertoButton()
     {
@@ -79,11 +116,19 @@ public class RegisterBusinessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                businessName = name.getText().toString();
-                businessDescription = description.getText().toString();
+                storeNameText     = storeName.getText().toString();
+                storeNifText      = storeNif.getText().toString();
+                storeContactText  = storeContact.getText().toString();
+                choseCategoryText = choseCategory.getText().toString();
+                storeAddressText  = storeAddress.getText().toString();
+
                 //TODO assemble query string and send request
-                Toast.makeText(getBaseContext(),(String)(businessName + " registered with description: " + businessDescription),
+                Toast.makeText(getBaseContext(),(String)(storeNameText + " registered "),
                         Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, AddStaffActivity.class);
+                //  intent.putExtra("app", customersSchedulingApp);
+                startActivity(intent);
             }
         });
 
@@ -155,6 +200,12 @@ public class RegisterBusinessActivity extends AppCompatActivity {
         System.out.println(locale);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent,CAMERA_REQUEST);
+    }
+
+    private void goToActivity(Class c)
+    {
+        Intent intent = new Intent(this, c);
+        startActivity(intent);
     }
 
 }
