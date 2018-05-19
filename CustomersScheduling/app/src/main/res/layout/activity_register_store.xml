@@ -104,7 +104,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp"
-        android:text="Register Business"
+        android:text="@string/registerStore"
         android:textSize="20dp" />
 
     <ImageView

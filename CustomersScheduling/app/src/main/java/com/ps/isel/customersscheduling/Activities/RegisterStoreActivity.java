@@ -55,9 +55,9 @@ public class RegisterStoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_business);
+        setContentView(R.layout.activity_register_store);
 
-        toolbar                  = (Toolbar) findViewById(R.id.filter_toolbar);
+        toolbar                  = findViewById(R.id.filter_toolbar);
 
         storeName                = findViewById(R.id.name);
         storeNif                 = findViewById(R.id.storeNif);
@@ -86,8 +86,7 @@ public class RegisterStoreActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+                goToActivity(MainActivity.class);
             }
         });
     }
@@ -126,9 +125,7 @@ public class RegisterStoreActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),(String)(storeNameText + " registered "),
                         Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(this, AddStaffActivity.class);
-                //  intent.putExtra("app", customersSchedulingApp);
-                startActivity(intent);
+                goToActivity(AddWorkTimeActivity.class);
             }
         });
 

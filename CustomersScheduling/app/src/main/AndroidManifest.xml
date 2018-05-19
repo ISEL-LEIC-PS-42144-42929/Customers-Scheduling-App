@@ -36,7 +36,9 @@
         <activity android:name=".Activities.ServicesActivity" />
         <activity android:name=".Activities.SchedulesActivity" />
         <activity android:name=".Activities.MyBusinessActivity" />
-        <activity android:name=".Activities.AddStaffActivity"></activity>
+        <activity android:name=".Activities.AddWorkTimeActivity" />
+        <activity android:name=".Activities.AddStaffActivity" />
+        <activity android:name=".Activities.AddStaffScheduleActivity"></activity>
     </application>
 
 </manifest>
