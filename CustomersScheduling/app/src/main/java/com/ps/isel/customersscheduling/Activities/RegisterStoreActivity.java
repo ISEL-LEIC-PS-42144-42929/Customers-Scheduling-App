@@ -17,14 +17,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class RegisterStoreActivity extends AppCompatActivity {
+
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
 
     private Toolbar toolbar;
 
@@ -56,6 +65,10 @@ public class RegisterStoreActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_store);
+
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+        jsonBodyObj = new JSONObject();
 
         toolbar                  = findViewById(R.id.filter_toolbar);
 
@@ -115,15 +128,24 @@ public class RegisterStoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                storeNameText     = storeName.getText().toString();
-                storeNifText      = storeNif.getText().toString();
-                storeContactText  = storeContact.getText().toString();
-                choseCategoryText = choseCategory.getText().toString();
-                storeAddressText  = storeAddress.getText().toString();
+                try
+                {
+                    jsonBodyObj.put("key1", storeName.getText().toString());
+                    jsonBodyObj.put("key2", storeNif.getText().toString());
+                    jsonBodyObj.put("key3", storeContact.getText().toString());
+                    jsonBodyObj.put("key4", choseCategory.getText().toString());
+                    jsonBodyObj.put("key5", storeAddress.getText().toString());
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
 
                 //TODO assemble query string and send request
                 Toast.makeText(getBaseContext(),(String)(storeNameText + " registered "),
                         Toast.LENGTH_SHORT).show();
+
+                customersSchedulingApp.registerStore(jsonBodyObj);
 
                 goToActivity(AddWorkTimeActivity.class);
             }

@@ -103,12 +103,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+
         toolbar   = findViewById(R.id.app_bar);
         filterBtn = findViewById(R.id.filter);
         lv        = findViewById(R.id.alreadySubToList);
-
-        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
 
         progressDialogCode();
         toolBarCode();
@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity
     private void goToActivity(Class c)
     {
         Intent intent = new Intent(this, c);
-      //  intent.putExtra("app", customersSchedulingApp);
         startActivity(intent);
     }
 

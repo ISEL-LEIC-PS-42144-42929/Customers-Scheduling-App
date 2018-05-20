@@ -42,4 +42,6 @@
     <string name="friday">Fri</string>
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
+    <string name="registerAnotherEmployee">Register Another Employee</string>
+    <string name="endRegistration">End Registration</string>
 </resources>

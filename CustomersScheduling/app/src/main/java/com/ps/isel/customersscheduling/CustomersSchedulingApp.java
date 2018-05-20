@@ -9,6 +9,8 @@ import com.android.volley.RequestQueue;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -50,23 +52,19 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserRegisteredBusiness(Consumer<Business> cons)
+    public void getUserRegisteredBusiness(Consumer<Business[]> cons)
     {
         api.getUserRegisteredBusiness(cons,(businessDto -> parseBusiness((Business)businessDto)));
     }
 
+    public void registerStore(JSONObject storeJSONObject)
+    {
+        api.registerStore(storeJSONObject);
+    }
+
     public Business parseBusiness(Business dto)
     {
-       // Business[] business = new Business[dto.length];
-       // for (int i = 0; i < dto.length; i++)
-       // {
-       //     business[i] = new Business(
-       //             dto[i].getPage(),
-       //             dto[i].getTotalResults(),
-       //             dto[i].getTotalPages(),
-       //             dto[i].getResults());
-       // }
-       // return business;
+
         return new Business(
                 dto.getNif(),
                 dto.getName(),

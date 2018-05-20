@@ -38,7 +38,8 @@
         <activity android:name=".Activities.MyBusinessActivity" />
         <activity android:name=".Activities.AddWorkTimeActivity" />
         <activity android:name=".Activities.AddStaffActivity" />
-        <activity android:name=".Activities.AddStaffScheduleActivity"></activity>
+        <activity android:name=".Activities.AddStaffScheduleActivity" />
+        <activity android:name=".Activities.AddOtherEmpOrEndActivity"></activity>
     </application>
 
 </manifest>
