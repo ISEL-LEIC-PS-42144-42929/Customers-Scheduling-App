@@ -2,6 +2,8 @@ package com.ps.isel.customersscheduling.Model;
 
 import android.graphics.Bitmap;
 
+import com.ps.isel.customersscheduling.java.dto.ServiceDto;
+
 import java.io.Serializable;
 
 /**
@@ -61,11 +63,11 @@ public class Business implements Serializable {
     private long contact;   //Store
     private String description;
     private float scoreReview; //Store
-    private Service[] services; //Stone
+    private ServiceDto[] services; //Stone
     private Bitmap businessImage;   //lista ou array
 
 
-     public Business(int nif, String name, String address, long contact, String description, float scoreReview, Bitmap businessImage, Service[] services)
+     public Business(int nif, String name, String address, long contact, String description, float scoreReview, Bitmap businessImage, ServiceDto[] services)
      {
          this.nif = nif;
          this.name = name;
@@ -83,7 +85,7 @@ public class Business implements Serializable {
      }
 
 
-     public void setServices(Service[] services) {
+     public void setServices(ServiceDto[] services) {
          this.services = services;
      }
 
@@ -107,7 +109,7 @@ public class Business implements Serializable {
          return description;
      }
 
-     public Service[] getServices() {
+     public ServiceDto[] getServices() {
          return services;
      }
 

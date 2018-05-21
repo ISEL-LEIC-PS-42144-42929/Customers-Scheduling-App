@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -48,11 +48,7 @@ public class RegisterStoreActivity extends AppCompatActivity {
     private Button takeNewPicture;
     private ImageView img;
 
-    private String storeNameText;
-    private String storeNifText;
-    private String storeContactText;
     private String choseCategoryText;
-    private String storeAddressText;
 
     private String[] hardcodedCategory = {"Saude", "Restauraçao", "Beleza", ""};
 
@@ -133,20 +129,16 @@ public class RegisterStoreActivity extends AppCompatActivity {
                     jsonBodyObj.put("key1", storeName.getText().toString());
                     jsonBodyObj.put("key2", storeNif.getText().toString());
                     jsonBodyObj.put("key3", storeContact.getText().toString());
-                    jsonBodyObj.put("key4", choseCategory.getText().toString());
+                    jsonBodyObj.put("key4", choseCategoryText);
                     jsonBodyObj.put("key5", storeAddress.getText().toString());
                 }
                 catch (JSONException e)
                 {
+                    //TODO resolve exception
                     e.printStackTrace();
                 }
 
-                //TODO assemble query string and send request
-                Toast.makeText(getBaseContext(),(String)(storeNameText + " registered "),
-                        Toast.LENGTH_SHORT).show();
-
                 customersSchedulingApp.registerStore(jsonBodyObj);
-
                 goToActivity(AddWorkTimeActivity.class);
             }
         });

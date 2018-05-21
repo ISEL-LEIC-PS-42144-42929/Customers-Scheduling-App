@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Activities.BusinessActivity;
-import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.Activities.ServicesActivity;
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 /**
  * Created by Colapso on 13/04/18.
@@ -23,7 +21,7 @@ import com.ps.isel.customersscheduling.R;
 public class CustomAdapterServices extends BaseAdapter
 {
     private Activity context;
-    private Service[] services;
+    private ServiceDto[] services;
     private Business business;
 
     private View row;
@@ -32,7 +30,7 @@ public class CustomAdapterServices extends BaseAdapter
 
     private Class serviceActivity;
 
-    public CustomAdapterServices(Activity context, Business business, Service[] services, Class c)
+    public CustomAdapterServices(Activity context, Business business, ServiceDto[] services, Class c)
     {
         this.context = context;
         this.services = services;
@@ -62,7 +60,7 @@ public class CustomAdapterServices extends BaseAdapter
         row = inflater.inflate(R.layout.rowofservices, parent, false);
 
         title = (TextView) row.findViewById(R.id.serviceName);
-        title.setText(services[position].getName());
+        title.setText(services[position].getTitle());
 
         price = (TextView) row.findViewById(R.id.servicePrice);
         price.setText(services[position].getPrice()+ "");
@@ -81,7 +79,7 @@ public class CustomAdapterServices extends BaseAdapter
                 Intent intent = new Intent(context, ServicesActivity.class);
                 intent.putExtra("service", services[position]);
                 intent.putExtra("business", business);
-                intent.putExtra("serviceName", services[position].getName());
+                intent.putExtra("serviceName", services[position].getTitle());
                 context.startActivity(intent);
             }
         });

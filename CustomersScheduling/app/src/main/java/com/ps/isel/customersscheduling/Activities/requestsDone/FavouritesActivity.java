@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;

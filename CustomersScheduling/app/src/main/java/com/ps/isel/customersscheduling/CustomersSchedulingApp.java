@@ -7,7 +7,11 @@ import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
 import com.ps.isel.customersscheduling.Model.Business;
+import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.java.dto.BusinessDto;
+import com.ps.isel.customersscheduling.java.dto.ClientDto;
+import com.ps.isel.customersscheduling.java.dto.ServiceDto;
+import com.ps.isel.customersscheduling.java.dto.StaffDto;
 
 import org.json.JSONObject;
 
@@ -40,39 +44,81 @@ public class CustomersSchedulingApp extends Application implements Serializable
         SystemClock.sleep(TimeUnit.SECONDS.toMillis(3));
     }
 
+    //GET REQUESTS
 
-    public RequestQueue getQueue() {
-        return queue;
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getUserStores(Consumer<Business[]> cons, String userName)
+    {
+        api.getUserStores(cons, userName);
     }
 
-
-    public void setQueue(RequestQueue queue) {
-        this.queue = queue;
+    public void getUserPendentRequests(Consumer<ClientDto[]> cons, String userName)
+    {
+        api.getUserPendentRequests(cons, userName);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getStoreByName(Consumer<Business> cons, String businessName)
+    {
+        api.getStoresByName(cons, businessName);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getStoreServices(Consumer<ServiceDto[]> cons, String businessName)
+    {
+        api.getStoresByName(cons, businessName);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getSearchedStoreByName(Consumer<Business[]> cons, String businessName)
+    {
+        api.getStoresByName(cons, businessName);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getStoreByLocationAndCategory(Consumer<Business[]> cons,
+                                              String location,
+                                              String category)
+    {
+        api.getStoresByLocationAndCategory(cons, location, category);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getUserRegisteredBusiness(Consumer<Business[]> cons)
     {
-        api.getUserRegisteredBusiness(cons,(businessDto -> parseBusiness((Business)businessDto)));
+        api.getUserRegisteredBusiness(cons);
     }
+
+    public void getDisponibilityWithAny(Consumer<String[]> cons,String date) {
+    }
+
+    public void getStoreEmployee(Consumer<StaffDto[]> cons, String businessName) {
+    }
+
+
+
+
+    //POST REQUESTS
 
     public void registerStore(JSONObject storeJSONObject)
     {
         api.registerStore(storeJSONObject);
     }
 
-    public Business parseBusiness(Business dto)
+    public void registerStoreSchedule(JSONObject storeJSONObject)
     {
-
-        return new Business(
-                dto.getNif(),
-                dto.getName(),
-                dto.getAddress(),
-                dto.getContact(),
-                dto.getDescription(),
-                dto.getScoreReview(),
-                dto.getBusinessImage(),
-                dto.getServices());
+        api.registerStoreSchedule(storeJSONObject);
     }
+
+    public void registerEmployee(JSONObject storeJSONObject)
+    {
+        api.registerEmployee(storeJSONObject);
+    }
+
+    public void registerEmployeeSchedule(JSONObject storeJSONObject)
+    {
+        api.registerEmployeeSchedule(storeJSONObject);
+    }
+
+
 }

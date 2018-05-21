@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,12 +7,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.Activities.requestsDone.AddOtherEmpOrEndActivity;
+import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AddStaffScheduleActivity extends AppCompatActivity
 {
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
+
     private Toolbar toolbar;
 
     private EditText employeeStartHour;
@@ -21,16 +31,16 @@ public class AddStaffScheduleActivity extends AppCompatActivity
     private EditText employeeEndHour;
     private Button employeeRegisterScheduleBtn;
 
-    private String employeeStartHourText;
-    private String employeeStartLunchHourText;
-    private String employeeEndLunchHourText;
-    private String employeeEndHourText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_staff_schedule);
+
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+        jsonBodyObj = new JSONObject();
 
         toolbar        = findViewById(R.id.filter_toolbar);
 
@@ -41,8 +51,8 @@ public class AddStaffScheduleActivity extends AppCompatActivity
 
         employeeRegisterScheduleBtn = findViewById(R.id.employeeRegisterSchedule);
 
-        addListenertoButton();
         toolBarCode();
+        addListenertoButton();
     }
 
     private void toolBarCode()
@@ -66,16 +76,19 @@ public class AddStaffScheduleActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                employeeStartHourText      = employeeStartHour.getText().toString();
-                employeeStartLunchHourText = employeeStartLunchHour.getText().toString();
-                employeeEndLunchHourText   = employeeEndLunchHour.getText().toString();
-                employeeEndHourText        = employeeEndHour.getText().toString();
-
-
-                //TODO assemble query string and send request
-                Toast.makeText(getBaseContext(),("Scheduled"),
-                        Toast.LENGTH_SHORT).show();
-
+                try
+                {
+                    jsonBodyObj.put("key1", employeeStartHour.getText().toString());
+                    jsonBodyObj.put("key2", employeeStartLunchHour.getText().toString());
+                    jsonBodyObj.put("key3", employeeEndLunchHour.getText().toString());
+                    jsonBodyObj.put("key4", employeeEndHour.getText().toString());
+                }
+                catch (JSONException e)
+                {
+                    //TODO resolve exception
+                    e.printStackTrace();
+                }
+                customersSchedulingApp.registerEmployeeSchedule(jsonBodyObj);
                 goToActivity(AddOtherEmpOrEndActivity.class);
             }
         });

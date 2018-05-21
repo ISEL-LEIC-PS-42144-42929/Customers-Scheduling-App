@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +7,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AddStaffActivity extends AppCompatActivity
 {
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
 
     private Toolbar toolbar;
 
@@ -23,16 +29,15 @@ public class AddStaffActivity extends AppCompatActivity
     private EditText employeeGender;
     private Button registerEmployee;
 
-    private String employeeNameText;
-    private String employeeEmailText;
-    private String employeePhoneNumberText;
-    private String employeeGenderText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_staff);
+
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+        jsonBodyObj = new JSONObject();
 
         toolbar         = findViewById(R.id.filter_toolbar);
         employeeName    = findViewById(R.id.employeeName);
@@ -52,16 +57,19 @@ public class AddStaffActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                employeeNameText = employeeName.getText().toString();
-                employeeEmailText = employeeEmail.getText().toString();
-                employeePhoneNumberText = employeeContact.getText().toString();
-                employeeGenderText = employeeGender.getText().toString();
-
-
-                //TODO assemble query string and send request
-                Toast.makeText(getBaseContext(),("Scheduled"),
-                        Toast.LENGTH_SHORT).show();
-
+                try
+                {
+                    jsonBodyObj.put("key1", employeeName.getText().toString());
+                    jsonBodyObj.put("key2", employeeEmail.getText().toString());
+                    jsonBodyObj.put("key3", employeeContact.getText().toString());
+                    jsonBodyObj.put("key4", employeeGender.getText().toString());
+                }
+                catch (JSONException e)
+                {
+                    //TODO resolve exception
+                    e.printStackTrace();
+                }
+                customersSchedulingApp.registerEmployee(jsonBodyObj);
                 goToActivity(AddStaffScheduleActivity.class);
             }
         });

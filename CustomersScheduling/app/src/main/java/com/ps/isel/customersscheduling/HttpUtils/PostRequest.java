@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by Colapso on 19/05/18.
  */
 
-public class PostRequest<T> extends JsonRequest<T>
+public class PostRequest extends JsonRequest
 {
 
     String requestBody;

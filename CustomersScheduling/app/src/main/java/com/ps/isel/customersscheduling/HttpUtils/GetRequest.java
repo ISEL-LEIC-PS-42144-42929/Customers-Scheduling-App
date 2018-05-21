@@ -12,18 +12,16 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 
-public class GetRequest<T, R> extends JsonRequest<T>
+public class GetRequest<T> extends JsonRequest<T>
 {
     public ObjectMapper mapper;
     private Class<T> dtoType;
     private Consumer<T> cons;
-    private Function<R,T> parser;
 
     public GetRequest(int method,
                       String url,
                       String reqBody,
                       Consumer<T> cons,
-                      Function<R,T> parser,
                       Class dtoRes,
                       Response.Listener<T> listener,
                       Response.ErrorListener errorListener)
@@ -31,7 +29,6 @@ public class GetRequest<T, R> extends JsonRequest<T>
         super(method, url, reqBody, listener, errorListener);
 
         this.cons = cons;
-        this.parser = parser;
         mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.dtoType = dtoRes;
     }

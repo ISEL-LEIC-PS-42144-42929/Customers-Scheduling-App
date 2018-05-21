@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ps.isel.customersscheduling.Activities.FavouritesActivity">
+    tools:context="com.ps.isel.customersscheduling.Activities.requestsDone.FavouritesActivity">
 
     <include
         android:id="@+id/filter_toolbar"

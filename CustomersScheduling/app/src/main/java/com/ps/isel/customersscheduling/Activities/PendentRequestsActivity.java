@@ -7,11 +7,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
-public class PendentRequestsActivity extends AppCompatActivity {
+public class PendentRequestsActivity extends AppCompatActivity
+{
+    private CustomersSchedulingApp customersSchedulingApp;
 
     private Toolbar toolbar;
     private ListView lv;
@@ -35,8 +39,11 @@ public class PendentRequestsActivity extends AppCompatActivity {
         pendentRequests[2] = user;      //hardcodeddata
         pendentRequests[3] = user;      //hardcodeddata
 
+      //  customersSchedulingApp.getUserPendentRequests(
+      //          (pendentRequests)->constructListViewAndAddListeners(pendentRequests),
+      //          "username");
         constructToolbarAndAddListeners();
-        constructListViewAndAddListeners();
+        constructListViewAndAddListeners(pendentRequests);
 
     }
 
@@ -58,7 +65,7 @@ public class PendentRequestsActivity extends AppCompatActivity {
         });
     }
 
-    private void constructListViewAndAddListeners()
+    private void constructListViewAndAddListeners(ClientDto[] pendentRequests)
     {
         lv.setAdapter(new CustomAdapterUsers(this, pendentRequests));
     }

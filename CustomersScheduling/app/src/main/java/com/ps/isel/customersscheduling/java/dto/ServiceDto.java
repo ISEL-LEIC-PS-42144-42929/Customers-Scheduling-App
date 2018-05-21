@@ -1,10 +1,12 @@
 package com.ps.isel.customersscheduling.java.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by Colapso on 16/05/18.
  */
 
-public class ServiceDto
+public class ServiceDto implements Serializable
 {
     private int id;
     private String desctription;

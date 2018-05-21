@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +7,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AddWorkTimeActivity extends AppCompatActivity
 {
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
+
     private Toolbar toolbar;
 
     private EditText startHour;
@@ -22,16 +29,15 @@ public class AddWorkTimeActivity extends AppCompatActivity
     private EditText endHour;
     private Button registerScheduleBtn;
 
-    private String startHourText;
-    private String startLunchHourText;
-    private String endLunchHourText;
-    private String endHourText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_work_time);
+
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+        jsonBodyObj = new JSONObject();
 
         toolbar        = findViewById(R.id.filter_toolbar);
 
@@ -41,8 +47,8 @@ public class AddWorkTimeActivity extends AppCompatActivity
         endHour        = findViewById(R.id.endHour);
         registerScheduleBtn = findViewById(R.id.registerSchedule);
 
-        addListenertoButton();
         toolBarCode();
+        addListenertoButton();
     }
 
     private void toolBarCode()
@@ -66,16 +72,20 @@ public class AddWorkTimeActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                startHourText      = startHour.getText().toString();
-                startLunchHourText = startLunchHour.getText().toString();
-                endLunchHourText   = endLunchHour.getText().toString();
-                endHourText        = endHour.getText().toString();
 
-
-                //TODO assemble query string and send request
-                Toast.makeText(getBaseContext(),("Scheduled"),
-                        Toast.LENGTH_SHORT).show();
-
+                try
+                {
+                    jsonBodyObj.put("key1", startHour.getText().toString());
+                    jsonBodyObj.put("key2", startLunchHour.getText().toString());
+                    jsonBodyObj.put("key3", endLunchHour.getText().toString());
+                    jsonBodyObj.put("key4", endHour.getText().toString());
+                }
+                catch (JSONException e)
+                {
+                    //TODO resolve exception
+                    e.printStackTrace();
+                }
+                customersSchedulingApp.registerStoreSchedule(jsonBodyObj);
                 goToActivity(AddStaffActivity.class);
             }
         });

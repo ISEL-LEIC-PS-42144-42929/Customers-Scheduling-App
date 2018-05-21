@@ -1,7 +1,9 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.content.Intent;
 import android.graphics.drawable.ClipDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,12 +13,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.Activities.ServicesActivity;
+import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
+import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 public class BusinessActivity extends AppCompatActivity
 {
+    private CustomersSchedulingApp customersSchedulingApp;
+
     private int MAXLEVEL = 10000;
     private int MAXPERCENT = 100;
     private String NAME = "Nome: ";
@@ -45,11 +55,15 @@ public class BusinessActivity extends AppCompatActivity
 
     private Intent intent;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_schedule);
+
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
 
         intent      = getIntent();
         business    = (Business) intent.getSerializableExtra("business");
@@ -62,10 +76,20 @@ public class BusinessActivity extends AppCompatActivity
         signInBtn   = (Button)findViewById(R.id.signIn);
         lv          = (ListView) findViewById(R.id.services);
 
-        constructTextViews();
         constructToolbarAndAddListeners();
         constructButtonsAndAddListeners();
-        constructListViewAndAddListeners();
+
+     //   customersSchedulingApp.getStoreByName(
+     //           (business)-> constructTextViews(business)
+     //           ,business.getName());
+
+      //  customersSchedulingApp.getStoreServices(
+      //          (services)->constructListViewAndAddListeners(services),
+      //          business.getName()
+      //  );
+
+        constructTextViews(business);
+        constructListViewAndAddListeners(business.getServices());
     }
 
     private void constructToolbarAndAddListeners()
@@ -84,7 +108,7 @@ public class BusinessActivity extends AppCompatActivity
         });
     }
 
-    private void constructTextViews()
+    private void constructTextViews(Business business)
     {
         name.setText(NAME + business.getName());
         address.setText(ADDRESS + business.getAddress());
@@ -98,9 +122,9 @@ public class BusinessActivity extends AppCompatActivity
         //add Listener to button
     }
 
-    private void constructListViewAndAddListeners()
+    private void constructListViewAndAddListeners(ServiceDto[] services)
     {
-        lv.setAdapter(new CustomAdapterServices(this, business, business.getServices(),ServicesActivity.class));
+        lv.setAdapter(new CustomAdapterServices(this, business, services ,ServicesActivity.class));
         constructRatingStars();
     }
 

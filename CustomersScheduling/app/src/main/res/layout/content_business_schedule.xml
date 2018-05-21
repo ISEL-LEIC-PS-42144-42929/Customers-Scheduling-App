@@ -5,8 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activities.BusinessActivity"
+    tools:context=".Activities.requestsDone.BusinessActivity"
     tools:showIn="@layout/activity_business_schedule">
+
+    <include
+        android:id="@+id/filter_toolbar"
+        layout="@layout/toolbarwithbackarrow"></include>
+
 
     <TextView
         android:id="@+id/TitleTextView"

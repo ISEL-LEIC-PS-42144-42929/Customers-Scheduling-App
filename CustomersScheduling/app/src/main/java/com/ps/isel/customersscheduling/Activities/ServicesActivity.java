@@ -14,19 +14,26 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.ps.isel.customersscheduling.Activities.requestsDone.BusinessActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
+import com.ps.isel.customersscheduling.java.dto.StaffDto;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class ServicesActivity extends AppCompatActivity {
+public class ServicesActivity extends AppCompatActivity
+{
+    private CustomersSchedulingApp customersSchedulingApp;
 
     private Toolbar toolbar;
     private TextView serviceName;
@@ -46,9 +53,11 @@ public class ServicesActivity extends AppCompatActivity {
     private String servName;
     private String[] hardcodedEmployesNames = {"Any", "Paulo", "João", "Francisco"};
     private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
+
     private String service;
     private String employee;
     private String temporaryday;
+    private String temporaryEmployee;
     private String dateSchedule;
     private String temporaryHour;
     private String hour;
@@ -58,6 +67,9 @@ public class ServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
+        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+
         calendarView       = findViewById(R.id.calendarView);
         toolbar            = findViewById(R.id.filter_toolbar);
         serviceName        = findViewById(R.id.serviceName);
@@ -66,48 +78,28 @@ public class ServicesActivity extends AppCompatActivity {
         spinner            = findViewById(R.id.employeesDropDown);
 
         intent = getIntent();
-
         business = (Business)intent.getSerializableExtra("business");
         servName = intent.getStringExtra("serviceName");
-
         serviceName.setText(servName);
 
-        setDateToCalendar();
-        constructToolbarAndAddListeners();
+        temporaryEmployee = hardcodedEmployesNames[0];
+
+        customersSchedulingApp.getStoreEmployee(
+                (employee)->dropDownButtonCode(employee),
+                business.getName());
+
+
+
+
         dropDownButtonCode();
+        constructToolbarAndAddListeners();
+        setDateToCalendar();
+
+
         calendarViewCode();
-        recyclerViewCode();
+     //   recyclerViewCode();
         addListenerToButtons();
 
-    }
-
-    private void recyclerViewCode()
-    {
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter       = new RecyclerViewAdapter(hardcodedHoursAvaiable);
-
-        mRecyclerView.setAdapter(mAdapter);
-
-        final boolean[] isBottomReached = new boolean[1];
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
-                int lastVisible = mLayoutManager.findFirstVisibleItemPosition();
-                temporaryHour = hardcodedHoursAvaiable[lastVisible];
-
-                isBottomReached[0] = !mRecyclerView.canScrollVertically(1);
-                if(isBottomReached[0])
-                {
-                    temporaryHour = hardcodedHoursAvaiable[hardcodedHoursAvaiable.length - 1];
-                }
-            }
-        });
     }
 
     private void setDateToCalendar()
@@ -131,25 +123,28 @@ public class ServicesActivity extends AppCompatActivity {
 
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                dateSchedule = date.toString();
+                customersSchedulingApp.getDisponibilityWithAny(
+                        (hours)-> recyclerViewCode(hours),
+                        date.toString()
+                );
             }
 
         });
     }
 
-    private void dropDownButtonCode()
+    private void dropDownButtonCode(StaffDto[] staff)
     {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<StaffDto> adapter = new ArrayAdapter<StaffDto>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
-                hardcodedEmployesNames);
+                staff);
 
         spinner.setAdapter(adapter);
 
         spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                employee = hardcodedEmployesNames[position];
+                employee = staff[position].getName();
             }
         });
     }
@@ -200,5 +195,34 @@ public class ServicesActivity extends AppCompatActivity {
         });
     }
 
+
+    private void recyclerViewCode(String[] hoursAvailables)
+    {
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter       = new RecyclerViewAdapter(hoursAvailables);
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        final boolean[] isBottomReached = new boolean[1];
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                int lastVisible = mLayoutManager.findFirstVisibleItemPosition();
+                temporaryHour = hoursAvailables[lastVisible];
+
+                isBottomReached[0] = !mRecyclerView.canScrollVertically(1);
+                if(isBottomReached[0])
+                {
+                    temporaryHour = hoursAvailables[hardcodedHoursAvaiable.length - 1];
+                }
+            }
+        });
+    }
 
 }

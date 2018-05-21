@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Activities.requestsDone;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,12 +16,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.Activities.PendentRequestsActivity;
+import com.ps.isel.customersscheduling.Activities.SchedulesActivity;
+import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
+import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 
 public class MainActivity extends AppCompatActivity
@@ -35,13 +38,10 @@ public class MainActivity extends AppCompatActivity
 
     private ProgressDialog dialog;
 
-    private Service[] services = new Service[]
+    private ServiceDto[] services = new ServiceDto[]
             {
-                    new Service(3.90f, "Corte de cabelo à tesoura"),
-                    new Service(3.90f, "Corte de barba à máquina"),
-                    new Service(3.90f, "Corte de barba à lamina"),
-                    new Service(3.90f, "Colorir cabelo"),
-                    new Service(3.90f, "Massagem facial")
+                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
+                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
             };
 
     private Business[] subbedBusiness = new Business[]
@@ -113,9 +113,9 @@ public class MainActivity extends AppCompatActivity
         progressDialogCode();
         toolBarCode();
         listViewCode(subbedBusiness);
-      //  customersSchedulingApp
-      //          .getUserRegisteredBusiness(
-      //                  (business -> listViewCode(business)));
+        customersSchedulingApp
+                .getUserRegisteredBusiness(
+                        (business -> listViewCode(business)));
 
 
         this.dialog.hide();
@@ -150,18 +150,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String s)
             {
-                //TODO...
-                //when user submits what he wrote
+
+                goToActivityWithExtra(SearchResultsActivity.class, s);
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s)
-            {
-                //TODO...
-                //called every time user writes a word
+            public boolean onQueryTextChange(String newText) {
                 return false;
             }
+
         });
     }
 
@@ -236,6 +234,14 @@ public class MainActivity extends AppCompatActivity
     private void goToActivity(Class c)
     {
         Intent intent = new Intent(this, c);
+        startActivity(intent);
+    }
+
+    private void goToActivityWithExtra(Class c, String extra)
+    {
+        Intent intent = new Intent(this, c);
+        intent.putExtra("byLocation", false);
+        intent.putExtra("businessName", extra);
         startActivity(intent);
     }
 

@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,20 +10,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.Activities.requestsDone.BusinessActivity;
+import com.ps.isel.customersscheduling.Activities.requestsDone.FilterActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
+import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 public class SearchResultsActivity extends AppCompatActivity
 {
-    private Service[] services = new Service[]
+    private ServiceDto[] services = new ServiceDto[]
             {
-                    new Service(3.90f, "Corte de cabelo à tesoura"),
-                    new Service(3.90f, "Corte de barba à máquina"),
-                    new Service(3.90f, "Corte de barba à lamina"),
-                    new Service(3.90f, "Colorir cabelo"),
-                    new Service(3.90f, "Massagem facial")
+                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
+                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
             };
 
 
@@ -83,24 +85,44 @@ public class SearchResultsActivity extends AppCompatActivity
                             services),
             };
 
+    private CustomersSchedulingApp customersSchedulingApp;
+
     private ListView lv;
     private Toolbar toolbar;
+    private Intent intent;
 
+    private String businessName;
+    private String businessLocation;
+    private String businessCategory;
+    private boolean searchByLocation;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         lv      = (ListView) findViewById(R.id.resultsSearch);
-
+        intent = getIntent();
+        searchByLocation = intent.getBooleanExtra("byLocation", false);
+        if(searchByLocation)
+        {
+            businessLocation = intent.getStringExtra("location");
+            businessCategory = intent.getStringExtra("category");
+//            customersSchedulingApp.getStoreByLocationAndCategory(business -> listViewCode(business), businessLocation, businessCategory);
+        }else
+        {
+            businessName = intent.getStringExtra("businessName");
+  //          customersSchedulingApp.getSearchedStoreByName(business -> listViewCode(business), businessName);
+        }
+        listViewCode(resultsBusiness);
         toolbarCode();
-        listviewCode();
     }
 
-    private void listviewCode()
+    private void listViewCode(Business[] businesses)
     {
 
         lv.setAdapter(new CustomAdapterBusiness(this, resultsBusiness));
