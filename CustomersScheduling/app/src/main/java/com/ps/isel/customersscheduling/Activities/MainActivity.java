@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,9 +16,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.PendentRequestsActivity;
-import com.ps.isel.customersscheduling.Activities.SchedulesActivity;
-import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
@@ -113,9 +110,9 @@ public class MainActivity extends AppCompatActivity
         progressDialogCode();
         toolBarCode();
         listViewCode(subbedBusiness);
-        customersSchedulingApp
-                .getUserRegisteredBusiness(
-                        (business -> listViewCode(business)));
+    //    customersSchedulingApp
+    //            .getUserRegisteredBusiness(
+    //                    this::listViewCode);
 
 
         this.dialog.hide();

@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.os.Bundle;
 import android.widget.ListView;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.ps.isel.customersscheduling.Activities.requestsDone.RegisterStoreActivity">
+    tools:context="com.ps.isel.customersscheduling.Activities.RegisterStoreActivity">
 
     <include
         android:id="@+id/filter_toolbar"

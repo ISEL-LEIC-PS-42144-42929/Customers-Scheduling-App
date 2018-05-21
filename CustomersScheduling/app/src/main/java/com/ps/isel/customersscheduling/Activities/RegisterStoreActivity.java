@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

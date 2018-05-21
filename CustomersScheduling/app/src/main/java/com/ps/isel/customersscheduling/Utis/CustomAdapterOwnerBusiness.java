@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 
 /**

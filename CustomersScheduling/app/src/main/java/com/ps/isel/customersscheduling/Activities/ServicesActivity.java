@@ -19,13 +19,11 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-import com.ps.isel.customersscheduling.Activities.requestsDone.BusinessActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
-import com.ps.isel.customersscheduling.java.dto.StaffDto;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
@@ -57,7 +55,7 @@ public class ServicesActivity extends AppCompatActivity
     private String service;
     private String employee;
     private String temporaryday;
-    private String temporaryEmployee;
+
     private String dateSchedule;
     private String temporaryHour;
     private String hour;
@@ -82,22 +80,17 @@ public class ServicesActivity extends AppCompatActivity
         servName = intent.getStringExtra("serviceName");
         serviceName.setText(servName);
 
-        temporaryEmployee = hardcodedEmployesNames[0];
-
-        customersSchedulingApp.getStoreEmployee(
-                (employee)->dropDownButtonCode(employee),
-                business.getName());
-
-
-
-
-        dropDownButtonCode();
         constructToolbarAndAddListeners();
+
+        //  customersSchedulingApp.getStoreEmployee(
+        //          this::dropDownButtonCode,
+        //          business.getName()
+        //  );
+
+        dropDownButtonCode(hardcodedEmployesNames);
         setDateToCalendar();
-
-
         calendarViewCode();
-     //   recyclerViewCode();
+        recyclerViewCode(hardcodedHoursAvaiable);
         addListenerToButtons();
 
     }
@@ -125,26 +118,27 @@ public class ServicesActivity extends AppCompatActivity
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 customersSchedulingApp.getDisponibilityWithAny(
                         (hours)-> recyclerViewCode(hours),
-                        date.toString()
+                        date.toString(),
+                        employee
                 );
             }
 
         });
     }
 
-    private void dropDownButtonCode(StaffDto[] staff)
+    private void dropDownButtonCode(String[] staff)
     {
-        ArrayAdapter<StaffDto> adapter = new ArrayAdapter<StaffDto>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
                 staff);
 
         spinner.setAdapter(adapter);
-
+        employee = hardcodedEmployesNames[0];
         spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                employee = staff[position].getName();
+                employee = staff[position];
             }
         });
     }

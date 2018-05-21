@@ -89,14 +89,11 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getUserRegisteredBusiness(cons);
     }
 
-    public void getDisponibilityWithAny(Consumer<String[]> cons,String date) {
+    public void getDisponibilityWithAny(Consumer<String[]> cons,String date, String employee) {
     }
 
     public void getStoreEmployee(Consumer<StaffDto[]> cons, String businessName) {
     }
-
-
-
 
     //POST REQUESTS
 
@@ -105,19 +102,19 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.registerStore(storeJSONObject);
     }
 
-    public void registerStoreSchedule(JSONObject storeJSONObject)
+    public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
     {
-        api.registerStoreSchedule(storeJSONObject);
+        api.registerStoreSchedule(storeScheduleJSONObject);
     }
 
-    public void registerEmployee(JSONObject storeJSONObject)
+    public void registerEmployee(JSONObject employeeJSONObject)
     {
-        api.registerEmployee(storeJSONObject);
+        api.registerEmployee(employeeJSONObject);
     }
 
-    public void registerEmployeeSchedule(JSONObject storeJSONObject)
+    public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject)
     {
-        api.registerEmployeeSchedule(storeJSONObject);
+        api.registerEmployeeSchedule(employeeScheduleJSONObject);
     }
 
 

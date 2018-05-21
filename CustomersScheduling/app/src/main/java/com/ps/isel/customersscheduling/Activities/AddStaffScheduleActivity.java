@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.requestsDone.AddOtherEmpOrEndActivity;
-import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;

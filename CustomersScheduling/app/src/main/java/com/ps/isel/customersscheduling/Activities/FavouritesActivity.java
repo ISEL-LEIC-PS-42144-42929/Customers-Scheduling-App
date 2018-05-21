@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
@@ -34,11 +33,10 @@ public class FavouritesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
-        toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
-        lv      = (ListView) findViewById(R.id.listButtons);
+        toolbar = findViewById(R.id.filter_toolbar);
+        lv      = findViewById(R.id.listButtons);
 
         lv.setAdapter(new CustomAdapterFavourites(this,favSearches));
-
         constructToolbarAndAddListeners();
     }
 

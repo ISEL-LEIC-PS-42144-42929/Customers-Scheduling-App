@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
@@ -39,9 +38,9 @@ public class PendentRequestsActivity extends AppCompatActivity
         pendentRequests[2] = user;      //hardcodeddata
         pendentRequests[3] = user;      //hardcodeddata
 
-      //  customersSchedulingApp.getUserPendentRequests(
-      //          (pendentRequests)->constructListViewAndAddListeners(pendentRequests),
-      //          "username");
+       // customersSchedulingApp.getUserPendentRequests(
+       //         this::constructListViewAndAddListeners,
+       //         "username");
         constructToolbarAndAddListeners();
         constructListViewAndAddListeners(pendentRequests);
 

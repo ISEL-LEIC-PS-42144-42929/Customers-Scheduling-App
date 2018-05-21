@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
 import android.graphics.drawable.ClipDrawable;
@@ -14,8 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.ServicesActivity;
-import com.ps.isel.customersscheduling.Activities.requestsDone.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
@@ -68,25 +66,25 @@ public class BusinessActivity extends AppCompatActivity
         intent      = getIntent();
         business    = (Business) intent.getSerializableExtra("business");
 
-        name        = (TextView) findViewById(R.id.name);
-        address     = (TextView) findViewById(R.id.address);
-        contact     = (TextView) findViewById(R.id.contact);
-        description = (TextView) findViewById(R.id.description);
-        toolbar     = (Toolbar) findViewById(R.id.filter_toolbar);
-        signInBtn   = (Button)findViewById(R.id.signIn);
-        lv          = (ListView) findViewById(R.id.services);
+        name        = findViewById(R.id.name);
+        address     = findViewById(R.id.address);
+        contact     = findViewById(R.id.contact);
+        description = findViewById(R.id.description);
+        toolbar     = findViewById(R.id.filter_toolbar);
+        signInBtn   = findViewById(R.id.signIn);
+        lv          = findViewById(R.id.services);
 
         constructToolbarAndAddListeners();
         constructButtonsAndAddListeners();
 
      //   customersSchedulingApp.getStoreByName(
-     //           (business)-> constructTextViews(business)
+     //           this::constructTextViews
      //           ,business.getName());
 
-      //  customersSchedulingApp.getStoreServices(
-      //          (services)->constructListViewAndAddListeners(services),
-      //          business.getName()
-      //  );
+     //   customersSchedulingApp.getStoreServices(
+     //           this::constructListViewAndAddListeners,
+     //           business.getName()
+     //   );
 
         constructTextViews(business);
         constructListViewAndAddListeners(business.getServices());

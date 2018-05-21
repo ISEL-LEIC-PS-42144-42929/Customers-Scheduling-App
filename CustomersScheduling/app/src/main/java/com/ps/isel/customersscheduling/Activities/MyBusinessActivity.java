@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Activities.requestsDone;
+package com.ps.isel.customersscheduling.Activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -68,9 +68,9 @@ public class MyBusinessActivity extends AppCompatActivity
 
         toolBarCode();
 
-       // customersSchedulingApp
-       //         .getUserStores(business -> listViewCode(business),
-       //                 "username");
+    //   customersSchedulingApp
+    //           .getUserStores(this::listViewCode,
+    //                   "username");
 
         listViewCode(subbedBusiness);
     }
@@ -94,7 +94,6 @@ public class MyBusinessActivity extends AppCompatActivity
 
     private void toolBarCode()
     {
-        toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Stores");
 

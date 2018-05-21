@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Activities.requestsDone.BusinessActivity;
-import com.ps.isel.customersscheduling.Activities.requestsDone.FilterActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
@@ -112,11 +110,16 @@ public class SearchResultsActivity extends AppCompatActivity
         {
             businessLocation = intent.getStringExtra("location");
             businessCategory = intent.getStringExtra("category");
-//            customersSchedulingApp.getStoreByLocationAndCategory(business -> listViewCode(business), businessLocation, businessCategory);
+        //    customersSchedulingApp.getStoreByLocationAndCategory(
+        //            this::listViewCode,
+        //            businessLocation,
+        //            businessCategory);
         }else
         {
             businessName = intent.getStringExtra("businessName");
-  //          customersSchedulingApp.getSearchedStoreByName(business -> listViewCode(business), businessName);
+        //    customersSchedulingApp.getSearchedStoreByName(
+        //            this::listViewCode,
+        //            businessName);
         }
         listViewCode(resultsBusiness);
         toolbarCode();

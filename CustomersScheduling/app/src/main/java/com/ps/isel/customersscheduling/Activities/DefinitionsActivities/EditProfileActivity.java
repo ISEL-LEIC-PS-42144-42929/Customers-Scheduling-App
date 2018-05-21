@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ps.isel.customersscheduling.Activities.BaseLayoutsActivities.BaseActivityWithOnlyBackArrow;
-import com.ps.isel.customersscheduling.Activities.requestsDone.DefinitionsActivity;
+import com.ps.isel.customersscheduling.Activities.DefinitionsActivity;
 
 public class EditProfileActivity extends BaseActivityWithOnlyBackArrow
 {
