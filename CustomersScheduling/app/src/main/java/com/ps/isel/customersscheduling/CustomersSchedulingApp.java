@@ -84,9 +84,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserRegisteredBusiness(Consumer<Business[]> cons)
+    public void getUserRegisteredBusiness(Consumer<Business[]> cons, String userName)
     {
-        api.getUserRegisteredBusiness(cons);
+        api.getUserRegisteredBusiness(cons, userName);
     }
 
     public void getDisponibilityWithAny(Consumer<String[]> cons,String date, String employee) {

@@ -101,11 +101,11 @@ public class SearchResultsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
-
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         lv      = (ListView) findViewById(R.id.resultsSearch);
         intent = getIntent();
         searchByLocation = intent.getBooleanExtra("byLocation", false);
+
         if(searchByLocation)
         {
             businessLocation = intent.getStringExtra("location");

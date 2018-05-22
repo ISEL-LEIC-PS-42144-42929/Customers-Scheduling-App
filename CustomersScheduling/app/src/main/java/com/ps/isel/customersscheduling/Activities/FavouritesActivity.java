@@ -13,8 +13,16 @@ import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 public class FavouritesActivity extends AppCompatActivity
 {
+    private final String FILE_NAME = "favourites2.txt";
+
     private Toolbar toolbar;
     private ListView lv;
 
@@ -32,6 +40,8 @@ public class FavouritesActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
+
+        String[] searchData = readFromInternalStorageAndParse();
 
         toolbar = findViewById(R.id.filter_toolbar);
         lv      = findViewById(R.id.listButtons);
@@ -57,5 +67,19 @@ public class FavouritesActivity extends AppCompatActivity
         });
     }
 
+    private String[] readFromInternalStorageAndParse()
+    {
+        StringBuffer text = new StringBuffer();
+        try {
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(openFileInput(FILE_NAME)));
+            String line;
+            while ((line = bReader.readLine()) != null) {
+                text.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text.toString().split("&");
+    }
 
 }

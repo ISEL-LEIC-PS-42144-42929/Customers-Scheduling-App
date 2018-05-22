@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity
         progressDialogCode();
         toolBarCode();
         listViewCode(subbedBusiness);
-    //    customersSchedulingApp
-    //            .getUserRegisteredBusiness(
-    //                    this::listViewCode);
+        customersSchedulingApp
+                .getUserRegisteredBusiness(
+                        this::listViewCode, "userName");
 
 
         this.dialog.hide();

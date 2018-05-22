@@ -10,12 +10,21 @@
         android:id="@+id/filter_toolbar"
         layout="@layout/toolbarwithbackarrow"></include>
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/location"
+    <EditText
+        android:id="@+id/searchName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/filter_toolbar"
         android:layout_marginTop="49dp"
+        android:cursorVisible="false"
+        android:hint="Name of Search:" />
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchName"
+        android:layout_marginTop="35dp"
         android:hint="@string/location"
         android:textColorHint="#05ab9a">
 

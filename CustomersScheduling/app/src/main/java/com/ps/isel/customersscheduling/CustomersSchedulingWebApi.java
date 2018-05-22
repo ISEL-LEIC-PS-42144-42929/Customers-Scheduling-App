@@ -23,7 +23,9 @@ import java.util.function.Function;
  * Created by Colapso on 09/05/18.
  */
 
-public class CustomersSchedulingWebApi<T> {
+public class CustomersSchedulingWebApi<T>
+{
+    private final String BASE_URL = "http://192.168.1.188:8080/";
 
     private RequestQueue requestQueue;
     final Gson gson = new Gson();
@@ -36,12 +38,9 @@ public class CustomersSchedulingWebApi<T> {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoresByName(Consumer<Business[]> cons, String storeName)
     {
-        String url ="http://192.168.1.188:8080/cinema?cinemaName=CI";
-
-        // Handles errors that occur due to Volley
-        GetRequest<Business[]> request = new GetRequest<Business[]>(
+        GetRequest<Business[]> request = new GetRequest<>(
                 Request.Method.GET,
-                url,
+                BASE_URL + storeName,
                 "",
                 cons,
                 Business.class,
@@ -53,26 +52,65 @@ public class CustomersSchedulingWebApi<T> {
         requestQueue.add(request);
     }
 
-    public void getUserStores(Consumer<Business[]> cons, String userName) {
-    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getUserStores(Consumer<Business[]> cons, String userName)
+    {
 
-
-    public void getStoresByLocationAndCategory(Consumer<Business[]> cons, String location, String category) {
-    }
-
-    public void getUserPendentRequests(Consumer<ClientDto[]> cons, String userName) {
+        GetRequest<Business[]> request = new GetRequest<>(
+                Request.Method.GET,
+                BASE_URL + userName,
+                "",
+                cons,
+                Business.class,
+                (element)->{
+                    cons.accept(element);
+                },
+                error -> error.printStackTrace()
+        );
+        requestQueue.add(request);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserRegisteredBusiness(Consumer<Business[]> cons)
+    public void getStoresByLocationAndCategory(Consumer<Business[]> cons, String location, String category)
     {
-
-        String url ="http://192.168.1.188:8080/cinema?cinemaName=CI";
-
-        // Handles errors that occur due to Volley
-        GetRequest<Business[]> request = new GetRequest<Business[]>(
+        GetRequest<Business[]> request = new GetRequest<>(
                 Request.Method.GET,
-                url,
+                BASE_URL + location +"/"+ category,
+                "",
+                cons,
+                Business.class,
+                (element)->{
+                    cons.accept(element);
+                },
+                error -> error.printStackTrace()
+        );
+        requestQueue.add(request);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getUserPendentRequests(Consumer<T> cons, String userName)
+    {
+        GetRequest<T> request = new GetRequest<T>(
+                Request.Method.GET,
+                BASE_URL + userName,
+                "",
+                cons,
+                ClientDto[].class,
+                (element)->{
+                    cons.accept(element);
+                },
+                error -> error.printStackTrace()
+        );
+        requestQueue.add(request);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getUserRegisteredBusiness(Consumer<Business[]> cons, String userName)
+    {
+        GetRequest<Business[]> request = new GetRequest<>(
+                Request.Method.GET,
+                BASE_URL+ userName,
                 "",
                 cons,
                 Business.class,
@@ -88,20 +126,17 @@ public class CustomersSchedulingWebApi<T> {
 
     public void registerStore(JSONObject storeJSONObject)
     {
-        String url ="http://192.168.1.188:8080/cinema";
-        postRequest(url, storeJSONObject);
+        postRequest(BASE_URL, storeJSONObject);
     }
 
     public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
     {
-        String url ="http://192.168.1.188:8080/cinema";
-        postRequest(url, storeScheduleJSONObject);
+        postRequest(BASE_URL, storeScheduleJSONObject);
     }
 
     public void registerEmployee(JSONObject employeeJSONObject)
     {
-        String url ="http://192.168.1.188:8080/cinema";
-        postRequest(url, employeeJSONObject);
+        postRequest(BASE_URL, employeeJSONObject);
     }
 
     public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject)
@@ -109,8 +144,6 @@ public class CustomersSchedulingWebApi<T> {
         String url ="http://192.168.1.188:8080/cinema";
         postRequest(url, employeeScheduleJSONObject);
     }
-
-
 
     public void postRequest(String url, JSONObject object)
     {
@@ -124,7 +157,22 @@ public class CustomersSchedulingWebApi<T> {
         requestQueue.add(request);
     }
 
-
+  // @RequiresApi(api = Build.VERSION_CODES.N)
+  // public void getRequest(Consumer<T> cons, String url)
+  // {
+  //     GetRequest<T> request = new GetRequest<>(
+  //             Request.Method.GET,
+  //             url,
+  //             "",
+  //             cons,
+  //             Business.class,
+  //             (element)->{
+  //                 cons.accept(element);
+  //             },
+  //             error -> error.printStackTrace()
+  //     );
+  //     requestQueue.add(request);
+  // }
 
 }
 

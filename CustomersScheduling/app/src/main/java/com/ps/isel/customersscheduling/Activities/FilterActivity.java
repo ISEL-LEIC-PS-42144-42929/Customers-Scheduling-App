@@ -8,14 +8,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
 public class FilterActivity extends AppCompatActivity
 {
+    private final String FILE_NAME = "favourites.txt";
+
     private Toolbar toolbar;
 
+    private EditText searchName;
     private MaterialBetterSpinner locationChosen;
     private MaterialBetterSpinner categoryChosen;
 
@@ -34,10 +41,12 @@ public class FilterActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        toolbar = findViewById(R.id.filter_toolbar);
+        toolbar        = findViewById(R.id.filter_toolbar);
 
+        searchName     = findViewById(R.id.searchName);
         locationChosen = findViewById(R.id.location);
         categoryChosen = findViewById(R.id.category);
+
         resultsBtn     = findViewById(R.id.results);
         saveFilter     = findViewById(R.id.saveFilter);
 
@@ -87,7 +96,12 @@ public class FilterActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                goToActivityWithExtra(SearchResultsActivity.class, location, category);
+                Intent intent = new Intent(getApplication(), SearchResultsActivity.class);
+                intent.putExtra("location", location);
+                intent.putExtra("category", category);
+                intent.putExtra("byLocation", true);
+                startActivity(intent);
+
             }
         });
 
@@ -96,12 +110,13 @@ public class FilterActivity extends AppCompatActivity
            @Override
            public void onClick(View v)
            {
-               //TODO save in memory and go to Activity of favourites
+               saveInInternalStorage();
                Intent intent = new Intent(getApplicationContext(), FavouritesActivity.class);
                startActivity(intent);
            }
        });
     }
+
 
     private void toolBarCode()
     {
@@ -119,12 +134,21 @@ public class FilterActivity extends AppCompatActivity
         });
     }
 
-    private void goToActivityWithExtra(Class c, String local, String category)
+    private void saveInInternalStorage()
     {
-        Intent intent = new Intent(this, c);
-        intent.putExtra("location", local);
-        intent.putExtra("category", category);
-        intent.putExtra("byLocation", true);
-        startActivity(intent);
+        String toWrite ="Name:" + searchName.getText().toString()+ "&" + "Category:" + category + "&" + "Location:" + location;
+
+          try
+          {
+              FileOutputStream fileout = openFileOutput(FILE_NAME, MODE_PRIVATE);
+              OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+              outputWriter.write(toWrite);
+              outputWriter.close();
+
+          }catch (Exception e)
+          {
+              e.printStackTrace();
+          }
     }
+
 }
