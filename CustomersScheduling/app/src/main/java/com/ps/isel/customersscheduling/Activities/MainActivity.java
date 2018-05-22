@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Model.Business;
@@ -33,13 +34,22 @@ public class MainActivity extends AppCompatActivity
     private ListView lv;
     private Button filterBtn;
 
-    private ProgressDialog dialog;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private String userEmail;
 
     private ServiceDto[] services = new ServiceDto[]
             {
                     new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
                     new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
             };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
 
     private Business[] subbedBusiness = new Business[]
             {
@@ -107,25 +117,29 @@ public class MainActivity extends AppCompatActivity
         filterBtn = findViewById(R.id.filter);
         lv        = findViewById(R.id.alreadySubToList);
 
-        progressDialogCode();
+        userEmail = getIntent().getStringExtra("userEmail");
+
+        authenticationCode();
         toolBarCode();
         listViewCode(subbedBusiness);
         customersSchedulingApp
                 .getUserRegisteredBusiness(
-                        this::listViewCode, "userName");
+                        this::listViewCode, userEmail);
 
-
-        this.dialog.hide();
     }
 
-    private void progressDialogCode() {
-        dialog = new ProgressDialog(MainActivity.this);
-        dialog.setTitle("Fancy App");
-        dialog.setMessage("Loading...Please wait...");
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.show();
-        dialog.setCancelable(false);
+    public void authenticationCode()
+    {
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = firebaseAuth -> {
+            if(firebaseAuth.getCurrentUser() == null)
+            {
+                startActivity(new Intent(this, SignInActivity.class));
+            }
+        };
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -186,6 +200,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case (R.id.About):
                 goToActivity(AboutActivity.class);
+                break;
+            case (R.id.logout):
+                mAuth.signOut();
                 break;
         }
         return super.onOptionsItemSelected(item);

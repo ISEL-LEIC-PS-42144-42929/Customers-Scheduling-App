@@ -21,7 +21,7 @@ import java.io.OutputStreamWriter;
 
 public class FavouritesActivity extends AppCompatActivity
 {
-    private final String FILE_NAME = "favourites2.txt";
+    private final String FILE_NAME = "favourites.txt";
 
     private Toolbar toolbar;
     private ListView lv;
@@ -74,6 +74,7 @@ public class FavouritesActivity extends AppCompatActivity
             BufferedReader bReader = new BufferedReader(new InputStreamReader(openFileInput(FILE_NAME)));
             String line;
             while ((line = bReader.readLine()) != null) {
+                System.out.println(line);
                 text.append(line + "\n");
             }
         } catch (IOException e) {

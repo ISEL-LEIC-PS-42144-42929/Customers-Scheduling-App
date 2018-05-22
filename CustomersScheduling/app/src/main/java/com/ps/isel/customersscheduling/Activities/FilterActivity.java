@@ -136,13 +136,14 @@ public class FilterActivity extends AppCompatActivity
 
     private void saveInInternalStorage()
     {
-        String toWrite ="Name:" + searchName.getText().toString()+ "&" + "Category:" + category + "&" + "Location:" + location;
+        String toWrite ="Name:" + searchName.getText().toString()+ "&" + "Category:" + category + "&" + "Location:" + location+ "\n";
 
           try
           {
-              FileOutputStream fileout = openFileOutput(FILE_NAME, MODE_PRIVATE);
+              FileOutputStream fileout = openFileOutput(FILE_NAME, MODE_PRIVATE | MODE_APPEND);
               OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
               outputWriter.write(toWrite);
+              outputWriter.flush();
               outputWriter.close();
 
           }catch (Exception e)
