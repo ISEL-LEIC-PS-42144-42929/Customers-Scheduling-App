@@ -117,7 +117,7 @@ public class ServicesActivity extends AppCompatActivity
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 customersSchedulingApp.getDisponibilityWithAny(
-                        (hours)-> recyclerViewCode(hours),
+                        (hours)-> recyclerViewCode((String[]) hours),
                         date.toString(),
                         employee
                 );

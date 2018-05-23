@@ -4,17 +4,27 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.Utis.AppendingObjectOutputStream;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
 
 public class FilterActivity extends AppCompatActivity
 {
@@ -110,9 +120,15 @@ public class FilterActivity extends AppCompatActivity
            @Override
            public void onClick(View v)
            {
-               saveInInternalStorage();
-               Intent intent = new Intent(getApplicationContext(), FavouritesActivity.class);
-               startActivity(intent);
+
+               if(TextUtils.isEmpty(categoryChosen.getText()) || TextUtils.isEmpty(searchName.getText()) || TextUtils.isEmpty(locationChosen.getText()))
+               {
+                   Toast.makeText(FilterActivity.this,"Please insert all values", Toast.LENGTH_LONG).show();
+               }else {
+                   saveInInternalStorage();
+                   Intent intent = new Intent(getApplicationContext(), FavouritesActivity.class);
+                   startActivity(intent);
+               }
            }
        });
     }
@@ -136,20 +152,44 @@ public class FilterActivity extends AppCompatActivity
 
     private void saveInInternalStorage()
     {
-        String toWrite ="Name:" + searchName.getText().toString()+ "&" + "Category:" + category + "&" + "Location:" + location+ "\n";
+        Favourite toSave = new Favourite(searchName.getText().toString(), category, location);
 
-          try
-          {
-              FileOutputStream fileout = openFileOutput(FILE_NAME, MODE_PRIVATE | MODE_APPEND);
-              OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
-              outputWriter.write(toWrite);
-              outputWriter.flush();
-              outputWriter.close();
+        ObjectOutputStream oos = null;
 
-          }catch (Exception e)
-          {
-              e.printStackTrace();
-          }
+        File f =new File(new File(getFilesDir(),"") + File.separator + FILE_NAME);
+        try{
+            boolean isNewFile=false;
+
+            if (!f.exists()){
+                f.createNewFile();
+                isNewFile=true;
+            }
+
+            FileOutputStream fos=new FileOutputStream(f,true);
+
+            if (isNewFile) {
+                oos=new ObjectOutputStream(fos);
+            }
+            else {
+                oos=new AppendingObjectOutputStream(fos);
+            }
+            oos.writeObject(toSave);
+
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                oos.flush();
+                oos.close();
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
     }
-
 }

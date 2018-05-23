@@ -52,6 +52,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getUserStores(cons, userName);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getUserPendentRequests(Consumer<ClientDto[]> cons, String userName)
     {
         api.getUserPendentRequests(cons, userName);
@@ -84,12 +85,12 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserRegisteredBusiness(Consumer<Business[]> cons, String userName)
+    public <T>void getUserRegisteredBusiness(Consumer<T[]> cons, String userName)
     {
         api.getUserRegisteredBusiness(cons, userName);
     }
 
-    public void getDisponibilityWithAny(Consumer<String[]> cons,String date, String employee) {
+    public <T>void getDisponibilityWithAny(Consumer<T[]> cons,String date, String employee) {
     }
 
     public void getStoreEmployee(Consumer<StaffDto[]> cons, String businessName) {
@@ -115,6 +116,11 @@ public class CustomersSchedulingApp extends Application implements Serializable
     public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject)
     {
         api.registerEmployeeSchedule(employeeScheduleJSONObject);
+    }
+
+    public void registerClient(JSONObject clientJSONObject)
+    {
+        api.registerClient(clientJSONObject);
     }
 
 

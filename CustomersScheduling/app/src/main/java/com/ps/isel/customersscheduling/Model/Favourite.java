@@ -12,7 +12,9 @@ public class Favourite implements Serializable
     private String category;
     private String name;
 
-    public Favourite(String location, String category, String name) {
+    private static final long serialVersionUID = 1L;
+
+    public Favourite(String name, String location, String category) {
         this.location = location;
         this.category = category;
         this.name = name;

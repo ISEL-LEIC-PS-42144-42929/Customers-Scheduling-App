@@ -62,6 +62,7 @@ public class SignInActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("userEmail", firebaseAuth.getCurrentUser().getEmail());
+
                 startActivity(intent);
             }
         };

@@ -2,8 +2,10 @@ package com.ps.isel.customersscheduling.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +26,11 @@ import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity
 {
@@ -33,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     private SearchView searchView;
     private ListView lv;
     private Button filterBtn;
+
+    private JSONObject jsonBodyObj;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -49,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+
+
     }
 
     private Business[] subbedBusiness = new Business[]
@@ -113,6 +124,28 @@ public class MainActivity extends AppCompatActivity
         customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
 
+        jsonBodyObj = new JSONObject();
+
+//TODO TESTE APAGAR QUANDO APLICAÇAO ESTIVER CONCLUIDA
+  //     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+  //     boolean a = prefs.getBoolean("firstTime2", false);
+  //     if (!prefs.getBoolean("firstTime2", false)) {
+  //         // <---- run your one time code here
+
+  //         File dir = getFilesDir();
+  //         File file = new File(dir, "favourites.txt");
+  //         boolean deleted = file.delete();
+
+
+
+  //         // mark first time has runned.
+  //         SharedPreferences.Editor editor = prefs.edit();
+  //         editor.putBoolean("firstTime", false);
+  //         editor.commit();
+  //     }
+//TODO------------------------------------------
+
+
         toolbar   = findViewById(R.id.app_bar);
         filterBtn = findViewById(R.id.filter);
         lv        = findViewById(R.id.alreadySubToList);
@@ -122,6 +155,19 @@ public class MainActivity extends AppCompatActivity
         authenticationCode();
         toolBarCode();
         listViewCode(subbedBusiness);
+
+     //  try {
+     //      jsonBodyObj.put("email", "mawdklwd");
+     //      jsonBodyObj.put("name", "asasas");
+     //      jsonBodyObj.put("contact", "dawkjwdnkj");
+     //      jsonBodyObj.put("gender", true);
+     //  } catch (JSONException e) {
+     //      e.printStackTrace();
+     //  }
+
+
+
+
         customersSchedulingApp
                 .getUserRegisteredBusiness(
                         this::listViewCode, userEmail);

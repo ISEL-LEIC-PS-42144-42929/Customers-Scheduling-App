@@ -40,6 +40,7 @@ public class GetRequest<T> extends JsonRequest<T>
     {
         try
         {
+            String a = response.toString();
             T dto = this.mapper.readValue(response.data, dtoType);
             return Response.success(dto, null);
         }

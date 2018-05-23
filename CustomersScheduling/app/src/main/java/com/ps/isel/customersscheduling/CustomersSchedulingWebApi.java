@@ -8,9 +8,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.ps.isel.customersscheduling.HALDto.ClientStores;
 import com.ps.isel.customersscheduling.HttpUtils.PostRequest;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.HttpUtils.GetRequest;
+import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
 import com.ps.isel.customersscheduling.java.dto.StoreDto;
 
@@ -25,7 +27,7 @@ import java.util.function.Function;
 
 public class CustomersSchedulingWebApi<T>
 {
-    private final String BASE_URL = "http://192.168.1.188:8080/";
+    private final String BASE_URL = "http://10.10.7.177:8181/person/client";
 
     private RequestQueue requestQueue;
     final Gson gson = new Gson();
@@ -36,90 +38,38 @@ public class CustomersSchedulingWebApi<T>
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoresByName(Consumer<Business[]> cons, String storeName)
+    public void getStoresByName(Consumer<T[]> cons, String storeName)
     {
-        GetRequest<Business[]> request = new GetRequest<>(
-                Request.Method.GET,
-                BASE_URL + storeName,
-                "",
-                cons,
-                Business.class,
-                (element)->{
-                    cons.accept(element);
-                },
-                error -> error.printStackTrace()
-        );
-        requestQueue.add(request);
+        String url = "http://10.10.7.177:8181/person/client";
+        getRequest(cons, url,Business.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserStores(Consumer<Business[]> cons, String userName)
+    public void getUserStores(Consumer<T[]> cons, String userName)
     {
-
-        GetRequest<Business[]> request = new GetRequest<>(
-                Request.Method.GET,
-                BASE_URL + userName,
-                "",
-                cons,
-                Business.class,
-                (element)->{
-                    cons.accept(element);
-                },
-                error -> error.printStackTrace()
-        );
-        requestQueue.add(request);
+        String url = "http://10.10.7.177:8181/person/client";
+        getRequest(cons, url,Business.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoresByLocationAndCategory(Consumer<Business[]> cons, String location, String category)
+    public void getStoresByLocationAndCategory(Consumer<T[]> cons, String location, String category)
     {
-        GetRequest<Business[]> request = new GetRequest<>(
-                Request.Method.GET,
-                BASE_URL + location +"/"+ category,
-                "",
-                cons,
-                Business.class,
-                (element)->{
-                    cons.accept(element);
-                },
-                error -> error.printStackTrace()
-        );
-        requestQueue.add(request);
-
+        String url = "http://10.10.7.177:8181/person/client";
+        getRequest(cons, url,Business.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserPendentRequests(Consumer<T> cons, String userName)
+    public void getUserPendentRequests(Consumer<T[]> cons, String userName)
     {
-        GetRequest<T> request = new GetRequest<T>(
-                Request.Method.GET,
-                BASE_URL + userName,
-                "",
-                cons,
-                ClientDto[].class,
-                (element)->{
-                    cons.accept(element);
-                },
-                error -> error.printStackTrace()
-        );
-        requestQueue.add(request);
+        String url = "http://10.10.7.177:8181/person/client";
+        getRequest(cons, url, ClientDto.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserRegisteredBusiness(Consumer<Business[]> cons, String userName)
+    public void getUserRegisteredBusiness(Consumer<T[]> cons, String userName)
     {
-        GetRequest<Business[]> request = new GetRequest<>(
-                Request.Method.GET,
-                BASE_URL+ userName,
-                "",
-                cons,
-                Business.class,
-                (element)->{
-                    cons.accept(element);
-                },
-                error -> error.printStackTrace()
-        );
-        requestQueue.add(request);
+        String url = "http://10.10.7.177:8181/store/owner/bitoowner@gmail.com";
+        getRequest(cons, url, ClientStores.class);
     }
 
     //POST REQUESTS
@@ -157,22 +107,28 @@ public class CustomersSchedulingWebApi<T>
         requestQueue.add(request);
     }
 
-  // @RequiresApi(api = Build.VERSION_CODES.N)
-  // public void getRequest(Consumer<T> cons, String url)
-  // {
-  //     GetRequest<T> request = new GetRequest<>(
-  //             Request.Method.GET,
-  //             url,
-  //             "",
-  //             cons,
-  //             Business.class,
-  //             (element)->{
-  //                 cons.accept(element);
-  //             },
-  //             error -> error.printStackTrace()
-  //     );
-  //     requestQueue.add(request);
-  // }
+    public void registerClient(JSONObject clientJSONObject)
+    {
+        String url ="http://192.168.1.188:8080/cinema";
+        postRequest(url, clientJSONObject);
+    }
+
+     @RequiresApi(api = Build.VERSION_CODES.N)
+   public void getRequest(Consumer<T[]> cons, String url, Class c)
+   {
+       GetRequest<T[]> request = new GetRequest<>(
+               Request.Method.GET,
+               url,
+               "",
+               cons,
+               c,
+               (element)->{
+                   cons.accept(element);
+               },
+               error -> error.printStackTrace()
+       );
+       requestQueue.add(request);
+   }
 
 }
 

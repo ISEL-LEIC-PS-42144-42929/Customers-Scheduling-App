@@ -14,10 +14,16 @@ import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class FavouritesActivity extends AppCompatActivity
 {
@@ -26,13 +32,7 @@ public class FavouritesActivity extends AppCompatActivity
     private Toolbar toolbar;
     private ListView lv;
 
-    private Favourite[] favSearches = new Favourite[]
-            {
-                    new Favourite("Lisbon", "beleza", "Beleza em Lisboa"),
-                    new Favourite("Sintra", "comida", "Restaurante em Sintra"),
-                    new Favourite("Lisbon", "beleza", "Beleza em Lisboa"),
-                    new Favourite("Sintra", "comida", "Restaurante em Sintra")
-            };
+    private Favourite[] favSearches;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -41,7 +41,7 @@ public class FavouritesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
-        String[] searchData = readFromInternalStorageAndParse();
+        favSearches = readFromInternalStorageAndSeparate();
 
         toolbar = findViewById(R.id.filter_toolbar);
         lv      = findViewById(R.id.listButtons);
@@ -67,20 +67,51 @@ public class FavouritesActivity extends AppCompatActivity
         });
     }
 
-    private String[] readFromInternalStorageAndParse()
+    public Favourite[] parseFavourites(String[] searchData)
     {
-        StringBuffer text = new StringBuffer();
-        try {
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(openFileInput(FILE_NAME)));
-            String line;
-            while ((line = bReader.readLine()) != null) {
-                System.out.println(line);
-                text.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Favourite[] favourites = new Favourite[searchData.length-1];
+
+        for (int i = 0; i < searchData.length-1 ; i++)
+        {
+            String[] aux = searchData[i].split("/");
+            favourites[i] = new Favourite(aux[0], aux[1], aux[2]);
         }
-        return text.toString().split("&");
+        return favourites;
     }
 
+    private Favourite[] readFromInternalStorageAndSeparate()
+    {
+        ArrayList<Favourite> objectsList = new ArrayList<>();
+        Favourite[] fav = null;
+        Favourite obj = null;
+        try {
+            FileInputStream fi = new FileInputStream(new File(new File(getFilesDir(),"") + File.separator + FILE_NAME));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            int a = fi.available();
+            while(fi.available() > 0 ) {
+                    objectsList.add((Favourite) oi.readObject());
+                a = fi.available();
+            }
+
+            fav = new Favourite[objectsList.size()];
+            fav = objectsList.toArray(fav);
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        return fav;
+
+    }
 }
+
+
+
+
