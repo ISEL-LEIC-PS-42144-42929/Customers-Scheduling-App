@@ -107,9 +107,8 @@ public class FilterActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 Intent intent = new Intent(getApplication(), SearchResultsActivity.class);
-                intent.putExtra("location", location);
-                intent.putExtra("category", category);
-                intent.putExtra("byLocation", true);
+                intent.putExtra("byFavourite", true);
+                intent.putExtra("Favourite", new Favourite(searchName.getText().toString(), location, category));
                 startActivity(intent);
 
             }

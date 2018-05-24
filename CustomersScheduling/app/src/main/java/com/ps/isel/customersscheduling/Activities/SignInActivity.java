@@ -27,11 +27,12 @@ import com.ps.isel.customersscheduling.R;
 
 public class SignInActivity extends AppCompatActivity
 {
+    private final static int RC_SIGN_IN = 2;
+
     private SignInButton signInButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleSignInClient;
-    private final static int RC_SIGN_IN = 2;
 
     @Override
     protected void onStart()

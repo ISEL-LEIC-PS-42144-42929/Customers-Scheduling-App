@@ -14,12 +14,23 @@ import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 /**
  * Created by Colapso on 14/04/18.
  */
 
 public class CustomAdapterFavourites extends BaseAdapter
 {
+    private final String FILE_NAME = "favourites.txt";
+
     private Favourite[] favourites;
 
     private View row;
@@ -78,10 +89,7 @@ public class CustomAdapterFavourites extends BaseAdapter
         @Override
         public void onClick(View v)
         {
-            //Todo Enviar ao servidor eliminar favorito ao request
-
-            //Refresh Activity
-            context.finish();
+            readFromInternalStorageAndDelete(favourites[position]);
             context.startActivity(context.getIntent());
 
         }
@@ -92,16 +100,88 @@ public class CustomAdapterFavourites extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                //Todo Enviar ao servidor e apresentar resultados do request
-
                 //Refresh Activity
                 Intent intent = new Intent(context, SearchResultsActivity.class);
-                intent.putExtra("business", favourites[position]);
+                intent.putExtra("byFavourite", true);
+                intent.putExtra("favourite", favourites[position]);
                 context.startActivity(intent);
-
             }
         });
 
     }
+
+
+    private void readFromInternalStorageAndDelete(Favourite favourite)
+    {
+        ArrayList<Favourite> objectsList = new ArrayList<>();
+        Favourite[] favArray = null;
+        Favourite favouriteElement;
+        try {
+            FileInputStream fi = new FileInputStream(new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            while(fi.available() > 0 ) {
+                favouriteElement = (Favourite) oi.readObject();
+                if(!favouriteElement.getName().equals(favourite.getName()))
+                {
+                    objectsList.add(favouriteElement);
+                }
+            }
+            favArray = new Favourite[objectsList.size()];
+            favArray = objectsList.toArray(favArray);
+            reWriteFavouritesToInternalStorage(favArray);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    private void reWriteFavouritesToInternalStorage(Favourite[] favourites)
+    {
+
+        ObjectOutputStream oos = null;
+
+        File f =new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME);
+        try{
+            boolean isNewFile=false;
+
+            if (!f.exists()){
+                f.createNewFile();
+                isNewFile=true;
+            }
+
+            FileOutputStream fos=new FileOutputStream(f);
+            oos=new ObjectOutputStream(fos);
+
+            for (int i = 0; i <favourites.length ; i++)
+            {
+                oos.writeObject(favourites[i]);
+            }
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                oos.flush();
+                oos.close();
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
 
 }

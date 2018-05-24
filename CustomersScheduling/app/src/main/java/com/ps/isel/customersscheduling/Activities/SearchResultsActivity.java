@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Model.Business;
+import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.java.dto.ServiceDto;
@@ -92,7 +93,9 @@ public class SearchResultsActivity extends AppCompatActivity
     private String businessName;
     private String businessLocation;
     private String businessCategory;
-    private boolean searchByLocation;
+    private boolean byFavourite;
+
+    private Favourite favourite;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -104,16 +107,15 @@ public class SearchResultsActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.filter_toolbar);
         lv      = (ListView) findViewById(R.id.resultsSearch);
         intent = getIntent();
-        searchByLocation = intent.getBooleanExtra("byLocation", false);
+        byFavourite = intent.getBooleanExtra("byFavourite", false);
 
-        if(searchByLocation)
+        if(byFavourite)
         {
-            businessLocation = intent.getStringExtra("location");
-            businessCategory = intent.getStringExtra("category");
-        //    customersSchedulingApp.getStoreByLocationAndCategory(
-        //            this::listViewCode,
-        //            businessLocation,
-        //            businessCategory);
+            favourite = (Favourite) intent.getSerializableExtra("favourite");
+           // customersSchedulingApp.getStoreByLocationAndCategory(
+           //         this::listViewCode,
+           //         favourite.getLocation(),
+           //         favourite.getCategory());
         }else
         {
             businessName = intent.getStringExtra("businessName");

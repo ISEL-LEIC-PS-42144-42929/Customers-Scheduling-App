@@ -127,23 +127,19 @@ public class MainActivity extends AppCompatActivity
         jsonBodyObj = new JSONObject();
 
 //TODO TESTE APAGAR QUANDO APLICAÇAO ESTIVER CONCLUIDA
-  //     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-  //     boolean a = prefs.getBoolean("firstTime2", false);
-  //     if (!prefs.getBoolean("firstTime2", false)) {
-  //         // <---- run your one time code here
-
-  //         File dir = getFilesDir();
-  //         File file = new File(dir, "favourites.txt");
-  //         boolean deleted = file.delete();
-
-
-
-  //         // mark first time has runned.
-  //         SharedPreferences.Editor editor = prefs.edit();
-  //         editor.putBoolean("firstTime", false);
-  //         editor.commit();
-  //     }
-//TODO------------------------------------------
+   //   SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+   //   boolean a = prefs.getBoolean("firstTime2", false);
+   //   if (!prefs.getBoolean("firstTime2", false)) {
+   //       // <---- run your one time code her
+   //       File dir = getFilesDir();
+   //       File file = new File(dir, "favourites.txt");
+   //       boolean deleted = file.delete();
+   //       // mark first time has runned.
+   //       SharedPreferences.Editor editor = prefs.edit();
+   //       editor.putBoolean("firstTime", false);
+   //       editor.commit();
+   //   }
+//T//DO------------------------------------------
 
 
         toolbar   = findViewById(R.id.app_bar);
@@ -299,8 +295,9 @@ public class MainActivity extends AppCompatActivity
 
     private void goToActivityWithExtra(Class c, String extra)
     {
+
         Intent intent = new Intent(this, c);
-        intent.putExtra("byLocation", false);
+        intent.putExtra("byFavourite", false);
         intent.putExtra("businessName", extra);
         startActivity(intent);
     }

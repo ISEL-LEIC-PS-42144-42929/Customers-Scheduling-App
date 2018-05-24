@@ -67,30 +67,16 @@ public class FavouritesActivity extends AppCompatActivity
         });
     }
 
-    public Favourite[] parseFavourites(String[] searchData)
-    {
-        Favourite[] favourites = new Favourite[searchData.length-1];
-
-        for (int i = 0; i < searchData.length-1 ; i++)
-        {
-            String[] aux = searchData[i].split("/");
-            favourites[i] = new Favourite(aux[0], aux[1], aux[2]);
-        }
-        return favourites;
-    }
 
     private Favourite[] readFromInternalStorageAndSeparate()
     {
         ArrayList<Favourite> objectsList = new ArrayList<>();
         Favourite[] fav = null;
-        Favourite obj = null;
         try {
             FileInputStream fi = new FileInputStream(new File(new File(getFilesDir(),"") + File.separator + FILE_NAME));
             ObjectInputStream oi = new ObjectInputStream(fi);
-            int a = fi.available();
             while(fi.available() > 0 ) {
                     objectsList.add((Favourite) oi.readObject());
-                a = fi.available();
             }
 
             fav = new Favourite[objectsList.size()];
@@ -108,7 +94,6 @@ public class FavouritesActivity extends AppCompatActivity
 
         }
         return fav;
-
     }
 }
 
