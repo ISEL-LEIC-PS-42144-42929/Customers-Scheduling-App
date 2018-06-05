@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+       // mAuth.addAuthStateListener(mAuthListener);
 
 
     }
@@ -146,9 +146,9 @@ public class MainActivity extends AppCompatActivity
         filterBtn = findViewById(R.id.filter);
         lv        = findViewById(R.id.alreadySubToList);
 
-        userEmail = getIntent().getStringExtra("userEmail");
+     //   userEmail = getIntent().getStringExtra("userEmail");
 
-        authenticationCode();
+     //   authenticationCode();
         toolBarCode();
         listViewCode(subbedBusiness);
 
