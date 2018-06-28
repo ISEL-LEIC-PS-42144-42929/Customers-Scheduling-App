@@ -43,6 +43,11 @@ public class FavouritesActivity extends AppCompatActivity
 
         favSearches = readFromInternalStorageAndSeparate();
 
+        if(favSearches == null)
+        {
+            favSearches = new Favourite[0];
+        }
+
         toolbar = findViewById(R.id.filter_toolbar);
         lv      = findViewById(R.id.listButtons);
 

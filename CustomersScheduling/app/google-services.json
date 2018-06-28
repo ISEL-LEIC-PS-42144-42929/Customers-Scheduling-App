@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "83972953232-4dpedskg3rhpbacd3as1pij759f3a3c1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ps.isel.customersscheduling",
+            "certificate_hash": "6402a7bb24f810de6f43bdfbfd5c998d76de2b76"
+          }
+        },
+        {
           "client_id": "83972953232-tfptaq384kdsdqm1t3ul60j0igshj0lk.apps.googleusercontent.com",
           "client_type": 3
         }

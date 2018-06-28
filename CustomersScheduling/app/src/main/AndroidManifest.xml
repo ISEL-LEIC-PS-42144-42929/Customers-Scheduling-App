@@ -15,11 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activities.BusinessActivity" />
         <activity android:name=".Activities.FilterActivity" />
@@ -37,12 +33,13 @@
         <activity android:name=".Activities.ServicesActivity" />
         <activity android:name=".Activities.SchedulesActivity" />
         <activity android:name=".Activities.MyBusinessActivity" />
-        <activity android:name=".Activities.AddWorkTimeActivity" />
-        <activity android:name=".Activities.AddStaffActivity" />
-        <activity android:name=".Activities.AddStaffScheduleActivity" />
         <activity android:name=".Activities.AddOtherEmpOrEndActivity" />
         <activity android:name=".Activities.SignInActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

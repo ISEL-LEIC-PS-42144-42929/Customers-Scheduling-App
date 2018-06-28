@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-       // mAuth.addAuthStateListener(mAuthListener);
+        mAuth.addAuthStateListener(mAuthListener);
 
 
     }
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity
 
         jsonBodyObj = new JSONObject();
 
+
 //TODO TESTE APAGAR QUANDO APLICAÇAO ESTIVER CONCLUIDA
    //   SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
    //   boolean a = prefs.getBoolean("firstTime2", false);
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 
      //   userEmail = getIntent().getStringExtra("userEmail");
 
-     //   authenticationCode();
+        authenticationCode();
         toolBarCode();
         listViewCode(subbedBusiness);
 
