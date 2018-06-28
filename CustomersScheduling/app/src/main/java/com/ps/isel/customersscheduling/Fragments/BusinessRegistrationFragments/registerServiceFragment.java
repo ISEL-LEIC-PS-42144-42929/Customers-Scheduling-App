@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Fragments;
+package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
 import android.net.Uri;

@@ -34,25 +34,12 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity
 {
-    private CustomersSchedulingApp customersSchedulingApp;
-
     private Toolbar toolbar;
     private SearchView searchView;
-    private ListView lv;
     private Button filterBtn;
-
-    private JSONObject jsonBodyObj;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-    private String userEmail;
-
-    private ServiceDto[] services = new ServiceDto[]
-            {
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
-            };
 
     @Override
     protected void onStart() {
@@ -62,58 +49,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private Business[] subbedBusiness = new Business[]
-            {
-                    new Business(
-                            12345,
-                            "O Barbas",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            3.2f,
-                            null,
-                            services)
-                    ,
-                    new Business(
-                            12345,
-                            "CUF",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            2.7f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "Barbeir",
-                            "rua do b",
-                            91111111,
-                            "loja do b",
-                            3.7f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "O spa da patri",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            4.2f,
-                            null,
-                            services),
-                    new Business(
-                            12345,
-                            "a tasca",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            4.8f,
-                            null,
-                            services)};
-
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -121,53 +56,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
-
-        jsonBodyObj = new JSONObject();
-
-
-//TODO TESTE APAGAR QUANDO APLICAÇAO ESTIVER CONCLUIDA
-   //   SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-   //   boolean a = prefs.getBoolean("firstTime2", false);
-   //   if (!prefs.getBoolean("firstTime2", false)) {
-   //       // <---- run your one time code her
-   //       File dir = getFilesDir();
-   //       File file = new File(dir, "favourites.txt");
-   //       boolean deleted = file.delete();
-   //       // mark first time has runned.
-   //       SharedPreferences.Editor editor = prefs.edit();
-   //       editor.putBoolean("firstTime", false);
-   //       editor.commit();
-   //   }
-//T//DO------------------------------------------
-
-
         toolbar   = findViewById(R.id.app_bar);
         filterBtn = findViewById(R.id.filter);
-        lv        = findViewById(R.id.alreadySubToList);
 
-     //   userEmail = getIntent().getStringExtra("userEmail");
+        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
+        {      //RTL to LTR
+            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+
+        //   userEmail = getIntent().getStringExtra("userEmail");
 
         authenticationCode();
         toolBarCode();
-        listViewCode(subbedBusiness);
-
-     //  try {
-     //      jsonBodyObj.put("email", "mawdklwd");
-     //      jsonBodyObj.put("name", "asasas");
-     //      jsonBodyObj.put("contact", "dawkjwdnkj");
-     //      jsonBodyObj.put("gender", true);
-     //  } catch (JSONException e) {
-     //      e.printStackTrace();
-     //  }
-
-
-
-
-        customersSchedulingApp
-                .getUserRegisteredBusiness(
-                        this::listViewCode, userEmail);
 
     }
 
@@ -262,28 +162,6 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 goToActivity(FilterActivity.class);
-            }
-        });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode(Business[] businesses)
-    {
-
-        lv.setAdapter(new CustomAdapterBusiness(this, businesses));
-
-        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
-        {      //RTL to LTR
-            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-                intent.putExtra("business", businesses[position]);
-                startActivity(intent);
             }
         });
     }

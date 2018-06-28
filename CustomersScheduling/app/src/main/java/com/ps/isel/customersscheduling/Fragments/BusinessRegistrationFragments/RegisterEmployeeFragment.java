@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Fragments;
+package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,32 +19,30 @@ import com.ps.isel.customersscheduling.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-public class BusinessScheduleFragment extends BaseFragment {
-
-    Fragment registerEmployeeFragment;
+public class RegisterEmployeeFragment extends BaseFragment
+{
+    Fragment registerEmployeeScheduleFragment;
     FragmentManager fragmentManager;
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
 
-    private EditText startHour;
-    private EditText startLunchHour;
-    private EditText endLunchHour;
-    private EditText endHour;
-    private Button registerScheduleBtn;
-
     private Context context;
 
-    public BusinessScheduleFragment() {
+    private EditText employeeName;
+    private EditText employeeEmail;
+    private EditText employeeContact;
+    private EditText employeeGender;
+    private Button registerEmployee;
+
+    public RegisterEmployeeFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_business_schedule, container, false);
+        return inflater.inflate(R.layout.fragment_register_employee, container, false);
     }
 
     @Override
@@ -57,41 +55,41 @@ public class BusinessScheduleFragment extends BaseFragment {
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
-        startHour           = view.findViewById(R.id.begginHour);
-        startLunchHour      = view.findViewById(R.id.begginLunch);
-        endLunchHour        = view.findViewById(R.id.endLunch);
-        endHour             = view.findViewById(R.id.endHour);
-        registerScheduleBtn = view.findViewById(R.id.registerSchedule);
+        employeeName        = view.findViewById(R.id.employeeName);
+        employeeEmail       = view.findViewById(R.id.employeeEmail);
+        employeeContact     = view.findViewById(R.id.employeeContact);
+        employeeGender      = view.findViewById(R.id.employeeGender);
+        registerEmployee    = view.findViewById(R.id.registerEmployee);
 
-        registerEmployeeFragment = new RegisterEmployeeFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
+        registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
 
         addListenertoButton();
+
     }
 
     private void addListenertoButton()
     {
-        registerScheduleBtn.setOnClickListener(new View.OnClickListener() {
+        registerEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-
                 try
                 {
-                    jsonBodyObj.put("key1", startHour.getText().toString());
-                    jsonBodyObj.put("key2", startLunchHour.getText().toString());
-                    jsonBodyObj.put("key3", endLunchHour.getText().toString());
-                    jsonBodyObj.put("key4", endHour.getText().toString());
+                    jsonBodyObj.put("key1", employeeName.getText().toString());
+                    jsonBodyObj.put("key2", employeeEmail.getText().toString());
+                    jsonBodyObj.put("key3", employeeContact.getText().toString());
+                    jsonBodyObj.put("key4", employeeGender.getText().toString());
                 }
                 catch (JSONException e)
                 {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                customersSchedulingApp.registerStoreSchedule(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeFragment);
-
+                customersSchedulingApp.registerEmployee(jsonBodyObj);
+                changeFragment(fragmentManager, R.id.businessData, registerEmployeeScheduleFragment);
             }
         });
+
     }
 }

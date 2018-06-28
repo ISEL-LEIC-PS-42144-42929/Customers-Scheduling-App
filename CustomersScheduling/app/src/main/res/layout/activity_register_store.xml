@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/businessData"
         android:layout_below="@+id/filter_toolbar"
-        class="com.ps.isel.customersscheduling.Fragments.BusinessDataFragment">
+        class="com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BusinessDataFragment">
     </fragment>
 
 </RelativeLayout>

@@ -11,40 +11,12 @@
         android:id="@+id/app_bar">
     </include>
 
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainActivityFragment"
         android:layout_below="@+id/app_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:gravity="center">
-
-        <ListView
-            android:id="@+id/alreadySubToList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignLeft="@+id/relativeLayout"
-            android:layout_alignStart="@+id/relativeLayout"
-            android:layout_alignTop="@+id/relativeLayout"
-            android:backgroundTint="@color/colorPrimary"
-            android:baselineAligned="false"
-            android:gravity="center"
-            android:paddingBottom="50dp"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            tools:ignore="NotSibling">
-        </ListView>
-
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </RelativeLayout>
+        class="com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.UserRegisteredBusinessFragment">
+    </fragment>
 
 </RelativeLayout>

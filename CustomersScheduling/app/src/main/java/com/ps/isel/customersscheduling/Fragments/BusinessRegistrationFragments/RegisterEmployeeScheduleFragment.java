@@ -1,7 +1,6 @@
-package com.ps.isel.customersscheduling.Fragments;
+package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.AddOtherEmpOrEndActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;

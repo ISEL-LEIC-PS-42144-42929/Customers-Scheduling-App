@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Fragments;
+package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -29,7 +29,7 @@ public class BaseFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_base, container, false);
     }
 
-     void changeFragment(FragmentManager fm, int id, Fragment fragment) {
+     protected void changeFragment(FragmentManager fm, int id, Fragment fragment) {
         transaction = fm.beginTransaction();
         transaction.replace(id, fragment);
         transaction.commit();

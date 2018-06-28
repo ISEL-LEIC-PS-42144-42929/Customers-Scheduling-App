@@ -33,7 +33,6 @@
         <activity android:name=".Activities.ServicesActivity" />
         <activity android:name=".Activities.SchedulesActivity" />
         <activity android:name=".Activities.MyBusinessActivity" />
-        <activity android:name=".Activities.AddOtherEmpOrEndActivity" />
         <activity android:name=".Activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
