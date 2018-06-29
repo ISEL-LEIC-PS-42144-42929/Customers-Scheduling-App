@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.FilterActivity" />
         <activity android:name=".Activities.SearchResultsActivity" />
         <activity android:name=".Activities.DefinitionsActivity" />
         <activity android:name=".Activities.FavouritesActivity" />

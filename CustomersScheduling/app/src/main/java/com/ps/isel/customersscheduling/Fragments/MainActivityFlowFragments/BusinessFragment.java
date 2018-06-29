@@ -96,6 +96,12 @@ public class BusinessFragment extends BaseFragment
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
@@ -138,12 +144,6 @@ public class BusinessFragment extends BaseFragment
     {
         signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE );   //change condition to without "!"
         //add Listener to button
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
     }
 
 
@@ -191,7 +191,7 @@ public class BusinessFragment extends BaseFragment
     private void toolBarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("teste");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(business.getName());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -201,11 +201,9 @@ public class BusinessFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-              //  Intent intent = new Intent(getContext().getApplicationContext(), DefinitionsActivity.class);
-              //  startActivity(intent);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", business));
             }
         });
-
 
     }
 

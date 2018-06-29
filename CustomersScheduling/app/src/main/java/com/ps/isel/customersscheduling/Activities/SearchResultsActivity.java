@@ -152,7 +152,7 @@ public class SearchResultsActivity extends AppCompatActivity
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),FilterActivity.class);
+              //  Intent intent = new Intent(getApplicationContext(),FilterActivity.class);
                 startActivity(intent);
             }
         });

@@ -21,15 +21,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.AboutActivity;
-import com.ps.isel.customersscheduling.Activities.DefinitionsActivity;
-import com.ps.isel.customersscheduling.Activities.FavouritesActivity;
-import com.ps.isel.customersscheduling.Activities.FilterActivity;
-import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
-import com.ps.isel.customersscheduling.Activities.PendentRequestsActivity;
-import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
-import com.ps.isel.customersscheduling.Activities.SchedulesActivity;
-import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
@@ -100,17 +91,16 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                             null,
                             services)};
     //-------------
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
 
-    Fragment businessFragment;
-    FragmentManager fragmentManager;
+    private Fragment businessFragment;
+    private FragmentManager fragmentManager;
 
     private ListView lv;
     private Toolbar toolbar;
     private SearchView searchView;
     private Button filterBtn;
-
-    private CustomersSchedulingApp customersSchedulingApp;
-    private JSONObject jsonBodyObj;
 
     private Context context;
 
@@ -252,7 +242,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             public void onClick(View view)
             {
                 //TODO fazer fragmento de filter e mudar
-                //changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new FilterFragment(), null, null));
             }
         });
     }
@@ -267,7 +257,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", businesses[position]));
             }
         });
     }
