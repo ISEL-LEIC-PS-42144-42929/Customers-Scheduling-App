@@ -84,7 +84,6 @@ public class ServiceFragment extends BaseFragment
                              Bundle savedInstanceState) {
         bundle = getArguments();
         business = (Business)bundle.getSerializable("business");
-
         return inflater.inflate(R.layout.fragment_service, container, false);
     }
 
@@ -96,7 +95,6 @@ public class ServiceFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
-
 
         calendarView       = view.findViewById(R.id.calendarView);
         mRecyclerView      = view.findViewById(R.id.hrlist_recycler_view);

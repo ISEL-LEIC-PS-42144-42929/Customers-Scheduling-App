@@ -46,8 +46,9 @@ public class FilterFragment extends BaseFragment {
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
 
-    private Fragment serviceFragment;
     private FragmentManager fragmentManager;
+    private Fragment favouriteFragment;
+
 
     private Context context;
 
@@ -97,6 +98,9 @@ public class FilterFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity().getApplicationContext();
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+        favouriteFragment = new SearchResultsFragment();
 
         toolbar        = view.findViewById(R.id.app_bar);
         searchName     = view.findViewById(R.id.searchName);
@@ -170,11 +174,8 @@ public class FilterFragment extends BaseFragment {
             @Override
             public void onClick(View view)
             {
-              //  Intent intent = new Intent(getApplication(), SearchResultsActivity.class);
-              //  intent.putExtra("byFavourite", true);
-              //  intent.putExtra("Favourite", new Favourite(searchName.getText().toString(), location, category));
-              //  startActivity(intent);
-               // changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+                addMultBundleToFragment(favouriteFragment,"byFavourite",true);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(favouriteFragment, "Favourite", new Favourite(searchName.getText().toString(), location, category)));
             }
         });
 

@@ -23,9 +23,11 @@ import java.io.Serializable;
 public class BaseFragment extends Fragment {
 
     FragmentTransaction transaction;
+    Bundle bundle;
 
     public BaseFragment() {
         // Required empty public constructor
+        bundle = new Bundle();
     }
 
 
@@ -37,10 +39,14 @@ public class BaseFragment extends Fragment {
 
     protected <T>Fragment addBundleToFragment(Fragment fragment, String tag, T business)
     {
-        Bundle bundle=new Bundle();
         bundle.putSerializable(tag, (Serializable) business);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    protected <T>void addMultBundleToFragment(Fragment fragment, String tag, T obj)
+    {
+        bundle.putSerializable(tag, (Serializable) obj);
     }
 
 }

@@ -41,8 +41,8 @@ public class BusinessFragment extends BaseFragment
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
 
-    Fragment serviceFragment;
-    FragmentManager fragmentManager;
+    private Fragment serviceFragment;
+    private FragmentManager fragmentManager;
 
     private Context context;
 
@@ -109,10 +109,10 @@ public class BusinessFragment extends BaseFragment
         bundle = getArguments();
         business = (Business)bundle.getSerializable("business");
 
-        context = getActivity().getApplicationContext();
-
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
+        context = getActivity().getApplicationContext();
 
         toolbar     = view.findViewById(R.id.app_bar);
         name        = view.findViewById(R.id.name);
