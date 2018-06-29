@@ -16,6 +16,9 @@
     <style name="CustomToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorPrimary</item>
     </style>
+    <style name="CustomToolbarStyle2" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/cardview_light_background</item>
+    </style>
 
     <!-- Pop-up Style. -->
     <style name="PopUpStyle" parent="Theme.AppCompat.Light.NoActionBar">

@@ -15,9 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".Activities.BusinessActivity" />
         <activity android:name=".Activities.FilterActivity" />
         <activity android:name=".Activities.SearchResultsActivity" />
         <activity android:name=".Activities.DefinitionsActivity" />
@@ -25,20 +28,17 @@
         <activity android:name=".Activities.RegisterStoreActivity" />
         <activity android:name=".Activities.PendentRequestsActivity" />
         <activity android:name=".Activities.BaseLayoutsActivities.BaseActivityWithOnlyBackArrow" />
-        <activity android:name=".Activities.DefinitionsActivities.EditProfileActivity" />
+        <activity android:name=".Activities.DefinitionsActivities.EditProfileActivity" >
+        </activity>
+
         <activity android:name=".Activities.DefinitionsActivities.ChangeEmailActivity" />
         <activity android:name=".Activities.DefinitionsActivities.ChangePasswordActivity" />
         <activity android:name=".Activities.DefinitionsActivities.EditNotificationsActivity" />
         <activity android:name=".Activities.AboutActivity" />
-        <activity android:name=".Activities.ServicesActivity" />
         <activity android:name=".Activities.SchedulesActivity" />
         <activity android:name=".Activities.MyBusinessActivity" />
         <activity android:name=".Activities.SignInActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

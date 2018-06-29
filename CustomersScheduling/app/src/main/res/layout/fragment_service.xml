@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    tools:context=".Fragments.MainActivityFlowFragments.ServiceFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_toolbar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout4">
+
+        <TextView
+            android:id="@+id/serviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_below="@+id/filter_toolbar"/>
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/employeesDropDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/serviceName"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/chooseEmployee"
+            android:textColorHint="#05ab9a">
+
+        </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/employeesDropDown"
+            android:layout_marginBottom="61dp">
+        </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+
+        <LinearLayout
+            android:id="@+id/hours_list"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/calendarView"
+            android:layout_centerHorizontal="true">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/hrlist_recycler_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+
+                    android:scrollbars="horizontal" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/reserveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/hours_list"
+            android:layout_marginTop="70dp"
+            android:text="Register"
+            android:textSize="20dp">
+
+        </Button>
+
+    </RelativeLayout>
+
+</FrameLayout>

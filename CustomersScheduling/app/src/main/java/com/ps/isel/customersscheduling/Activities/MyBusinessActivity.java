@@ -85,9 +85,9 @@ public class MyBusinessActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-                intent.putExtra("business", businesses[position]);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
+                //intent.putExtra("business", businesses[position]);
+                //startActivity(intent);
             }
         });
     }

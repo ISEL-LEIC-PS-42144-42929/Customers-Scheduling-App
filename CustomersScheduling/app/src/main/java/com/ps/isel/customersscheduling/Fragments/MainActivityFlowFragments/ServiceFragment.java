@@ -1,13 +1,18 @@
-package com.ps.isel.customersscheduling.Activities;
+package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,22 +26,31 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.Date;
 
-public class ServicesActivity extends AppCompatActivity
+public class ServiceFragment extends BaseFragment
 {
-    private CustomersSchedulingApp customersSchedulingApp;
+    //HARDCODED
+    private String[] hardcodedEmployesNames = {"Any", "Paulo", "João", "Francisco"};
+    private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
+    //-----------------
 
-    private Toolbar toolbar;
-    private TextView serviceName;
-    private Button registerRequestBtn;
-    private Intent intent;
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
+
+    Fragment businessFragment;
+    FragmentManager fragmentManager;
+
+    private Context context;
 
     private MaterialCalendarView calendarView;
     private MaterialBetterSpinner spinner;
@@ -45,62 +59,71 @@ public class ServicesActivity extends AppCompatActivity
     private RecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
+    private Button registerRequestBtn;
+    private TextView serviceName;
+    private Bundle bundle;
+
     private Date currentTime;
     private Calendar maxDate;
-    private Business business;
-    private String servName;
-    private String[] hardcodedEmployesNames = {"Any", "Paulo", "João", "Francisco"};
-    private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
-
     private String service;
     private String employee;
     private String temporaryday;
-
     private String dateSchedule;
     private String temporaryHour;
     private String hour;
+    private String servName;
+    private Business business;
+
+    public ServiceFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_services);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        bundle = getArguments();
+        business = (Business)bundle.getSerializable("business");
 
-        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
+        return inflater.inflate(R.layout.fragment_service, container, false);
+    }
 
-        calendarView       = findViewById(R.id.calendarView);
-        toolbar            = findViewById(R.id.filter_toolbar);
-        serviceName        = findViewById(R.id.serviceName);
-        mRecyclerView      = findViewById(R.id.hrlist_recycler_view);
-        registerRequestBtn = findViewById(R.id.reserveButton);
-        spinner            = findViewById(R.id.employeesDropDown);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        context = getActivity().getApplicationContext();
 
-        intent = getIntent();
-        business = (Business)intent.getSerializableExtra("business");
-        servName = intent.getStringExtra("serviceName");
+        customersSchedulingApp = ((CustomersSchedulingApp)context);
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
+
+        calendarView       = view.findViewById(R.id.calendarView);
+        mRecyclerView      = view.findViewById(R.id.hrlist_recycler_view);
+        registerRequestBtn = view.findViewById(R.id.reserveButton);
+        spinner            = view.findViewById(R.id.employeesDropDown);
+        serviceName        = view.findViewById(R.id.serviceName);
+
+        //business = (Business)intent.getSerializableExtra("business");
+        //servName = intent.getStringExtra("serviceName");
         serviceName.setText(servName);
 
-        constructToolbarAndAddListeners();
+
 
         //  customersSchedulingApp.getStoreEmployee(
         //          this::dropDownButtonCode,
         //          business.getName()
         //  );
 
-        dropDownButtonCode(hardcodedEmployesNames);
         setDateToCalendar();
+        dropDownButtonCode(hardcodedEmployesNames);
         calendarViewCode();
         recyclerViewCode(hardcodedHoursAvaiable);
         addListenerToButtons();
 
-    }
 
-    private void setDateToCalendar()
-    {
-        currentTime=new Date();
-        maxDate = Calendar.getInstance();
-        maxDate.setTime(currentTime);
-        maxDate.add(Calendar.MONTH, 1);
+        fragmentManager = getActivity().getSupportFragmentManager();
+        businessFragment = new BusinessFragment();
     }
 
     private void calendarViewCode()
@@ -129,7 +152,7 @@ public class ServicesActivity extends AppCompatActivity
     private void dropDownButtonCode(String[] staff)
     {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
+                getActivity(),
                 android.R.layout.simple_dropdown_item_1line,
                 staff);
 
@@ -139,23 +162,6 @@ public class ServicesActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 employee = staff[position];
-            }
-        });
-    }
-
-    private void constructToolbarAndAddListeners()
-    {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(business.getName());
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-                intent.putExtra("business", business);
-                startActivity(intent);
             }
         });
     }
@@ -182,18 +188,20 @@ public class ServicesActivity extends AppCompatActivity
                 hour = temporaryHour;
 
                 //TODO send request
-                Toast.makeText(getBaseContext(),(String)(service + " with "
-                                + employee+ " at " + dateSchedule + " at " + " at " + hour  +"Scheduled!!"),
-                        Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(context,(String)(service + " with "
+              //                  + employee+ " at " + dateSchedule + " at " + " at " + hour  +"Scheduled!!"),
+              //          Toast.LENGTH_SHORT).show();
+//
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", business));
+
             }
         });
     }
 
-
     private void recyclerViewCode(String[] hoursAvailables)
     {
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter       = new RecyclerViewAdapter(hoursAvailables);
 
@@ -217,6 +225,14 @@ public class ServicesActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private void setDateToCalendar()
+    {
+        currentTime=new Date();
+        maxDate = Calendar.getInstance();
+        maxDate.setTime(currentTime);
+        maxDate.add(Calendar.MONTH, 1);
     }
 
 }

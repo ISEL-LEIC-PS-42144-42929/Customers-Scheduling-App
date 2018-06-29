@@ -19,7 +19,6 @@
             android:onClick="goToFilterActivity"
             android:layout_gravity="right"
             tools:ignore="OnClick" />
-
-</RelativeLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

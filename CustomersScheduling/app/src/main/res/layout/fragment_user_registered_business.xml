@@ -6,13 +6,20 @@
     android:background="@color/cardview_light_background"
     tools:context=".Fragments.MainActivityFlowFragments.UserRegisteredBusinessFragment">
 
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+        <include
+         android:id="@+id/filter_toolbar"
+         layout="@layout/toolbar">
+        </include>
+
         <ListView
             android:id="@+id/alreadySubToList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignLeft="@+id/relativeLayout"
-            android:layout_alignStart="@+id/relativeLayout"
-            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_below="@+id/filter_toolbar"
             android:backgroundTint="@color/colorPrimary"
             android:baselineAligned="false"
             android:layout_marginTop="28dp"
@@ -23,4 +30,5 @@
             tools:ignore="NotSibling">
         </ListView>
 
+     </RelativeLayout>
 </FrameLayout>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    tools:context=".Fragments.MainActivityFlowFragments.BusinessFragment">
+
+    <include
+        layout="@layout/toolbarwithbackarrow"
+        android:id="@+id/app_bar">
+    </include>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_bar">
+
+        <Button
+            android:id="@+id/signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="19dp"
+            android:visibility="invisible"
+            android:text="Signin" />
+
+
+        <ImageView
+            android:id="@+id/busImage"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/images"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/busImage"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/busImage"/>
+
+        <TextView
+            android:id="@+id/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address"
+            android:layout_toRightOf="@+id/busImage"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact"
+            android:layout_toRightOf="@+id/busImage"/>
+
+        <ImageView
+            android:id="@+id/imgBack1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_alignLeft="@+id/busImage"
+            android:src="@android:drawable/btn_star" />
+
+
+        <ImageView
+            android:id="@+id/imgIcon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_alignLeft="@+id/busImage"
+            android:src="@drawable/clipdrawable" />
+
+        <ImageView
+            android:id="@+id/imgBack2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgBack1"
+            android:src="@android:drawable/btn_star" />
+
+        <ImageView
+            android:id="@+id/imgIcon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgBack1"
+            android:src="@drawable/clipdrawable" />
+
+        <ImageView
+            android:id="@+id/imgBack3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgBack2"
+            android:src="@android:drawable/btn_star" />
+
+        <ImageView
+            android:id="@+id/imgIcon3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgBack2"
+            android:src="@drawable/clipdrawable" />
+
+        <ImageView
+            android:id="@+id/imgBack4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgIcon3"
+            android:src="@android:drawable/btn_star" />
+
+        <ImageView
+            android:id="@+id/imgIcon4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgIcon3"
+            android:src="@drawable/clipdrawable" />
+
+        <ImageView
+            android:id="@+id/imgBack5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgBack4"
+            android:src="@android:drawable/btn_star" />
+
+        <ImageView
+            android:id="@+id/imgIcon5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/busImage"
+            android:layout_toRightOf="@+id/imgBack4"
+            android:src="@drawable/clipdrawable" />
+
+    <TextView
+        android:id="@+id/serv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgBack1"
+        android:layout_alignLeft="@+id/imgBack1"
+        android:layout_marginLeft="5dp"
+        android:clickable="false"
+        android:text="@string/services"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgBack1"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:clickable="false"
+        android:text="@string/price"
+        android:textSize="20dp" />
+
+        <include
+            android:id="@+id/services"
+            android:layout_below="@+id/serv"
+            layout="@layout/listview"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+        </include>
+
+    </RelativeLayout>
+
+</RelativeLayout>

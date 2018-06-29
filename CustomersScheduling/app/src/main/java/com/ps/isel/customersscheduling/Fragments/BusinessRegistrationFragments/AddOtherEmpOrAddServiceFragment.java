@@ -45,7 +45,7 @@ public class AddOtherEmpOrAddServiceFragment extends BaseFragment
 
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeFragment = new RegisterEmployeeFragment();
-        registerServiceFragment = new registerServiceFragment();
+        registerServiceFragment = new RegisterServiceFragment();
 
         addListenertoButton();
     }

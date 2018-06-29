@@ -1,25 +1,38 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.BusinessActivity;
+import com.ps.isel.customersscheduling.Activities.AboutActivity;
+import com.ps.isel.customersscheduling.Activities.DefinitionsActivity;
+import com.ps.isel.customersscheduling.Activities.FavouritesActivity;
+import com.ps.isel.customersscheduling.Activities.FilterActivity;
+import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
+import com.ps.isel.customersscheduling.Activities.PendentRequestsActivity;
+import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
+import com.ps.isel.customersscheduling.Activities.SchedulesActivity;
+import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BusinessScheduleFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
@@ -92,6 +105,9 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     FragmentManager fragmentManager;
 
     private ListView lv;
+    private Toolbar toolbar;
+    private SearchView searchView;
+    private Button filterBtn;
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
@@ -103,11 +119,60 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_user_registered_business, container, false);
     }
+
+   @Override
+   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+       inflater.inflate(R.menu.menu, menu);
+       MenuItem item = menu.findItem(R.id.menu_search);
+       searchView = (SearchView) item.getActionView();
+       searchBarCode();
+       super.onCreateOptionsMenu(menu, inflater);
+   }
+
+
+
+      @Override
+      public boolean onOptionsItemSelected(MenuItem item) {
+
+          switch(item.getItemId())
+          {
+              // TODO later(which menu item)
+              case (R.id.registerStore):
+                  //goToActivity(RegisterStoreActivity.class);
+                  break;
+              case (R.id.myStores):
+                  //goToActivity(MyBusinessActivity.class);
+                  break;
+              case (R.id.scheduled):
+                  //goToActivity(SchedulesActivity.class);
+                  break;
+              case (R.id.pendentRequests):
+                  //goToActivity(PendentRequestsActivity.class);
+                  break;
+              case (R.id.definitions):
+                  //goToActivity(DefinitionsActivity.class);
+                  break;
+              case (R.id.Favorites):
+                  //goToActivity(FavouritesActivity.class);
+                  break;
+              case (R.id.About):
+                  //goToActivity(AboutActivity.class);
+                  break;
+          }
+          return super.onOptionsItemSelected(item);
+      }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -117,6 +182,10 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         lv        = view.findViewById(R.id.alreadySubToList);
+        toolbar   = view.findViewById(R.id.filter_toolbar);
+        filterBtn = view.findViewById(R.id.filter);
+
+        toolBarCode();
         listViewCode(subbedBusiness);// Remove after App done!!
 
         //userEmail = getIntent().getStringExtra("userEmail");
@@ -131,7 +200,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                         this::listViewCode, "userEmail");
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        businessFragment = new BusinessScheduleFragment();
+        businessFragment = new BusinessFragment();
 
 
         //TODO TESTE APAGAR QUANDO APLICAÇAO ESTIVER CONCLUIDA
@@ -151,6 +220,43 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
     }
 
+    protected void searchBarCode() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String s)
+            {
+
+                //TODO fazer fragmento de filter e mudar
+                //changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+    }
+
+    private void toolBarCode()
+    {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(null);
+
+        filterBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //TODO fazer fragmento de filter e mudar
+                //changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+            }
+        });
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void listViewCode(Business[] businesses)
     {
@@ -161,11 +267,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                changeFragment(fragmentManager, R.id.filter_toolbar, businessFragment);
-
-               // Intent intent = new Intent(context, BusinessActivity.class);
-               // intent.putExtra("business", businesses[position]);
-               // startActivity(intent);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
             }
         });
     }
