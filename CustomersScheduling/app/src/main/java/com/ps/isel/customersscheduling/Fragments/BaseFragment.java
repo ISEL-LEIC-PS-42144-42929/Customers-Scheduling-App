@@ -49,4 +49,6 @@ public class BaseFragment extends Fragment {
         bundle.putSerializable(tag, (Serializable) obj);
     }
 
+
+
 }

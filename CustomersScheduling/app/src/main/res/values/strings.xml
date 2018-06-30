@@ -43,7 +43,9 @@
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
     <string name="registerAnotherEmployee">Register Another Employee</string>
+    <string name="registerAnotherService">Register Another Service</string>
     <string name="endRegistration">End Registration</string>
+    <string name="endServiceRegistration">End Service Registration</string>
     <string name="logout">Logout</string>
     <string name="registerSchedule">Register Schedule</string>
     <string name="registerService">Register Service</string>

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class RegisterServiceFragment extends BaseFragment
     private EditText serviceName;
     private EditText servicePrice;
     private Button registerService;
-
+    private Toolbar toolbar;
 
     public RegisterServiceFragment() {
         // Required empty public constructor
@@ -57,6 +59,7 @@ public class RegisterServiceFragment extends BaseFragment
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
+        toolbar                  = view.findViewById(R.id.app_bar);
         serviceName        = view.findViewById(R.id.serviceName);
         servicePrice       = view.findViewById(R.id.servicePrice);
         registerService   = view.findViewById(R.id.registerService);
@@ -64,7 +67,24 @@ public class RegisterServiceFragment extends BaseFragment
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
 
+        toolbarCode();
         addListenertoButton();
+    }
+
+    private void toolbarCode()
+    {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Service");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //   Intent intent = new Intent(getActivity(), MainActivity.class);
+                //   startActivity(intent);
+            }
+        });
     }
 
     private void addListenertoButton()
@@ -85,6 +105,7 @@ public class RegisterServiceFragment extends BaseFragment
                     e.printStackTrace();
                 }
                // customersSchedulingApp.registerService(jsonBodyObj);
+
                 //TODO change to userBusiness
                 changeFragment(fragmentManager, R.id.businessData, new AddOtherServiceOrEndFragment());
             }

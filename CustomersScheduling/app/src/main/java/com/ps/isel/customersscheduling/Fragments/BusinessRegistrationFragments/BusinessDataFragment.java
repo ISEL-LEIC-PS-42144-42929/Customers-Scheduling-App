@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +45,10 @@ public class BusinessDataFragment extends BaseFragment {
     private final int IMAGE_REQUEST_CODE = 20;
     private final int CAMERA_REQUEST = 10;
 
-    Fragment registerBusinessScheduleFragment;
-    FragmentManager fragmentManager;
+    private Fragment registerBusinessScheduleFragment;
+    private FragmentManager fragmentManager;
 
+    private Toolbar toolbar;
     private EditText storeName;
     private EditText storeNif;
     private EditText storeContact;
@@ -74,6 +77,7 @@ public class BusinessDataFragment extends BaseFragment {
 
         context = getActivity().getApplicationContext();
 
+        toolbar                  = view.findViewById(R.id.app_bar);
         storeName                = view.findViewById(R.id.name);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
@@ -93,6 +97,7 @@ public class BusinessDataFragment extends BaseFragment {
         registerBusinessScheduleFragment = new BusinessScheduleFragment();
 
         dropDownButtonCode();
+        toolbarCode();
         addListenertoButton();
     }
 
@@ -100,6 +105,22 @@ public class BusinessDataFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_business_data, container, false);
+    }
+
+    private void toolbarCode()
+    {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Business");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //   Intent intent = new Intent(getActivity(), MainActivity.class);
+                //   startActivity(intent);
+            }
+        });
     }
 
     private void dropDownButtonCode()

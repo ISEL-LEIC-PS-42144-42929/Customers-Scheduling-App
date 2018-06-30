@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ public class BusinessScheduleFragment extends BaseFragment {
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
 
+    private Toolbar toolbar;
     private EditText startHour;
     private EditText startLunchHour;
     private EditText endLunchHour;
@@ -58,6 +61,7 @@ public class BusinessScheduleFragment extends BaseFragment {
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
+        toolbar                  = view.findViewById(R.id.app_bar);
         startHour           = view.findViewById(R.id.begginHour);
         startLunchHour      = view.findViewById(R.id.begginLunch);
         endLunchHour        = view.findViewById(R.id.endLunch);
@@ -67,7 +71,24 @@ public class BusinessScheduleFragment extends BaseFragment {
         registerEmployeeFragment = new RegisterEmployeeFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
 
+        toolbarCode();
         addListenertoButton();
+    }
+
+    private void toolbarCode()
+    {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Business Schedule");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //   Intent intent = new Intent(getActivity(), MainActivity.class);
+                //   startActivity(intent);
+            }
+        });
     }
 
     private void addListenertoButton()
