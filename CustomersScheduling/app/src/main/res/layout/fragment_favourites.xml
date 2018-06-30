@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ps.isel.customersscheduling.Activities.FavouritesActivity">
+    android:background="@color/cardview_light_background"
+    tools:context=".Fragments.MainActivityFlowFragments.FavouritesFragment">
 
     <include
-        android:id="@+id/filter_toolbar"
+        android:id="@+id/app_bar"
         layout="@layout/toolbarwithbackarrow"></include>
 
     <LinearLayout

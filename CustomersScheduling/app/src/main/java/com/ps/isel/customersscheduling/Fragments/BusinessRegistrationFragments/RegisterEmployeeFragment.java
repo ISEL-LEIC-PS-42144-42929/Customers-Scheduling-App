@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;

@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +20,7 @@ import android.widget.ListView;
 import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
@@ -113,7 +112,7 @@ public class SearchResultsFragment extends BaseFragment {
 
     private boolean byFavourite;
     private Favourite favourite;
-    private Business business;
+    private Business[] business;
 
     public SearchResultsFragment() {
         // Required empty public constructor
@@ -157,6 +156,8 @@ public class SearchResultsFragment extends BaseFragment {
         toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         lv      = (ListView) view.findViewById(R.id.resultsSearch);
 
+        fragmentManager = getActivity().getSupportFragmentManager();
+
         toolbarCode();
         listViewCode(resultsBusiness);
 
@@ -169,7 +170,7 @@ public class SearchResultsFragment extends BaseFragment {
             //         favourite.getCategory());
         }else
         {
-            business = (Business) bundle.getSerializable("business");
+            business = (Business[]) bundle.getSerializable("business");
             //    customersSchedulingApp.getSearchedStoreByName(
             //            this::listViewCode,
             //            business.getName());
@@ -186,9 +187,7 @@ public class SearchResultsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                //  Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-                // intent.putExtra("business", resultsBusiness[position]);
-                // startActivity(intent);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", businesses[position]));
             }
         });
     }

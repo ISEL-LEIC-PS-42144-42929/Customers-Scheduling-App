@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
+package com.ps.isel.customersscheduling.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -31,20 +31,20 @@ public class BaseFragment extends Fragment {
     }
 
 
-     protected void changeFragment(FragmentManager fm, int id, Fragment fragment) {
+     public void changeFragment(FragmentManager fm, int id, Fragment fragment) {
         transaction = fm.beginTransaction();
         transaction.replace(id, fragment);
         transaction.commit();
     }
 
-    protected <T>Fragment addBundleToFragment(Fragment fragment, String tag, T business)
+    public <T>Fragment addBundleToFragment(Fragment fragment, String tag, T business)
     {
         bundle.putSerializable(tag, (Serializable) business);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    protected <T>void addMultBundleToFragment(Fragment fragment, String tag, T obj)
+    public <T>void addMultBundleToFragment(String tag, T obj)
     {
         bundle.putSerializable(tag, (Serializable) obj);
     }

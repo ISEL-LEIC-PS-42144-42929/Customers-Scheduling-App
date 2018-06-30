@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.AppendingObjectOutputStream;
@@ -77,7 +77,9 @@ public class FilterFragment extends BaseFragment {
         {      //RTL to LTR
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
+
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -174,8 +176,12 @@ public class FilterFragment extends BaseFragment {
             @Override
             public void onClick(View view)
             {
-                addMultBundleToFragment(favouriteFragment,"byFavourite",true);
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(favouriteFragment, "Favourite", new Favourite(searchName.getText().toString(), location, category)));
+                addMultBundleToFragment("byFavourite",true);
+                changeFragment(fragmentManager,
+                        R.id.mainActivityFragment,
+                        addBundleToFragment(new SearchResultsFragment(),
+                                "Favourite",
+                                new Favourite(searchName.getText().toString(), location, category)));
             }
         });
 
@@ -190,9 +196,9 @@ public class FilterFragment extends BaseFragment {
                     Toast.makeText(context,"Please insert all values", Toast.LENGTH_LONG).show();
                 }else {
                     saveInInternalStorage();
-                  //  Intent intent = new Intent(context, FavouritesActivity.class);
-                  //  startActivity(intent);
-                    // changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+                    changeFragment(fragmentManager,
+                            R.id.mainActivityFragment,
+                            addBundleToFragment(new FavouritesFragment(), null, null));
                 }
             }
         });

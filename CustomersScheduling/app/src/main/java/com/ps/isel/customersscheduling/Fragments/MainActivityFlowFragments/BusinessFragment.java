@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,12 +9,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,10 +22,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.DefinitionsActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
@@ -109,10 +105,10 @@ public class BusinessFragment extends BaseFragment
         bundle = getArguments();
         business = (Business)bundle.getSerializable("business");
 
+        context = getActivity().getApplicationContext();
+
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
-
-        context = getActivity().getApplicationContext();
 
         toolbar     = view.findViewById(R.id.app_bar);
         name        = view.findViewById(R.id.name);

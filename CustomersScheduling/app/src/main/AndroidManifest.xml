@@ -21,9 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SearchResultsActivity" />
         <activity android:name=".Activities.DefinitionsActivity" />
-        <activity android:name=".Activities.FavouritesActivity" />
         <activity android:name=".Activities.RegisterStoreActivity" />
         <activity android:name=".Activities.PendentRequestsActivity" />
         <activity android:name=".Activities.BaseLayoutsActivities.BaseActivityWithOnlyBackArrow" />

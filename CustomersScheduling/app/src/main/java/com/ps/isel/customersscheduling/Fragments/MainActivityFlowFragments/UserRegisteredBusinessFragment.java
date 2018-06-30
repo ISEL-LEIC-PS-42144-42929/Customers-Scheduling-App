@@ -23,7 +23,7 @@ import android.widget.ListView;
 import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
@@ -219,7 +219,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             {
 
                 //TODO fazer fragmento de filter e mudar
-                //changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", businesses[position]));
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "business", subbedBusiness));
                 return false;
             }
 

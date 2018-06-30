@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
+import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.BusinessFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 
@@ -31,6 +36,9 @@ public class CustomAdapterFavourites extends BaseAdapter
 {
     private final String FILE_NAME = "favourites.txt";
 
+    private FragmentManager fragmentManager;
+    private BaseFragment fragment;
+
     private Favourite[] favourites;
 
     private View row;
@@ -39,12 +47,14 @@ public class CustomAdapterFavourites extends BaseAdapter
     private Button deleteFavBtn;
     private Button goToFavBtn;
 
-    public CustomAdapterFavourites(Activity context, Favourite[] favourites)
+    public CustomAdapterFavourites(Activity context, Favourite[] favourites, Fragment fragment)
     {
         this.favourites = favourites;
         this.name = name;
         this.context = context;
 
+        fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+        this.fragment = (BaseFragment) fragment;
     }
 
     @Override
@@ -84,14 +94,17 @@ public class CustomAdapterFavourites extends BaseAdapter
 
     private void addListenersToButtons(final int position)
     {
+
         deleteFavBtn.setOnClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
             readFromInternalStorageAndDelete(favourites[position]);
-            context.startActivity(context.getIntent());
-
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.detach(fragment);
+            fragmentTransaction.attach(fragment);
+            fragmentTransaction.commit();
         }
     });
 
@@ -100,11 +113,12 @@ public class CustomAdapterFavourites extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                //Refresh Activity
-                Intent intent = new Intent(context, SearchResultsActivity.class);
-                intent.putExtra("byFavourite", true);
-                intent.putExtra("favourite", favourites[position]);
-                context.startActivity(intent);
+                fragment.addMultBundleToFragment("byFavourite", true);
+                ;
+                fragment.changeFragment(fragmentManager,
+                        R.id.mainActivityFragment,
+                        fragment.addBundleToFragment(
+                                new SearchResultsFragment(),"Favourite", favourites[position]));
             }
         });
 

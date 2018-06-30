@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Activities.SearchResultsActivity;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
@@ -95,10 +94,10 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
                 //Todo Enviar ao servidor e apresentar resultados do request
 
                 //Refresh Activity
-                Intent intent = new Intent(context, SearchResultsActivity.class);
-                intent.putExtra("business", ownerBusiness[position]);
-                context.startActivity(intent);
-
+             //   Intent intent = new Intent(context, SearchResultsActivity.class);
+              //  intent.putExtra("business", ownerBusiness[position]);
+              //  context.startActivity(intent);
+//
             }
         });
 
