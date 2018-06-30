@@ -83,10 +83,10 @@ public class FavouritesFragment extends BaseFragment
         lv      = view.findViewById(R.id.listButtons);
 
         lv.setAdapter(new CustomAdapterFavourites(getActivity(),favSearches, this));
-        constructToolbarAndAddListeners();
+        toolbarCode();
     }
 
-    private void constructToolbarAndAddListeners()
+    private void toolbarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

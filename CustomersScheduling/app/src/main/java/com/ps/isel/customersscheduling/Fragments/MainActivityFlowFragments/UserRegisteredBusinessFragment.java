@@ -159,7 +159,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                   goToActivity(MyBusinessActivity.class);
                   break;
               case (R.id.scheduled):
-                  //goToActivity(SchedulesActivity.class);
+                  changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment());
                   break;
               case (R.id.pendentRequests):
                   changeFragment(fragmentManager,R.id.mainActivityFragment,new PendentRequestsFragment());

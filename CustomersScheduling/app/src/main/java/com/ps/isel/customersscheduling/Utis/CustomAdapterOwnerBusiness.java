@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
+import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
 import com.ps.isel.customersscheduling.Model.Business;

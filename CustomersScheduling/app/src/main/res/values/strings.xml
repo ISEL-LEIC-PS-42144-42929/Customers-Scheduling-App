@@ -47,4 +47,5 @@
     <string name="logout">Logout</string>
     <string name="registerSchedule">Register Schedule</string>
     <string name="registerService">Register Service</string>
+    <string name="deleteService">Delete Service</string>
 </resources>

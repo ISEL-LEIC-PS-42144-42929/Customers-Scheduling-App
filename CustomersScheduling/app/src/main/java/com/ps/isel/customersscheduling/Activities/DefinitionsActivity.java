@@ -43,7 +43,7 @@ public class DefinitionsActivity extends BaseActivityWithOnlyBackArrow
        getSupportActionBar().setTitle("Definitions");
 
        lv = (ListView) findViewById(R.id.listButtons);
-       lv.setAdapter(new CustomAdapterButtons(subbedBusiness, this, goToOnClick, customersSchedulingApp) );
+       //lv.setAdapter(new CustomAdapterButtons(subbedBusiness, this, goToOnClick, customersSchedulingApp) );
 
    }
 

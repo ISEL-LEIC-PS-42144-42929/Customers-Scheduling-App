@@ -37,9 +37,9 @@ public class BaseFragment extends Fragment {
         transaction.commit();
     }
 
-    public <T>Fragment addBundleToFragment(Fragment fragment, String tag, T business)
+    public <T>Fragment addBundleToFragment(Fragment fragment, String tag, T obj)
     {
-        bundle.putSerializable(tag, (Serializable) business);
+        bundle.putSerializable(tag, (Serializable) obj);
         fragment.setArguments(bundle);
         return fragment;
     }

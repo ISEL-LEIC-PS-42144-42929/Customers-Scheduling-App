@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -85,7 +86,7 @@ public class RegisterServiceFragment extends BaseFragment
                 }
                // customersSchedulingApp.registerService(jsonBodyObj);
                 //TODO change to userBusiness
-               // changeFragment(fragmentManager, R.id.businessData, registerEmployeeScheduleFragment);
+                changeFragment(fragmentManager, R.id.businessData, new AddOtherServiceOrEndFragment());
             }
         });
     }

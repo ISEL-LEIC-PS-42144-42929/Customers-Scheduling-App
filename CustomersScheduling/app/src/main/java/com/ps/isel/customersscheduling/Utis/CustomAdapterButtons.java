@@ -2,6 +2,8 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
+import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 
 import java.util.ArrayList;
@@ -20,17 +26,19 @@ import java.util.ArrayList;
 
 public class CustomAdapterButtons extends BaseAdapter
 {
-    private Class[] goToOnClick;
     private String[] buttonsName;
     private Context context;
-    private CustomersSchedulingApp customersSchedulingApp;
 
-    public CustomAdapterButtons(String[] buttonsName, Context context, Class[] goToOnClick, CustomersSchedulingApp customersSchedulingApp)
+    private FragmentManager fragmentManager;
+    private BaseFragment fragment;
+
+    public CustomAdapterButtons(String[] buttonsName, Context context, Fragment fragment)
     {
         this.buttonsName = buttonsName;
         this.context = context;
-        this.goToOnClick = goToOnClick;
-        this.customersSchedulingApp = customersSchedulingApp;
+        this.fragment = (BaseFragment) fragment;
+        fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+
     }
 
 
@@ -69,9 +77,7 @@ public class CustomAdapterButtons extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(context, goToOnClick[position]);
-                intent.putExtra("app", customersSchedulingApp);
-                context.startActivity(intent);
+                fragment.changeFragment(fragmentManager,R.id.mainActivityFragment,fragment.addBundleToFragment(new ScheduleInfoFragment(),"Service", new Service(3.90f,"teste")));
             }
         });
 
