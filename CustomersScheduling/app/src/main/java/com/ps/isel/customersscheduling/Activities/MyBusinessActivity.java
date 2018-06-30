@@ -20,38 +20,6 @@ import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 public class MyBusinessActivity extends AppCompatActivity
 {
-    private CustomersSchedulingApp customersSchedulingApp;
-
-    private Toolbar toolbar;
-    private ListView lv;
-
-    private ServiceDto[] services = new ServiceDto[]
-            {
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
-            };
-
-    private Business[] subbedBusiness = new Business[]
-            {
-                    new Business(
-                            12345,
-                            "O Barbas",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            3.2f,
-                            null,
-                            services)
-                    ,
-                    new Business(
-                            12345,
-                            "CUF",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            2.7f,
-                            null,
-                            services),};
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -59,52 +27,5 @@ public class MyBusinessActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_business);
-
-        customersSchedulingApp = ((CustomersSchedulingApp)getApplicationContext());
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(getApplicationContext())));
-
-        toolbar   = findViewById(R.id.filter_toolbar);
-        lv        = findViewById(R.id.myBusiness);
-
-        toolBarCode();
-
-    //   customersSchedulingApp
-    //           .getUserStores(this::listViewCode,
-    //                   "username");
-
-        listViewCode(subbedBusiness);
-    }
-
-
-    private void listViewCode(Business[] businesses)
-    {
-
-        lv.setAdapter(new CustomAdapterOwnerBusiness(this, businesses));
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                //Intent intent = new Intent(getApplicationContext(), BusinessActivity.class);
-                //intent.putExtra("business", businesses[position]);
-                //startActivity(intent);
-            }
-        });
-    }
-
-    private void toolBarCode()
-    {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My Stores");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

@@ -3,6 +3,9 @@ package com.ps.isel.customersscheduling.Utis;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
@@ -19,6 +26,9 @@ import com.ps.isel.customersscheduling.R;
 
 public class CustomAdapterOwnerBusiness extends BaseAdapter
 {
+    private FragmentManager fragmentManager;
+    private BaseFragment fragment;
+
     private Business[] ownerBusiness;
 
     private View row;
@@ -27,11 +37,14 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
     private Button deleteBusinessBtn;
     private Button editBusinessBtn;
 
-    public CustomAdapterOwnerBusiness(Activity context, Business[] ownerBusiness)
+    public CustomAdapterOwnerBusiness(Activity context, Business[] ownerBusiness, Fragment fragment)
     {
         this.ownerBusiness = ownerBusiness;
         this.name = name;
         this.context = context;
+
+        fragmentManager = ((MyBusinessActivity)context).getSupportFragmentManager();
+        this.fragment = (BaseFragment) fragment;
 
     }
 
@@ -79,9 +92,10 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             {
                 //Todo Enviar ao servidor eliminar favorito ao request
 
-                //Refresh Activity
-                context.finish();
-                context.startActivity(context.getIntent());
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.detach(fragment);
+                fragmentTransaction.attach(fragment);
+                fragmentTransaction.commit();
 
             }
         });
@@ -91,13 +105,15 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                //Todo Enviar ao servidor e apresentar resultados do request
+                //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
 
-                //Refresh Activity
-             //   Intent intent = new Intent(context, SearchResultsActivity.class);
-              //  intent.putExtra("business", ownerBusiness[position]);
-              //  context.startActivity(intent);
-//
+               // fragment.addMultBundleToFragment("byFavourite", true);
+               // ;
+               // fragment.changeFragment(fragmentManager,
+               //         R.id.mainActivityFragment,
+               //         fragment.addBundleToFragment(
+               //                 new SearchResultsFragment(),"Favourite", favourites[position]));
+////
             }
         });
 

@@ -3,6 +3,9 @@ package com.ps.isel.customersscheduling.Utis;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
+import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
@@ -20,6 +26,9 @@ import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
 public class CustomAdapterUsers extends BaseAdapter
 {
+    private FragmentManager fragmentManager;
+    private BaseFragment fragment;
+
     private ClientDto[] users;
 
     private View row;
@@ -30,12 +39,14 @@ public class CustomAdapterUsers extends BaseAdapter
     private Button acceptBtn;
     private Button rejectBtn;
 
-    public CustomAdapterUsers(Activity context, ClientDto[] users)
+    public CustomAdapterUsers(Activity context, ClientDto[] users, Fragment fragment)
     {
         this.users = users;
         this.name = name;
         this.context = context;
 
+        fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+        this.fragment = (BaseFragment) fragment;
     }
 
     @Override
@@ -93,9 +104,10 @@ public class CustomAdapterUsers extends BaseAdapter
             {
                 //Todo Enviar ao servidor resposta positiva ao request
 
-                //Refresh Activity
-                context.finish();
-                context.startActivity(context.getIntent());
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.detach(fragment);
+                fragmentTransaction.attach(fragment);
+                fragmentTransaction.commit();
 
             }
         });
@@ -105,11 +117,12 @@ public class CustomAdapterUsers extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                //Todo Enviar ao servidor resposta positiva ao request
+                //Todo Enviar ao servidor resposta negativa ao request
 
-                //Refresh Activity
-                context.finish();
-                context.startActivity(context.getIntent());
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.detach(fragment);
+                fragmentTransaction.attach(fragment);
+                fragmentTransaction.commit();
 
             }
         });

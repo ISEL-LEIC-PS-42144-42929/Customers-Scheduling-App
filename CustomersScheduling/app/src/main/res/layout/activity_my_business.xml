@@ -6,18 +6,10 @@
     android:orientation="horizontal"
     tools:context="com.ps.isel.customersscheduling.Activities.MyBusinessActivity">
 
-    <include
-        android:id="@+id/filter_toolbar"
-        layout="@layout/toolbarwithbackarrow"></include>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="70dp">
-
-        <include
-            android:id="@+id/myBusiness"
-            layout="@layout/listview"></include>
-
-    </LinearLayout>
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userBusinessFragment"
+        class="com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment">
+    </fragment>
 </RelativeLayout>

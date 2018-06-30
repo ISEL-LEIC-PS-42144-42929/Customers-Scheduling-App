@@ -17,7 +17,7 @@ public class RegisterStoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_store);
 
-        toolbar                  = findViewById(R.id.filter_toolbar);
+        toolbar                  = findViewById(R.id.app_bar);
         toolBarCode();
 
     }

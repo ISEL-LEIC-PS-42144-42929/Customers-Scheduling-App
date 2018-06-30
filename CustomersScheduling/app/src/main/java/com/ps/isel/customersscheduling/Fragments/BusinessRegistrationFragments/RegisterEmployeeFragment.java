@@ -22,8 +22,8 @@ import org.json.JSONObject;
 
 public class RegisterEmployeeFragment extends BaseFragment
 {
-    Fragment registerEmployeeScheduleFragment;
-    FragmentManager fragmentManager;
+    private Fragment registerEmployeeScheduleFragment;
+    private FragmentManager fragmentManager;
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;

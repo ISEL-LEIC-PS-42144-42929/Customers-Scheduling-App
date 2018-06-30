@@ -1,6 +1,7 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,12 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.Activities.AboutActivity;
+import com.ps.isel.customersscheduling.Activities.DefinitionsActivity;
+import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
+import com.ps.isel.customersscheduling.Activities.PendentRequestsActivity;
+import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
+import com.ps.isel.customersscheduling.Activities.SchedulesActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -108,10 +115,16 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
+        if (getActivity().getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+        {      //RTL to LTR
+            getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
     }
 
     @Override
@@ -140,25 +153,25 @@ public class UserRegisteredBusinessFragment extends BaseFragment
           {
               // TODO later(which menu item)
               case (R.id.registerStore):
-                  //goToActivity(RegisterStoreActivity.class);
+                  goToActivity(RegisterStoreActivity.class);
                   break;
               case (R.id.myStores):
-                  //goToActivity(MyBusinessActivity.class);
+                  goToActivity(MyBusinessActivity.class);
                   break;
               case (R.id.scheduled):
                   //goToActivity(SchedulesActivity.class);
                   break;
               case (R.id.pendentRequests):
-                  //goToActivity(PendentRequestsActivity.class);
+                  changeFragment(fragmentManager,R.id.mainActivityFragment,new PendentRequestsFragment());
                   break;
               case (R.id.definitions):
-                  //goToActivity(DefinitionsActivity.class);
+                  goToActivity(DefinitionsActivity.class);
                   break;
               case (R.id.Favorites):
-                  //goToActivity(FavouritesActivity.class);
+                  changeFragment(fragmentManager,R.id.mainActivityFragment,new FavouritesFragment());
                   break;
               case (R.id.About):
-                  //goToActivity(AboutActivity.class);
+                  goToActivity(AboutActivity.class);
                   break;
           }
           return super.onOptionsItemSelected(item);
@@ -260,6 +273,12 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                 changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", businesses[position]));
             }
         });
+    }
+
+    private void goToActivity(Class c)
+    {
+        Intent intent = new Intent(context, c);
+        startActivity(intent);
     }
 
 }
