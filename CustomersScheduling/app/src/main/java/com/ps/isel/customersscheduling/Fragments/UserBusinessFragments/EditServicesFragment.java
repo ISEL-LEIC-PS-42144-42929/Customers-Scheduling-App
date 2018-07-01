@@ -1,6 +1,7 @@
-package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
+package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,14 @@ import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.AddOtherServiceOrEndFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterEmployeeFragment extends BaseFragment
+public class EditServicesFragment extends BaseFragment
 {
     private Fragment registerEmployeeScheduleFragment;
     private FragmentManager fragmentManager;
@@ -32,27 +35,26 @@ public class RegisterEmployeeFragment extends BaseFragment
 
     private Context context;
 
+    private EditText serviceName;
+    private EditText servicePrice;
+    private Button registerService;
     private Toolbar toolbar;
-    private EditText employeeName;
-    private EditText employeeEmail;
-    private EditText employeeContact;
-    private EditText employeeGender;
-    private Button registerEmployee;
 
-    public RegisterEmployeeFragment() {
+    public EditServicesFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register_employee, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_edit_services, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -60,18 +62,15 @@ public class RegisterEmployeeFragment extends BaseFragment
         jsonBodyObj = new JSONObject();
 
         toolbar                  = view.findViewById(R.id.app_bar);
-        employeeName        = view.findViewById(R.id.employeeName);
-        employeeEmail       = view.findViewById(R.id.employeeEmail);
-        employeeContact     = view.findViewById(R.id.employeeContact);
-        employeeGender      = view.findViewById(R.id.employeeGender);
-        registerEmployee    = view.findViewById(R.id.registerEmployee);
+        serviceName        = view.findViewById(R.id.serviceName);
+        servicePrice       = view.findViewById(R.id.servicePrice);
+        registerService   = view.findViewById(R.id.registerService);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
 
         toolbarCode();
         addListenertoButton();
-
     }
 
     private void toolbarCode()
@@ -79,7 +78,7 @@ public class RegisterEmployeeFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Employee");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Service");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,26 +91,26 @@ public class RegisterEmployeeFragment extends BaseFragment
 
     private void addListenertoButton()
     {
-        registerEmployee.setOnClickListener(new View.OnClickListener() {
+        registerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 try
                 {
-                    jsonBodyObj.put("key1", employeeName.getText().toString());
-                    jsonBodyObj.put("key2", employeeEmail.getText().toString());
-                    jsonBodyObj.put("key3", employeeContact.getText().toString());
-                    jsonBodyObj.put("key4", employeeGender.getText().toString());
+                    jsonBodyObj.put("key1", serviceName.getText().toString());
+                    jsonBodyObj.put("key2", servicePrice.getText().toString());
+
                 }
                 catch (JSONException e)
                 {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                //customersSchedulingApp.registerEmployee(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeScheduleFragment);
+                // customersSchedulingApp.registerService(jsonBodyObj);
+
+                //TODO change to userBusiness
+                changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
             }
         });
-
     }
 }

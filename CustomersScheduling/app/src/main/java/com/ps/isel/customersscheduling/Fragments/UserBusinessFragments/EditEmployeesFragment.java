@@ -1,6 +1,7 @@
-package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
+package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,13 @@ import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterEmployeeFragment extends BaseFragment
+public class EditEmployeesFragment extends BaseFragment
 {
     private Fragment registerEmployeeScheduleFragment;
     private FragmentManager fragmentManager;
@@ -39,14 +41,15 @@ public class RegisterEmployeeFragment extends BaseFragment
     private EditText employeeGender;
     private Button registerEmployee;
 
-    public RegisterEmployeeFragment() {
+    public EditEmployeesFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register_employee, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_edit_employees, container, false);
     }
 
     @Override
@@ -79,7 +82,7 @@ public class RegisterEmployeeFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Employee");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Employee Data");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +112,10 @@ public class RegisterEmployeeFragment extends BaseFragment
                     e.printStackTrace();
                 }
                 //customersSchedulingApp.registerEmployee(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeScheduleFragment);
+                changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
             }
         });
 
     }
 }
+

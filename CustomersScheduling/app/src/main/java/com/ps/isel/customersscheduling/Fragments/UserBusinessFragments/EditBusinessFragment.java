@@ -38,7 +38,7 @@ public class EditBusinessFragment extends BaseFragment
                     "Edit Employee",
                     "Edit Employee Schedule"
             };
-    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new UserBusinessFragment(),new UserBusinessFragment()};
+    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new EditServicesFragment(),new EditEmployeesFragment(), new EditEmployeesScheduleFragment()};
 
     private FragmentManager fragmentManager;
     private CustomersSchedulingApp customersSchedulingApp;
