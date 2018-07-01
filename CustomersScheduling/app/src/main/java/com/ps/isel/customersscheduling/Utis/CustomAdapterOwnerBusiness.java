@@ -18,6 +18,7 @@ import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
 import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusinessFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
@@ -108,12 +109,9 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             {
                 //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
 
-               // fragment.addMultBundleToFragment("byFavourite", true);
-               // ;
-               // fragment.changeFragment(fragmentManager,
-               //         R.id.mainActivityFragment,
-               //         fragment.addBundleToFragment(
-               //                 new SearchResultsFragment(),"Favourite", favourites[position]));
+                fragment.changeFragment(fragmentManager,
+                        R.id.userBusinessFragment,
+                        new EditBusinessFragment());
 ////
             }
         });

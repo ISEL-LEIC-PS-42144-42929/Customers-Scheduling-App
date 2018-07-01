@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    tools:context=".Fragments.UserBusinessFragments.EditBusinessDataFragment">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbarwithbackarrow">
+    </include>
+
+    <RelativeLayout
+        android:id="@+id/editTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_bar">
+
+        <EditText
+            android:id="@+id/storeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="23dp"
+            android:cursorVisible="false"
+            android:hint="insert name" />
+
+        <EditText
+            android:id="@+id/storeNif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/storeName"
+            android:cursorVisible="false"
+            android:hint="insert Nif" />
+
+        <EditText
+            android:id="@+id/storeContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/storeNif"
+            android:cursorVisible="false"
+            android:hint="insert Contact" />
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/categoryDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/storeContact"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/chooseCategory"
+            android:textColorHint="#05ab9a">
+
+        </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+
+        <EditText
+            android:id="@+id/storeAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:cursorVisible="false"
+            android:layout_below="@+id/categoryDropDown"
+            android:hint="insert Address" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/insertExisting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignBaseline="@+id/takePicture"
+            android:layout_alignBottom="@+id/takePicture"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Open Existing Image" />
+
+        <Button
+            android:id="@+id/takePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editBusiness"
+            android:layout_marginBottom="11dp"
+
+            android:text="Take New Photo" />
+
+        <Button
+            android:id="@+id/editBusiness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="21dp"
+            android:text="@string/editBusinessInfo"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@+id/insertExisting"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+</RelativeLayout>

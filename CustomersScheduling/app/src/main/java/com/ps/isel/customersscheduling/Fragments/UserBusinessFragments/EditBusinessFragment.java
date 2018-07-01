@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
+package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -17,62 +17,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Favourite;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterServiceFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
 import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterButtons;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
-import com.ps.isel.customersscheduling.java.dto.ServiceDto;
+import com.ps.isel.customersscheduling.Utis.EditBusinessAdapter;
 
 
-public class ScheduledFragment extends BaseFragment
+public class EditBusinessFragment extends BaseFragment
 {
-    //HARDCODED
-    private ServiceDto[] services = new ServiceDto[]
+    private String[] edits = new String[]
             {
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
+                    "Edit Business Info",
+                    "Edit Services",
+                    "Edit Employee",
             };
+    private BaseFragment[] fragments = {new EditBusinessDataFragment(), new UserBusinessFragment(),new UserBusinessFragment()};
 
-    private Business[] subbedBusiness = new Business[]
-            {
-                    new Business(
-                            12345,
-                            "O Barbas",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            3.2f,
-                            null,
-                            services)
-                    ,
-                    new Business(
-                            12345,
-                            "CUF",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            2.7f,
-                            null,
-                            services)};
-
-    private String[] names = {"corteReserva","barbaReserva","comidaReserva","saudeReserva"};
-    //-------------
-
-    private Fragment registerBusinessScheduleFragment;
     private FragmentManager fragmentManager;
+    private CustomersSchedulingApp customersSchedulingApp;
+
+    private Context context;
 
     private Toolbar toolbar;
     private ListView lv;
 
-    private Context context;
 
-    private Business[] schedules ;         //TODO change type
-
-    public ScheduledFragment() {
+    public EditBusinessFragment() {
         // Required empty public constructor
     }
 
@@ -92,7 +67,7 @@ public class ScheduledFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scheduled, container, false);
+        return inflater.inflate(R.layout.fragment_edit_business, container, false);
     }
 
     @Override
@@ -101,20 +76,21 @@ public class ScheduledFragment extends BaseFragment
         menu.clear();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         context = getActivity().getApplicationContext();
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
         toolbar = view.findViewById(R.id.app_bar);
-        lv      = view.findViewById(R.id.listSchedules);
 
-        lv.setAdapter(new CustomAdapterButtons(names, getActivity(), this, R.id.mainActivityFragment));
+        lv = (ListView) view.findViewById(R.id.listEdits);
+        lv.setAdapter(new EditBusinessAdapter(edits, getActivity(), fragments,this, R.id.userBusinessFragment));
+
         toolbarCode();
-        listViewCode();
+
     }
 
     private void toolbarCode()
@@ -131,12 +107,6 @@ public class ScheduledFragment extends BaseFragment
                 //   startActivity(intent);
             }
         });
-    }
-
-    private void listViewCode()
-    {
-        changeFragment(fragmentManager,R.id.mainActivityFragment,addBundleToFragment(new ScheduleInfoFragment(),"Service", new Service(3.90f,"teste")));
-
     }
 
 }
