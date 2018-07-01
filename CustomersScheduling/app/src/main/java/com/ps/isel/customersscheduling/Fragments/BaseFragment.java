@@ -33,8 +33,9 @@ public class BaseFragment extends Fragment {
 
      public void changeFragment(FragmentManager fm, int id, Fragment fragment) {
         transaction = fm.beginTransaction();
-        transaction.replace(id, fragment);
-        transaction.commit();
+        transaction.replace(id, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public <T>Fragment addBundleToFragment(Fragment fragment, String tag, T obj)
