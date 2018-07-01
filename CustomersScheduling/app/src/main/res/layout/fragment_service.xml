@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     tools:context=".Fragments.MainActivityFlowFragments.ServiceFragment">
 
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbarwithbackarrow">
+    </include>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/filter_toolbar"
+        android:layout_below="@+id/app_bar"
         android:layout_centerHorizontal="true"
         android:id="@+id/relativeLayout4">
 
@@ -71,4 +76,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>

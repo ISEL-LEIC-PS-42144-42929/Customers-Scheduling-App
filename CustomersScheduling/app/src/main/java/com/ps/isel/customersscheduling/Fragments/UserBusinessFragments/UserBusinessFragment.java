@@ -24,6 +24,7 @@ import android.widget.ListView;
 
 import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -133,8 +134,7 @@ public class UserBusinessFragment extends BaseFragment
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent intent = new Intent(context,MainActivity.class);
-               // startActivity(intent);
+               goToActivity(context, MainActivity.class);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Favourite;
@@ -114,7 +116,6 @@ public class ScheduledFragment extends BaseFragment
 
         lv.setAdapter(new CustomAdapterButtons(names, getActivity(), this, R.id.mainActivityFragment));
         toolbarCode();
-        listViewCode();
     }
 
     private void toolbarCode()
@@ -127,16 +128,8 @@ public class ScheduledFragment extends BaseFragment
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //   Intent intent = new Intent(getActivity(), MainActivity.class);
-                //   startActivity(intent);
+                goToActivity(context, MainActivity.class);
             }
         });
     }
-
-    private void listViewCode()
-    {
-        changeFragment(fragmentManager,R.id.mainActivityFragment,addBundleToFragment(new ScheduleInfoFragment(),"Service", new Service(3.90f,"teste")));
-
-    }
-
 }

@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
+import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -117,7 +118,7 @@ public class BusinessDataFragment extends BaseFragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                goToActivity(context, MainActivity.class);
             }
         });
     }
@@ -157,7 +158,7 @@ public class BusinessDataFragment extends BaseFragment {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                customersSchedulingApp.registerStore(jsonBodyObj);
+                //customersSchedulingApp.registerStore(jsonBodyObj);
                 changeFragment(fragmentManager, R.id.businessData, registerBusinessScheduleFragment);
             }
         });
@@ -230,4 +231,5 @@ public class BusinessDataFragment extends BaseFragment {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent,CAMERA_REQUEST);
     }
+
 }

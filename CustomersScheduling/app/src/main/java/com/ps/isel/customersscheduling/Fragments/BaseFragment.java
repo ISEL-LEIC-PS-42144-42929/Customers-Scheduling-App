@@ -1,6 +1,7 @@
 package com.ps.isel.customersscheduling.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,10 @@ public class BaseFragment extends Fragment {
         bundle.putSerializable(tag, (Serializable) obj);
     }
 
-
+    protected void goToActivity(Context context, Class c)
+    {
+        Intent intent = new Intent(context, c);
+        startActivity(intent);
+    }
 
 }

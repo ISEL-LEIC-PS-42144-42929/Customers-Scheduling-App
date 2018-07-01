@@ -8,9 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -61,6 +65,7 @@ public class ServiceFragment extends BaseFragment
     private Button registerRequestBtn;
     private TextView serviceName;
     private Bundle bundle;
+    private Toolbar toolbar;
 
     private Date currentTime;
     private Calendar maxDate;
@@ -75,6 +80,24 @@ public class ServiceFragment extends BaseFragment
 
     public ServiceFragment() {
         // Required empty public constructor
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+
+        if (getActivity().getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+        {      //RTL to LTR
+            getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
 
@@ -95,6 +118,7 @@ public class ServiceFragment extends BaseFragment
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
+        toolbar                  = view.findViewById(R.id.app_bar);
         calendarView       = view.findViewById(R.id.calendarView);
         mRecyclerView      = view.findViewById(R.id.hrlist_recycler_view);
         registerRequestBtn = view.findViewById(R.id.reserveButton);
@@ -112,6 +136,7 @@ public class ServiceFragment extends BaseFragment
         //          business.getName()
         //  );
 
+        toolbarCode();
         setDateToCalendar();
         dropDownButtonCode(hardcodedEmployesNames);
         calendarViewCode();
@@ -121,6 +146,21 @@ public class ServiceFragment extends BaseFragment
 
         fragmentManager = getActivity().getSupportFragmentManager();
         businessFragment = new BusinessFragment();
+    }
+
+    private void toolbarCode()
+    {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Reserve Service");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.popBackStackImmediate();
+            }
+        });
     }
 
     private void calendarViewCode()

@@ -31,7 +31,8 @@ public class RegisterStoreActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 goToActivity(MainActivity.class);
             }
         });

@@ -139,7 +139,7 @@ public class ScheduleInfoFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "business", service));
+                fragmentManager.popBackStackImmediate();
             }
         });
 

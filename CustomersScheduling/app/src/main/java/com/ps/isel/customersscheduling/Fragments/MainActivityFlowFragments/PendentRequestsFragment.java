@@ -35,6 +35,8 @@ public class PendentRequestsFragment extends BaseFragment
     private ClientDto user ;
     private ClientDto[] pendentRequests = new ClientDto[4];
 
+    private Context context;
+
     public PendentRequestsFragment() {
         // Required empty public constructor
     }
@@ -71,6 +73,7 @@ public class PendentRequestsFragment extends BaseFragment
         toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         lv      = (ListView) view.findViewById(R.id.pendentRequests);
 
+        context = getActivity().getApplicationContext();
 
         user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
         pendentRequests[0] = user;      //hardcodeddata
@@ -98,8 +101,7 @@ public class PendentRequestsFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-              // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-              // startActivity(intent);
+              goToActivity(context, MainActivity.class);
             }
         });
     }

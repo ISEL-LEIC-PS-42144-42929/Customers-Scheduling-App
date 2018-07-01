@@ -3,18 +3,14 @@ package com.ps.isel.customersscheduling.Utis;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.ps.isel.customersscheduling.Activities.MainActivity;
-import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
+import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
-import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 
 public class EditBusinessAdapter extends BaseAdapter
@@ -34,7 +30,7 @@ public class EditBusinessAdapter extends BaseAdapter
         this.fragment = (BaseFragment)fragment;
         this.fragments = fragments;
         this.id = id;
-        fragmentManager = ((MyBusinessActivity)context).getSupportFragmentManager();
+        fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
     }
 
     @Override

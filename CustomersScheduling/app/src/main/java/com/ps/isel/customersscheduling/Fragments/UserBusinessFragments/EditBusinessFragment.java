@@ -105,8 +105,7 @@ public class EditBusinessFragment extends BaseFragment
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //   Intent intent = new Intent(getActivity(), MainActivity.class);
-                //   startActivity(intent);
+                fragmentManager.popBackStackImmediate();
             }
         });
     }

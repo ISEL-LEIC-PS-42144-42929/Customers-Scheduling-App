@@ -2,7 +2,6 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,11 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Activities.MainActivity;
-import com.ps.isel.customersscheduling.Activities.MyBusinessActivity;
-import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
+import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusinessFragment;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
@@ -45,7 +41,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         this.name = name;
         this.context = context;
 
-        fragmentManager = ((MyBusinessActivity)context).getSupportFragmentManager();
+        fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
         this.fragment = (BaseFragment) fragment;
 
     }

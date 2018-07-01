@@ -18,7 +18,7 @@ import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
 import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
-public class MyBusinessActivity extends AppCompatActivity
+public class UserBusinessActivity extends AppCompatActivity
 {
 
     @RequiresApi(api = Build.VERSION_CODES.N)

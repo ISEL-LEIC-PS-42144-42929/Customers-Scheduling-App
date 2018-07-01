@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
 
-    tools:context="com.ps.isel.customersscheduling.Activities.MyBusinessActivity">
+    tools:context="com.ps.isel.customersscheduling.Activities.UserBusinessActivity">
 
     <fragment
         android:layout_width="wrap_content"

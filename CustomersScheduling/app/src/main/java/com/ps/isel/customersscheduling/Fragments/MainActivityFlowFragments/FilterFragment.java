@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Model.Favourite;
@@ -128,8 +129,7 @@ public class FilterFragment extends BaseFragment {
             @Override
             public void onClick(View v)
             {
-                //  Intent intent = new Intent(getContext().getApplicationContext(), DefinitionsActivity.class);
-                //  startActivity(intent);
+                goToActivity(context, MainActivity.class);
             }
         });
 
