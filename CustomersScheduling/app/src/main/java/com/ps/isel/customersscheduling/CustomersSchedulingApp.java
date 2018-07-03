@@ -37,9 +37,8 @@ public class CustomersSchedulingApp extends Application implements Serializable
         return api;
     }
 
-    public void setApi(CustomersSchedulingWebApi api, String userEmail) {
-        this.userEmail = userEmail;
-        this.api = api;
+    public void setApi(CustomersSchedulingWebApi api) {
+        this.api= api;
     }
 
     @Override
@@ -96,9 +95,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public <T>void getUserRegisteredBusiness(Consumer<T[]> cons, String userName)
+    public <T>void getUserRegisteredBusiness(Consumer<T> cons,String idToken, String userName)
     {
-        api.getUserRegisteredBusiness(cons, userName);
+        api.getUserRegisteredBusiness(cons, idToken, userName);
     }
 
 
@@ -151,4 +150,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sendIdToken(String idToken, Consumer cons)
+    {
+        api.sendIdToken(idToken, cons);
+    }
 }

@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.HALDto;
 
-public class CategoryDto {
+import java.io.Serializable;
+
+public class CategoryDto implements Serializable {
     private String name;
 
     public CategoryDto() {

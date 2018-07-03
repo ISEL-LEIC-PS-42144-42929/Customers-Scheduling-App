@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.R;
 
 public class AddOtherEmpOrEndFragment extends BaseFragment
 {
     Fragment registerEmployeeFragment;
-    Fragment registerServiceFragment;
+    Fragment userBusinessFragment;
     FragmentManager fragmentManager;
 
     private Context context;
@@ -46,7 +47,7 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
 
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeFragment = new RegisterEmployeeFragment();
-        registerServiceFragment = new RegisterServiceFragment();
+        userBusinessFragment = new UserBusinessFragment();
 
         addListenertoButton();
     }
@@ -65,7 +66,7 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-                changeFragment(fragmentManager, R.id.businessData, registerServiceFragment);
+                changeFragment(fragmentManager, R.id.businessData, userBusinessFragment);
             }
         });
     }

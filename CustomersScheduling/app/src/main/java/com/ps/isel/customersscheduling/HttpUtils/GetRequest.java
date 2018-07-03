@@ -1,5 +1,9 @@
 package com.ps.isel.customersscheduling.HttpUtils;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -8,6 +12,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -16,9 +23,11 @@ public class GetRequest<T> extends JsonRequest<T>
 {
     public ObjectMapper mapper;
     private Class<T> dtoType;
+    private String idToken;
     private Consumer<T> cons;
 
     public GetRequest(int method,
+                      String idToken,
                       String url,
                       String reqBody,
                       Consumer<T> cons,
@@ -27,21 +36,28 @@ public class GetRequest<T> extends JsonRequest<T>
                       Response.ErrorListener errorListener)
     {
         super(method, url, reqBody, listener, errorListener);
-
         this.cons = cons;
+        this.idToken = idToken;
         mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.dtoType = dtoRes;
     }
 
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+            HashMap<String, String> headers = new HashMap<String, String>();
+            headers.put("Content-Type", "application/json");
+            headers.put("Authorization", "Bearer " + idToken);
+            return headers;
+    }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected Response parseNetworkResponse(NetworkResponse response)
     {
         try
         {
-            String a = response.toString();
-            T dto = this.mapper.readValue(response.data, dtoType);
+            String str = new String(response.data, StandardCharsets.UTF_8);
+            T dto = this.mapper.readValue(str, dtoType);
             return Response.success(dto, null);
         }
         catch (IOException e)

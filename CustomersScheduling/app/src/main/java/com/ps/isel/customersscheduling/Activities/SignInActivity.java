@@ -1,7 +1,10 @@
 package com.ps.isel.customersscheduling.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.HttpResponse;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -22,8 +27,18 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
+import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.R;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity
 {
@@ -33,6 +48,11 @@ public class SignInActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleSignInClient;
+
+    private Context context;
+    private CustomersSchedulingApp customersSchedulingApp;
+    private JSONObject jsonBodyObj;
+
 
     @Override
     protected void onStart()
@@ -46,6 +66,12 @@ public class SignInActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        context = getApplicationContext();
+
+
+        customersSchedulingApp = ((CustomersSchedulingApp)context);
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(v -> signIn());
@@ -61,10 +87,22 @@ public class SignInActivity extends AppCompatActivity
         mAuthListener = firebaseAuth -> {
             if(firebaseAuth.getCurrentUser() != null)
             {
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("userEmail", firebaseAuth.getCurrentUser().getEmail());
-
-                startActivity(intent);
+                firebaseAuth.getCurrentUser().getIdToken(true)
+                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                if (task.isSuccessful()) {
+                                    String idToken = task.getResult().getToken();
+                                    String email = firebaseAuth.getCurrentUser().getEmail();
+                                    putEmailonIntentAndChangeActivity(idToken, email);
+                                    //customersSchedulingApp.sendIdToken(idToken, elem->putEmailonIntentAndChangeActivity(elem));
+                                    // Send token to your backend via HTTPS
+                                    // ...
+                                } else {
+                                    // Handle error -> task.getException();
+                                }
+                            }
+                        });
             }
         };
 
@@ -89,6 +127,7 @@ public class SignInActivity extends AppCompatActivity
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -99,6 +138,7 @@ public class SignInActivity extends AppCompatActivity
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
+
                 firebaseAuthWithGoogle(account);
             } else {
                 Toast.makeText(SignInActivity.this, "Auth went wrong",Toast.LENGTH_LONG).show();
@@ -106,6 +146,16 @@ public class SignInActivity extends AppCompatActivity
             }
         }
     }
+
+    private void putEmailonIntentAndChangeActivity(String idtoken, String email) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("idtoken", idtoken);
+        intent.putExtra("email", email);
+        startActivity(intent);
+    }
+
+
+
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account)
     {
@@ -118,7 +168,9 @@ public class SignInActivity extends AppCompatActivity
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
+
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

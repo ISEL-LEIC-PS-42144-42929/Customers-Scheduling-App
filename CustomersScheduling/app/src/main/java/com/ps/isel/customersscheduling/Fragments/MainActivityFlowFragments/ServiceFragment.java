@@ -185,10 +185,16 @@ public class ServiceFragment extends BaseFragment
 
     private void dropDownButtonCode(PersonDto[] staff)
     {
-        ArrayAdapter<PersonDto> adapter = new ArrayAdapter<>(
+        String[] staffName = new String[staff.length];
+
+        for (int i = 0; i <staff.length ; i++) {
+            staffName[i] = staff[i].getName();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_dropdown_item_1line,
-                staff);
+                staffName);
 
         spinner.setAdapter(adapter);
         employee = hardcodedEmployesNames[0].getName();

@@ -12,6 +12,8 @@ public class StoreDto implements Serializable {
     private String contact;
     private Link[] links;
 
+    public StoreDto(){}
+
     public StoreDto(AddressDto address, CategoryDto category, String storeName, String nif, String contact, Link[] links, float score) {
         this.address = address;
         this.category = category;

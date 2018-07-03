@@ -1,5 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -34,11 +35,21 @@ import com.ps.isel.customersscheduling.HALDto.AddressDto;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class UserRegisteredBusinessFragment extends BaseFragment
@@ -109,19 +120,13 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         {      //RTL to LTR
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = firebaseAuth -> {
-            if(firebaseAuth.getCurrentUser() == null)
-            {
-                startActivity(new Intent(context, SignInActivity.class));
-            }else{
-                    userEmail = firebaseAuth.getCurrentUser().getEmail();
-                }
-        };
-
-        mAuth.addAuthStateListener(mAuthListener);
+       mAuth = FirebaseAuth.getInstance();
     }
+
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,7 +137,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
    @Override
    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
        inflater.inflate(R.menu.menu, menu);
        MenuItem item = menu.findItem(R.id.menu_search);
        searchView = (SearchView) item.getActionView();
@@ -147,6 +151,9 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
+        String idToken = getActivity().getIntent().getStringExtra("idtoken");
+        String email = getActivity().getIntent().getStringExtra("email");
+
         lv        = view.findViewById(R.id.alreadySubToList);
         toolbar   = view.findViewById(R.id.filter_toolbar);
         filterBtn = view.findViewById(R.id.filter);
@@ -155,21 +162,20 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         listViewCode(subbedBusiness);// Remove after App done!!
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)), userEmail);
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
-        //    customersSchedulingApp
-        //            .getUserRegisteredBusiness(
-        //                    this::listViewCode, userEmail);
-//
+      //      customersSchedulingApp
+      //              .getUserRegisteredBusiness(
+      //                      elem-> listViewCode(elem), idToken, email);
+
         fragmentManager = getActivity().getSupportFragmentManager();
 
     }
 
 
-
-      @Override
+    @Override
       public boolean onOptionsItemSelected(MenuItem item) {
 
           switch(item.getItemId())
@@ -242,9 +248,11 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode(StoreDto[] stores)
+    private void listViewCode(StoreDto[] stores)             //TODO change parameter to connect to server Object storesDTO
     {
+//        StoreDto [] stores = Arrays.stream(((StoresOfUserDTO)storesDTO).get_embedded().getStoreResourceList()).map(elem->elem.getStore()).toArray(s -> new StoreDto[s]);
 
         lv.setAdapter(new CustomAdapterBusiness(getActivity(),stores));
 
@@ -257,7 +265,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             }
         });
     }
-
 
 
     private void logout()

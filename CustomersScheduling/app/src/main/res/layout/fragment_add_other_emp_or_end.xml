@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/registerAnotherEmployee"
         android:layout_centerHorizontal="true"
-        android:text="@string/registerService"
+        android:text="@string/endRegistration"
         android:textSize="20dp" />
 
 </FrameLayout>

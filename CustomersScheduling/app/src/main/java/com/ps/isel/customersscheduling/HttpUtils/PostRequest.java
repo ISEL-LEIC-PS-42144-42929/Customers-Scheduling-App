@@ -7,6 +7,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonRequest;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,29 +16,44 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Created by Colapso on 19/05/18.
  */
 
-public class PostRequest extends JsonRequest
+public class PostRequest<T> extends JsonRequest<T>
 {
 
-    String requestBody;
-    public PostRequest(int method, String url, String requestBody, Response.Listener listener, Response.ErrorListener errorListener)
+    private String requestBody;
+    private Consumer<T> cons;
+    private ObjectMapper mapper;
+    private String idToken;
+
+    public PostRequest(int method,
+                       String url,
+                       String idToken,
+                       String requestBody,
+                       Consumer<T> cons,
+                       Response.Listener<T> listener,
+                       Response.ErrorListener errorListener)
     {
         super(method, url, requestBody, listener, errorListener);
+        this.cons = cons;
+        this.idToken = idToken;
         this.requestBody = requestBody;
+        mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
-
-
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
+        headers.put("Authorization:", "Bearer " + idToken);
         return headers;
     }
+
+
 
     @Override
     protected Response parseNetworkResponse(NetworkResponse response) {

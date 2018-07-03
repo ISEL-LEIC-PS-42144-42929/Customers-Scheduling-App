@@ -1,24 +1,22 @@
 package com.ps.isel.customersscheduling.HALDto;
 
-public class Link {
-    private String rel;
-    private String href;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public Link(String rel, String href) {
-        this.rel = rel;
-        this.href = href;
-    }
+import java.io.Serializable;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Link implements Serializable {
+
+    private String href;
+    private boolean templated;
 
     public Link() {
 
     }
 
-    public String getRel() {
-        return rel;
-    }
-
-    public void setRel(String rel) {
-        this.rel = rel;
+    public Link(String href, boolean templated) {
+        this.href = href;
+        this.templated = templated;
     }
 
     public String getHref() {
@@ -27,5 +25,13 @@ public class Link {
 
     public void setHref(String href) {
         this.href = href;
+    }
+
+    public boolean isTemplated() {
+        return templated;
+    }
+
+    public void setTemplated(boolean template) {
+        this.templated = template;
     }
 }

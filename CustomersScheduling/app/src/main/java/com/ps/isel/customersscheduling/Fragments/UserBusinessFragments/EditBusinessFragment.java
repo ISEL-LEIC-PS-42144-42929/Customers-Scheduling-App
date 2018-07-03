@@ -91,6 +91,8 @@ public class EditBusinessFragment extends BaseFragment
         lv = (ListView) view.findViewById(R.id.listEdits);
         lv.setAdapter(new EditBusinessAdapter(edits, getActivity(), fragments,this, R.id.userBusinessFragment));
 
+        names, getActivity(), this, R.id.mainActivityFragment
+
         toolbarCode();
 
     }

@@ -218,6 +218,8 @@ public class BusinessFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
+                //fragmentManager.popBackStackImmediate();
+                //changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new FilterFragment(), null, null));
                 goToActivity(context, MainActivity.class);
             }
         });
