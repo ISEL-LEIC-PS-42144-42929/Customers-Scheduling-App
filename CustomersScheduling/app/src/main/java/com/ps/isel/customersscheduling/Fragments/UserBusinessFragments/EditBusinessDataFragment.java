@@ -121,7 +121,7 @@ public class EditBusinessDataFragment extends BaseFragment
         img                      = view.findViewById(R.id.imageView);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+       // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 

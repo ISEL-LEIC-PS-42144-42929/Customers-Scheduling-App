@@ -100,7 +100,7 @@ public class ScheduleInfoFragment extends BaseFragment
         jsonBodyObj = new JSONObject();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         toolbar      = view.findViewById(R.id.app_bar);
         serviceName  = view.findViewById(R.id.serviceName);

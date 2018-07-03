@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ServiceFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -25,7 +24,7 @@ import org.json.JSONObject;
 
 public class BusinessScheduleFragment extends BaseFragment {
 
-    Fragment registerEmployeeFragment;
+    Fragment registerServiceFragment;
     FragmentManager fragmentManager;
 
     private CustomersSchedulingApp customersSchedulingApp;
@@ -37,8 +36,11 @@ public class BusinessScheduleFragment extends BaseFragment {
     private EditText endLunchHour;
     private EditText endHour;
     private Button registerScheduleBtn;
+    private Bundle bundle;
 
     private Context context;
+
+    String storeNIF;
 
     public BusinessScheduleFragment() {
         // Required empty public constructor
@@ -55,20 +57,24 @@ public class BusinessScheduleFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        bundle = getArguments();
+        storeNIF = (String) bundle.getSerializable("storeNIF");
+
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
         jsonBodyObj = new JSONObject();
 
-        toolbar                  = view.findViewById(R.id.app_bar);
+        toolbar             = view.findViewById(R.id.app_bar);
         startHour           = view.findViewById(R.id.begginHour);
         startLunchHour      = view.findViewById(R.id.begginLunch);
         endLunchHour        = view.findViewById(R.id.endLunch);
         endHour             = view.findViewById(R.id.endHour);
         registerScheduleBtn = view.findViewById(R.id.registerSchedule);
 
-        registerEmployeeFragment = new RegisterEmployeeFragment();
+        registerServiceFragment = new RegisterServiceFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
 
         toolbarCode();
@@ -96,21 +102,21 @@ public class BusinessScheduleFragment extends BaseFragment {
             @Override
             public void onClick(View v)
             {
-
+                //TODO falar com o Bito sobre os pedidos do dia da semana e como esta a UI
                 try
                 {
-                    jsonBodyObj.put("key1", startHour.getText().toString());
-                    jsonBodyObj.put("key2", startLunchHour.getText().toString());
-                    jsonBodyObj.put("key3", endLunchHour.getText().toString());
-                    jsonBodyObj.put("key4", endHour.getText().toString());
+                    jsonBodyObj.put("open_hour", startHour.getText().toString());
+                    jsonBodyObj.put("init_break", startLunchHour.getText().toString());
+                    jsonBodyObj.put("finish_break", endLunchHour.getText().toString());
+                    jsonBodyObj.put("close_hour", endHour.getText().toString());
                 }
                 catch (JSONException e)
                 {
-                    //TODO resolve exception
+                    //TODO resolver exception
                     e.printStackTrace();
                 }
-                customersSchedulingApp.registerStoreSchedule(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeFragment);
+                customersSchedulingApp.registerStoreSchedule(jsonBodyObj, storeNIF);
+                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "nif",storeNIF));
 
             }
         });

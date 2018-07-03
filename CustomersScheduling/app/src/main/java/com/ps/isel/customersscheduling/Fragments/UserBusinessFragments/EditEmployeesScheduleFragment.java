@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,11 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.AddOtherEmpOrAddServiceFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.AddOtherEmpOrEndFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -65,12 +62,12 @@ public class EditEmployeesScheduleFragment extends BaseFragment
         employeeRegisterScheduleBtn = view.findViewById(R.id.employeeRegisterSchedule);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        addOtherEmpOrAddServiceFragment = new AddOtherEmpOrAddServiceFragment();
+        addOtherEmpOrAddServiceFragment = new AddOtherEmpOrEndFragment();
 
         toolbarCode();
         addListenertoButton();

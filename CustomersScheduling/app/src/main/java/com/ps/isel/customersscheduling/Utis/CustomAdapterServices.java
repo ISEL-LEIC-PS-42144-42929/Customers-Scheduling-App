@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.java.dto.ServiceDto;
+
 
 /**
  * Created by Colapso on 13/04/18.

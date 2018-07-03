@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,11 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -36,8 +32,13 @@ public class RegisterServiceFragment extends BaseFragment
 
     private EditText serviceName;
     private EditText servicePrice;
+    private EditText durations;
+    private EditText descriptions;
     private Button registerService;
     private Toolbar toolbar;
+    private Bundle bundle;
+
+    private String nif;
 
     public RegisterServiceFragment() {
         // Required empty public constructor
@@ -55,14 +56,20 @@ public class RegisterServiceFragment extends BaseFragment
     {
         context = getActivity().getApplicationContext();
 
+        bundle = getArguments();
+        nif = (String) bundle.getSerializable("nif");
+
+
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
-        toolbar                  = view.findViewById(R.id.app_bar);
+        toolbar            = view.findViewById(R.id.app_bar);
         serviceName        = view.findViewById(R.id.serviceName);
         servicePrice       = view.findViewById(R.id.servicePrice);
-        registerService   = view.findViewById(R.id.registerService);
+        durations          = view.findViewById(R.id.duration);
+        descriptions       = view.findViewById(R.id.servdescription);
+        registerService    = view.findViewById(R.id.registerService);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
@@ -94,8 +101,20 @@ public class RegisterServiceFragment extends BaseFragment
             {
                 try
                 {
-                    jsonBodyObj.put("key1", serviceName.getText().toString());
-                    jsonBodyObj.put("key2", servicePrice.getText().toString());
+                    String name = serviceName.getText().toString();
+                    String price = servicePrice.getText().toString();
+                    String duration = durations.getText().toString();
+                    String desc = descriptions.getText().toString();
+
+                    if(name.equals("") || price.equals("")|| duration.equals("")|| desc.equals(""))
+                    {
+                        jsonBodyObj.put("key1", name);
+                        jsonBodyObj.put("key2", price);
+                        jsonBodyObj.put("key1", duration);
+                        jsonBodyObj.put("key2", desc);
+                    }
+                    customersSchedulingApp.registerService(jsonBodyObj, nif);
+                    changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new AddOtherServiceOrRegisterEmployee(),"nif",nif));
 
                 }
                 catch (JSONException e)
@@ -103,10 +122,6 @@ public class RegisterServiceFragment extends BaseFragment
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-               // customersSchedulingApp.registerService(jsonBodyObj);
-
-                //TODO change to userBusiness
-                changeFragment(fragmentManager, R.id.businessData, new AddOtherServiceOrEndFragment());
             }
         });
     }

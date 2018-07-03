@@ -22,19 +22,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.Volley;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Model.Business;
+import com.ps.isel.customersscheduling.HALDto.PersonDto;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -43,7 +43,7 @@ import java.util.Date;
 public class ServiceFragment extends BaseFragment
 {
     //HARDCODED
-    private String[] hardcodedEmployesNames = {"Any", "Paulo", "João", "Francisco"};
+    private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo", "paulo@gmail", 91111,1),new PersonDto("Joao", "Joao@gmail", 91111,1),};
     private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
     //-----------------
 
@@ -69,14 +69,14 @@ public class ServiceFragment extends BaseFragment
 
     private Date currentTime;
     private Calendar maxDate;
-    private String service;
+    private String serviceNameS;
     private String employee;
     private String temporaryday;
     private String dateSchedule;
     private String temporaryHour;
     private String hour;
-    private String servName;
-    private Business business;
+
+    private ServiceDto service;
 
     public ServiceFragment() {
         // Required empty public constructor
@@ -105,7 +105,8 @@ public class ServiceFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bundle = getArguments();
-        business = (Business)bundle.getSerializable("business");
+        service = (ServiceDto) bundle.getSerializable("service");
+
         return inflater.inflate(R.layout.fragment_service, container, false);
     }
 
@@ -116,25 +117,19 @@ public class ServiceFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));            //nao sei se é necessário fazer isto em todas as activities
+        //customersSchedulingApp.getStoreEmployees(this::dropDownButtonCode, service);
 
-        toolbar                  = view.findViewById(R.id.app_bar);
+        jsonBodyObj = new JSONObject();
+
+        toolbar            = view.findViewById(R.id.app_bar);
         calendarView       = view.findViewById(R.id.calendarView);
         mRecyclerView      = view.findViewById(R.id.hrlist_recycler_view);
         registerRequestBtn = view.findViewById(R.id.reserveButton);
         spinner            = view.findViewById(R.id.employeesDropDown);
         serviceName        = view.findViewById(R.id.serviceName);
 
-        //business = (Business)intent.getSerializableExtra("business");
-        //servName = intent.getStringExtra("serviceName");
-        serviceName.setText(servName);
-
-
-
-        //  customersSchedulingApp.getStoreEmployee(
-        //          this::dropDownButtonCode,
-        //          business.getName()
-        //  );
+        serviceName.setText(service.getTitle());
 
         toolbarCode();
         setDateToCalendar();
@@ -148,6 +143,7 @@ public class ServiceFragment extends BaseFragment
         businessFragment = new BusinessFragment();
     }
 
+
     private void toolbarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -157,7 +153,8 @@ public class ServiceFragment extends BaseFragment
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 fragmentManager.popBackStackImmediate();
             }
         });
@@ -174,31 +171,31 @@ public class ServiceFragment extends BaseFragment
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                customersSchedulingApp.getDisponibilityWithAny(
-                        (hours)-> recyclerViewCode((String[]) hours),
-                        date.toString(),
-                        employee
-                );
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected)
+            {
+                customersSchedulingApp.getEmployeeDisponibility(
+                        hours-> recyclerViewCode(hours),service);
+
             }
 
         });
     }
 
-    private void dropDownButtonCode(String[] staff)
+    private void dropDownButtonCode(PersonDto[] staff)
     {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<PersonDto> adapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_dropdown_item_1line,
                 staff);
 
         spinner.setAdapter(adapter);
-        employee = hardcodedEmployesNames[0];
+        employee = hardcodedEmployesNames[0].getName();
         spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                employee = staff[position];
+                employee = staff[position].getName();
             }
         });
     }
@@ -210,7 +207,7 @@ public class ServiceFragment extends BaseFragment
             public void onClick(View v) {
                 if(employee == null)
                 {
-                    employee = hardcodedEmployesNames[0];
+                    employee = hardcodedEmployesNames[0].getName();
                 }
                 if(dateSchedule == null)
                 {
@@ -221,15 +218,17 @@ public class ServiceFragment extends BaseFragment
                     temporaryHour = hardcodedHoursAvaiable[0];
                 }
 
-                service = (String)serviceName.getText();
-                hour = temporaryHour;
+                try
+                {
+                    jsonBodyObj.put("employee", employee);
+                    jsonBodyObj.put("date", dateSchedule);
+                    jsonBodyObj.put("hour", temporaryHour);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                //TODO send request
-              //  Toast.makeText(context,(String)(service + " with "
-              //                  + employee+ " at " + dateSchedule + " at " + " at " + hour  +"Scheduled!!"),
-              //          Toast.LENGTH_SHORT).show();
-//
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "business", business));
+                customersSchedulingApp.registerUserService(jsonBodyObj, service);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "store", service.getStore()));
 
             }
         });

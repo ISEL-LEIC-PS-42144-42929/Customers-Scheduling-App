@@ -26,6 +26,11 @@ import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
@@ -35,11 +40,23 @@ import org.json.JSONObject;
 
 public class BusinessFragment extends BaseFragment
 {
+    //HARDCODED
+    private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
+    private CategoryDto cat = new CategoryDto("Tech");
+    private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
+
+    private ServiceDto[] services = new ServiceDto[]
+            {
+
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2),
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2)
+            };
+
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
 
-    private Fragment serviceFragment;
     private FragmentManager fragmentManager;
+    private Fragment serviceFragment;
 
     private Context context;
 
@@ -62,7 +79,7 @@ public class BusinessFragment extends BaseFragment
     private ListView lv;
     private Bundle bundle;
 
-    private Business business;
+    private StoreDto store;
     private boolean isUserSigned;
     private float score;
     private int numberStars;
@@ -78,7 +95,7 @@ public class BusinessFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_business, container, false);
+        return inflater.inflate(R.layout.fragment_store, container, false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -104,12 +121,18 @@ public class BusinessFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         bundle = getArguments();
-        business = (Business)bundle.getSerializable("business");
-
+        store = (StoreDto) bundle.getSerializable("store");
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
+       // customersSchedulingApp
+       //         .getStoreByNif(store->
+       //             constructRatingStarsAndTextViews(view,store), store);
+       // customersSchedulingApp
+       //         .getStoreServices(service->
+       //                 listViewCode(service),store);
 
         toolbar     = view.findViewById(R.id.app_bar);
         name        = view.findViewById(R.id.name);
@@ -120,22 +143,14 @@ public class BusinessFragment extends BaseFragment
         lv          = view.findViewById(R.id.services);
 
         toolBarCode();
-        constructRatingStars(view);
-        constructTextViews(business);
-        listViewCode(business);
         constructButtonsAndAddListeners();
+        constructRatingStarsAndTextViews(view,store);
+        listViewCode(services);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ServiceFragment();
     }
 
-    private void constructTextViews(Business business)
-    {
-        name.setText(NAME + business.getName());
-        address.setText(ADDRESS + business.getAddress());
-        contact.setText(CONTACT + business.getContact()+ "");
-        description.setText(DESCRIPTION + business.getDescription());
-    }
 
     private void constructButtonsAndAddListeners()
     {
@@ -144,9 +159,14 @@ public class BusinessFragment extends BaseFragment
     }
 
 
-    private void constructRatingStars(View view)
+    private void constructRatingStarsAndTextViews(View view, StoreDto store)
     {
-        score = business.getScoreReview();
+        name.setText(NAME + store.getStoreName());
+        address.setText(ADDRESS + store.getAddress());
+        contact.setText(CONTACT + store.getContact()+ "");
+        description.setText(DESCRIPTION + store.getAddress());          //mudar para descrição
+
+        score = store.getScoreReview();
         floatingPoint = score % 1;
         numberStars =(int)Math.ceil(score);
 
@@ -172,15 +192,15 @@ public class BusinessFragment extends BaseFragment
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode(Business business)
+    private void listViewCode(ServiceDto[] services)
     {
-        lv.setAdapter(new CustomAdapterServices(getActivity(), business.getServices()));
+        lv.setAdapter(new CustomAdapterServices(getActivity(), services));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(serviceFragment, "business", business));
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "service", services[position]));
             }
         });
     }
@@ -188,7 +208,7 @@ public class BusinessFragment extends BaseFragment
     private void toolBarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(business.getName());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(store.getStoreName());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 

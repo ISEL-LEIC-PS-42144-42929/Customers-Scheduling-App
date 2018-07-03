@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -56,10 +58,10 @@ public class RegisterEmployeeFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
-        toolbar                  = view.findViewById(R.id.app_bar);
+        toolbar             = view.findViewById(R.id.app_bar);
         employeeName        = view.findViewById(R.id.employeeName);
         employeeEmail       = view.findViewById(R.id.employeeEmail);
         employeeContact     = view.findViewById(R.id.employeeContact);
@@ -85,7 +87,6 @@ public class RegisterEmployeeFragment extends BaseFragment
             @Override
             public void onClick(View v) {
                 fragmentManager.popBackStackImmediate();
-
             }
         });
     }
@@ -98,18 +99,28 @@ public class RegisterEmployeeFragment extends BaseFragment
             {
                 try
                 {
-                    jsonBodyObj.put("key1", employeeName.getText().toString());
-                    jsonBodyObj.put("key2", employeeEmail.getText().toString());
-                    jsonBodyObj.put("key3", employeeContact.getText().toString());
-                    jsonBodyObj.put("key4", employeeGender.getText().toString());
+                    String clientEmail = employeeEmail.getText().toString();
+
+                    if(clientEmail.equals(""))
+                    {
+                        Toast.makeText(context, "Have to insert employee e-mail",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+
+
+                        jsonBodyObj.put("name", employeeName.getText().toString());
+                        jsonBodyObj.put("email", clientEmail);
+                        jsonBodyObj.put("contact", employeeContact.getText().toString());
+                        jsonBodyObj.put("gender", employeeGender.getText().toString());
+
+                        customersSchedulingApp.registerEmployee(jsonBodyObj);
+                        changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "email", clientEmail));
+                    }
                 }
-                catch (JSONException e)
-                {
+                catch (JSONException e) {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                //customersSchedulingApp.registerEmployee(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeScheduleFragment);
             }
         });
 

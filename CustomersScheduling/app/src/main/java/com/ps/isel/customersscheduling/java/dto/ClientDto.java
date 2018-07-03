@@ -1,5 +1,7 @@
 package com.ps.isel.customersscheduling.java.dto;
 
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+
 /**
  * Created by Colapso on 16/05/18.
  */

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
-    tools:context=".Fragments.BusinessRegistrationFragments.AddOtherServiceOrEndFragment">
+    tools:context=".Fragments.BusinessRegistrationFragments.AddOtherServiceOrRegisterEmployee">
 
     <Button
         android:id="@+id/registerAnotherService"
@@ -17,12 +17,12 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/endRegistration"
+        android:id="@+id/addEmployee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/registerAnotherEmployee"
         android:layout_centerHorizontal="true"
-        android:text="@string/endServiceRegistration"
+        android:text="@string/registerEmployee"
         android:textSize="20dp" />
 
 </FrameLayout>

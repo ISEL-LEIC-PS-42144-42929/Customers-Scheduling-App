@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.R;
 
@@ -37,6 +36,9 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     private EditText employeeEndLunchHour;
     private EditText employeeEndHour;
     private Button employeeRegisterScheduleBtn;
+    private Bundle bundle;
+
+    private String email;
 
 
     public RegisterEmployeeScheduleFragment() {
@@ -54,9 +56,11 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        bundle = getArguments();
+        email = (String)bundle.getSerializable("email");
         context = getActivity().getApplicationContext();
 
-        toolbar                  = view.findViewById(R.id.app_bar);
+        toolbar                     = view.findViewById(R.id.app_bar);
         employeeStartHour           = view.findViewById(R.id.employeeBegginHour);
         employeeStartLunchHour      = view.findViewById(R.id.employeeBegginLunch);
         employeeEndLunchHour        = view.findViewById(R.id.employeeEndLunch);
@@ -64,12 +68,12 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         employeeRegisterScheduleBtn = view.findViewById(R.id.employeeRegisterSchedule);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        addOtherEmpOrAddServiceFragment = new AddOtherEmpOrAddServiceFragment();
+        addOtherEmpOrAddServiceFragment = new AddOtherEmpOrEndFragment();
 
         toolbarCode();
         addListenertoButton();
@@ -98,18 +102,35 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             {
                 try
                 {
-                    jsonBodyObj.put("key1", employeeStartHour.getText().toString());
-                    jsonBodyObj.put("key2", employeeStartLunchHour.getText().toString());
-                    jsonBodyObj.put("key3", employeeEndLunchHour.getText().toString());
-                    jsonBodyObj.put("key4", employeeEndHour.getText().toString());
+                    String startHour =  employeeStartHour.getText().toString();
+                    String StartLunchHour = employeeStartLunchHour.getText().toString();
+                    String EndLunchHour = employeeEndLunchHour.getText().toString();
+                    String EndHour = employeeEndHour.getText().toString();
+
+                    if(startHour.equals("") || StartLunchHour.equals("")|| EndLunchHour.equals("")|| EndHour.equals(""))
+                    {
+                        Toast.makeText(context, "Have to insert hour",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        //TODO falar com o Bito sobre os pedidos do dia da semana e como esta a UI
+
+                        jsonBodyObj.put("open_hour", startHour);
+                        jsonBodyObj.put("init_break", StartLunchHour);
+                        jsonBodyObj.put("finish_break", EndLunchHour);
+                        jsonBodyObj.put("close_hour", EndHour);
+
+                        customersSchedulingApp.registerEmployeeSchedule(jsonBodyObj, email);
+                        changeFragment(fragmentManager, R.id.businessData, addOtherEmpOrAddServiceFragment);
+                    }
+
                 }
-                catch (JSONException e)
-                {
+                catch (JSONException e) {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                customersSchedulingApp.registerEmployeeSchedule(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, addOtherEmpOrAddServiceFragment);
+
+
+
             }
         });
 

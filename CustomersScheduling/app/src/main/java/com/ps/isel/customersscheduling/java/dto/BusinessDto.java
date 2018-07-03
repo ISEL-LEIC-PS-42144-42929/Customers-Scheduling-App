@@ -2,6 +2,7 @@ package com.ps.isel.customersscheduling.java.dto;
 
 import android.graphics.Bitmap;
 
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Service;
 
 /**

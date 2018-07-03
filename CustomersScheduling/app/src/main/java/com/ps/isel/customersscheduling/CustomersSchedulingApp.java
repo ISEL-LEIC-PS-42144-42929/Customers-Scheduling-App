@@ -6,12 +6,11 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
+import com.ps.isel.customersscheduling.HALDto.PersonDto;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Service;
-import com.ps.isel.customersscheduling.java.dto.BusinessDto;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
-import com.ps.isel.customersscheduling.java.dto.ServiceDto;
-import com.ps.isel.customersscheduling.java.dto.StaffDto;
 
 import org.json.JSONObject;
 
@@ -28,12 +27,18 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     private RequestQueue queue;
     private CustomersSchedulingWebApi api;
+    private String userEmail;
+
+    public String getUserEmail() {
+        return userEmail;
+    }
 
     public CustomersSchedulingWebApi getApi() {
         return api;
     }
 
-    public void setApi(CustomersSchedulingWebApi api) {
+    public void setApi(CustomersSchedulingWebApi api, String userEmail) {
+        this.userEmail = userEmail;
         this.api = api;
     }
 
@@ -47,9 +52,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
     //GET REQUESTS
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserStores(Consumer<Business[]> cons, String userName)
+    public void getUserStores(Consumer<StoreDto[]> cons, String userEmail)
     {
-        api.getUserStores(cons, userName);
+        api.getUserStores(cons, userEmail);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -59,21 +64,27 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreByName(Consumer<Business> cons, String businessName)
+    public void getStoreByNif(Consumer<StoreDto> cons, StoreDto store)
     {
-        api.getStoresByName(cons, businessName);
+        api.getStoresByNif(cons, store);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreServices(Consumer<ServiceDto[]> cons, String businessName)
+    public void getStoreServices(Consumer<ServiceDto[]> cons, StoreDto storeDto)
     {
-        api.getStoresByName(cons, businessName);
+        api.getStoresByNif(cons, storeDto);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getEmployeeDisponibility(Consumer<String[]> cons, ServiceDto service)
+    {
+       api.getEmployeeDisponibility(cons,service);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getSearchedStoreByName(Consumer<Business[]> cons, String businessName)
     {
-        api.getStoresByName(cons, businessName);
+       // api.getStoresByNif(cons, businessName);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -90,22 +101,38 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getUserRegisteredBusiness(cons, userName);
     }
 
-    public <T>void getDisponibilityWithAny(Consumer<T[]> cons,String date, String employee) {
+
+    public <T>void getStaffOfService(Consumer<T[]> cons)
+    {
+
     }
 
-    public void getStoreEmployee(Consumer<StaffDto[]> cons, String businessName) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public<T> void getStoreEmployees(Consumer<T[]> cons, ServiceDto service)
+    {
+       api.getStoreEmployees(cons,service);
     }
 
     //POST REQUESTS
 
-    public void registerStore(JSONObject storeJSONObject)
+    public void registerStore(JSONObject storeJSONObject, String userEmail)
     {
-        api.registerStore(storeJSONObject);
+        api.registerStore(storeJSONObject, userEmail);
     }
 
-    public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
+    public void registerService(JSONObject storeJSONObject, String nif)
     {
-        api.registerStoreSchedule(storeScheduleJSONObject);
+        api.registerService(storeJSONObject, nif);
+    }
+
+    public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
+    {
+        api.registerUserService(storeJSONObject, service);
+    }
+
+    public void registerStoreSchedule(JSONObject storeScheduleJSONObject, String storeNIF)
+    {
+        api.registerStoreSchedule(storeScheduleJSONObject, storeNIF);
     }
 
     public void registerEmployee(JSONObject employeeJSONObject)
@@ -113,9 +140,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.registerEmployee(employeeJSONObject);
     }
 
-    public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject)
+    public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject, String email)
     {
-        api.registerEmployeeSchedule(employeeScheduleJSONObject);
+        api.registerEmployeeSchedule(employeeScheduleJSONObject, email);
     }
 
     public void registerClient(JSONObject clientJSONObject)

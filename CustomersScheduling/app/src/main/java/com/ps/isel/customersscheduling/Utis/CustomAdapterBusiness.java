@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Model.Business;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.R;
 
 /**
@@ -20,7 +20,7 @@ import com.ps.isel.customersscheduling.R;
 public class CustomAdapterBusiness extends BaseAdapter
 {
     private Activity context;
-    private Business[] business;
+    private StoreDto[] stores;
 
     private TextView title;
     private TextView reviewScore;
@@ -32,16 +32,16 @@ public class CustomAdapterBusiness extends BaseAdapter
     private float proporcionToDraw;
     private int finalLevelToDraw;
 
-    public CustomAdapterBusiness(Activity context, Business[] businessNames)
+    public CustomAdapterBusiness(Activity context, StoreDto[] stores)
     {
         this.context = context;
-        this.business = businessNames;
+        this.stores = stores;
     }
 
     @Override
     public int getCount()
     {
-        return business.length;
+        return stores.length;
     }
 
     @Override
@@ -65,19 +65,19 @@ public class CustomAdapterBusiness extends BaseAdapter
         row = inflater.inflate(R.layout.rowofbusiness, parent, false);
 
         title = (TextView) row.findViewById(R.id.storeName);
-        title.setText(business[position].getName());
+        title.setText(stores[position].getStoreName());
         //title.setText(businessNames[position].getName());
 
         imageView = row.findViewById(R.id.imgIcon);
         drawable = (ClipDrawable) imageView.getDrawable();
 
-        proporcionToDraw = (business[position].getScoreReview() * 100) / 5;
+        proporcionToDraw = (stores[position].getScoreReview() * 100) / 5;
         //proporcionToDraw = (businessNames[position].getScoreReview() * 100) / 5;
         finalLevelToDraw = (int)(proporcionToDraw * 10000)/100;
         drawable.setLevel(finalLevelToDraw);
 
         reviewScore = (TextView) row.findViewById(R.id.scoreReview);
-        reviewScore.setText(business[position].getScoreReview() + "");
+        reviewScore.setText(stores[position].getScoreReview() + "");
         //reviewScore.setText(businessNames[position].getScoreReview() + "");
 
         return (row);

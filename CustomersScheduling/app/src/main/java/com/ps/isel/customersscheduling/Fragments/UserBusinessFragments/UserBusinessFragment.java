@@ -1,8 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,37 +8,37 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
-import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
-import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 public class UserBusinessFragment extends BaseFragment
 {
+    private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
+    private CategoryDto cat = new CategoryDto("Tech");
+    private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
     //HARDCODED
     private ServiceDto[] services = new ServiceDto[]
             {
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
+
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store),
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store)
             };
 
     private Business[] subbedBusiness = new Business[]
@@ -110,7 +108,7 @@ public class UserBusinessFragment extends BaseFragment
         editBusinessFragment = null;     //TODO new EditStoreFragment();
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+       // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         toolbar   = view.findViewById(R.id.app_bar);
         lv        = view.findViewById(R.id.myBusiness);

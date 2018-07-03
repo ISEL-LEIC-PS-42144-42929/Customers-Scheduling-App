@@ -14,29 +14,33 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
-import com.ps.isel.customersscheduling.java.dto.ServiceDto;
 
 import org.json.JSONObject;
 
 public class SearchResultsFragment extends BaseFragment {
 
+    private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
+    private CategoryDto cat = new CategoryDto("Tech");
+    private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
     //HARDCODED
     private ServiceDto[] services = new ServiceDto[]
             {
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15),
-                    new ServiceDto(1, "Corte de cabelo à tesoura",3.9,"Corte de cabelo à tesoura", 15)
+
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store),
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store)
             };
 
 
@@ -152,7 +156,7 @@ public class SearchResultsFragment extends BaseFragment {
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         lv      = (ListView) view.findViewById(R.id.resultsSearch);
@@ -182,15 +186,15 @@ public class SearchResultsFragment extends BaseFragment {
     private void listViewCode(Business[] businesses)
     {
 
-        lv.setAdapter(new CustomAdapterBusiness(getActivity(), resultsBusiness));
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", businesses[position]));
-            }
-        });
+      //  lv.setAdapter(new CustomAdapterBusiness(getActivity(), resultsBusiness));
+//
+      //  lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      //      @Override
+      //      public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+      //      {
+      //          changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", businesses[position]));
+      //      }
+      //  });
     }
 
     private void toolbarCode() {

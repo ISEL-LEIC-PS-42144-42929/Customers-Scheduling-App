@@ -24,7 +24,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="23dp"
             android:cursorVisible="false"
-            android:hint="insert name" />
+            android:hint="insert Name" />
 
         <EditText
             android:id="@+id/storeNif"
@@ -58,15 +58,54 @@
         </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
         <EditText
-            android:id="@+id/storeAddress"
+            android:id="@+id/street"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:cursorVisible="false"
             android:layout_below="@+id/categoryDropDown"
-            android:hint="insert Address" />
+            android:cursorVisible="false"
+            android:hint="insert Street" />
+
+        <EditText
+            android:id="@+id/zipcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/street"
+            android:cursorVisible="false"
+            android:hint="insert zipcode" />
+
+        <EditText
+            android:id="@+id/lot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:cursorVisible="false"
+            android:layout_below="@+id/zipcode"
+            android:hint="insert Lot" />
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:cursorVisible="false"
+            android:layout_below="@+id/lot"
+            android:hint="insert City" />
+
+        <EditText
+            android:id="@+id/country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:cursorVisible="false"
+            android:layout_below="@+id/city"
+            android:hint="insert Country" />
 
     </RelativeLayout>
 

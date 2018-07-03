@@ -28,6 +28,7 @@ import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -46,13 +47,18 @@ public class BusinessDataFragment extends BaseFragment {
     private final int IMAGE_REQUEST_CODE = 20;
     private final int CAMERA_REQUEST = 10;
 
-    private Fragment registerBusinessScheduleFragment;
     private FragmentManager fragmentManager;
+    private Fragment storeScheduleFragment;
 
     private Toolbar toolbar;
     private EditText storeName;
     private EditText storeNif;
     private EditText storeContact;
+    private EditText street;
+    private EditText zipcode;
+    private EditText lot;
+    private EditText city;
+    private EditText country;
     private MaterialBetterSpinner choseCategory;
     private EditText storeAddress;
     private Button registerBusiness;
@@ -82,20 +88,24 @@ public class BusinessDataFragment extends BaseFragment {
         storeName                = view.findViewById(R.id.name);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
+        street                   = view.findViewById(R.id.street);
+        zipcode                  = view.findViewById(R.id.zipcode);
+        lot                      = view.findViewById(R.id.lot);
+        city                     = view.findViewById(R.id.city);
+        country                  = view.findViewById(R.id.country);
         choseCategory            = view.findViewById(R.id.categoryDropDown);
-        storeAddress             = view.findViewById(R.id.storeAddress);
         registerBusiness         = view.findViewById(R.id.registerBusiness);
         insertExistingPictureBtn = view.findViewById(R.id.insertExisting);
         takeNewPicture           = view.findViewById(R.id.takePicture);
         img                      = view.findViewById(R.id.imageView);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
+        storeScheduleFragment = new BusinessScheduleFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
-        registerBusinessScheduleFragment = new BusinessScheduleFragment();
 
         dropDownButtonCode();
         toolbarCode();
@@ -148,18 +158,34 @@ public class BusinessDataFragment extends BaseFragment {
             public void onClick(View view) {
                 try
                 {
-                    jsonBodyObj.put("key1", storeName.getText().toString());
-                    jsonBodyObj.put("key2", storeNif.getText().toString());
-                    jsonBodyObj.put("key3", storeContact.getText().toString());
-                    jsonBodyObj.put("key4", choseCategoryText);
-                    jsonBodyObj.put("key5", storeAddress.getText().toString());
+                    String storeNIF = storeNif.getText().toString();
+
+                    if(storeNIF.equals(""))
+                    {
+                        Toast.makeText(context, "Have to insert store NIF",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+
+                        jsonBodyObj.put("name", storeName.getText().toString());
+                        jsonBodyObj.put("NIF", storeNif.getText().toString());
+                        jsonBodyObj.put("contact", storeNIF);
+                        jsonBodyObj.put("category", new CategoryDto(choseCategoryText));
+                        jsonBodyObj.put("street", street.getText().toString());
+                        jsonBodyObj.put("zipcode", zipcode.getText().toString());
+                        jsonBodyObj.put("lot", lot.getText().toString());
+                        jsonBodyObj.put("city", city.getText().toString());
+                        jsonBodyObj.put("country", country.getText().toString());
+
+                        customersSchedulingApp.registerStore(jsonBodyObj, customersSchedulingApp.getUserEmail());
+                        changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeNIF", storeNIF));
+                    }
+
                 }
                 catch (JSONException e) {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                //customersSchedulingApp.registerStore(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.businessData, registerBusinessScheduleFragment);
+
             }
         });
 
