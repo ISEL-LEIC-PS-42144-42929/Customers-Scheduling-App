@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by Colapso on 04/04/18.
  */
 
-public class CustomAdapterButtons extends BaseAdapter
+public class CustomAdapterSameFragment extends BaseAdapter
 {
     private String[] buttonsName;
     private Context context;
@@ -34,7 +34,7 @@ public class CustomAdapterButtons extends BaseAdapter
 
     private int id;
 
-    public CustomAdapterButtons(String[] buttonsName, Context context, Fragment fragment, int id)
+    public CustomAdapterSameFragment(String[] buttonsName, Context context, Fragment fragment, int id)
     {
         this.buttonsName = buttonsName;
         this.context = context;

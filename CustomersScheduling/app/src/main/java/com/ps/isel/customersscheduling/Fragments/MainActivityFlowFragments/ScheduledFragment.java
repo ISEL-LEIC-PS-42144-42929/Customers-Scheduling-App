@@ -25,7 +25,7 @@ import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterButtons;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
 
 
 public class ScheduledFragment extends BaseFragment
@@ -118,7 +118,7 @@ public class ScheduledFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
         lv      = view.findViewById(R.id.listSchedules);
 
-        lv.setAdapter(new CustomAdapterButtons(names, getActivity(), this, R.id.mainActivityFragment));
+        lv.setAdapter(new CustomAdapterSameFragment(names, getActivity(), this, R.id.mainActivityFragment));
         toolbarCode();
     }
 

@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.PendentRequestsFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusinessFragment;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
@@ -27,15 +30,16 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
     private FragmentManager fragmentManager;
     private BaseFragment fragment;
 
-    private Business[] ownerBusiness;
+    private StoreDto[] ownerBusiness;
 
     private View row;
     private TextView name;
     private Activity context;
     private Button deleteBusinessBtn;
     private Button editBusinessBtn;
+    private Button pendentRequests;
 
-    public CustomAdapterOwnerBusiness(Activity context, Business[] ownerBusiness, Fragment fragment)
+    public CustomAdapterOwnerBusiness(Activity context, StoreDto[] ownerBusiness, Fragment fragment)
     {
         this.ownerBusiness = ownerBusiness;
         this.name = name;
@@ -71,10 +75,11 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         row = inflater.inflate(R.layout.rowofbusinessowned, parent, false);
 
         name = (TextView) row.findViewById(R.id.businessName);
-        name.setText(ownerBusiness[position].getName());
+        name.setText(ownerBusiness[position].getStoreName());
 
         deleteBusinessBtn = (Button) row.findViewById(R.id.deleteBusiness);
         editBusinessBtn = (Button) row.findViewById(R.id.editBusinessInfo);
+        pendentRequests = (Button) row.findViewById(R.id.pendentRequests);
 
         addListenersToButtons(position);
 
@@ -108,7 +113,19 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
                         new EditBusinessFragment());
-////
+            }
+        });
+
+        pendentRequests.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
+
+                fragment.changeFragment(fragmentManager,
+                        R.id.userBusinessFragment,
+                        new PendentRequestsFragment());
             }
         });
 

@@ -23,6 +23,16 @@
             android:textColor="@android:color/background_dark" />
 
         <Button
+            android:id="@+id/pendentRequests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/editBusiness"
+            android:text="@string/multilines"
+            android:textSize="10dp"
+            android:layout_marginLeft="115dp"/>
+
+        <Button
             android:id="@+id/editBusinessInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,8 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/userPhoto"
-            android:layout_marginRight="11dp"
             android:text="@string/delete" />
     </RelativeLayout>
 

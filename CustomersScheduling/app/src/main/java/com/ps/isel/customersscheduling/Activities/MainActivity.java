@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+       // mAuth.addAuthStateListener(mAuthListener);
 
 
     }
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         //   userEmail = getIntent().getStringExtra("userEmail");
-        authenticationCode();
+       // authenticationCode();
 
     }
 

@@ -3,26 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/registerStore"
+        android:visible="false"
         android:title="@string/registerStore">
     </item>
     <item
         android:id="@+id/myStores"
+        android:visible="false"
         android:title="@string/myStores">
     </item>
     <item
-        android:id="@+id/pendentRequests"
-        android:title="@string/pendentRequests">
-    </item>
-    <item
         android:id="@+id/scheduled"
+        android:visible="false"
         android:title="@string/scheduled">
     </item>
     <item
         android:id="@+id/definitions"
+        android:visible="false"
         android:title="@string/definitions">
     </item>
     <item
-        android:id="@+id/Favorites"
+        android:id="@+id/favorites"
+        android:visible="false"
         android:title="@string/favourites">
     </item>
 
@@ -38,7 +39,12 @@
         android:title="@string/about">
     </item>
     <item
+        android:id="@+id/login"
+        android:title="@string/login">
+    </item>
+    <item
         android:id="@+id/logout"
+        android:visible="false"
         android:title="@string/logout">
     </item>
 

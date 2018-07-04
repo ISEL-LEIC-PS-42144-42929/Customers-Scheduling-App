@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.BusinessFragment;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
@@ -44,7 +46,7 @@ public class CustomAdapterUsers extends BaseAdapter
         this.name = name;
         this.context = context;
 
-        fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+        fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
         this.fragment = (BaseFragment) fragment;
     }
 

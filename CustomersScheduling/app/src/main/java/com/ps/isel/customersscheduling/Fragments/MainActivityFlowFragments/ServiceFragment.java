@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
@@ -75,6 +76,7 @@ public class ServiceFragment extends BaseFragment
     private String dateSchedule;
     private String temporaryHour;
     private String hour;
+    private String idToken;
 
     private ServiceDto service;
 
@@ -209,33 +211,40 @@ public class ServiceFragment extends BaseFragment
     private void addListenerToButtons()
     {
         registerRequestBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                if(employee == null)
+                if(idToken == null)
                 {
-                    employee = hardcodedEmployesNames[0].getName();
-                }
-                if(dateSchedule == null)
-                {
-                    dateSchedule = currentTime.toString();
-                }
-                if(temporaryHour == null)
-                {
-                    temporaryHour = hardcodedHoursAvaiable[0];
-                }
+                    Toast.makeText(context, "Log yourself in so you can make a booking",Toast.LENGTH_LONG).show();
+                }else{
+                        if (employee == null)
+                        {
+                            employee = hardcodedEmployesNames[0].getName();
+                        }
+                        if (dateSchedule == null)
+                        {
+                            dateSchedule = currentTime.toString();
+                        }
+                        if (temporaryHour == null)
+                        {
+                            temporaryHour = hardcodedHoursAvaiable[0];
+                        }
 
-                try
-                {
-                    jsonBodyObj.put("employee", employee);
-                    jsonBodyObj.put("date", dateSchedule);
-                    jsonBodyObj.put("hour", temporaryHour);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        try
+                        {
+                            jsonBodyObj.put("employee", employee);
+                            jsonBodyObj.put("date", dateSchedule);
+                            jsonBodyObj.put("hour", temporaryHour);
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                        customersSchedulingApp.registerUserService(jsonBodyObj, service);
+                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "store", service.getStore()));
                 }
-
-                customersSchedulingApp.registerUserService(jsonBodyObj, service);
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "store", service.getStore()));
-
             }
         });
     }

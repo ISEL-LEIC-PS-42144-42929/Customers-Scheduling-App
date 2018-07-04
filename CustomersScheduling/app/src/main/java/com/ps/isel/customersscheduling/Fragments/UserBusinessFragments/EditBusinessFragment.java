@@ -1,12 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,13 +17,8 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeFragment;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterServiceFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
-import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterButtons;
-import com.ps.isel.customersscheduling.Utis.EditBusinessAdapter;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
 
 
 public class EditBusinessFragment extends BaseFragment
@@ -89,9 +82,8 @@ public class EditBusinessFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
 
         lv = (ListView) view.findViewById(R.id.listEdits);
-        lv.setAdapter(new EditBusinessAdapter(edits, getActivity(), fragments,this, R.id.userBusinessFragment));
+        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment));
 
-        names, getActivity(), this, R.id.mainActivityFragment
 
         toolbarCode();
 

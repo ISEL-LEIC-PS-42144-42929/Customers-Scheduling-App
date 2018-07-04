@@ -104,7 +104,8 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
     private Context context;
 
-    private String userEmail;
+    private String idToken;
+    private String email;
 
     public UserRegisteredBusinessFragment() {
         // Required empty public constructor
@@ -139,6 +140,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
        inflater.inflate(R.menu.menu, menu);
        MenuItem item = menu.findItem(R.id.menu_search);
+       setVisibilityMenuItemsIdToken(menu);
        searchView = (SearchView) item.getActionView();
        searchBarCode();
        super.onCreateOptionsMenu(menu, inflater);
@@ -151,8 +153,8 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
-        String idToken = getActivity().getIntent().getStringExtra("idtoken");
-        String email = getActivity().getIntent().getStringExtra("email");
+        idToken = getActivity().getIntent().getStringExtra("idtoken");
+        email = getActivity().getIntent().getStringExtra("email");
 
         lv        = view.findViewById(R.id.alreadySubToList);
         toolbar   = view.findViewById(R.id.filter_toolbar);
@@ -174,8 +176,32 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
     }
 
+    public void setVisibilityMenuItemsIdToken(Menu menu)
+    {
+        if(idToken != null)
+        {
+            MenuItem itemMystores = (MenuItem) menu.findItem(R.id.myStores);
+            MenuItem registerBusiness = (MenuItem) menu.findItem(R.id.registerStore);
+            MenuItem schedules = (MenuItem) menu.findItem(R.id.definitions);
+            MenuItem definitions = (MenuItem) menu.findItem(R.id.definitions);
+            MenuItem favourites = (MenuItem) menu.findItem(R.id.favorites);
+            MenuItem logout = (MenuItem) menu.findItem(R.id.logout);
+            MenuItem login = (MenuItem) menu.findItem(R.id.login);
 
-    @Override
+            itemMystores.setVisible(true);
+            registerBusiness.setVisible(true);
+            schedules.setVisible(true);
+            definitions.setVisible(true);
+            favourites.setVisible(true);
+            logout.setVisible(true);
+            login.setVisible(false);
+
+        }
+
+    }
+
+
+      @Override
       public boolean onOptionsItemSelected(MenuItem item) {
 
           switch(item.getItemId())
@@ -196,7 +222,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
               case (R.id.definitions):
                   goToActivity(context,DefinitionsActivity.class);
                   break;
-              case (R.id.Favorites):
+              case (R.id.favorites):
                   changeFragment(fragmentManager,R.id.mainActivityFragment,new FavouritesFragment());
                   break;
               case (R.id.About):
@@ -209,6 +235,9 @@ public class UserRegisteredBusinessFragment extends BaseFragment
           }
           return super.onOptionsItemSelected(item);
       }
+
+
+
 
 
 

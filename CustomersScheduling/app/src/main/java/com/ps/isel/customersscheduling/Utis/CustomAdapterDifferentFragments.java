@@ -13,7 +13,7 @@ import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.R;
 
-public class EditBusinessAdapter extends BaseAdapter
+public class CustomAdapterDifferentFragments extends BaseAdapter
 {
     private String[] buttonsName;
     private Context context;
@@ -24,7 +24,7 @@ public class EditBusinessAdapter extends BaseAdapter
 
     private int id;
 
-    public EditBusinessAdapter(String[] buttonsName, Context context, BaseFragment[] fragments,Fragment fragment, int id){
+    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id){
         this.buttonsName = buttonsName;
         this.context = context;
         this.fragment = (BaseFragment)fragment;

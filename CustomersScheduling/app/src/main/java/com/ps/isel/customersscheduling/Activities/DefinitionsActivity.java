@@ -10,7 +10,6 @@ import com.ps.isel.customersscheduling.Activities.DefinitionsActivities.EditNoti
 import com.ps.isel.customersscheduling.Activities.DefinitionsActivities.EditProfileActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterButtons;
 
 
 public class DefinitionsActivity extends BaseActivityWithOnlyBackArrow
@@ -43,7 +42,7 @@ public class DefinitionsActivity extends BaseActivityWithOnlyBackArrow
        getSupportActionBar().setTitle("Definitions");
 
        lv = (ListView) findViewById(R.id.listButtons);
-      // lv.setAdapter(new CustomAdapterButtons(subbedBusiness, this, goToOnClick, customersSchedulingApp) );
+      // lv.setAdapter(new CustomAdapterSameFragment(subbedBusiness, this, goToOnClick, customersSchedulingApp) );
 
    }
 

@@ -50,4 +50,6 @@
     <string name="registerSchedule">Register Schedule</string>
     <string name="registerService">Register Service</string>
     <string name="deleteService">Delete Service</string>
+    <string name="multilines">Client\nRequests</string>
+    <string name="login">Login</string>
 </resources>
