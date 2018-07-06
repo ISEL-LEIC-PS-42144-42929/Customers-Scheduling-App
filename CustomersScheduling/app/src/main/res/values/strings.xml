@@ -60,13 +60,12 @@
     <string name="insert_nif">insert Nif</string>
     <string name="open_existing_image">Open Existing Image</string>
     <string name="take_new_photo">Take New Photo</string>
-
     <string-array name="categories_array">
-        <item name="Restaurants" />
-        <item name="Barber" />
-        <item name="Gym" />
-        <item name="Spa" />
-        <item name="Health" />
-        <item name="Dentists" />
+        <item>Restaurants</item>
+        <item>Barber</item>
+        <item>Gym</item>
+    <item>Spa</item>
+    <item>Health</item>
+    <item>Dentists</item>
     </string-array>
 </resources>

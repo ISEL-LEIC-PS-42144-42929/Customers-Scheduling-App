@@ -1,6 +1,7 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -90,7 +91,7 @@ public class FilterFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_filter, container, false);
     }
 
@@ -103,6 +104,8 @@ public class FilterFragment extends BaseFragment {
 
         categories = getResources().getStringArray(R.array.categories_array);
 
+       // categories = context.getApplicationContext().getResources().getStringArray(R.array.categories_array);
+
         fragmentManager = getActivity().getSupportFragmentManager();
         favouriteFragment = new SearchResultsFragment();
 
@@ -114,8 +117,11 @@ public class FilterFragment extends BaseFragment {
         saveFilter     = view.findViewById(R.id.saveFilter);
 
         toolBarCode();
+
         constructDropdowns();
         addListenersToButtons();
+
+
     }
 
     private void toolBarCode()

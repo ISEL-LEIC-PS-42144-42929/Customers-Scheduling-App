@@ -26,12 +26,10 @@
         <activity android:name=".Activities.BaseLayoutsActivities.BaseActivityWithOnlyBackArrow" />
         <activity android:name=".Activities.DefinitionsActivities.EditProfileActivity" >
         </activity>
-
         <activity android:name=".Activities.DefinitionsActivities.ChangeEmailActivity" />
         <activity android:name=".Activities.DefinitionsActivities.ChangePasswordActivity" />
         <activity android:name=".Activities.DefinitionsActivities.EditNotificationsActivity" />
         <activity android:name=".Activities.AboutActivity" />
-        <activity android:name=".Activities.SchedulesActivity" />
         <activity android:name=".Activities.UserBusinessActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activities.SignInActivity">
 
