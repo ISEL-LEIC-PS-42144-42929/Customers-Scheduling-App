@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/toolbarwithbackarrow"></include>
+        layout="@layout/toolbarwithbackarrow" />
 
     <RelativeLayout
         android:id="@+id/editTextLayout"
@@ -24,7 +24,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="23dp"
             android:cursorVisible="false"
-            android:hint="insert Name" />
+            android:hint="@string/insert_name" />
 
         <EditText
             android:id="@+id/storeNif"
@@ -34,7 +34,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/name"
             android:cursorVisible="false"
-            android:hint="insert Nif" />
+            android:hint="@string/insert_nif" />
 
         <EditText
             android:id="@+id/storeContact"
@@ -44,7 +44,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/storeNif"
             android:cursorVisible="false"
-            android:hint="insert Contact" />
+            android:hint="@string/insert_contact" />
 
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/categoryDropDown"
@@ -53,19 +53,17 @@
             android:layout_below="@+id/storeContact"
             android:layout_centerHorizontal="true"
             android:hint="@string/chooseCategory"
-            android:textColorHint="#05ab9a">
-
-        </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+            android:textColorHint="#05ab9a" />
 
         <EditText
-            android:id="@+id/street"
+            android:id="@+id/streetandLotNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/categoryDropDown"
             android:cursorVisible="false"
-            android:hint="insert Street" />
+            android:hint="@string/street_and_lot_number_ex_street_2" />
 
         <EditText
             android:id="@+id/zipcode"
@@ -73,39 +71,20 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/street"
+            android:layout_below="@+id/cityAndCountry"
             android:cursorVisible="false"
-            android:hint="insert zipcode" />
+            android:hint="@string/insert_zipcode" />
+
 
         <EditText
-            android:id="@+id/lot"
+            android:id="@+id/cityAndCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:cursorVisible="false"
-            android:layout_below="@+id/zipcode"
-            android:hint="insert Lot" />
-
-        <EditText
-            android:id="@+id/city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:cursorVisible="false"
-            android:layout_below="@+id/lot"
-            android:hint="insert City" />
-
-        <EditText
-            android:id="@+id/country"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:cursorVisible="false"
-            android:layout_below="@+id/city"
-            android:hint="insert Country" />
+            android:layout_below="@+id/streetandLotNumber"
+            android:hint="@string/ex_london_england"/>
 
     </RelativeLayout>
 
@@ -122,7 +101,7 @@
         android:layout_alignBottom="@+id/takePicture"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Open Existing Image" />
+        android:text="@string/open_existing_image" />
 
     <Button
         android:id="@+id/takePicture"
@@ -131,7 +110,7 @@
         android:layout_above="@+id/registerBusiness"
         android:layout_marginBottom="11dp"
 
-        android:text="Take New Photo" />
+        android:text="@string/take_new_photo" />
 
     <Button
         android:id="@+id/registerBusiness"
@@ -141,7 +120,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp"
         android:text="@string/registerStore"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/imageView"

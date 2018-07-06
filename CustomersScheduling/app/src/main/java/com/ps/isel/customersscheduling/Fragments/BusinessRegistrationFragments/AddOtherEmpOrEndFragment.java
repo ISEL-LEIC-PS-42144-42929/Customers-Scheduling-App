@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
+import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
 public class AddOtherEmpOrEndFragment extends BaseFragment
@@ -66,7 +68,7 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-                changeFragment(fragmentManager, R.id.businessData, userBusinessFragment);
+                goToActivity(context, UserBusinessActivity.class);
             }
         });
     }

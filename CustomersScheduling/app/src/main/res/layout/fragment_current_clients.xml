@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/cardview_light_background"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.UserBusinessFragments.currentClientsFragment">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/toolbarwithbackarrow">
+        </include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="70dp">
+
+            <include
+                android:id="@+id/myClients"
+                layout="@layout/listview" />
+
+        </LinearLayout>
+
+</FrameLayout>

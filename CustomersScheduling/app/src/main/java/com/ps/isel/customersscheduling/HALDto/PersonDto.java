@@ -4,10 +4,10 @@ public class PersonDto {
 
     private String name;
     private String email;
-    private int contact;
+    private String contact;
     private int gender;
 
-    public PersonDto(String name, String email, int contact, int gender)
+    public PersonDto(String name, String email, String contact, int gender)
     {
         this.name = name;
         this.email = email;
@@ -23,7 +23,7 @@ public class PersonDto {
         return email;
     }
 
-    public int getContact() {
+    public String getContact() {
         return contact;
     }
 

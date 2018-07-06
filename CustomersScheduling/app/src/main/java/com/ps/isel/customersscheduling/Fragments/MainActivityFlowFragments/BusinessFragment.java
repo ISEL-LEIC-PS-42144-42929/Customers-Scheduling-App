@@ -139,7 +139,7 @@ public class BusinessFragment extends BaseFragment
         address     = view.findViewById(R.id.address);
         contact     = view.findViewById(R.id.contact);
         description = view.findViewById(R.id.description);
-        signInBtn   = view.findViewById(R.id.signIn);
+        //signInBtn   = view.findViewById(R.id.signIn);
         lv          = view.findViewById(R.id.services);
 
         toolBarCode();
@@ -154,7 +154,7 @@ public class BusinessFragment extends BaseFragment
 
     private void constructButtonsAndAddListeners()
     {
-        signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE );   //change condition to without "!"
+//        signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE );   //change condition to without "!"
         //add Listener to button
     }
 

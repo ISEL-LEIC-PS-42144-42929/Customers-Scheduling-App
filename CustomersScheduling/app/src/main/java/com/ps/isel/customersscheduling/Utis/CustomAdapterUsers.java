@@ -84,13 +84,6 @@ public class CustomAdapterUsers extends BaseAdapter
         drawable = (ClipDrawable) imageView.getDrawable();
         drawable.setLevel(10000);
 
-        acceptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         addListenersToButtons();
 
         return (row);

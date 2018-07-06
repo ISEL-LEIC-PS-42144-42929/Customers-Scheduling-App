@@ -40,9 +40,9 @@ public class FilterFragment extends BaseFragment {
 
     //HARDCODED
     private String[] hardcodedLocations = {"Lisbon", "Porto", "Sesimbra", "Algarve"};
-    private String[] hardcodedCategorys= {"Health", "Restauration", "Hair", "Nails","Cofee"};
     //--------------
     private final String FILE_NAME = "favourites.txt";
+    private String[] categories;
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
@@ -101,6 +101,8 @@ public class FilterFragment extends BaseFragment {
 
         context = getActivity().getApplicationContext();
 
+        categories = getResources().getStringArray(R.array.categories_array);
+
         fragmentManager = getActivity().getSupportFragmentManager();
         favouriteFragment = new SearchResultsFragment();
 
@@ -154,14 +156,14 @@ public class FilterFragment extends BaseFragment {
         ArrayAdapter<String> adapterCategorys = new ArrayAdapter<String>(
                 context,
                 android.R.layout.simple_dropdown_item_1line,
-                hardcodedCategorys);
+                categories);
 
         categoryChosen.setAdapter(adapterCategorys);
 
         categoryChosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                category = hardcodedCategorys[position];
+                category = categories[position];
             }
         });
 

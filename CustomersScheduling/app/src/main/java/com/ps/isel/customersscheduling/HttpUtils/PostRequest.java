@@ -61,7 +61,8 @@ public class PostRequest<T> extends JsonRequest<T>
 
     }
 
-    @Override    public byte[] getBody() {
+    @Override
+    public byte[] getBody() {
         try {
             return requestBody == null ? null : requestBody.getBytes("utf-8");
         } catch (UnsupportedEncodingException uee) {

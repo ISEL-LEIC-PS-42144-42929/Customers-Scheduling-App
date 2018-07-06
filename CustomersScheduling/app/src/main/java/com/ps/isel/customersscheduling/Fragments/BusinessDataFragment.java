@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
+package com.ps.isel.customersscheduling.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +23,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
-import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
-import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -47,17 +43,14 @@ public class BusinessDataFragment extends BaseFragment {
     private final int IMAGE_REQUEST_CODE = 20;
     private final int CAMERA_REQUEST = 10;
 
-    private FragmentManager fragmentManager;
-    private Fragment storeScheduleFragment;
+    Fragment registerBusinessScheduleFragment;
+    FragmentManager fragmentManager;
 
-    private Toolbar toolbar;
     private EditText storeName;
     private EditText storeNif;
     private EditText storeContact;
-    private EditText streetAndLot;
-    private EditText zipcode;
-    private EditText cityAndCountry;
     private MaterialBetterSpinner choseCategory;
+    private EditText storeAddress;
     private Button registerBusiness;
     private Button insertExistingPictureBtn;
     private Button takeNewPicture;
@@ -66,10 +59,10 @@ public class BusinessDataFragment extends BaseFragment {
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
-
     private Context context;
 
     private String[] hardcodedCategory = {"Saude", "Restauraçao", "Beleza", ""};
+
 
     public BusinessDataFragment() {
         // Required empty public constructor
@@ -81,29 +74,26 @@ public class BusinessDataFragment extends BaseFragment {
 
         context = getActivity().getApplicationContext();
 
-        toolbar                  = view.findViewById(R.id.app_bar);
         storeName                = view.findViewById(R.id.name);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
-        streetAndLot             = view.findViewById(R.id.streetandLotNumber);
-        zipcode                  = view.findViewById(R.id.zipcode);
-        cityAndCountry           = view.findViewById(R.id.cityAndCountry);
         choseCategory            = view.findViewById(R.id.categoryDropDown);
+        storeAddress             = view.findViewById(R.id.storeAddress);
         registerBusiness         = view.findViewById(R.id.registerBusiness);
         insertExistingPictureBtn = view.findViewById(R.id.insertExisting);
         takeNewPicture           = view.findViewById(R.id.takePicture);
         img                      = view.findViewById(R.id.imageView);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+        customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
-        storeScheduleFragment = new BusinessScheduleFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
 
+        registerBusinessScheduleFragment = new BusinessScheduleFragment();
+
         dropDownButtonCode();
-        toolbarCode();
         addListenertoButton();
     }
 
@@ -111,21 +101,6 @@ public class BusinessDataFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_business_data, container, false);
-    }
-
-    private void toolbarCode()
-    {
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Business");
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToActivity(context, MainActivity.class);
-            }
-        });
     }
 
     private void dropDownButtonCode()
@@ -153,39 +128,18 @@ public class BusinessDataFragment extends BaseFragment {
             public void onClick(View view) {
                 try
                 {
-                    String storeNIF = storeNif.getText().toString();
-                    String storeCont = storeContact.getText().toString();
-                    String storeNam = storeName.getText().toString();
-                    String strtAndLot = streetAndLot.getText().toString();
-                    String zipCode = zipcode.getText().toString();
-                    String cityAndCoun = cityAndCountry.getText().toString();
-
-                    if(storeNIF.equals("") || storeCont.equals("") || storeNam.equals("") || strtAndLot.equals("") || zipCode.equals("") || cityAndCoun.equals("") )
-                    {
-                        Toast.makeText(context, "Have to insert all store data",Toast.LENGTH_LONG).show();
-                    }
-                    else{
-
-                        jsonBodyObj.put("name", storeName.getText().toString());
-                        jsonBodyObj.put("NIF", storeNif.getText().toString());
-                        jsonBodyObj.put("contact", storeContact);
-                        jsonBodyObj.put("category", new CategoryDto(choseCategoryText));
-                        jsonBodyObj.put("street", deserializeString(streetAndLot.getText().toString())[0]);
-                        jsonBodyObj.put("zipcode", zipcode.getText().toString());
-                        jsonBodyObj.put("lot", deserializeString(streetAndLot.getText().toString())[1]);
-                        jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
-                        jsonBodyObj.put("country",deserializeString(cityAndCountry.getText().toString())[1]);
-
-                     //   customersSchedulingApp.registerStore(jsonBodyObj, customersSchedulingApp.getUserEmail());
-                        changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeNIF", storeNIF));
-                    }
-
+                    jsonBodyObj.put("key1", storeName.getText().toString());
+                    jsonBodyObj.put("key2", storeNif.getText().toString());
+                    jsonBodyObj.put("key3", storeContact.getText().toString());
+                    jsonBodyObj.put("key4", choseCategoryText);
+                    jsonBodyObj.put("key5", storeAddress.getText().toString());
                 }
                 catch (JSONException e) {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-
+           //     customersSchedulingApp.registerStore(jsonBodyObj);
+                changeFragment(fragmentManager, R.id.businessData, registerBusinessScheduleFragment);
             }
         });
 
@@ -207,11 +161,6 @@ public class BusinessDataFragment extends BaseFragment {
             }
         });
 }
-
-    public String[] deserializeString(String string)
-    {
-        return string.split(" ");
-    }
 
      @Override
      public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -262,5 +211,4 @@ public class BusinessDataFragment extends BaseFragment {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent,CAMERA_REQUEST);
     }
-
 }

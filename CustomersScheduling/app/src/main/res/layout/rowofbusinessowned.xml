@@ -23,32 +23,32 @@
             android:textColor="@android:color/background_dark" />
 
         <Button
+            android:id="@+id/clients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Clients"
+            android:textSize="10dp"
+            android:layout_toLeftOf="@+id/pendentRequests"
+            android:layout_toStartOf="@+id/pendentRequests"/>
+
+        <Button
             android:id="@+id/pendentRequests"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/editBusiness"
-            android:text="@string/multilines"
-            android:textSize="10dp"
-            android:layout_marginLeft="115dp"/>
 
+            android:textSize="10dp"
+            android:layout_toLeftOf="@+id/editBusinessInfo"
+            android:layout_toStartOf="@+id/editBusinessInfo"
+            android:text="@string/multilines" />
         <Button
             android:id="@+id/editBusinessInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="17dp"
-            android:layout_marginRight="17dp"
-            android:layout_toLeftOf="@+id/deleteBusiness"
-            android:layout_toStartOf="@+id/deleteBusiness"
-            android:text="@string/editBusinessInfo" />
-        <Button
-            android:id="@+id/deleteBusiness"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/delete" />
+            android:text="@string/editBusinessInfo" />
     </RelativeLayout>
 
 </RelativeLayout>

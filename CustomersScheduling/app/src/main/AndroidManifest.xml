@@ -23,7 +23,6 @@
         </activity>
         <activity android:name=".Activities.DefinitionsActivity" />
         <activity android:name=".Activities.RegisterStoreActivity" />
-        <activity android:name=".Activities.PendentRequestsActivity" />
         <activity android:name=".Activities.BaseLayoutsActivities.BaseActivityWithOnlyBackArrow" />
         <activity android:name=".Activities.DefinitionsActivities.EditProfileActivity" >
         </activity>

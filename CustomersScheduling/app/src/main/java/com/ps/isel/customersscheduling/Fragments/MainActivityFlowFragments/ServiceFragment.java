@@ -44,7 +44,7 @@ import java.util.Date;
 public class ServiceFragment extends BaseFragment
 {
     //HARDCODED
-    private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo", "paulo@gmail", 91111,1),new PersonDto("Joao", "Joao@gmail", 91111,1),};
+    private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo", "paulo@gmail", "91111",1),new PersonDto("Joao", "Joao@gmail", "91111",1),};
     private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
     //-----------------
 

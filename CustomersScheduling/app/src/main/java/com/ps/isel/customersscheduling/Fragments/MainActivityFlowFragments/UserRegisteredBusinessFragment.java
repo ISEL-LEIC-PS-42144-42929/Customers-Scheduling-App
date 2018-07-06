@@ -178,11 +178,11 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
     public void setVisibilityMenuItemsIdToken(Menu menu)
     {
-        if(idToken != null)
+        if(idToken == null)
         {
             MenuItem itemMystores = (MenuItem) menu.findItem(R.id.myStores);
             MenuItem registerBusiness = (MenuItem) menu.findItem(R.id.registerStore);
-            MenuItem schedules = (MenuItem) menu.findItem(R.id.definitions);
+            MenuItem schedules = (MenuItem) menu.findItem(R.id.scheduled);
             MenuItem definitions = (MenuItem) menu.findItem(R.id.definitions);
             MenuItem favourites = (MenuItem) menu.findItem(R.id.favorites);
             MenuItem logout = (MenuItem) menu.findItem(R.id.logout);
@@ -215,9 +215,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                   break;
               case (R.id.scheduled):
                   changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment());
-                  break;
-              case (R.id.pendentRequests):
-                  changeFragment(fragmentManager,R.id.mainActivityFragment,new PendentRequestsFragment());
                   break;
               case (R.id.definitions):
                   goToActivity(context,DefinitionsActivity.class);

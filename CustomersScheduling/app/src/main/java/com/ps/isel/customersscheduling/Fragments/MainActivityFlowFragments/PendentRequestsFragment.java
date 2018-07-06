@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
@@ -28,6 +30,7 @@ public class PendentRequestsFragment extends BaseFragment
 {
 
     private CustomersSchedulingApp customersSchedulingApp;
+    private FragmentManager fragmentManager;
 
     private Toolbar toolbar;
     private ListView lv;
@@ -75,6 +78,8 @@ public class PendentRequestsFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
+        fragmentManager = getActivity().getSupportFragmentManager();
+
         user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
         pendentRequests[0] = user;      //hardcodeddata
         pendentRequests[1] = user;      //hardcodeddata
@@ -101,7 +106,9 @@ public class PendentRequestsFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-              goToActivity(context, MainActivity.class);
+                changeFragment(fragmentManager,
+                        R.id.userBusinessFragment,
+                        new UserBusinessFragment());
             }
         });
     }

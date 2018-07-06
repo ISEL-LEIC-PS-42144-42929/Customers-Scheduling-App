@@ -16,9 +16,8 @@ import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.PendentRequestsFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusinessFragment;
-import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.currentClientsFragment;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
 /**
@@ -35,7 +34,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
     private View row;
     private TextView name;
     private Activity context;
-    private Button deleteBusinessBtn;
+    private Button currentClients;
     private Button editBusinessBtn;
     private Button pendentRequests;
 
@@ -77,29 +76,41 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         name = (TextView) row.findViewById(R.id.businessName);
         name.setText(ownerBusiness[position].getStoreName());
 
-        deleteBusinessBtn = (Button) row.findViewById(R.id.deleteBusiness);
         editBusinessBtn = (Button) row.findViewById(R.id.editBusinessInfo);
         pendentRequests = (Button) row.findViewById(R.id.pendentRequests);
+        currentClients = (Button) row.findViewById(R.id.clients);
 
-        addListenersToButtons(position);
+        addListenersToButtons(currentClients, pendentRequests, editBusinessBtn);
 
         return (row);
     }
 
-    private void addListenersToButtons(final int position)
+    private void addListenersToButtons(Button currentClients, Button pendentRequests, Button editBusinessBtn )
     {
-        deleteBusinessBtn.setOnClickListener(new View.OnClickListener()
+        currentClients.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Todo Enviar ao servidor eliminar favorito ao request
 
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.detach(fragment);
-                fragmentTransaction.attach(fragment);
-                fragmentTransaction.commit();
+                fragment.changeFragment(fragmentManager,
+                        R.id.userBusinessFragment,
+                        new currentClientsFragment());
 
+            }
+        });
+
+        pendentRequests.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
+
+                fragment.changeFragment(fragmentManager,
+                        R.id.userBusinessFragment,
+                        new PendentRequestsFragment());
             }
         });
 
@@ -116,18 +127,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             }
         });
 
-        pendentRequests.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
 
-                fragment.changeFragment(fragmentManager,
-                        R.id.userBusinessFragment,
-                        new PendentRequestsFragment());
-            }
-        });
 
     }
 
