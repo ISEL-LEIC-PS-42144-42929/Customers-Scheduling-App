@@ -113,10 +113,10 @@ public class CustomersSchedulingWebApi<T>
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserRegisteredBusiness(Consumer<T> cons,String idToken, String userEmail)
+    public void getUserRegisteredBusiness(Consumer<T> cons)
     {
-        String path = String.format(DB_HOST +DB_USER_STORES, userEmail);
-        getRequest(cons,idToken, path, StoresOfUserDTO.class);
+        String path = String.format(DB_HOST +DB_USER_STORES, IdTokenAndEmailContainer.getInstance().getEmail());
+        getRequest(cons, path, StoresOfUserDTO.class);
     }
 
     //POST REQUESTS
@@ -184,11 +184,10 @@ public class CustomersSchedulingWebApi<T>
     }
 
      @RequiresApi(api = Build.VERSION_CODES.N)
-   public void getRequest(Consumer<T> cons,String idToken, String url, Class c)
+   public void getRequest(Consumer<T> cons, String url, Class c)
    {
        GetRequest<T> request = new GetRequest<>(
                Request.Method.GET,
-               idToken,
                url,
                "",
                cons,

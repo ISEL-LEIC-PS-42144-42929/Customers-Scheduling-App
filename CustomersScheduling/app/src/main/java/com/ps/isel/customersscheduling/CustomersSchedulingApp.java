@@ -95,9 +95,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public <T>void getUserRegisteredBusiness(Consumer<T> cons,String idToken, String userName)
+    public <T>void getUserRegisteredBusiness(Consumer<StoreDto[]> cons)
     {
-        api.getUserRegisteredBusiness(cons, idToken, userName);
+        api.getUserRegisteredBusiness(cons);
     }
 
 

@@ -8,11 +8,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,14 +28,10 @@ import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
+import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SignInActivity extends AppCompatActivity
 {
@@ -94,10 +87,9 @@ public class SignInActivity extends AppCompatActivity
                                 if (task.isSuccessful()) {
                                     String idToken = task.getResult().getToken();
                                     String email = firebaseAuth.getCurrentUser().getEmail();
-                                    putEmailonIntentAndChangeActivity(idToken, email);
-                                    //customersSchedulingApp.sendIdToken(idToken, elem->putEmailonIntentAndChangeActivity(elem));
-                                    // Send token to your backend via HTTPS
-                                    // ...
+                                    IdTokenAndEmailContainer.getInstance().setIdToken(idToken);
+                                    IdTokenAndEmailContainer.getInstance().setEmail(email);
+                                    changeActivity();
                                 } else {
                                     // Handle error -> task.getException();
                                 }
@@ -147,10 +139,8 @@ public class SignInActivity extends AppCompatActivity
         }
     }
 
-    private void putEmailonIntentAndChangeActivity(String idtoken, String email) {
+    private void changeActivity() {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("idtoken", idtoken);
-        intent.putExtra("email", email);
         startActivity(intent);
     }
 

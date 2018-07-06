@@ -37,21 +37,5 @@ public class MainActivity extends AppCompatActivity
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
-        //   userEmail = getIntent().getStringExtra("userEmail");
-       // authenticationCode();
-
     }
-
-    public void authenticationCode()
-    {
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = firebaseAuth -> {
-            if(firebaseAuth.getCurrentUser() == null)
-            {
-                startActivity(new Intent(this, SignInActivity.class));
-            }
-        };
-    }
-
 }

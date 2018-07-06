@@ -9,6 +9,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,11 +29,10 @@ public class PostRequest<T> extends JsonRequest<T>
     private String requestBody;
     private Consumer<T> cons;
     private ObjectMapper mapper;
-    private String idToken;
+
 
     public PostRequest(int method,
                        String url,
-                       String idToken,
                        String requestBody,
                        Consumer<T> cons,
                        Response.Listener<T> listener,
@@ -40,7 +40,6 @@ public class PostRequest<T> extends JsonRequest<T>
     {
         super(method, url, requestBody, listener, errorListener);
         this.cons = cons;
-        this.idToken = idToken;
         this.requestBody = requestBody;
         mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
@@ -49,7 +48,7 @@ public class PostRequest<T> extends JsonRequest<T>
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
-        headers.put("Authorization:", "Bearer " + idToken);
+        headers.put("Authorization:", "Bearer " + IdTokenAndEmailContainer.getInstance().getIdToken());
         return headers;
     }
 

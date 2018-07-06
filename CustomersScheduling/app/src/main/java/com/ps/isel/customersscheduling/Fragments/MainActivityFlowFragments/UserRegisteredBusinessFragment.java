@@ -37,6 +37,7 @@ import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
@@ -117,10 +118,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
 
-        if (getActivity().getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
-        {      //RTL to LTR
-            getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-        }
        mAuth = FirebaseAuth.getInstance();
     }
 
@@ -153,9 +150,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
-        idToken = getActivity().getIntent().getStringExtra("idtoken");
-        email = getActivity().getIntent().getStringExtra("email");
-
         lv        = view.findViewById(R.id.alreadySubToList);
         toolbar   = view.findViewById(R.id.filter_toolbar);
         filterBtn = view.findViewById(R.id.filter);
@@ -168,9 +162,9 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         jsonBodyObj = new JSONObject();
 
-      //      customersSchedulingApp
-      //              .getUserRegisteredBusiness(
-      //                      elem-> listViewCode(elem), idToken, email);
+        //    customersSchedulingApp
+        //            .getUserRegisteredBusiness(
+        //                    elem-> listViewCode(elem));
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -180,13 +174,13 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     {
         if(idToken == null)
         {
-            MenuItem itemMystores = (MenuItem) menu.findItem(R.id.myStores);
-            MenuItem registerBusiness = (MenuItem) menu.findItem(R.id.registerStore);
-            MenuItem schedules = (MenuItem) menu.findItem(R.id.scheduled);
-            MenuItem definitions = (MenuItem) menu.findItem(R.id.definitions);
-            MenuItem favourites = (MenuItem) menu.findItem(R.id.favorites);
-            MenuItem logout = (MenuItem) menu.findItem(R.id.logout);
-            MenuItem login = (MenuItem) menu.findItem(R.id.login);
+            MenuItem itemMystores     =  menu.findItem(R.id.myStores);
+            MenuItem registerBusiness =  menu.findItem(R.id.registerStore);
+            MenuItem schedules        =  menu.findItem(R.id.scheduled);
+            MenuItem definitions      =  menu.findItem(R.id.definitions);
+            MenuItem favourites       =  menu.findItem(R.id.favorites);
+            MenuItem logout           =  menu.findItem(R.id.logout);
+            MenuItem login            =  menu.findItem(R.id.login);
 
             itemMystores.setVisible(true);
             registerBusiness.setVisible(true);
@@ -224,6 +218,9 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                   break;
               case (R.id.About):
                   goToActivity(context, AboutActivity.class);
+                  break;
+              case (R.id.login):
+                  goToActivity(context, SignInActivity.class);
                   break;
               case (R.id.logout):
                   logout();
