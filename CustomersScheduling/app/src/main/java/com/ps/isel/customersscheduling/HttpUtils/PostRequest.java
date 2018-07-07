@@ -48,7 +48,7 @@ public class PostRequest<T> extends JsonRequest<T>
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
-        headers.put("Authorization:", "Bearer " + IdTokenAndEmailContainer.getInstance().getIdToken());
+        headers.put("Authorization", "Bearer " + IdTokenAndEmailContainer.getInstance().getIdToken());
         return headers;
     }
 

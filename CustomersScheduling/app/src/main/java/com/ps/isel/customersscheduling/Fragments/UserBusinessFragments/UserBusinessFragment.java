@@ -115,12 +115,8 @@ public class UserBusinessFragment extends BaseFragment
 
         toolBarCode();
 
-        //   customersSchedulingApp
-        //           .getUserStores(this::listViewCode,
-        //                   "username");
-
-        lv.setAdapter(new CustomAdapterOwnerBusiness(getActivity(), subbedBusiness, this));
-
+           customersSchedulingApp
+                   .getUserStores(this::listViewCode);
     }
 
     private void toolBarCode()
@@ -136,6 +132,11 @@ public class UserBusinessFragment extends BaseFragment
                goToActivity(context, MainActivity.class);
             }
         });
+    }
+
+    private void listViewCode(Object[] stores)
+    {
+        lv.setAdapter(new CustomAdapterOwnerBusiness(getActivity(), subbedBusiness, this));
     }
 
 

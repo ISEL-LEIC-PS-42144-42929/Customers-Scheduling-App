@@ -1,4 +1,6 @@
-package com.ps.isel.customersscheduling.HALDto;
+package com.ps.isel.customersscheduling.HALDto.links;
+
+import com.ps.isel.customersscheduling.HALDto.Link;
 
 /**
  * Created by Colapso on 23/05/18.

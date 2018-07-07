@@ -18,13 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
-import com.ps.isel.customersscheduling.java.dto.ClientDto;
+
 
 public class PendentRequestsFragment extends BaseFragment
 {
@@ -35,8 +34,8 @@ public class PendentRequestsFragment extends BaseFragment
     private Toolbar toolbar;
     private ListView lv;
 
-    private ClientDto user ;
-    private ClientDto[] pendentRequests = new ClientDto[4];
+  //  private ClientDto user ;
+  //  private ClientDto[] pendentRequests = new ClientDto[4];
 
     private Context context;
 
@@ -80,14 +79,14 @@ public class PendentRequestsFragment extends BaseFragment
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
-        user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
-        pendentRequests[0] = user;      //hardcodeddata
-        pendentRequests[1] = user;      //hardcodeddata
-        pendentRequests[2] = user;      //hardcodeddata
-        pendentRequests[3] = user;      //hardcodeddata
+    //    user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
+    //    pendentRequests[0] = user;      //hardcodeddata
+    //    pendentRequests[1] = user;      //hardcodeddata
+    //    pendentRequests[2] = user;      //hardcodeddata
+    //    pendentRequests[3] = user;      //hardcodeddata
 
         toolbarCode();
-        constructListViewAndAddListeners(pendentRequests);
+      //  constructListViewAndAddListeners(pendentRequests);
 
         // customersSchedulingApp.getUserPendentRequests(
         //         this::constructListViewAndAddListeners,
@@ -113,8 +112,8 @@ public class PendentRequestsFragment extends BaseFragment
         });
     }
 
-    private void constructListViewAndAddListeners(ClientDto[] pendentRequests)
-    {
-        lv.setAdapter(new CustomAdapterUsers(getActivity(), pendentRequests, this));
-    }
+  //  private void constructListViewAndAddListeners(ClientDto[] pendentRequests)
+  //  {
+  //      lv.setAdapter(new CustomAdapterUsers(getActivity(), pendentRequests, this));
+  //  }
 }

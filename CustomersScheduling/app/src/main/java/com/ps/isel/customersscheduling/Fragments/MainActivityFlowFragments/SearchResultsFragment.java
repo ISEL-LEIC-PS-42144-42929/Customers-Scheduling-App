@@ -25,8 +25,6 @@ import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
@@ -84,8 +82,8 @@ public class SearchResultsFragment extends BaseFragment {
     private Bundle bundle;
 
     private boolean byFavourite;
-    private Favourite favourite;
-    private Business[] business;
+   // private Favourite favourite;
+   // private Business[] business;
 
     public SearchResultsFragment() {
         // Required empty public constructor
@@ -121,48 +119,50 @@ public class SearchResultsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-        context = getActivity().getApplicationContext();
-
-        customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
-
-        toolbar = (Toolbar) view.findViewById(R.id.app_bar);
-        lv      = (ListView) view.findViewById(R.id.resultsSearch);
-
+       context = getActivity().getApplicationContext();
         fragmentManager = getActivity().getSupportFragmentManager();
 
+        customersSchedulingApp = ((CustomersSchedulingApp)context);
+    //    //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+//
+        toolbar = (Toolbar) view.findViewById(R.id.app_bar);
+        lv      = (ListView) view.findViewById(R.id.resultsSearch);
         toolbarCode();
-        listViewCode(resultsBusiness);
+//
 
-        if(byFavourite)
-        {
-            favourite = (Favourite) bundle.getSerializable("favourite");
-            // customersSchedulingApp.getStoreByLocationAndCategory(
-            //         this::listViewCode,
-            //         favourite.getLocation(),
-            //         favourite.getCategory());
-        }else
-        {
-            business = (Business[]) bundle.getSerializable("business");
-            //    customersSchedulingApp.getSearchedStoreByName(
-            //            this::listViewCode,
-            //            business.getName());
-        }
-
+//
+    //
+    //    listViewCode(resultsBusiness);
+//
+    //    if(byFavourite)
+    //    {
+    //        favourite = (Favourite) bundle.getSerializable("favourite");
+    //        // customersSchedulingApp.getStoreByLocationAndCategory(
+    //        //         this::listViewCode,
+    //        //         favourite.getLocation(),
+    //        //         favourite.getCategory());
+    //    }else
+    //    {
+    //        business = (Business[]) bundle.getSerializable("business");
+    //        //    customersSchedulingApp.getSearchedStoreByName(
+    //        //            this::listViewCode,
+    //        //            business.getName());
+    //    }
+//
     }
 
     private void listViewCode(StoreDto[] stores)
     {
 
-        lv.setAdapter(new CustomAdapterBusiness(getActivity(), resultsBusiness));
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", stores[position]));
-            }
-        });
+     //   lv.setAdapter(new CustomAdapterBusiness(getActivity(), resultsBusiness));
+//
+     //   lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+     //       @Override
+     //       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+     //       {
+     //           changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", stores[position]));
+     //       }
+     //   });
     }
 
     private void toolbarCode() {

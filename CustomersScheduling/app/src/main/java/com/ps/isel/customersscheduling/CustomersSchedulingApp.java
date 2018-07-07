@@ -9,8 +9,7 @@ import com.android.volley.RequestQueue;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.java.dto.ClientDto;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 
 import org.json.JSONObject;
 
@@ -51,48 +50,48 @@ public class CustomersSchedulingApp extends Application implements Serializable
     //GET REQUESTS
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserStores(Consumer<StoreDto[]> cons, String userEmail)
+    public void getUserStores(Consumer<StoreDto[]> cons)
     {
-        api.getUserStores(cons, userEmail);
+        api.getUserStores(cons);
+    }
+
+  // @RequiresApi(api = Build.VERSION_CODES.N)
+  // public void getUserPendentRequests(Consumer<ClientDto[]> cons, String userName)
+  // {
+  //     api.getUserPendentRequests(cons, userName);
+  // }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getStoreByNif(Consumer<StoreDto> cons, StoreResourceItem storeResource)
+    {
+        api.getStoresByNif(cons, storeResource);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserPendentRequests(Consumer<ClientDto[]> cons, String userName)
+    public void getStoreServices(Consumer<ServiceDto[]> cons, StoreResourceItem storeResource)
     {
-        api.getUserPendentRequests(cons, userName);
+        api.getStoreServices(cons, storeResource);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreByNif(Consumer<StoreDto> cons, StoreDto store)
-    {
-        api.getStoresByNif(cons, store);
-    }
+  //  @RequiresApi(api = Build.VERSION_CODES.N)
+  //  public void getEmployeeDisponibility(Consumer<String[]> cons, ServiceDto service)
+  //  {
+  //     api.getEmployeeDisponibility(cons,service);
+  //  }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreServices(Consumer<ServiceDto[]> cons, StoreDto storeDto)
-    {
-        api.getStoresByNif(cons, storeDto);
-    }
+  //  @RequiresApi(api = Build.VERSION_CODES.N)
+  //  public void getSearchedStoreByName(Consumer<Business[]> cons, String businessName)
+  //  {
+  //     // api.getStoresByNif(cons, businessName);
+  //  }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getEmployeeDisponibility(Consumer<String[]> cons, ServiceDto service)
-    {
-       api.getEmployeeDisponibility(cons,service);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getSearchedStoreByName(Consumer<Business[]> cons, String businessName)
-    {
-       // api.getStoresByNif(cons, businessName);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreByLocationAndCategory(Consumer<Business[]> cons,
-                                              String location,
-                                              String category)
-    {
-        api.getStoresByLocationAndCategory(cons, location, category);
-    }
+ //   @RequiresApi(api = Build.VERSION_CODES.N)
+ //   public void getStoreByLocationAndCategory(Consumer<Business[]> cons,
+ //                                             String location,
+ //                                             String category)
+ //   {
+ //       api.getStoresByLocationAndCategory(cons, location, category);
+ //   }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public <T>void getUserRegisteredBusiness(Consumer<StoreDto[]> cons)

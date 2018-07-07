@@ -31,6 +31,9 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -78,7 +81,9 @@ public class ServiceFragment extends BaseFragment
     private String hour;
     private String idToken;
 
-    private ServiceDto service;
+    private ServiceResourceItem serviceResource;
+    private StoresOfUserDTO storeDTO;
+    private int position;
 
     public ServiceFragment() {
         // Required empty public constructor
@@ -107,7 +112,10 @@ public class ServiceFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bundle = getArguments();
-        service = (ServiceDto) bundle.getSerializable("service");
+
+        position = (int) bundle.getSerializable("position");
+        storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
+        serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
 
         return inflater.inflate(R.layout.fragment_service, container, false);
     }
@@ -131,7 +139,7 @@ public class ServiceFragment extends BaseFragment
         spinner            = view.findViewById(R.id.employeesDropDown);
         serviceName        = view.findViewById(R.id.serviceName);
 
-        serviceName.setText(service.getTitle());
+        serviceName.setText(serviceResource.getService().getTitle());
 
         toolbarCode();
         setDateToCalendar();
@@ -177,9 +185,9 @@ public class ServiceFragment extends BaseFragment
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected)
             {
-                customersSchedulingApp.getEmployeeDisponibility(
-                        hours-> recyclerViewCode(hours),service);
-
+             //   customersSchedulingApp.getEmployeeDisponibility(
+             //           hours-> recyclerViewCode(hours),service);
+//
             }
 
         });
@@ -242,8 +250,8 @@ public class ServiceFragment extends BaseFragment
                             e.printStackTrace();
                         }
 
-                        customersSchedulingApp.registerUserService(jsonBodyObj, service);
-                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "store", service.getStore()));
+                        //customersSchedulingApp.registerUserService(jsonBodyObj, serviceResource);
+                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "storeDTO", storeDTO.get_embedded().getStoreResourceList()[position]));
                 }
             }
         });

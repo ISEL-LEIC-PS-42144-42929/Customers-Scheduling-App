@@ -1,9 +1,11 @@
 package com.ps.isel.customersscheduling.HALDto.entitiesResourceList;
 
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.HALDto.StoreLinks;
+import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 
-public class StoreResourceItem {
+import java.io.Serializable;
+
+public class StoreResourceItem implements Serializable {
 
     private StoreDto store;
     private StoreLinks _links;

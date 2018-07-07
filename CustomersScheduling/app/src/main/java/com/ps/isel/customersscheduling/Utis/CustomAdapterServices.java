@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 
@@ -19,21 +20,21 @@ import com.ps.isel.customersscheduling.R;
 public class CustomAdapterServices extends BaseAdapter
 {
     private Activity context;
-    private ServiceDto[] services;
+    private ServiceResourceItem[] servicesResourceItem;
 
     private View row;
     private TextView title;
     private TextView price;
 
-    public CustomAdapterServices(Activity context, ServiceDto[] services)
+    public CustomAdapterServices(Activity context, ServiceResourceItem[] servicesResourceItem)
     {
         this.context = context;
-        this.services = services;
+        this.servicesResourceItem = servicesResourceItem;
     }
 
     @Override
     public int getCount() {
-        return services.length;
+        return servicesResourceItem.length;
     }
 
     @Override
@@ -53,10 +54,10 @@ public class CustomAdapterServices extends BaseAdapter
         row = inflater.inflate(R.layout.rowofservices, parent, false);
 
         title = (TextView) row.findViewById(R.id.serviceName);
-        title.setText(services[position].getTitle());
+        title.setText(servicesResourceItem[position].getService().getTitle());
 
         price = (TextView) row.findViewById(R.id.servicePrice);
-        price.setText(services[position].getPrice()+ "");
+        price.setText(servicesResourceItem[position].getService().getPrice()+ "");
 
         return row;
     }

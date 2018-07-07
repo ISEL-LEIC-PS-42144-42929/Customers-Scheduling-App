@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Model.Favourite;
+
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.AppendingObjectOutputStream;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -178,19 +178,19 @@ public class FilterFragment extends BaseFragment {
 
     private void addListenersToButtons()
     {
-        resultsBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                addMultBundleToFragment("byFavourite",true);
-                changeFragment(fragmentManager,
-                        R.id.mainActivityFragment,
-                        addBundleToFragment(new SearchResultsFragment(),
-                                "Favourite",
-                                new Favourite(searchName.getText().toString(), location, category)));
-            }
-        });
+     //  resultsBtn.setOnClickListener(new View.OnClickListener()
+     //  {
+     //      @Override
+     //      public void onClick(View view)
+     //      {
+     //          addMultBundleToFragment("byFavourite",true);
+     //          changeFragment(fragmentManager,
+     //                  R.id.mainActivityFragment,
+     //                  addBundleToFragment(new SearchResultsFragment(),
+     //                          "Favourite",
+     //                          new Favourite(searchName.getText().toString(), location, category)));
+     //      }
+     //  });
 
         saveFilter.setOnClickListener(new View.OnClickListener()
         {
@@ -213,46 +213,46 @@ public class FilterFragment extends BaseFragment {
 
     private void saveInInternalStorage()
     {
-        Favourite toSave = new Favourite(searchName.getText().toString(), category, location);
-
-        ObjectOutputStream oos = null;
-
-        File f =new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME);
-        try{
-            boolean isNewFile=false;
-
-            if (!f.exists()){
-                f.createNewFile();
-                isNewFile=true;
-            }
-
-            FileOutputStream fos=new FileOutputStream(f,true);
-
-            if (isNewFile) {
-                oos=new ObjectOutputStream(fos);
-            }
-            else {
-                oos=new AppendingObjectOutputStream(fos);
-            }
-            oos.writeObject(toSave);
-
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                oos.flush();
-                oos.close();
-
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-    }
+     //   Favourite toSave = new Favourite(searchName.getText().toString(), category, location);
+//
+     //   ObjectOutputStream oos = null;
+//
+     //   File f =new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME);
+     //   try{
+     //       boolean isNewFile=false;
+//
+     //       if (!f.exists()){
+     //           f.createNewFile();
+     //           isNewFile=true;
+     //       }
+//
+     //       FileOutputStream fos=new FileOutputStream(f,true);
+//
+     //       if (isNewFile) {
+     //           oos=new ObjectOutputStream(fos);
+     //       }
+     //       else {
+     //           oos=new AppendingObjectOutputStream(fos);
+     //       }
+     //       oos.writeObject(toSave);
+//
+//
+     //   }
+     //   catch (IOException e) {
+     //       e.printStackTrace();
+     //   }
+     //   finally {
+     //       try {
+     //           oos.flush();
+     //           oos.close();
+//
+     //       } catch (IOException e) {
+     //           // TODO Auto-generated catch block
+     //           e.printStackTrace();
+     //       }
+     //   }
+//
+    }//
 
 
 }

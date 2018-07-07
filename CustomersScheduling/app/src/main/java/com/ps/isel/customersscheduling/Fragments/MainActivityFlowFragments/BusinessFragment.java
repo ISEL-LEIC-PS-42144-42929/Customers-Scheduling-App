@@ -21,17 +21,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.AddressDto;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.Model.Business;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
@@ -79,8 +80,10 @@ public class BusinessFragment extends BaseFragment
     private ListView lv;
     private Bundle bundle;
 
+    private StoresOfUserDTO storeDTO;
     private StoreDto store;
-    private boolean isUserSigned;
+    private int position;
+
     private float score;
     private int numberStars;
     private float proporcionToDraw;
@@ -121,25 +124,33 @@ public class BusinessFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         bundle = getArguments();
-        store = (StoreDto) bundle.getSerializable("store");
+
         context = getActivity().getApplicationContext();
+
+        position = (int) bundle.getSerializable("position");
+        storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
+        store = storeDTO.get_embedded().getStoreResourceList()[position].getStore();
+
+
+        //store = (StoreDto) bundle.getSerializable("store");
+        //store = storeResource.getStore();
+
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
-       // customersSchedulingApp
-       //         .getStoreByNif(store->
-       //             constructRatingStarsAndTextViews(view,store), store);
-       // customersSchedulingApp
-       //         .getStoreServices(service->
-       //                 listViewCode(service),store);
+        customersSchedulingApp
+                .getStoreByNif(store->
+                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
+       customersSchedulingApp
+               .getStoreServices(service->
+                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
 
         toolbar     = view.findViewById(R.id.app_bar);
         name        = view.findViewById(R.id.name);
         address     = view.findViewById(R.id.address);
         contact     = view.findViewById(R.id.contact);
         description = view.findViewById(R.id.description);
-        //signInBtn   = view.findViewById(R.id.signIn);
         lv          = view.findViewById(R.id.services);
 
         toolBarCode();
@@ -192,16 +203,21 @@ public class BusinessFragment extends BaseFragment
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode(ServiceDto[] services)
+    private void listViewCode(Object services)
     {
-        lv.setAdapter(new CustomAdapterServices(getActivity(), services));
+        ServiceResourceItem[] serviceResourceItems = ((ServicesOfBusinessDTO)services).get_embedded().getServiceResourceList();
+
+        lv.setAdapter(new CustomAdapterServices(getActivity(), serviceResourceItems));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "service", services[position]));
+                addMultBundleToFragment("position",position);
+                addMultBundleToFragment("storeDTO",storeDTO);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "serviceResource", serviceResourceItems[position]));
             }
+
         });
     }
 

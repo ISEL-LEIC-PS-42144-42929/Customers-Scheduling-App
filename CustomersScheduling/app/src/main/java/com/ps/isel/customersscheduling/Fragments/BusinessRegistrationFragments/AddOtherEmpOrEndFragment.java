@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
-import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 
 public class AddOtherEmpOrEndFragment extends BaseFragment

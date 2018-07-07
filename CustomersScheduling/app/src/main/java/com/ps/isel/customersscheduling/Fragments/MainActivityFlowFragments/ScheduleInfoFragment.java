@@ -16,15 +16,11 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.Volley;
+
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Model.Business;
-import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -55,7 +51,7 @@ public class ScheduleInfoFragment extends BaseFragment
     private TextView employeeName;
     private Button deleteService;
 
-    private Service service;
+    //private Service service;
 
 
 
@@ -93,7 +89,7 @@ public class ScheduleInfoFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         bundle = getArguments();
-        service = (Service) bundle.getSerializable("Service");
+       // service = (Service) bundle.getSerializable("Service");
 
         context = getActivity().getApplicationContext();
 
@@ -111,37 +107,37 @@ public class ScheduleInfoFragment extends BaseFragment
 
         toolBarCode();
         addListenertoButton();
-        constructTextViews(service);
+       // constructTextViews(service);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ScheduledFragment();
 
     }
 
-    private void constructTextViews(Service service)
-    {
-        serviceName.setText(SERVICE_NAME + service.getName());
-        servicePrice.setText(SERVICE_PRICE + service.getPrice());
-        businessName.setText(BUSINESS_NAME + service.getName() + "adicionar nome loja");
-        employeeName.setText(EMPLOYEE_NAME + service.getName() + "adicionar nome empregado");
-    }
+  //  private void constructTextViews(Service service)
+  //  {
+  //      serviceName.setText(SERVICE_NAME + service.getName());
+  //      servicePrice.setText(SERVICE_PRICE + service.getPrice());
+  //      businessName.setText(BUSINESS_NAME + service.getName() + "adicionar nome loja");
+  //      employeeName.setText(EMPLOYEE_NAME + service.getName() + "adicionar nome empregado");
+  //  }
 
     private void toolBarCode()
     {
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(service.getName());
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+   //    ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+   //    ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(service.getName());
+   //    ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+   //    ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+   //    toolbar.setNavigationOnClickListener(new View.OnClickListener()
+   //    {
+   //        @Override
+   //        public void onClick(View v)
+   //        {
+   //            fragmentManager.popBackStackImmediate();
+   //        }
+   //    });
 
     }
 

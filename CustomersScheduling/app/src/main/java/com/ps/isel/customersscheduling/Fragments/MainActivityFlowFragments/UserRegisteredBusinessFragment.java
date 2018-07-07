@@ -36,6 +36,7 @@ import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
 import com.ps.isel.customersscheduling.R;
@@ -273,18 +274,21 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode(StoreDto[] stores)             //TODO change parameter to connect to server Object storesDTO
+    private void listViewCode(Object stores)             //TODO change parameter to connect to server Object storesDTO
     {
-//        StoreDto [] stores = Arrays.stream(((StoresOfUserDTO)storesDTO).get_embedded().getStoreResourceList()).map(elem->elem.getStore()).toArray(s -> new StoreDto[s]);
+        StoresOfUserDTO storeDTO =  ((StoresOfUserDTO)stores);
 
-        lv.setAdapter(new CustomAdapterBusiness(getActivity(),stores));
+//        StoreDto [] stores = Arrays.stream(((StoresOfUserDTO)storesDTO).get_embedded().getServiceResourceList()).map(elem->elem.getStore()).toArray(s -> new StoreDto[s]);
+
+        lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "store", stores[position]));
+                addMultBundleToFragment("posintion",position);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
             }
         });
     }

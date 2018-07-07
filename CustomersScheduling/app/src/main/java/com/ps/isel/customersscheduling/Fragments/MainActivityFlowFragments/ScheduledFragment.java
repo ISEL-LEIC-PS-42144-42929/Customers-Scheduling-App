@@ -23,7 +23,7 @@ import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.Model.Business;
+
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
 
@@ -43,27 +43,7 @@ public class ScheduledFragment extends BaseFragment
                     new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store)
             };
 
-    private Business[] subbedBusiness = new Business[]
-            {
-                    new Business(
-                            12345,
-                            "O Barbas",
-                            "rua do velho",
-                            91111111,
-                            "loja do barbas",
-                            3.2f,
-                            null,
-                            services)
-                    ,
-                    new Business(
-                            12345,
-                            "CUF",
-                            "rua do a",
-                            91111111,
-                            "loja do cuf",
-                            2.7f,
-                            null,
-                            services)};
+
 
     private String[] names = {"corteReserva","barbaReserva","comidaReserva","saudeReserva"};
     //-------------
@@ -76,7 +56,7 @@ public class ScheduledFragment extends BaseFragment
 
     private Context context;
 
-    private Business[] schedules ;         //TODO change type
+   // private Business[] schedules ;         //TODO change type
 
     public ScheduledFragment() {
         // Required empty public constructor

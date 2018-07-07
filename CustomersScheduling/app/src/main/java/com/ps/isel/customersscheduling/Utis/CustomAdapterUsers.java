@@ -21,6 +21,7 @@ import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.Busin
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
+
 /**
  * Created by Colapso on 13/04/18.
  */
