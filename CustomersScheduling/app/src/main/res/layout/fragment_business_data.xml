@@ -17,7 +17,7 @@
         android:layout_below="@+id/app_bar">
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/storeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/storeName"
             android:cursorVisible="false"
             android:hint="@string/insert_nif" />
 

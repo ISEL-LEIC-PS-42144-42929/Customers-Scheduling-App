@@ -78,7 +78,7 @@ public class BusinessDataFragment extends BaseFragment {
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
         choseCategory            = view.findViewById(R.id.categoryDropDown);
-        storeAddress             = view.findViewById(R.id.storeAddress);
+      //  storeAddress             = view.findViewById(R.id.storeAddress);
         registerBusiness         = view.findViewById(R.id.registerBusiness);
         insertExistingPictureBtn = view.findViewById(R.id.insertExisting);
         takeNewPicture           = view.findViewById(R.id.takePicture);

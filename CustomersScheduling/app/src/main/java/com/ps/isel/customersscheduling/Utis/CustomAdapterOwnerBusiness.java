@@ -12,10 +12,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.PendentRequestsFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusinessFragment;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.currentClientsFragment;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.R;
@@ -28,6 +30,8 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
 {
     private FragmentManager fragmentManager;
     private BaseFragment fragment;
+
+    private EditBusinessFragment editBusinessFragment;
 
     private StoreDto[] ownerBusiness;
 
@@ -43,10 +47,10 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         this.ownerBusiness = ownerBusiness;
         this.name = name;
         this.context = context;
-
-        fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
         this.fragment = (BaseFragment) fragment;
+        fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
 
+        editBusinessFragment = new EditBusinessFragment();
     }
 
     @Override
@@ -121,6 +125,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             {
                 //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
 
+                fragment.addBundleToFragment(fragment,"storeDTO", ownerBusiness);
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
                         new EditBusinessFragment());

@@ -32,6 +32,8 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BusinessScheduleFragment;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -55,7 +57,9 @@ public class EditBusinessDataFragment extends BaseFragment
     private EditText storeName;
     private EditText storeNif;
     private EditText storeContact;
-    private EditText storeAddress;
+    private EditText streetAndLot;
+    private EditText zipcode;
+    private EditText cityAndCountry;
     private Button editBusiness;
     private String choseCategoryText;
     private Button insertExistingPictureBtn;
@@ -70,9 +74,10 @@ public class EditBusinessDataFragment extends BaseFragment
     private JSONObject jsonBodyObj;
 
     private Context context;
+    private Bundle bundle;
 
-    private String[] hardcodedCategory = {"Saude", "Restauraçao", "Beleza", ""};
-
+    private String[] categories;
+    private StoresOfUserDTO storeDTO;
 
     public EditBusinessDataFragment() {
         // Required empty public constructor
@@ -107,13 +112,18 @@ public class EditBusinessDataFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        categories = getResources().getStringArray(R.array.categories_array);
+        bundle = getArguments();
+        storeDTO = (StoresOfUserDTO)bundle.get("storeDTO");
         context = getActivity().getApplicationContext();
 
         toolbar                  = view.findViewById(R.id.app_bar);
         storeName                = view.findViewById(R.id.storeName);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
-        storeAddress             = view.findViewById(R.id.storeAddress);
+        streetAndLot             = view.findViewById(R.id.streetandLotNumber);
+        cityAndCountry           = view.findViewById(R.id.cityAndCountry);
+        zipcode                  = view.findViewById(R.id.zipcode);
         choseCategory            = view.findViewById(R.id.categoryDropDown);
         editBusiness             = view.findViewById(R.id.editBusiness);
         insertExistingPictureBtn = view.findViewById(R.id.insertExisting);
@@ -128,9 +138,21 @@ public class EditBusinessDataFragment extends BaseFragment
         fragmentManager = getActivity().getSupportFragmentManager();
         registerBusinessScheduleFragment = new BusinessScheduleFragment();
 
+        putHints();
         dropDownButtonCode();
         toolbarCode();
         addListenertoButton();
+    }
+
+    private void putHints()
+    {
+        storeName.setHint("ola");
+        storeNif.setHint("ola");
+        storeContact.setHint("ola");
+        streetAndLot.setHint("ola"); //  construir string com os dois campos
+        zipcode.setHint("ola");
+        cityAndCountry.setHint("ola"); //  construir string com os dois campos
+        choseCategory.setHint("ola");
     }
 
     private void dropDownButtonCode()
@@ -138,14 +160,14 @@ public class EditBusinessDataFragment extends BaseFragment
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_dropdown_item_1line,
-                hardcodedCategory);
+                categories);
 
         choseCategory.setAdapter(adapter);
 
         choseCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                choseCategoryText = hardcodedCategory[position];
+                choseCategoryText = categories[position];
             }
         });
     }
@@ -173,18 +195,57 @@ public class EditBusinessDataFragment extends BaseFragment
             public void onClick(View view) {
                 try
                 {
-                    jsonBodyObj.put("key1", storeName.getText().toString());
-                    jsonBodyObj.put("key2", storeNif.getText().toString());
-                    jsonBodyObj.put("key3", storeContact.getText().toString());
-                    jsonBodyObj.put("key4", choseCategoryText);
-                    jsonBodyObj.put("key5", storeAddress.getText().toString());
+
+                    String storeNIF = storeNif.getText().toString();
+                    String storeCont = storeContact.getText().toString();
+                    String storeNam = storeName.getText().toString();
+                    String strtAndLot = streetAndLot.getText().toString();
+                    String zipCode = zipcode.getText().toString();
+                    String cityAndCoun = cityAndCountry.getText().toString();
+
+                    if(storeNIF.equals(""))
+                    {
+                        storeNIF = storeNif.getHint().toString();
+                    }
+                    if(storeCont.equals(""))
+                    {
+                        storeCont = storeContact.getHint().toString();
+                    }
+                    if(storeNam.equals(""))
+                    {
+                        storeNam = storeName.getHint().toString();
+                    }
+                    if(strtAndLot.equals(""))
+                    {
+                        strtAndLot = streetAndLot.getHint().toString();
+                    }
+                    if(zipCode.equals(""))
+                    {
+                        zipCode = zipcode.getHint().toString();
+                    }
+                    if(cityAndCoun.equals(""))
+                    {
+                        cityAndCoun = cityAndCountry.getHint().toString();
+                    }
+
+                    jsonBodyObj.put("name", storeNam);
+                    jsonBodyObj.put("nif", storeNIF);
+                    jsonBodyObj.put("contact", storeCont);
+                    jsonBodyObj.put("category", new CategoryDto(choseCategoryText));
+                    jsonBodyObj.put("street", deserializeString(strtAndLot)[0]);
+                    jsonBodyObj.put("zipcode", zipCode);
+                    jsonBodyObj.put("lot", deserializeString(strtAndLot)[1]);
+                    jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
+                    jsonBodyObj.put("country",deserializeString(cityAndCoun)[1]);
+
+                    //   customersSchedulingApp.registerStore(jsonBodyObj, customersSchedulingApp.getUserEmail());
+                    changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
                 }
                 catch (JSONException e) {
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                //customersSchedulingApp.registerStore(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
+
             }
         });
 
@@ -206,6 +267,12 @@ public class EditBusinessDataFragment extends BaseFragment
             }
         });
     }
+
+    public String[] deserializeString(String string)
+{
+    return string.split(" ");
+}
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

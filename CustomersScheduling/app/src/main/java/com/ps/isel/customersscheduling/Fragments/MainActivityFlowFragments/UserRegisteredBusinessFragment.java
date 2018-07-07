@@ -156,7 +156,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         filterBtn = view.findViewById(R.id.filter);
 
         toolBarCode();
-        listViewCode(subbedBusiness);// Remove after App done!!
+//        listViewCode(subbedBusiness);// Remove after App done!!
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));

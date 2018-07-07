@@ -25,6 +25,7 @@ import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
@@ -114,9 +115,10 @@ public class UserBusinessFragment extends BaseFragment
         lv        = view.findViewById(R.id.myBusiness);
 
         toolBarCode();
+        listViewCode(subbedBusiness);
 
-           customersSchedulingApp
-                   .getUserStores(this::listViewCode);
+      //     customersSchedulingApp
+      //             .getUserStores(this::listViewCode);
     }
 
     private void toolBarCode()
@@ -136,6 +138,7 @@ public class UserBusinessFragment extends BaseFragment
 
     private void listViewCode(Object[] stores)
     {
+
         lv.setAdapter(new CustomAdapterOwnerBusiness(getActivity(), subbedBusiness, this));
     }
 

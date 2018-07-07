@@ -25,7 +25,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="23dp"
             android:cursorVisible="false"
-            android:hint="insert name" />
+            android:hint="@string/insert_name" />
 
         <EditText
             android:id="@+id/storeNif"
@@ -35,7 +35,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/storeName"
             android:cursorVisible="false"
-            android:hint="insert Nif" />
+            android:hint="@string/insert_nif" />
 
         <EditText
             android:id="@+id/storeContact"
@@ -45,7 +45,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/storeNif"
             android:cursorVisible="false"
-            android:hint="insert Contact" />
+            android:hint="@string/insert_contact" />
 
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/categoryDropDown"
@@ -59,7 +59,7 @@
         </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
         <EditText
-            android:id="@+id/storeAddress"
+            android:id="@+id/streetandLotNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -67,7 +67,28 @@
             android:layout_centerVertical="true"
             android:cursorVisible="false"
             android:layout_below="@+id/categoryDropDown"
-            android:hint="insert Address" />
+            android:hint="@string/street_and_lot_number_ex_street_2" />
+
+        <EditText
+            android:id="@+id/zipcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/cityAndCountry"
+            android:cursorVisible="false"
+            android:hint="@string/insert_zipcode" />
+
+
+        <EditText
+            android:id="@+id/cityAndCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:cursorVisible="false"
+            android:layout_below="@+id/streetandLotNumber"
+            android:hint="@string/ex_london_england"/>
 
     </RelativeLayout>
 

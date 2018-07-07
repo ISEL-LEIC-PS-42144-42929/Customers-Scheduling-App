@@ -1,5 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -69,7 +70,7 @@ public class BusinessDataFragment extends BaseFragment {
 
     private Context context;
 
-    private String[] hardcodedCategory = {"Saude", "Restauraçao", "Beleza", ""};
+    private String[] categories;
 
     public BusinessDataFragment() {
         // Required empty public constructor
@@ -80,6 +81,8 @@ public class BusinessDataFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity().getApplicationContext();
+
+        categories = getResources().getStringArray(R.array.categories_array);
 
         toolbar                  = view.findViewById(R.id.app_bar);
         storeName                = view.findViewById(R.id.name);
@@ -133,14 +136,14 @@ public class BusinessDataFragment extends BaseFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_dropdown_item_1line,
-                hardcodedCategory);
+                categories);
 
         choseCategory.setAdapter(adapter);
 
         choseCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                choseCategoryText = hardcodedCategory[position];
+                choseCategoryText = categories[position];
             }
         });
     }

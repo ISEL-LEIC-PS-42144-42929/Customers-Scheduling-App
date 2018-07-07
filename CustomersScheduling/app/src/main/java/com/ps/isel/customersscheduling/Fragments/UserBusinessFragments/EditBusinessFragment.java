@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
 
@@ -37,9 +38,12 @@ public class EditBusinessFragment extends BaseFragment
     private CustomersSchedulingApp customersSchedulingApp;
 
     private Context context;
+    private Bundle bundle;
 
     private Toolbar toolbar;
     private ListView lv;
+
+    private StoresOfUserDTO storeDTO;
 
 
     public EditBusinessFragment() {
@@ -75,6 +79,8 @@ public class EditBusinessFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        bundle = getArguments();
+//        storeDTO = (StoresOfUserDTO)bundle.get("storeDTO");
         context = getActivity().getApplicationContext();
 
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -82,7 +88,7 @@ public class EditBusinessFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
 
         lv = (ListView) view.findViewById(R.id.listEdits);
-        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment));
+        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, storeDTO));
 
 
         toolbarCode();
