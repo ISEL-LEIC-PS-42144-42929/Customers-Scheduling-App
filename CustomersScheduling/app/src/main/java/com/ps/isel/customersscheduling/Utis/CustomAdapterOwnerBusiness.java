@@ -20,6 +20,7 @@ import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusin
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.currentClientsFragment;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 /**
@@ -33,7 +34,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
 
     private EditBusinessFragment editBusinessFragment;
 
-    private StoreDto[] ownerBusiness;
+    private StoreResourceItem[] ownerBusiness;
 
     private View row;
     private TextView name;
@@ -42,7 +43,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
     private Button editBusinessBtn;
     private Button pendentRequests;
 
-    public CustomAdapterOwnerBusiness(Activity context, StoreDto[] ownerBusiness, Fragment fragment)
+    public CustomAdapterOwnerBusiness(Activity context, StoreResourceItem[] ownerBusiness, Fragment fragment)
     {
         this.ownerBusiness = ownerBusiness;
         this.name = name;
@@ -78,18 +79,18 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         row = inflater.inflate(R.layout.rowofbusinessowned, parent, false);
 
         name = (TextView) row.findViewById(R.id.businessName);
-        name.setText(ownerBusiness[position].getStoreName());
+        name.setText(ownerBusiness[position].getStore().getStoreName());
 
         editBusinessBtn = (Button) row.findViewById(R.id.editBusinessInfo);
         pendentRequests = (Button) row.findViewById(R.id.pendentRequests);
         currentClients = (Button) row.findViewById(R.id.clients);
 
-        addListenersToButtons(currentClients, pendentRequests, editBusinessBtn);
+        addListenersToButtons(currentClients, pendentRequests, editBusinessBtn, position);
 
         return (row);
     }
 
-    private void addListenersToButtons(Button currentClients, Button pendentRequests, Button editBusinessBtn )
+    private void addListenersToButtons(Button currentClients, Button pendentRequests, Button editBusinessBtn, int position)
     {
         currentClients.setOnClickListener(new View.OnClickListener()
         {
@@ -125,10 +126,10 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             {
                 //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
 
-                fragment.addBundleToFragment(fragment,"storeDTO", ownerBusiness);
+                ;
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
-                        new EditBusinessFragment());
+                        fragment.addBundleToFragment(new EditBusinessFragment(),"storeResource", ownerBusiness[position]));
             }
         });
 

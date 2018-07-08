@@ -1,12 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,18 +12,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.AddressDto;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterTogleButtons;
 
 
@@ -38,18 +32,18 @@ public class currentClientsFragment extends BaseFragment {
                     new PersonDto(
                             "john",
                             "j@gmail.com",
-                            "91111111",
-                            1),
+                            1,
+                            "91111111"),
                     new PersonDto(
-                            "g",
-                            "g@gmail.com",
-                            "91111111",
-                            1),
+                            "john",
+                            "j@gmail.com",
+                            1,
+                            "91111111"),
                     new PersonDto(
-                            "sarah",
-                            "s@gmail.com",
-                            "91111111",
-                            0),
+                            "john",
+                            "j@gmail.com",
+                            1,
+                            "91111111")
             };
     //-----------
     private CustomersSchedulingApp customersSchedulingApp;

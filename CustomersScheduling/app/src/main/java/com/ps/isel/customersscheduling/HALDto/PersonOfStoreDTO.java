@@ -1,24 +1,23 @@
 package com.ps.isel.customersscheduling.HALDto;
 
-import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 
-import java.io.Serializable;
+public class PersonOfStoreDTO {
 
-public class StoresOfUserDTO implements Serializable {
-
-    private StoresOfUserEmbedded _embedded;
+    private PersonEmbedded _embedded;
     private SelfLink _links;
 
-    public StoresOfUserDTO() {
+    public PersonOfStoreDTO() {
     }
 
-    public StoresOfUserDTO(StoresOfUserEmbedded _embedded, SelfLink _links) {
+    public PersonOfStoreDTO(PersonEmbedded _embedded, SelfLink _links)
+    {
         this._embedded = _embedded;
         this._links = _links;
     }
 
-    public StoresOfUserEmbedded get_embedded() {
+    public PersonEmbedded get_embedded() {
         return _embedded;
     }
 
@@ -26,7 +25,7 @@ public class StoresOfUserDTO implements Serializable {
         return _links;
     }
 
-    public void set_embedded(StoresOfUserEmbedded _embedded) {
+    public void set_embedded(PersonEmbedded _embedded) {
         this._embedded = _embedded;
     }
 

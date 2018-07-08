@@ -113,7 +113,7 @@ public class RegisterEmployeeFragment extends BaseFragment
                         jsonBodyObj.put("contact", employeeContact.getText().toString());
                         jsonBodyObj.put("gender", employeeGender.getText().toString());
 
-                        customersSchedulingApp.registerEmployee(jsonBodyObj);
+                     //  customersSchedulingApp.registerEmployee(jsonBodyObj);
                         changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "email", clientEmail));
                     }
                 }

@@ -15,6 +15,7 @@ import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
+import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.SelectEmployeeToEditFragment;
 import com.ps.isel.customersscheduling.Model.Service;
 import com.ps.isel.customersscheduling.R;
 
@@ -32,18 +33,14 @@ public class CustomAdapterSameFragment extends BaseAdapter
     private FragmentManager fragmentManager;
     private BaseFragment fragment;
 
-    private int id;
-
-    public CustomAdapterSameFragment(String[] buttonsName, Context context, Fragment fragment, int id)
+    public CustomAdapterSameFragment(String[] buttonsName, Context context, Fragment fragment)
     {
         this.buttonsName = buttonsName;
         this.context = context;
         this.fragment = (BaseFragment) fragment;
-        this.id = id;
         fragmentManager = ((MainActivity)context).getSupportFragmentManager();
 
     }
-
 
     @Override
     public int getCount()

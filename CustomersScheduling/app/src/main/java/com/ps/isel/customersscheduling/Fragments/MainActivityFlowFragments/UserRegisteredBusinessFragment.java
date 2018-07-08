@@ -38,6 +38,8 @@ import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
@@ -62,35 +64,17 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     private Link link = new Link();
     private Link[] links = new Link[1];
 
+    private SelfLink _links;
 
-    private StoreDto[] subbedBusiness = new StoreDto[]
-            {
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f),
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f),
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f)
-};
-    //-------------
+    private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+    private StoreLinks _linkStores;
+
+
+    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,_linkStores)};
+    private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
+    private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
+
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -156,7 +140,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         filterBtn = view.findViewById(R.id.filter);
 
         toolBarCode();
-//        listViewCode(subbedBusiness);// Remove after App done!!
+        listViewCode(storesOfUserDTO);// Remove after App done!!
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
@@ -245,7 +229,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             {
 
                 //TODO fazer fragmento de filter e mudar
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "business", subbedBusiness));
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "business", storesOfUserDTO));
                 return false;
             }
 
@@ -287,7 +271,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                addMultBundleToFragment("posintion",position);
+                addMultBundleToFragment("position",position);
                 changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
             }
         });

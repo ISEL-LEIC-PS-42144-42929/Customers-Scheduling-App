@@ -1,23 +1,17 @@
 package com.ps.isel.customersscheduling.Utis;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
+import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
 import com.ps.isel.customersscheduling.R;
-
-import org.w3c.dom.Text;
 
 
 public class CustomAdapterTogleButtons extends BaseAdapter {

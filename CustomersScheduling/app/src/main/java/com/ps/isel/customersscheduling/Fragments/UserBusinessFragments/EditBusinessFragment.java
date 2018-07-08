@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
 
@@ -32,7 +33,7 @@ public class EditBusinessFragment extends BaseFragment
                     "Edit Employee",
                     "Edit Employee Schedule"
             };
-    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new EditServicesFragment(),new EditEmployeesFragment(), new EditEmployeesScheduleFragment()};
+    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectServiceToEditFragment(), new EditEmployeesScheduleFragment()};
 
     private FragmentManager fragmentManager;
     private CustomersSchedulingApp customersSchedulingApp;
@@ -43,7 +44,7 @@ public class EditBusinessFragment extends BaseFragment
     private Toolbar toolbar;
     private ListView lv;
 
-    private StoresOfUserDTO storeDTO;
+    private StoreResourceItem storeResourceItem;
 
 
     public EditBusinessFragment() {
@@ -65,7 +66,7 @@ public class EditBusinessFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_edit_business, container, false);
     }
 
@@ -80,7 +81,7 @@ public class EditBusinessFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
 
         bundle = getArguments();
-//        storeDTO = (StoresOfUserDTO)bundle.get("storeDTO");
+        storeResourceItem = (StoreResourceItem) bundle.get("storeResource");
         context = getActivity().getApplicationContext();
 
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -88,7 +89,7 @@ public class EditBusinessFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
 
         lv = (ListView) view.findViewById(R.id.listEdits);
-        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, storeDTO));
+        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, storeResourceItem));
 
 
         toolbarCode();

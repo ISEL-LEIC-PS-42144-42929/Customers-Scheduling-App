@@ -34,6 +34,7 @@ import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BusinessScheduleFragment;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -77,7 +78,7 @@ public class EditBusinessDataFragment extends BaseFragment
     private Bundle bundle;
 
     private String[] categories;
-    private StoresOfUserDTO storeDTO;
+    private StoreResourceItem storeResource;
 
     public EditBusinessDataFragment() {
         // Required empty public constructor
@@ -111,10 +112,10 @@ public class EditBusinessDataFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         categories = getResources().getStringArray(R.array.categories_array);
         bundle = getArguments();
-        storeDTO = (StoresOfUserDTO)bundle.get("storeDTO");
+        storeResource = (StoreResourceItem)bundle.get("storeResource");
+
         context = getActivity().getApplicationContext();
 
         toolbar                  = view.findViewById(R.id.app_bar);
@@ -146,13 +147,13 @@ public class EditBusinessDataFragment extends BaseFragment
 
     private void putHints()
     {
-        storeName.setHint("ola");
-        storeNif.setHint("ola");
-        storeContact.setHint("ola");
-        streetAndLot.setHint("ola"); //  construir string com os dois campos
-        zipcode.setHint("ola");
-        cityAndCountry.setHint("ola"); //  construir string com os dois campos
-        choseCategory.setHint("ola");
+        storeName.setHint(storeResource.getStore().getStoreName());
+        storeNif.setHint(storeResource.getStore().getNif());
+        storeContact.setHint(storeResource.getStore().getContact());
+        streetAndLot.setHint(storeResource.getStore().getAddress().getStreet() + " " + storeResource.getStore().getAddress().getLot());
+        zipcode.setHint(storeResource.getStore().getAddress().getZip_code());
+        cityAndCountry.setHint(storeResource.getStore().getAddress().getCity() + " " + storeResource.getStore().getAddress().getCountry()); //  construir string com os dois campos
+        choseCategory.setHint(storeResource.getStore().getCategory().getName());
     }
 
     private void dropDownButtonCode()

@@ -64,8 +64,8 @@
         <item>Restaurants</item>
         <item>Barber</item>
         <item>Gym</item>
-    <item>Spa</item>
-    <item>Health</item>
-    <item>Dentists</item>
+        <item>Spa</item>
+        <item>Health</item>
+        <item>Dentists</item>
     </string-array>
 </resources>

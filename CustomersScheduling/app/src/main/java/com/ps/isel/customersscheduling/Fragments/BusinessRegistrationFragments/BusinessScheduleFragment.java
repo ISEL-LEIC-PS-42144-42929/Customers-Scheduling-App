@@ -115,7 +115,7 @@ public class BusinessScheduleFragment extends BaseFragment {
                     //TODO resolver exception
                     e.printStackTrace();
                 }
-                customersSchedulingApp.registerStoreSchedule(jsonBodyObj, storeNIF);
+               // customersSchedulingApp.registerStoreSchedule(jsonBodyObj, storeNIF);
                 changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "nif",storeNIF));
 
             }

@@ -108,12 +108,12 @@ public class RegisterServiceFragment extends BaseFragment
 
                     if(name.equals("") || price.equals("")|| duration.equals("")|| desc.equals(""))
                     {
-                        jsonBodyObj.put("key1", name);
-                        jsonBodyObj.put("key2", price);
-                        jsonBodyObj.put("key1", duration);
-                        jsonBodyObj.put("key2", desc);
+                        jsonBodyObj.put("name", name);
+                        jsonBodyObj.put("price", price);
+                        jsonBodyObj.put("duration", duration);
+                        jsonBodyObj.put("desc", desc);
                     }
-                    customersSchedulingApp.registerService(jsonBodyObj, nif);
+                //    customersSchedulingApp.registerService(jsonBodyObj, nif);
                     changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new AddOtherServiceOrRegisterEmployee(),"nif",nif));
 
                 }

@@ -2,33 +2,50 @@ package com.ps.isel.customersscheduling.HALDto;
 
 public class PersonDto {
 
-    private String name;
     private String email;
-    private String contact;
+    private String name;
     private int gender;
+    private String contact;
 
-    public PersonDto(String name, String email, String contact, int gender)
-    {
-        this.name = name;
-        this.email = email;
-        this.contact = contact;
-        this.gender = gender;
+    public PersonDto() {
     }
 
-    public String getName() {
-        return name;
+    public PersonDto(String email, String name, int gender, String contact) {
+        this.email = email;
+        this.name = name;
+        this.gender = gender;
+        this.contact = contact;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getContact() {
-        return contact;
+    public String getName() {
+        return name;
     }
 
     public int getGender() {
         return gender;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 }

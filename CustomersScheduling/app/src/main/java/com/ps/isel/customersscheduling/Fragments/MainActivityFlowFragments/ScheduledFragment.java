@@ -98,7 +98,7 @@ public class ScheduledFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
         lv      = view.findViewById(R.id.listSchedules);
 
-        lv.setAdapter(new CustomAdapterSameFragment(names, getActivity(), this, R.id.mainActivityFragment));
+        lv.setAdapter(new CustomAdapterSameFragment(names, getActivity(), this));
         toolbarCode();
     }
 

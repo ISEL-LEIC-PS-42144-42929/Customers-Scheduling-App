@@ -26,45 +26,34 @@ import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
 
 public class UserBusinessFragment extends BaseFragment
 {
-    //HARDCODED
+
+
+//HARDCODED
 
     private Link link = new Link();
     private Link[] links = new Link[1];
 
+    private SelfLink _links;
 
-    private StoreDto[] subbedBusiness = new StoreDto[]
-            {
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f),
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f),
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f)
-            };
+    private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+    private StoreLinks _linkStores;
+
+
+    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,_linkStores)};
+    private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
+    private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
+
+    //----
 
 
     private CustomersSchedulingApp customersSchedulingApp;
@@ -115,7 +104,7 @@ public class UserBusinessFragment extends BaseFragment
         lv        = view.findViewById(R.id.myBusiness);
 
         toolBarCode();
-        listViewCode(subbedBusiness);
+        listViewCode(storesOfUserDTO);
 
       //     customersSchedulingApp
       //             .getUserStores(this::listViewCode);
@@ -136,10 +125,11 @@ public class UserBusinessFragment extends BaseFragment
         });
     }
 
-    private void listViewCode(Object[] stores)
+    private void listViewCode(Object stores)
     {
+        StoresOfUserDTO storesOfUserDTO = (StoresOfUserDTO)stores;
 
-        lv.setAdapter(new CustomAdapterOwnerBusiness(getActivity(), subbedBusiness, this));
+        lv.setAdapter(new CustomAdapterOwnerBusiness(getActivity(), storesOfUserDTO.get_embedded().getStoreResourceList(), this));
     }
 
 

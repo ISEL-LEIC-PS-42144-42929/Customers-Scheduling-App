@@ -30,8 +30,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.ServiceDto;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.R;
@@ -47,7 +46,7 @@ import java.util.Date;
 public class ServiceFragment extends BaseFragment
 {
     //HARDCODED
-    private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo", "paulo@gmail", "91111",1),new PersonDto("Joao", "Joao@gmail", "91111",1),};
+    private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo@gmail","paulo",1, "91111"),new PersonDto("paulo@gmail","paulo",1, "91111")};
     private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
     //-----------------
 
@@ -111,12 +110,6 @@ public class ServiceFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        bundle = getArguments();
-
-        position = (int) bundle.getSerializable("position");
-        storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
-        serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
-
         return inflater.inflate(R.layout.fragment_service, container, false);
     }
 
@@ -125,6 +118,12 @@ public class ServiceFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         context = getActivity().getApplicationContext();
+
+        bundle = getArguments();
+
+        position = (int) bundle.getSerializable("position");
+        storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
+        serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));            //nao sei se é necessário fazer isto em todas as activities
@@ -139,7 +138,7 @@ public class ServiceFragment extends BaseFragment
         spinner            = view.findViewById(R.id.employeesDropDown);
         serviceName        = view.findViewById(R.id.serviceName);
 
-        serviceName.setText(serviceResource.getService().getTitle());
+      //  serviceName.setText(serviceResource.getService().getTitle());
 
         toolbarCode();
         setDateToCalendar();

@@ -16,10 +16,13 @@ import android.widget.EditText;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.xml.transform.Source;
 
 public class EditServicesFragment extends BaseFragment
 {
@@ -30,11 +33,16 @@ public class EditServicesFragment extends BaseFragment
     private JSONObject jsonBodyObj;
 
     private Context context;
+    private Bundle bundle;
 
     private EditText serviceName;
     private EditText servicePrice;
+    private EditText durations;
+    private EditText descriptions;
     private Button registerService;
     private Toolbar toolbar;
+
+    private ServiceResourceItem serviceResourceItem;
 
     public EditServicesFragment() {
         // Required empty public constructor
@@ -53,13 +61,17 @@ public class EditServicesFragment extends BaseFragment
     {
         context = getActivity().getApplicationContext();
 
+        bundle = getArguments();
+        serviceResourceItem = (ServiceResourceItem) bundle.getSerializable("serviceResource");
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
-        toolbar                  = view.findViewById(R.id.app_bar);
-        serviceName        = view.findViewById(R.id.serviceName);
-        servicePrice       = view.findViewById(R.id.servicePrice);
+        toolbar           = view.findViewById(R.id.app_bar);
+        serviceName       = view.findViewById(R.id.serviceName);
+        servicePrice      = view.findViewById(R.id.servicePrice);
+        durations       = view.findViewById(R.id.duration);
+        descriptions      = view.findViewById(R.id.servdescription);
         registerService   = view.findViewById(R.id.registerService);
 
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -67,6 +79,7 @@ public class EditServicesFragment extends BaseFragment
 
         toolbarCode();
         addListenertoButton();
+        putHints();
     }
 
     private void toolbarCode()
@@ -92,8 +105,34 @@ public class EditServicesFragment extends BaseFragment
             {
                 try
                 {
-                    jsonBodyObj.put("key1", serviceName.getText().toString());
-                    jsonBodyObj.put("key2", servicePrice.getText().toString());
+                    String servName = serviceName.getText().toString();
+                    String servPrice = servicePrice.getText().toString();
+                    String duration = durations.getText().toString();
+                    String description = descriptions.getText().toString();
+
+                    if(servName.equals(""))
+                    {
+                        CharSequence a = serviceName.getHint();
+                        servName = serviceName.getHint().toString();
+                    }
+                    if(servPrice.equals(""))
+                    {
+                        servPrice = servicePrice.getHint().toString();
+                    }
+                    if(duration.equals(""))
+                    {
+                        duration = durations.getHint().toString();
+                    }
+                    if(description.equals(""))
+                    {
+                        description = descriptions.getHint().toString();
+                    }
+
+
+                    jsonBodyObj.put("name", servName);
+                    jsonBodyObj.put("price", servPrice);
+                    jsonBodyObj.put("duration", duration);
+                    jsonBodyObj.put("description", description);
 
                 }
                 catch (JSONException e)
@@ -101,11 +140,19 @@ public class EditServicesFragment extends BaseFragment
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                // customersSchedulingApp.registerService(jsonBodyObj);
+                 //customersSchedulingApp.registerService(jsonBodyObj);
 
                 //TODO change to userBusiness
                 changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
             }
         });
+    }
+
+    private void putHints()
+    {
+        serviceName.setHint(serviceResourceItem.getService().getTitle());
+        servicePrice.setHint(serviceResourceItem.getService().getPrice() + "");
+        durations.setHint(serviceResourceItem.getService().getDuration() + "");
+        descriptions.setHint(serviceResourceItem.getService().getDesctription());
     }
 }

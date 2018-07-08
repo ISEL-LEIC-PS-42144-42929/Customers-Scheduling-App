@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 public class CustomAdapterDifferentFragments extends BaseAdapter
@@ -23,18 +24,18 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
     private BaseFragment[] fragments;
     private BaseFragment fragment;
 
-    private StoresOfUserDTO storeDTO;
+    private StoreResourceItem storeResource;
 
     private int id;
 
-    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id, StoresOfUserDTO storeDTO){
+    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id, StoreResourceItem storeResource){
         this.buttonsName = buttonsName;
         this.context = context;
         this.fragment = (BaseFragment)fragment;
         this.fragments = fragments;
         this.id = id;
         fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
-        this.storeDTO = storeDTO;
+        this.storeResource = storeResource;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                fragment.changeFragment(fragmentManager,id,fragment.addBundleToFragment(fragments[position],"storeDTO", storeDTO));
+                fragment.changeFragment(fragmentManager,id,fragment.addBundleToFragment(fragments[position],"storeResource", storeResource));
             }
         });
 

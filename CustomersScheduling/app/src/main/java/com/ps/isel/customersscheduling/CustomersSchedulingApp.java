@@ -6,7 +6,6 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
-import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
@@ -106,42 +105,42 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public<T> void getStoreEmployees(Consumer<T[]> cons, ServiceDto service)
+    public<T> void getStoreEmployees(Consumer<T[]> cons, StoreResourceItem storeResource)
     {
-       api.getStoreEmployees(cons,service);
+       api.getStoreEmployees(cons,storeResource);
     }
 
     //POST REQUESTS
 
-    public void registerStore(JSONObject storeJSONObject, String userEmail)
-    {
-        api.registerStore(storeJSONObject, userEmail);
-    }
+ //  public void registerStore(JSONObject storeJSONObject, String userEmail)
+ //  {
+ //      api.registerStore(storeJSONObject, userEmail);
+ //  }
 
-    public void registerService(JSONObject storeJSONObject, String nif)
-    {
-        api.registerService(storeJSONObject, nif);
-    }
+ //  public void registerService(JSONObject storeJSONObject, String nif)
+ //  {
+ //      api.registerService(storeJSONObject, nif);
+ //  }
 
-    public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
-    {
-        api.registerUserService(storeJSONObject, service);
-    }
+ //  public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
+ //  {
+ //      api.registerUserService(storeJSONObject, service);
+ //  }
 
-    public void registerStoreSchedule(JSONObject storeScheduleJSONObject, String storeNIF)
-    {
-        api.registerStoreSchedule(storeScheduleJSONObject, storeNIF);
-    }
+ //  public void registerStoreSchedule(JSONObject storeScheduleJSONObject, String storeNIF)
+ //  {
+ //      api.registerStoreSchedule(storeScheduleJSONObject, storeNIF);
+ //  }
 
-    public void registerEmployee(JSONObject employeeJSONObject)
-    {
-        api.registerEmployee(employeeJSONObject);
-    }
+ //  public void registerEmployee(JSONObject employeeJSONObject)
+ //  {
+ //      api.registerEmployee(employeeJSONObject);
+ //  }
 
-    public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject, String email)
-    {
-        api.registerEmployeeSchedule(employeeScheduleJSONObject, email);
-    }
+ //  public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject, String email)
+ //  {
+ //      api.registerEmployeeSchedule(employeeScheduleJSONObject, email);
+ //  }
 
     public void registerClient(JSONObject clientJSONObject)
     {

@@ -119,7 +119,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
                         jsonBodyObj.put("finish_break", EndLunchHour);
                         jsonBodyObj.put("close_hour", EndHour);
 
-                        customersSchedulingApp.registerEmployeeSchedule(jsonBodyObj, email);
+                      //  customersSchedulingApp.registerEmployeeSchedule(jsonBodyObj, email);
                         changeFragment(fragmentManager, R.id.businessData, addOtherEmpOrAddServiceFragment);
                     }
 

@@ -5,7 +5,9 @@ import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 
-public class ServiceResourceItem {
+import java.io.Serializable;
+
+public class ServiceResourceItem implements Serializable {
 
     private StoreDto store;
     private ServiceDto service;

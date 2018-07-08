@@ -31,8 +31,11 @@ import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.ServicesOfBusinessEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
@@ -45,13 +48,25 @@ public class BusinessFragment extends BaseFragment
     private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
     private CategoryDto cat = new CategoryDto("Tech");
     private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
+    private Link[] links = new Link[1];
 
-    private ServiceDto[] services = new ServiceDto[]
-            {
+    private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2);
 
-                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2),
-                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2)
-            };
+
+    private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+    private ServiceLink _linkService;
+    private SelfLink _links;
+
+
+    private ServiceResourceItem[] serviceResourceList = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
+    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceList);
+    private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
+
+
+
+
+
+
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
@@ -81,7 +96,7 @@ public class BusinessFragment extends BaseFragment
     private Bundle bundle;
 
     private StoresOfUserDTO storeDTO;
-    private StoreDto store;
+    private StoreDto storeBundle;
     private int position;
 
     private float score;
@@ -139,12 +154,12 @@ public class BusinessFragment extends BaseFragment
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
-        customersSchedulingApp
-                .getStoreByNif(store->
-                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
-       customersSchedulingApp
-               .getStoreServices(service->
-                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
+      //  customersSchedulingApp
+      //          .getStoreByNif(store->
+      //              constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
+      // customersSchedulingApp
+      //         .getStoreServices(service->
+      //                 listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
 
         toolbar     = view.findViewById(R.id.app_bar);
         name        = view.findViewById(R.id.name);
@@ -156,7 +171,7 @@ public class BusinessFragment extends BaseFragment
         toolBarCode();
         constructButtonsAndAddListeners();
         constructRatingStarsAndTextViews(view,store);
-        listViewCode(services);
+        listViewCode(servicesOfBusinessDTO);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ServiceFragment();
@@ -205,7 +220,7 @@ public class BusinessFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void listViewCode(Object services)
     {
-        ServiceResourceItem[] serviceResourceItems = ((ServicesOfBusinessDTO)services).get_embedded().getServiceResourceList();
+       ServiceResourceItem[] serviceResourceItems = ((ServicesOfBusinessDTO)services).get_embedded().getServiceResourceList();
 
         lv.setAdapter(new CustomAdapterServices(getActivity(), serviceResourceItems));
 

@@ -2,36 +2,21 @@ package com.ps.isel.customersscheduling;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpResponse;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.ps.isel.customersscheduling.HALDto.ClientStores;
-import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HttpUtils.PostRequest;
 import com.ps.isel.customersscheduling.HttpUtils.GetRequest;
 
 
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Created by Colapso on 09/05/18.
@@ -83,7 +68,7 @@ public class CustomersSchedulingWebApi<T>
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreEmployees(Consumer<T[]> cons,ServiceDto service)
+    public void getStoreEmployees(Consumer<T[]> cons,StoreResourceItem storeResource)
     {
             //TODO depois do Bito adicionar este link mudar para o link correcto
         //getRequest(cons, service.getLinks()[TYPE_REQUESTS[0]].getHref(),StoreDto.class);
@@ -101,7 +86,7 @@ public class CustomersSchedulingWebApi<T>
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)
     {
-       // getRequest(cons, service.getLinks()[0].getHref(), PersonDto.class);
+       // getRequest(cons, service.getLinks()[0].getHref(), PersonOfStoreDTO.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
