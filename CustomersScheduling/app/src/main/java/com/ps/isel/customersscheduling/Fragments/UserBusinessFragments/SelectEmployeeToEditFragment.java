@@ -46,7 +46,7 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
     private PersonLink _linkPerson;
 
 
-    private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkPerson)};
+    private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkPerson), new StaffResourceItem(person,_linkPerson)};
     private PersonEmbedded _embedded = new PersonEmbedded(staffResourceItems);
     private PersonOfStoreDTO personOfStoreDTO = new PersonOfStoreDTO(_embedded, _links);
 
@@ -67,6 +67,18 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
 
     public SelectEmployeeToEditFragment() {
         // Required empty public constructor
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+
+        if (getActivity().getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL)
+        {      //RTL to LTR
+            getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
     }
 
     @Override
@@ -96,7 +108,7 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         bundle = getArguments();
         storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
 
-        lv = (ListView) view.findViewById(R.id.listServices);
+        lv = (ListView) view.findViewById(R.id.employeesList);
 
         //customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
         listViewCode(personOfStoreDTO);
@@ -129,16 +141,20 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
             employeeNames[i] = personDtos[i].getPerson().getName();
         }
 
-          lv.setAdapter(new CustomAdapterSameFragment(employeeNames, context, this));
+          lv.setAdapter(new CustomAdapterSameFragment(employeeNames,
+                  fragmentManager,
+                  this,new SelectScheduleOrEmployeeDataFragment(),
+                  getActivity(),
+                  R.id.userBusinessFragment));
 
-          lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                  @Override
-                          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                          changeFragment(fragmentManager,
-                                  R.id.userBusinessFragment,
-                                  addBundleToFragment(new SelectScheduleOrEmployeeDataFragment(), null,null));
-                      }
-              });
+        //  lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //          @Override
+        //                  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //                  changeFragment(fragmentManager,
+        //                          R.id.userBusinessFragment,
+        //                          addBundleToFragment(new SelectScheduleOrEmployeeDataFragment(), null,null));
+        //              }
+        //      });
     }
 
 

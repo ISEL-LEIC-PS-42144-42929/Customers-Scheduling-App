@@ -31,15 +31,18 @@ public class CustomAdapterSameFragment extends BaseAdapter
     private Context context;
 
     private FragmentManager fragmentManager;
-    private BaseFragment fragment;
+    private BaseFragment fragmentFrom;
+    private BaseFragment fragmentTo;
+    private int id;
 
-    public CustomAdapterSameFragment(String[] buttonsName, Context context, Fragment fragment)
+    public CustomAdapterSameFragment(String[] buttonsName, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id)
     {
         this.buttonsName = buttonsName;
         this.context = context;
-        this.fragment = (BaseFragment) fragment;
-        fragmentManager = ((MainActivity)context).getSupportFragmentManager();
-
+        this.fragmentFrom = (BaseFragment) fragmentFrom;
+        this.fragmentTo = (BaseFragment) fragmentTo;
+        this.fragmentManager = fragmentManager;
+        this.id = id;
     }
 
     @Override
@@ -77,7 +80,7 @@ public class CustomAdapterSameFragment extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                fragment.changeFragment(fragmentManager,R.id.mainActivityFragment,fragment.addBundleToFragment(new ScheduleInfoFragment(),"Service", new Service(3.90f,"teste")));
+                fragmentFrom.changeFragment(fragmentManager,id,fragmentFrom.addBundleToFragment(fragmentTo,null,null));
             }
         });
 
