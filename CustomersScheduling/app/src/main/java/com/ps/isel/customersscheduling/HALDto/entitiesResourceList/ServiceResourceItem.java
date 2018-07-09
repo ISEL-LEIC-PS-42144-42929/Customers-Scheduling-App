@@ -3,11 +3,10 @@ package com.ps.isel.customersscheduling.HALDto.entitiesResourceList;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
-import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 
 import java.io.Serializable;
 
-public class ServiceResourceItem extends BaseResourceList implements Serializable {
+public class ServiceResourceItem implements Serializable {
 
     private StoreDto store;
     private ServiceDto service;

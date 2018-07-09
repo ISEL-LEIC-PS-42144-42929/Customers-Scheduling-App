@@ -85,7 +85,7 @@ public class BusinessDataFragment extends BaseFragment {
         categories = getResources().getStringArray(R.array.categories_array);
 
         toolbar                  = view.findViewById(R.id.app_bar);
-        storeName                = view.findViewById(R.id.name);
+        storeName                = view.findViewById(R.id.storeName);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
         streetAndLot             = view.findViewById(R.id.streetandLotNumber);

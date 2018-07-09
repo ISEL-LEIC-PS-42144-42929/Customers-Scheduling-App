@@ -126,7 +126,6 @@ public class EditServicesFragment extends BaseFragment
 
                     if(servName.equals(""))
                     {
-                        CharSequence a = serviceName.getHint();
                         servName = serviceName.getHint().toString();
                     }
                     if(servPrice.equals(""))

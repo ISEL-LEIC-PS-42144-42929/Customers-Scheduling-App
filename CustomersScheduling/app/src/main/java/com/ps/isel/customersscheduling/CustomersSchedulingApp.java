@@ -127,10 +127,10 @@ public class CustomersSchedulingApp extends Application implements Serializable
  //      api.registerUserService(storeJSONObject, service);
  //  }
 
- //  public void registerStoreSchedule(JSONObject storeScheduleJSONObject, String storeNIF)
- //  {
- //      api.registerStoreSchedule(storeScheduleJSONObject, storeNIF);
- //  }
+   public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
+   {
+       api.registerStoreSchedule(storeScheduleJSONObject);
+   }
 
  //  public void registerEmployee(JSONObject employeeJSONObject)
  //  {

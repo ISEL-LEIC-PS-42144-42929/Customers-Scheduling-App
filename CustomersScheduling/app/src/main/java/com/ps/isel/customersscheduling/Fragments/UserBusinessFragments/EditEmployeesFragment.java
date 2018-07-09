@@ -19,6 +19,8 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -33,6 +35,9 @@ public class EditEmployeesFragment extends BaseFragment
     private JSONObject jsonBodyObj;
 
     private Context context;
+    private Bundle bundle;
+
+    private StaffResourceItem staffResourceItem;
 
     private Toolbar toolbar;
     private EditText employeeName;
@@ -58,6 +63,7 @@ public class EditEmployeesFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
+        //TODO fazer o pedido ao servidor para ir buscar o employee e dados do respectivo
         customersSchedulingApp = ((CustomersSchedulingApp)context);
        // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
@@ -100,10 +106,32 @@ public class EditEmployeesFragment extends BaseFragment
             {
                 try
                 {
-                    jsonBodyObj.put("key1", employeeName.getText().toString());
-                    jsonBodyObj.put("key2", employeeEmail.getText().toString());
-                    jsonBodyObj.put("key3", employeeContact.getText().toString());
-                    jsonBodyObj.put("key4", employeeGender.getText().toString());
+                    String empName = employeeName.getText().toString();
+                    String empEmail = employeeEmail.getText().toString();
+                    String empContact = employeeContact.getText().toString();
+                    String empGender = employeeGender.getText().toString();
+
+                    if(empName.equals(""))
+                    {
+                        empName = employeeName.getHint().toString();
+                    }
+                    if(empEmail.equals(""))
+                    {
+                        empEmail = employeeEmail.getHint().toString();
+                    }
+                    if(empContact.equals(""))
+                    {
+                        empContact = employeeContact.getHint().toString();
+                    }
+                    if(empGender.equals(""))
+                    {
+                        empGender = employeeGender.getHint().toString();
+                    }
+
+                    jsonBodyObj.put("name", empName);
+                    jsonBodyObj.put("email", empEmail);
+                    jsonBodyObj.put("contact", empContact);
+                    jsonBodyObj.put("gender", empGender);
                 }
                 catch (JSONException e)
                 {

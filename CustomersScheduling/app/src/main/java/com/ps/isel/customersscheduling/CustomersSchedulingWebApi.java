@@ -125,9 +125,10 @@ public class CustomersSchedulingWebApi<T>
         // postRequest(String.format(DB_HOST+ DB_USER_REG_STORE, userEmail), storeJSONObject);
     }
 
-    public void registerStoreSchedule(JSONObject storeScheduleJSONObject, String storeNIF)
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
     {
-       // postRequest(String.format(DB_HOST + DB_USER_REG_STORE_SCHEDULE, storeNIF), storeScheduleJSONObject);
+        postRequest(String.format(DB_HOST + DB_USER_REG_STORE_SCHEDULE), storeScheduleJSONObject, null);
     }
 
     public void registerEmployee(JSONObject employeeJSONObject)
