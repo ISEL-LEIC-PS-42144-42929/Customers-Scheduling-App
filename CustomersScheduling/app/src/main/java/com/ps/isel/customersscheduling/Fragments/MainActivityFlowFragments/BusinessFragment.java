@@ -50,7 +50,7 @@ public class BusinessFragment extends BaseFragment
     private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
     private Link[] links = new Link[1];
 
-    private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2);
+    private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20);
 
 
     private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
@@ -58,8 +58,8 @@ public class BusinessFragment extends BaseFragment
     private SelfLink _links;
 
 
-    private ServiceResourceItem[] serviceResourceList = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
-    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceList);
+    private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
+    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
     private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
 
 
@@ -76,12 +76,13 @@ public class BusinessFragment extends BaseFragment
 
     private Context context;
 
-    private int MAXLEVEL = 10000;
-    private int MAXPERCENT = 100;
-    private String NAME = "Nome: ";
-    private String ADDRESS = "Address: ";
-    private String CONTACT = "Contact: ";
-    private String DESCRIPTION = "Description: ";
+    private final int MAXLEVEL = 10000;
+    private final int MAXPERCENT = 100;
+    private final String NAME = "Nome: ";
+    private final String ADDRESS = "Address: ";
+    private final String CONTACT = "Contact: ";
+    private final String CATEGORY = "Category: ";
+    private final String DESCRIPTION = "Description: ";
 
     private Toolbar toolbar;
     private Button signInBtn;
@@ -89,6 +90,7 @@ public class BusinessFragment extends BaseFragment
     private TextView address;
     private TextView contact;
     private TextView description;
+    private TextView category;
     private ImageView star;
     private ClipDrawable starDrawable;
     private String idOfImage = "imgIcon";
@@ -99,11 +101,11 @@ public class BusinessFragment extends BaseFragment
     private StoreDto storeBundle;
     private int position;
 
-    private float score;
+    private double score;
     private int numberStars;
-    private float proporcionToDraw;
+    private double proporcionToDraw;
     private int finalLevelToDraw;
-    private float floatingPoint;
+    private double floatingPoint;
 
     public BusinessFragment() {
         // Required empty public constructor
@@ -154,24 +156,25 @@ public class BusinessFragment extends BaseFragment
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
-      //  customersSchedulingApp
-      //          .getStoreByNif(store->
-      //              constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
-      // customersSchedulingApp
-      //         .getStoreServices(service->
-      //                 listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
+        customersSchedulingApp
+                .getStoreByNif(store->
+                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
+       customersSchedulingApp
+               .getStoreServices(service->
+                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
 
         toolbar     = view.findViewById(R.id.app_bar);
         name        = view.findViewById(R.id.name);
         address     = view.findViewById(R.id.address);
         contact     = view.findViewById(R.id.contact);
         description = view.findViewById(R.id.description);
+        category    = view.findViewById(R.id.category);
         lv          = view.findViewById(R.id.services);
 
         toolBarCode();
         constructButtonsAndAddListeners();
-        constructRatingStarsAndTextViews(view,store);
-        listViewCode(servicesOfBusinessDTO);
+    //    constructRatingStarsAndTextViews(view,store);
+    //    listViewCode(servicesOfBusinessDTO);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ServiceFragment();
@@ -185,14 +188,18 @@ public class BusinessFragment extends BaseFragment
     }
 
 
-    private void constructRatingStarsAndTextViews(View view, StoreDto store)
+    private void constructRatingStarsAndTextViews(View view, StoreResourceItem storeData)
     {
-        name.setText(NAME + store.getStoreName());
-        address.setText(ADDRESS + store.getAddress());
-        contact.setText(CONTACT + store.getContact()+ "");
-        description.setText(DESCRIPTION + store.getAddress());          //mudar para descrição
+        AddressDto addressAux = storeData.getStore().getAddress();
 
-        score = store.getScoreReview();
+        String addAux = addressAux.getStreet() + " " + addressAux.getLot() + " " + addressAux.getCity() + " " + addressAux.getCountry();
+
+        name.setText(NAME + storeData.getStore().getStoreName());
+        address.setText(ADDRESS + addAux);
+        category.setText(CATEGORY + storeData.getStore().getCategory().getName());
+        contact.setText(CONTACT + storeData.getStore().getContact()+ "");
+
+        score = storeData.getScore();
         floatingPoint = score % 1;
         numberStars =(int)Math.ceil(score);
 
@@ -220,7 +227,7 @@ public class BusinessFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void listViewCode(Object services)
     {
-       ServiceResourceItem[] serviceResourceItems = ((ServicesOfBusinessDTO)services).get_embedded().getServiceResourceList();
+       ServiceResourceItem[] serviceResourceItems = ((ServicesOfBusinessDTO)services).get_embedded().getserviceResourceList();
 
         lv.setAdapter(new CustomAdapterServices(getActivity(), serviceResourceItems));
 

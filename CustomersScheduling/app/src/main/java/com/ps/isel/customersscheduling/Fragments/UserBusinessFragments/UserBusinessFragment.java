@@ -49,7 +49,7 @@ public class UserBusinessFragment extends BaseFragment
     private StoreLinks _linkStores;
 
 
-    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,_linkStores)};
+    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,3.0,_linkStores)};
     private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
     private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
 

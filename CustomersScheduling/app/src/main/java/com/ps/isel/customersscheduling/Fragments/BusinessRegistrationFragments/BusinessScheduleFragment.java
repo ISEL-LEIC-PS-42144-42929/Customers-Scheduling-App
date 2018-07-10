@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,7 +26,9 @@ import com.ps.isel.customersscheduling.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -53,7 +56,10 @@ public class BusinessScheduleFragment extends BaseFragment {
     private CheckBox saturday;
     private CheckBox sunday;
 
+    private final String[] days_of_week = {"monday", "tuesday", "wednesday","thursday","friday","saturday","sunday"};
     private HashMap<String, JSONObject> jsons = new HashMap<>();
+    private ArrayList<CheckBox> checkBoxesList = new ArrayList<>();
+
     private CheckBox[] checkBoxes;
 
     private Button registerScheduleBtn;
@@ -94,6 +100,11 @@ public class BusinessScheduleFragment extends BaseFragment {
 
         jsonBodyObj = new JSONObject();
 
+        if(jsons.isEmpty()){
+            fillHashMap();
+        }
+
+
         toolbar             = view.findViewById(R.id.app_bar);
         startHour           = view.findViewById(R.id.begginHour);
         startLunchHour      = view.findViewById(R.id.begginLunch);
@@ -113,8 +124,41 @@ public class BusinessScheduleFragment extends BaseFragment {
         registerServiceFragment = new RegisterServiceFragment();
         fragmentManager = getActivity().getSupportFragmentManager();
 
+        addListenersTOCheckBoxes();
         toolbarCode();
         addListenertoButton();
+    }
+
+    private void addListenersTOCheckBoxes() {
+
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                CheckBox aux = (CheckBox) compoundButton;
+
+                if(!aux.isChecked())
+                {
+                    checkBoxesList.remove(aux);
+                }else {
+                    checkBoxesList.add((CheckBox) compoundButton);
+                }
+            }
+        };
+
+        monday.setOnCheckedChangeListener(onCheckedChangeListener);
+        tuesday.setOnCheckedChangeListener(onCheckedChangeListener);
+        wednesday.setOnCheckedChangeListener(onCheckedChangeListener);
+        thursday.setOnCheckedChangeListener(onCheckedChangeListener);
+        friday.setOnCheckedChangeListener(onCheckedChangeListener);
+        saturday.setOnCheckedChangeListener(onCheckedChangeListener);
+        sunday.setOnCheckedChangeListener(onCheckedChangeListener);
+    }
+
+    private void fillHashMap()
+    {
+        for (int i = 0; i < days_of_week.length ; i++) {
+            createJsonSaveInArray("-1","-1","-1","-1",days_of_week[i]);
+        }
     }
 
 
@@ -167,115 +211,73 @@ public class BusinessScheduleFragment extends BaseFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        if(jsons.containsKey(weekday))
+        {
+            jsons.remove(weekday);
+        }
         jsons.put(weekday, aux);
     }
 
     private void testCheckBoxesEnd() //TODO ver como se faz para os dias de folga
     {
-        String openHour = startHour.getText().toString();
-        String startLunchH = startHour.getText().toString();
-        String endLunchH = startHour.getText().toString();
-        String endH = startHour.getText().toString();
+        JSONObject aux = new JSONObject();
+        Iterator it = jsons.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry item = (Map.Entry) it.next();
+            try {
+                aux.put("open_hour",-1);
+                aux.put("init_break",-1);
+                aux.put("finish_break",-1);
+                aux.put("close_hour",-1);
+                aux.put("week_day", item.getKey());
 
-        if(!monday.isChecked())
-        {
-            changedChecked(monday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, monday.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            // customersSchedulingApp.registerStoreSchedule(entry.getValue());
+            it.remove();
         }
-        if(!tuesday.isChecked())
-        {
-            changedChecked(tuesday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, tuesday.getText().toString());
-        }
-        if(!wednesday.isChecked())
-        {
-            changedChecked(wednesday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, wednesday.getText().toString());
-        }
-        if(!thursday.isChecked())
-        {
-            changedChecked(thursday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, thursday.getText().toString());
-        }
-        if(!friday.isChecked())
-        {
-            changedChecked(friday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, friday.getText().toString());
-        }
-        if(!saturday.isChecked())
-        {
-            changedChecked(saturday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, saturday.getText().toString());
-        }
-        if(!sunday.isChecked())
-        {
-            changedChecked(sunday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, sunday.getText().toString());
-        }
-
     }
+
+
 
 
 
     private void testCheckBoxes()
     {
         String openHour = startHour.getText().toString();
-        String startLunchH = startHour.getText().toString();
-        String endLunchH = startHour.getText().toString();
-        String endH = startHour.getText().toString();
+        String startLunchH = startLunchHour.getText().toString();
+        String endLunchH = endLunchHour.getText().toString();
+        String endH = endHour.getText().toString();
 
-        if(monday.isChecked())
-        {
-            changedChecked(monday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, monday.getText().toString());
-        }
-        if(tuesday.isChecked())
-        {
-            changedChecked(tuesday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, tuesday.getText().toString());
-        }
-        if(wednesday.isChecked())
-        {
-            changedChecked(wednesday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, wednesday.getText().toString());
-        }
-        if(thursday.isChecked())
-        {
-            changedChecked(thursday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, thursday.getText().toString());
-        }
-        if(friday.isChecked())
-        {
-            changedChecked(friday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, friday.getText().toString());
-        }
-        if(saturday.isChecked())
-        {
-            changedChecked(saturday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, saturday.getText().toString());
-        }
-        if(sunday.isChecked())
-        {
-            changedChecked(sunday);
-            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, sunday.getText().toString());
-        }
+        for (CheckBox checkBox: checkBoxesList) {
+            changedChecked(checkBox);
+            createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, checkBox.getText().toString());
 
+        }
     }
 
     private void changedChecked(CheckBox checkBox)
     {
         checkBox.setBackgroundColor(Color.GRAY);
         checkBox.setClickable(false);
-
     }
 
     private void sendSchedules()
     {
-        for(Map.Entry<String, JSONObject> entry : jsons.entrySet()) {
-            customersSchedulingApp.registerStoreSchedule(entry.getValue());
-            jsons.remove(entry.getKey());
-            ++count;
+        Iterator it = checkBoxesList.iterator();
+
+        while (it.hasNext())
+        {
+            CheckBox item = (CheckBox) it.next();
+            if(jsons.containsKey(item.getText()))
+            {
+                // customersSchedulingApp.registerStoreSchedule(entry.getValue());
+                jsons.remove(item.getText());
+                it.remove();
+            }
+
         }
     }
 }

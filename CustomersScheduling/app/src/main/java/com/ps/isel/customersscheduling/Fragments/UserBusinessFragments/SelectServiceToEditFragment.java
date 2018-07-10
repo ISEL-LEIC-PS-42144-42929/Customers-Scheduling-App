@@ -1,12 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,22 +18,18 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ServiceFragment;
 import com.ps.isel.customersscheduling.HALDto.AddressDto;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.ServicesOfBusinessEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
 
@@ -48,7 +42,7 @@ public class SelectServiceToEditFragment extends BaseFragment {
     private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
     private Link[] links = new Link[1];
 
-    private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store2);
+    private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20);
 
 
     private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
@@ -56,8 +50,8 @@ public class SelectServiceToEditFragment extends BaseFragment {
     private SelfLink _links;
 
 
-    private ServiceResourceItem[] serviceResourceList = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
-    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceList);
+    private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
+    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
     private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
 
 
@@ -144,13 +138,13 @@ public class SelectServiceToEditFragment extends BaseFragment {
 
     private void listViewCode(Object services) {
         ServicesOfBusinessDTO serv = (ServicesOfBusinessDTO) services;
-        lv.setAdapter(new CustomAdapterServices(getActivity(), serv.get_embedded().getServiceResourceList()));
+        lv.setAdapter(new CustomAdapterServices(getActivity(), serv.get_embedded().getserviceResourceList()));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new EditServicesFragment(), "serviceResource", serv.get_embedded().getServiceResourceList()[position]));
+                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new EditServicesFragment(), "serviceResource", serv.get_embedded().getserviceResourceList()[position]));
             }
         });
     }

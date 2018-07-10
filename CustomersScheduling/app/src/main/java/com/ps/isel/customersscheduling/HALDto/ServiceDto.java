@@ -5,26 +5,22 @@ import java.io.Serializable;
 public class ServiceDto implements Serializable {
 
     private int id;
-    private String desctription;
+    private String description;
     private double price;
     private String title;
     private int duration;
-    private Link[] links;
-    private StoreDto store;
 
-    public ServiceDto(int id, String desctription, double price, String title, int duration, Link[] links, StoreDto store)
+
+    public ServiceDto() {
+    }
+
+    public ServiceDto(int id, String description, double price, String title, int duration)
     {
         this.id = id;
-        this.desctription = desctription;
+        this.description = description;
         this.price = price;
         this.title = title;
         this.duration = duration;
-        this.links = links;
-        this.store = store;
-    }
-
-    public Link[] getLinks() {
-        return links;
     }
 
     public void setId(int id) {
@@ -32,7 +28,7 @@ public class ServiceDto implements Serializable {
     }
 
     public void setDesctription(String desctription) {
-        this.desctription = desctription;
+        this.description = desctription;
     }
 
     public void setPrice(double price) {
@@ -47,16 +43,12 @@ public class ServiceDto implements Serializable {
         this.duration = duration;
     }
 
-    public void setLinks(Link[] links) {
-        this.links = links;
-    }
-
     public int getId() {
         return id;
     }
 
     public String getDesctription() {
-        return desctription;
+        return description;
     }
 
     public double getPrice() {
@@ -71,7 +63,4 @@ public class ServiceDto implements Serializable {
         return duration;
     }
 
-    public StoreDto getStore() {
-        return store;
-    }
 }

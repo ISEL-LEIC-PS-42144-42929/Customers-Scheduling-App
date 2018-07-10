@@ -36,6 +36,7 @@
             android:cursorVisible="false"
             android:hint="@string/insert_nif" />
 
+
         <EditText
             android:id="@+id/storeContact"
             android:layout_width="match_parent"

@@ -24,8 +24,6 @@ import com.ps.isel.customersscheduling.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.xml.transform.Source;
-
 public class EditServicesFragment extends BaseFragment
 {
     private Fragment registerEmployeeScheduleFragment;

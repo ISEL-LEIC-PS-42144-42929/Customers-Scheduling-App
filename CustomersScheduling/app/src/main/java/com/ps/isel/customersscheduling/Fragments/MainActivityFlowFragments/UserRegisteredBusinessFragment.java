@@ -67,10 +67,11 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     private SelfLink _links;
 
     private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+    private double score = 3.0;
     private StoreLinks _linkStores;
 
 
-    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,_linkStores)};
+    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,score,_linkStores)};
     private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
     private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
 
@@ -140,16 +141,18 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         filterBtn = view.findViewById(R.id.filter);
 
         toolBarCode();
-        listViewCode(storesOfUserDTO);// Remove after App done!!
+
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
-        //    customersSchedulingApp
-        //            .getUserRegisteredBusiness(
-        //                    elem-> listViewCode(elem));
+            customersSchedulingApp
+                    .getUserRegisteredBusiness(
+                            elem-> listViewCode(elem));
+
+       // listViewCode(storesOfUserDTO);// Remove after App done!!
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -174,11 +177,8 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             favourites.setVisible(true);
             logout.setVisible(true);
             login.setVisible(false);
-
         }
-
     }
-
 
       @Override
       public boolean onOptionsItemSelected(MenuItem item) {
@@ -261,8 +261,10 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     private void listViewCode(Object stores)             //TODO change parameter to connect to server Object storesDTO
     {
         StoresOfUserDTO storeDTO =  ((StoresOfUserDTO)stores);
+        if(storeDTO.get_embedded() == null)
+        {
 
-//        StoreDto [] stores = Arrays.stream(((StoresOfUserDTO)storesDTO).get_embedded().getServiceResourceList()).map(elem->elem.getStore()).toArray(s -> new StoreDto[s]);
+        }else{
 
         lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
 
@@ -275,6 +277,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                 changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
             }
         });
+        }
     }
 
 

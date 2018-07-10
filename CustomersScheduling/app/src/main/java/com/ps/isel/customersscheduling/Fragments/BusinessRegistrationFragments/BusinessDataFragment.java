@@ -1,15 +1,18 @@
 package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
@@ -51,6 +55,11 @@ public class BusinessDataFragment extends BaseFragment {
     private FragmentManager fragmentManager;
     private Fragment storeScheduleFragment;
 
+    private AlertDialog.Builder builder;
+    private TextView insertNIF;
+    private EditText nif;
+    private Button ok;
+    private Button cancel;
     private Toolbar toolbar;
     private EditText storeName;
     private EditText storeNif;
@@ -84,6 +93,13 @@ public class BusinessDataFragment extends BaseFragment {
 
         categories = getResources().getStringArray(R.array.categories_array);
 
+        builder = new AlertDialog.Builder(context);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_nif, null);
+
+        insertNIF                = view.findViewById(R.id.nifDialog);
+        nif                      = view.findViewById(R.id.nif);
+        ok                       = view.findViewById(R.id.ok);
+        cancel                   = view.findViewById(R.id.cancel);
         toolbar                  = view.findViewById(R.id.app_bar);
         storeName                = view.findViewById(R.id.storeName);
         storeNif                 = view.findViewById(R.id.storeNif);
@@ -150,8 +166,12 @@ public class BusinessDataFragment extends BaseFragment {
 
     private void addListenertoButton()
     {
+
+
+
         registerBusiness.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 try
@@ -169,17 +189,18 @@ public class BusinessDataFragment extends BaseFragment {
                     }
                     else{
 
-                        jsonBodyObj.put("name", storeName.getText().toString());
-                        jsonBodyObj.put("NIF", storeNif.getText().toString());
+                        jsonBodyObj.put("name", storeNam);
+                        jsonBodyObj.put("ownerNif", "123456");
+                        jsonBodyObj.put("nif", storeNIF);
                         jsonBodyObj.put("contact", storeContact);
-                        jsonBodyObj.put("category", new CategoryDto(choseCategoryText));
+                        jsonBodyObj.put("category", choseCategoryText);
                         jsonBodyObj.put("street", deserializeString(streetAndLot.getText().toString())[0]);
-                        jsonBodyObj.put("zipcode", zipcode.getText().toString());
+                        jsonBodyObj.put("zipcode", zipCode);
                         jsonBodyObj.put("lot", deserializeString(streetAndLot.getText().toString())[1]);
                         jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
                         jsonBodyObj.put("country",deserializeString(cityAndCountry.getText().toString())[1]);
 
-                     //   customersSchedulingApp.registerStore(jsonBodyObj, customersSchedulingApp.getUserEmail());
+                        //customersSchedulingApp.registerStore(jsonBodyObj);
                         changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeNIF", storeNIF));
                     }
 

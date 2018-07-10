@@ -40,10 +40,17 @@
             android:layout_toRightOf="@+id/busImage"/>
 
         <TextView
-            android:id="@+id/contact"
+            android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address"
+            android:layout_toRightOf="@+id/busImage"/>
+
+        <TextView
+            android:id="@+id/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/category"
             android:layout_toRightOf="@+id/busImage"/>
 
         <TextView

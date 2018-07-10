@@ -6,8 +6,9 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
-import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import java.util.function.Consumer;
 /**
  * Created by Colapso on 09/05/18.
  */
-
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomersSchedulingApp extends Application implements Serializable
 {
 
@@ -61,13 +62,13 @@ public class CustomersSchedulingApp extends Application implements Serializable
   // }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreByNif(Consumer<StoreDto> cons, StoreResourceItem storeResource)
+    public void getStoreByNif(Consumer<StoreResourceItem> cons, StoreResourceItem storeResource)
     {
         api.getStoresByNif(cons, storeResource);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getStoreServices(Consumer<ServiceDto[]> cons, StoreResourceItem storeResource)
+    public void getStoreServices(Consumer<ServicesOfBusinessDTO> cons, StoreResourceItem storeResource)
     {
         api.getStoreServices(cons, storeResource);
     }
@@ -93,7 +94,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
  //   }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public <T>void getUserRegisteredBusiness(Consumer<StoreDto[]> cons)
+    public <T>void getUserRegisteredBusiness(Consumer<StoresOfUserDTO> cons)
     {
         api.getUserRegisteredBusiness(cons);
     }
@@ -112,10 +113,11 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     //POST REQUESTS
 
- //  public void registerStore(JSONObject storeJSONObject, String userEmail)
- //  {
- //      api.registerStore(storeJSONObject, userEmail);
- //  }
+   @RequiresApi(api = Build.VERSION_CODES.N)
+   public void registerStore(JSONObject storeJSONObject)
+   {
+       api.registerStore(storeJSONObject);
+   }
 
  //  public void registerService(JSONObject storeJSONObject, String nif)
  //  {
@@ -129,7 +131,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
    public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
    {
-       api.registerStoreSchedule(storeScheduleJSONObject);
+  //     api.registerStoreSchedule(storeScheduleJSONObject);
    }
 
  //  public void registerEmployee(JSONObject employeeJSONObject)

@@ -39,8 +39,8 @@ public class ScheduledFragment extends BaseFragment
     private ServiceDto[] services = new ServiceDto[]
             {
 
-                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store),
-                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20, new Link[1], store)
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20),
+                    new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20)
             };
 
 

@@ -35,13 +35,13 @@
     <string name="chooseCategory">Chose Category</string>
     <string name="scheduleRegistration">Schedule Registration</string>
     <string name="employeeRegistration">Employee Registration</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+    <string name="monday">monday</string>
+    <string name="tuesday">tuesday</string>
+    <string name="wednesday">wednesday</string>
+    <string name="thursday">thursday</string>
+    <string name="friday">friday</string>
+    <string name="saturday">saturday</string>
+    <string name="sunday">sunday</string>
     <string name="registerAnotherEmployee">Register Another Employee</string>
     <string name="registerAnotherService">Register Another Service</string>
     <string name="endRegistration">End Registration</string>
@@ -60,6 +60,9 @@
     <string name="insert_nif">insert Nif</string>
     <string name="open_existing_image">Open Existing Image</string>
     <string name="take_new_photo">Take New Photo</string>
+    <string name="ok">Ok</string>
+    <string name="nif">nif</string>
+    <string name="cancel">Cancel</string>
     <string-array name="categories_array">
         <item>Restaurants</item>
         <item>Barber</item>

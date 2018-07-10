@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HttpUtils.PostRequest;
@@ -21,7 +22,7 @@ import java.util.function.Consumer;
 /**
  * Created by Colapso on 09/05/18.
  */
-
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomersSchedulingWebApi<T>
 {
     //private final String BASE_URL = "http://10.10.7.177:8181/person/client";
@@ -30,9 +31,9 @@ public class CustomersSchedulingWebApi<T>
 
 
 
-    private final String DB_HOST = "http://192.168.1.196:8181/";
-    private final String DB_USER_STORES = "person/%s/client/stores";
-    private final String DB_USER_REG_STORE = "store/‰s/";
+    private final String DB_HOST = "http://192.168.1.206:8181/";
+    private final String DB_USER_STORES = "person/client/%s/stores";
+    private final String DB_USER_REG_STORE = "store/%s/";
     private final String DB_USER_STORE = "store/owner/%s/";
     private final String DB_SERVICE = "service";
     private final String DB_USER_REG_STORE_SCHEDULE = "timetable/store/";
@@ -47,34 +48,29 @@ public class CustomersSchedulingWebApi<T>
         this.requestQueue = queue;
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getUserRegisteredBusiness(Consumer<T> cons)
     {
         String path = String.format(DB_HOST +DB_USER_STORES, IdTokenAndEmailContainer.getInstance().getEmail());
         getRequest(cons, path, StoresOfUserDTO.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoresByNif(Consumer<T> cons, StoreResourceItem store)
     {
-        getRequest(cons, store.get_links().getGet().getHref(), StoresOfUserDTO.class);
+        String path = store.get_links().getGet().getHref();
+        getRequest(cons, store.get_links().getGet().getHref(), StoreResourceItem.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoreServices(Consumer<T> cons, StoreResourceItem storeResource)
     {
         getRequest(cons,storeResource.get_links().getServices().getHref(),ServicesOfBusinessDTO.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoreEmployees(Consumer<T[]> cons,StoreResourceItem storeResource)
     {
             //TODO depois do Bito adicionar este link mudar para o link correcto
         //getRequest(cons, service.getLinks()[TYPE_REQUESTS[0]].getHref(),StoreDto.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getUserStores(Consumer<T> cons)
     {
         getRequest(cons, String.format(DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()) ,StoresOfUserDTO.class);
@@ -83,20 +79,20 @@ public class CustomersSchedulingWebApi<T>
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)
     {
        // getRequest(cons, service.getLinks()[0].getHref(), PersonOfStoreDTO.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void getStoresByLocationAndCategory(Consumer<T[]> cons, String location, String category)
     {
        // String url = "http://10.10.7.177:8181/person/client";
        // getRequest(cons, url,Business.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void getUserPendentRequests(Consumer<T[]> cons, String userName)
     {
         //String url = "http://10.10.7.177:8181/person/client";
@@ -120,12 +116,12 @@ public class CustomersSchedulingWebApi<T>
 
 
 
-    public void registerStore(JSONObject storeJSONObject, String userEmail)
+
+    public void registerStore(JSONObject storeJSONObject)
     {
-        // postRequest(String.format(DB_HOST+ DB_USER_REG_STORE, userEmail), storeJSONObject);
+         postRequest(String.format(DB_HOST+ DB_USER_STORE, IdTokenAndEmailContainer.getInstance().getEmail()), storeJSONObject, null);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
     {
         postRequest(String.format(DB_HOST + DB_USER_REG_STORE_SCHEDULE), storeScheduleJSONObject, null);
@@ -141,7 +137,6 @@ public class CustomersSchedulingWebApi<T>
         //postRequest(DB_HOST + DB_USER_REG_STAFF_SCHEDULE + email, employeeScheduleJSONObject);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void sendIdToken(String idToken, Consumer<T> cons){
         String url = "http://192.168.1.196:8181/tokensignin";
         postRequest(url, new JSONObject() , cons);
@@ -155,7 +150,6 @@ public class CustomersSchedulingWebApi<T>
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void postRequest(String url, JSONObject object, Consumer<T> cons)
     {
         PostRequest<T> request = new PostRequest<>(
@@ -169,7 +163,6 @@ public class CustomersSchedulingWebApi<T>
         requestQueue.add(request);
     }
 
-     @RequiresApi(api = Build.VERSION_CODES.N)
    public void getRequest(Consumer<T> cons, String url, Class c)
    {
        GetRequest<T> request = new GetRequest<>(

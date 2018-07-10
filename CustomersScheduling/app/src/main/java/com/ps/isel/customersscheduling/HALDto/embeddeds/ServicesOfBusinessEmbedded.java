@@ -1,24 +1,23 @@
 package com.ps.isel.customersscheduling.HALDto.embeddeds;
 
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
-import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 
 public class ServicesOfBusinessEmbedded {
 
-    private ServiceResourceItem[] serviceResourceItems;
+    private ServiceResourceItem[] serviceResourceList;
 
     public ServicesOfBusinessEmbedded() {
     }
 
-    public ServicesOfBusinessEmbedded(ServiceResourceItem[] serviceResourceItems) {
-        this.serviceResourceItems = serviceResourceItems;
+    public ServicesOfBusinessEmbedded(ServiceResourceItem[] serviceResourceItem) {
+        this.serviceResourceList = serviceResourceItem;
     }
 
-    public ServiceResourceItem[] getServiceResourceList() {
-        return serviceResourceItems;
+    public ServiceResourceItem[] getserviceResourceList() {
+        return serviceResourceList;
     }
 
     public void setStoreResourceList(ServiceResourceItem[] serviceResourceItem) {
-        this.serviceResourceItems = serviceResourceItem;
+        this.serviceResourceList = serviceResourceItem;
     }
 }
