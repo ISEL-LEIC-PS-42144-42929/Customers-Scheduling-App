@@ -2,20 +2,36 @@ package com.ps.isel.customersscheduling.HALDto;
 
 import java.io.Serializable;
 
-public class PersonDto implements Serializable {
+public class StaffDto implements Serializable {
 
     private String email;
     private String name;
     private int gender;
     private String contact;
 
-    public PersonDto() {
+    public StaffDto() {
     }
 
-    public PersonDto(String email, String name, int gender, String contact) {
+    public StaffDto(String email, String name, int gender, String contact) {
         this.email = email;
         this.name = name;
         this.gender = gender;
+        this.contact = contact;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public void setContact(String contact) {
         this.contact = contact;
     }
 
@@ -33,21 +49,5 @@ public class PersonDto implements Serializable {
 
     public String getContact() {
         return contact;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
     }
 }

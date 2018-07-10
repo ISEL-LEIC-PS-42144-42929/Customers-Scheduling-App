@@ -15,12 +15,13 @@ public class StoreLinks {
     private Link portfolio;
     private Link update_addr;
     private Link update_info;
+    private Link insert_staff;
 
     public StoreLinks() {
 
     }
 
-    public StoreLinks(Link get, Link insert, Link services, Link portfolio, Link update_addr, Link update_info, Link timetable) {
+    public StoreLinks(Link get, Link insert, Link services, Link portfolio, Link update_addr, Link update_info, Link timetable, Link insert_staff) {
         this.get = get;
         this.insert = insert;
         this.services = services;
@@ -28,6 +29,15 @@ public class StoreLinks {
         this.update_addr = update_addr;
         this.update_info = update_info;
         this.timetable = timetable;
+        this.insert_staff = insert_staff;
+    }
+
+    public void setInsert_staff(Link insert_staff) {
+        this.insert_staff = insert_staff;
+    }
+
+    public Link getInsert_staff() {
+        return insert_staff;
     }
 
     public Link getTimetable() {

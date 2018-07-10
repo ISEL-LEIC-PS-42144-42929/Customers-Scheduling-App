@@ -1,36 +1,36 @@
 package com.ps.isel.customersscheduling.HALDto.entitiesResourceList;
 
-import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.links.PersonLink;
-import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
+import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 
-public class StaffResourceItem {
+import java.io.Serializable;
 
-    private PersonDto person;
-    private PersonLink _links;
+public class StaffResourceItem implements Serializable {
 
+    private StaffDto person;
+    private StaffLinks _links;
 
     public StaffResourceItem() {
     }
 
-    public StaffResourceItem(PersonDto person, PersonLink _links) {
+    public StaffResourceItem(StaffDto person, StaffLinks _links) {
         this.person = person;
         this._links = _links;
     }
 
-    public void setPerson(PersonDto person) {
+    public void setPerson(StaffDto person) {
         this.person = person;
     }
 
-    public void set_links(PersonLink _links) {
+    public void set_links(StaffLinks _links) {
         this._links = _links;
     }
 
-    public PersonDto getPerson() {
+    public StaffDto getPerson() {
         return person;
     }
 
-    public PersonLink get_links() {
+    public StaffLinks get_links() {
         return _links;
     }
 }

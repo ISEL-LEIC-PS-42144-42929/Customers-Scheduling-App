@@ -63,6 +63,7 @@
     <string name="ok">Ok</string>
     <string name="nif">nif</string>
     <string name="cancel">Cancel</string>
+    <string name="end_employee_schedule_registration">End Employee Schedule Registration</string>
     <string-array name="categories_array">
         <item>Restaurants</item>
         <item>Barber</item>

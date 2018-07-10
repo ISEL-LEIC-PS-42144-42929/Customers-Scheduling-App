@@ -3,7 +3,9 @@ package com.ps.isel.customersscheduling.HALDto;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 
-public class PersonOfStoreDTO {
+import java.io.Serializable;
+
+public class PersonOfStoreDTO implements Serializable {
 
     private PersonEmbedded _embedded;
     private SelfLink _links;

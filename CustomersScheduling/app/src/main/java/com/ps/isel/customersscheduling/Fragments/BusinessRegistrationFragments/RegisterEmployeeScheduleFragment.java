@@ -2,8 +2,10 @@ package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +17,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -39,6 +41,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     private Context context;
 
     private final String[] days_of_week = {"monday", "tuesday", "wednesday","thursday","friday","saturday","sunday"};
+    private HashMap<String, Integer> mapForDataBase = new HashMap<>();
     private HashMap<String, JSONObject> jsons = new HashMap<>();
     private ArrayList<CheckBox> checkBoxesList = new ArrayList<>();
 
@@ -48,6 +51,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     private EditText employeeEndLunchHour;
     private EditText employeeEndHour;
     private Button employeeRegisterScheduleBtn;
+    private Button endEmployeeRegisterScheduleBtn;
     private Bundle bundle;
 
     private CheckBox monday;
@@ -58,8 +62,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     private CheckBox saturday;
     private CheckBox sunday;
 
-    private String email;
-
+    private StaffResourceItem staffResource;
 
     public RegisterEmployeeScheduleFragment() {
         // Required empty public constructor
@@ -77,25 +80,10 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         bundle = getArguments();
-        email = (String)bundle.getSerializable("email");
+        staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
         context = getActivity().getApplicationContext();
 
-        toolbar                     = view.findViewById(R.id.app_bar);
-        employeeStartHour           = view.findViewById(R.id.employeeBegginHour);
-        employeeStartLunchHour      = view.findViewById(R.id.employeeBegginLunch);
-        employeeEndLunchHour        = view.findViewById(R.id.employeeEndLunch);
-        employeeEndHour             = view.findViewById(R.id.employeeEndHour);
-        employeeRegisterScheduleBtn = view.findViewById(R.id.employeeRegisterSchedule);
-        monday              = view.findViewById(R.id.monday);
-        tuesday             = view.findViewById(R.id.tuesday);
-        wednesday           = view.findViewById(R.id.wednesday);
-        thursday            = view.findViewById(R.id.thursday);
-        friday              = view.findViewById(R.id.friday);
-        saturday            = view.findViewById(R.id.saturday);
-        sunday              = view.findViewById(R.id.sunday);
-
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
@@ -103,12 +91,26 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             fillHashMap();
         }
 
-        fragmentManager = getActivity().getSupportFragmentManager();
+        toolbar                         = view.findViewById(R.id.app_bar);
+        employeeStartHour               = view.findViewById(R.id.employeeBegginHour);
+        employeeStartLunchHour          = view.findViewById(R.id.employeeBegginLunch);
+        employeeEndLunchHour            = view.findViewById(R.id.employeeEndLunch);
+        employeeEndHour                 = view.findViewById(R.id.employeeEndHour);
+        employeeRegisterScheduleBtn     = view.findViewById(R.id.employeeRegisterSchedule);
+        endEmployeeRegisterScheduleBtn  = view.findViewById(R.id.endEmployeeRegisterSchedule);
+        monday                          = view.findViewById(R.id.monday);
+        tuesday                         = view.findViewById(R.id.tuesday);
+        wednesday                       = view.findViewById(R.id.wednesday);
+        thursday                        = view.findViewById(R.id.thursday);
+        friday                          = view.findViewById(R.id.friday);
+        saturday                        = view.findViewById(R.id.saturday);
+        sunday                          = view.findViewById(R.id.sunday);
+        fragmentManager                 = getActivity().getSupportFragmentManager();
         addOtherEmpOrAddServiceFragment = new AddOtherEmpOrEndFragment();
 
         toolbarCode();
         addListenersTOCheckBoxes();
-        addListenertoButton();
+        addListenerToButton();
     }
 
     private void toolbarCode()
@@ -126,29 +128,33 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         });
     }
 
-    private void addListenertoButton()
+    private void addListenerToButton()
     {
         employeeRegisterScheduleBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
                 testCheckBoxes();
                 sendSchedules();
+            }
+        });
 
-
+        endEmployeeRegisterScheduleBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                testCheckBoxesEnd();
             }
         });
 
     }
 
-
-
-
-
     private void fillHashMap()
     {
         for (int i = 0; i < days_of_week.length ; i++) {
             createJsonSaveInArray("-1","-1","-1","-1",days_of_week[i]);
+            mapForDataBase.put(days_of_week[i],i);
         }
     }
 
@@ -212,6 +218,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void testCheckBoxesEnd() //TODO ver como se faz para os dias de folga
     {
         JSONObject aux = new JSONObject();
@@ -229,7 +236,11 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            // customersSchedulingApp.registerStoreSchedule(entry.getValue());
+            customersSchedulingApp.registerEmployeeSchedule(elem->
+                    changeFragment(fragmentManager,R.id.businessData,addBundleToFragment(addOtherEmpOrAddServiceFragment,"staffResource",elem)),
+                    (JSONObject)item.getValue(),
+                    staffResource,
+                    StaffResourceItem.class);
             it.remove();
         }
     }
@@ -241,6 +252,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void sendSchedules()
     {
         Iterator it = checkBoxesList.iterator();
@@ -250,11 +262,14 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             CheckBox item = (CheckBox) it.next();
             if(jsons.containsKey(item.getText()))
             {
-                // customersSchedulingApp.registerStoreSchedule(entry.getValue());
+                customersSchedulingApp.registerEmployeeSchedule(elem->
+                        staffResource = elem,
+                        jsons.get(item.getText()),
+                        staffResource,
+                        StaffResourceItem.class);
                 jsons.remove(item.getText());
                 it.remove();
             }
-
         }
     }
 

@@ -109,17 +109,29 @@
             android:layout_toRightOf="@+id/friday"
             android:text="@string/sunday" />
 
-        <Button
-            android:id="@+id/employeeRegisterSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="21dp"
-            android:text="@string/registerSchedule"
-            android:textSize="20dp" />
+
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/employeeRegisterSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="148dp"
+        android:text="@string/registerSchedule"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/endEmployeeRegisterSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:text="@string/end_employee_schedule_registration"
+        android:textSize="20dp" />
 
 
 </RelativeLayout>

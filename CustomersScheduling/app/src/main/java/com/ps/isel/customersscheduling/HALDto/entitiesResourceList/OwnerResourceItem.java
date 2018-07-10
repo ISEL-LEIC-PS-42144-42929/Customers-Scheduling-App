@@ -5,7 +5,9 @@ import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.links.OwnerLinks;
 import com.ps.isel.customersscheduling.HALDto.links.PersonLink;
 
-public class OwnerResourceItem {
+import java.io.Serializable;
+
+public class OwnerResourceItem implements Serializable {
 
     private OwnerDto person;
     private OwnerLinks _links;

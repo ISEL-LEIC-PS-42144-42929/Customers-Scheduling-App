@@ -29,14 +29,14 @@
         <activity android:name=".Activities.DefinitionsActivities.EditNotificationsActivity" />
         <activity android:name=".Activities.AboutActivity" />
         <activity android:name=".Activities.UserBusinessActivity" android:windowSoftInputMode="adjustPan">
-
-        </activity>
-        <activity android:name=".Activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Activities.SignInActivity">
+
         </activity>
     </application>
 

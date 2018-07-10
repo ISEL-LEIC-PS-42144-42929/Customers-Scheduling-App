@@ -1,8 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,8 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -40,6 +44,9 @@ public class RegisterEmployeeFragment extends BaseFragment
     private EditText employeeContact;
     private EditText employeeGender;
     private Button registerEmployee;
+    private Bundle bundle;
+
+    private StoreResourceItem storeResource;
 
     public RegisterEmployeeFragment() {
         // Required empty public constructor
@@ -57,8 +64,11 @@ public class RegisterEmployeeFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
+        bundle = getArguments();
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
         jsonBodyObj = new JSONObject();
 
         toolbar             = view.findViewById(R.id.app_bar);
@@ -94,6 +104,7 @@ public class RegisterEmployeeFragment extends BaseFragment
     private void addListenertoButton()
     {
         registerEmployee.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
@@ -111,10 +122,15 @@ public class RegisterEmployeeFragment extends BaseFragment
                         jsonBodyObj.put("name", employeeName.getText().toString());
                         jsonBodyObj.put("email", clientEmail);
                         jsonBodyObj.put("contact", employeeContact.getText().toString());
+                        jsonBodyObj.put("nif", storeResource.getStore().getNif());
                         jsonBodyObj.put("gender", employeeGender.getText().toString());
 
-                     //  customersSchedulingApp.registerEmployee(jsonBodyObj);
-                        changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "email", clientEmail));
+                       customersSchedulingApp.registerEmployee(elem->
+                                       changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
+                               jsonBodyObj,
+                               storeResource,
+                               StaffResourceItem.class);
+
                     }
                 }
                 catch (JSONException e) {

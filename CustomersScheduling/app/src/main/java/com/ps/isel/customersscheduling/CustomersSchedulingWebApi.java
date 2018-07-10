@@ -13,6 +13,7 @@ import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HttpUtils.PostRequest;
 import com.ps.isel.customersscheduling.HttpUtils.GetRequest;
@@ -81,10 +82,10 @@ public class CustomersSchedulingWebApi<T>
         getRequest(cons, String.format(DB_HOST + DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
     }
 
-    public void getOwner(Consumer<T> cons) {
+    public void getOwner(Consumer<T> cons)
+    {
         getRequest(cons, String.format(DB_HOST + DB_USER_GET_OWNER, IdTokenAndEmailContainer.getInstance().getEmail()), OwnerResourceItem.class);
     }
-
 
     public void registerStore(Consumer<T> cons, JSONObject storeJSONObject)
     {
@@ -93,17 +94,27 @@ public class CustomersSchedulingWebApi<T>
 
     public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
     {
-        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, StoreResourceItem.class);
+        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, storeResourceItemClass);
     }
 
-    public void registerStoreScheduleEnd(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource) {
-        postRequest(storeResource.get_links().getTimetable().getHref(),storeScheduleJSONObject,cons,StoreResourceItem.class);
-    }
+  // public void registerStoreScheduleEnd(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
+  // {
+  //     postRequest(storeResource.get_links().getTimetable().getHref(),storeScheduleJSONObject,cons,storeResourceItemClass);
+  // }
 
     public void registerService(Consumer<T> cons, JSONObject serviceJSONObject, StoreResourceItem storeResource, Class<ServiceResourceItem> serviceResourceItemClass)
     {
         postRequest(storeResource.get_links().getServices().getHref(), serviceJSONObject,cons,serviceResourceItemClass);
+    }
 
+    public void registerEmployee(Consumer<T> cons, JSONObject employeeJSONObject, StoreResourceItem storeResource, Class<StaffResourceItem> staffResourceItemClass)
+    {
+       postRequest(storeResource.get_links().getInsert_staff().getHref(), employeeJSONObject,cons,staffResourceItemClass);
+    }
+
+    public void registerEmployeeSchedule(Consumer<T> cons, JSONObject staffJSONObject, StaffResourceItem staffResource, Class<StaffResourceItem> staffResourceItemClass)
+    {
+        postRequest(staffResource.get_links().getInsert_timetable().getHref(), staffJSONObject, cons, staffResourceItemClass);
     }
 
 
@@ -140,15 +151,9 @@ public class CustomersSchedulingWebApi<T>
 
 
 
-    public void registerEmployee(JSONObject employeeJSONObject)
-    {
-        //postRequest(DB_HOST, employeeJSONObject);
-    }
 
-    public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject, String email)
-    {
-        //postRequest(DB_HOST + DB_USER_REG_STAFF_SCHEDULE + email, employeeScheduleJSONObject);
-    }
+
+
 
     public void sendIdToken(String idToken){
         String url = "http://192.168.1.196:8181/tokensignin";

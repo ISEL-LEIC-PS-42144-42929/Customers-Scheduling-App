@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.HALDto;
 
-public class OwnerDto {
+import java.io.Serializable;
+
+public class OwnerDto implements Serializable {
 
     private String nif;
     private PersonDto client;

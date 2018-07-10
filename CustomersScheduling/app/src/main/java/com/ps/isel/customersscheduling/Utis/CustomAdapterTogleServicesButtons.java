@@ -10,14 +10,13 @@ import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.R;
 
+public class CustomAdapterTogleServicesButtons extends BaseAdapter{
 
-public class CustomAdapterTogleButtons extends BaseAdapter {
-
+    private ServiceDto[] currentServices;
     private Context context;
-    private PersonDto[] currentClients;
 
     private View row;
     private TextView name;
@@ -26,16 +25,16 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
 
     private CustomersSchedulingApp customersSchedulingApp;
 
-    public CustomAdapterTogleButtons(Context context, PersonDto[] users, CustomersSchedulingApp customersSchedulingApp)
-    {
+    public CustomAdapterTogleServicesButtons(Context context, ServiceDto[] obj, CustomersSchedulingApp customersSchedulingApp) {
         this.context = context;
-        this.currentClients = users;
+        this.currentServices = obj;
         this.customersSchedulingApp = customersSchedulingApp;
+
     }
 
     @Override
     public int getCount() {
-        return currentClients.length;
+        return currentServices.length;
     }
 
     @Override
@@ -48,14 +47,13 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
         return 0;
     }
 
-
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofcurrentclients, parent, false);
 
         name = (TextView) row.findViewById(R.id.userName);
-        name.setText(currentClients[position].getName());
+        name.setText(currentServices[position].getTitle());
 
         blocked = (TextView) row.findViewById(R.id.blocked);
 
@@ -75,7 +73,7 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
                 if(!sw.isChecked())
                 {
                     //customersSchedulingApp.blockUser
-                    text.setText("Blocked");
+                    text.setText("Employee removed from service");
                 }else{
                     //customersSchedulingApp.UnblockUser
                     text.setText("");
@@ -84,5 +82,4 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
         });
 
     }
-
 }

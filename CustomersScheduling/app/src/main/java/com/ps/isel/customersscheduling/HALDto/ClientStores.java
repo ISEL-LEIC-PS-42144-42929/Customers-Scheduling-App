@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.HALDto;
 
 import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 
-public class ClientStores {
+import java.io.Serializable;
+
+public class ClientStores implements Serializable {
     private Link[] links;
     private StoreLinks[] content;
 

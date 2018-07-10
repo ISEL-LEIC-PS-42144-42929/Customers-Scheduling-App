@@ -17,19 +17,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ServiceFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -94,14 +90,9 @@ public class BusinessScheduleFragment extends BaseFragment {
 
         bundle = getArguments();
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
-
         context = getActivity().getApplicationContext();
 
-        count = 0;
-        countNumberClicks = 0;
-
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
@@ -109,32 +100,29 @@ public class BusinessScheduleFragment extends BaseFragment {
             fillHashMap();
         }
 
-
-        toolbar             = view.findViewById(R.id.app_bar);
-        startHour           = view.findViewById(R.id.begginHour);
-        startLunchHour      = view.findViewById(R.id.begginLunch);
-        endLunchHour        = view.findViewById(R.id.endLunch);
-        endHour             = view.findViewById(R.id.endHour);
-        monday              = view.findViewById(R.id.monday);
-        tuesday             = view.findViewById(R.id.tuesday);
-        wednesday           = view.findViewById(R.id.wednesday);
-        thursday            = view.findViewById(R.id.thursday);
-        friday              = view.findViewById(R.id.friday);
-        saturday            = view.findViewById(R.id.saturday);
-        sunday              = view.findViewById(R.id.sunday);
-
+        toolbar                    = view.findViewById(R.id.app_bar);
+        startHour                  = view.findViewById(R.id.begginHour);
+        startLunchHour             = view.findViewById(R.id.begginLunch);
+        endLunchHour               = view.findViewById(R.id.endLunch);
+        endHour                    = view.findViewById(R.id.endHour);
+        monday                     = view.findViewById(R.id.monday);
+        tuesday                    = view.findViewById(R.id.tuesday);
+        wednesday                  = view.findViewById(R.id.wednesday);
+        thursday                   = view.findViewById(R.id.thursday);
+        friday                     = view.findViewById(R.id.friday);
+        saturday                   = view.findViewById(R.id.saturday);
+        sunday                     = view.findViewById(R.id.sunday);
         registerScheduleBtn        = view.findViewById(R.id.registerSchedule);
         endScheduleRegistrationBtn = view.findViewById(R.id.endregisterSchedule);
-
-        registerServiceFragment = new RegisterServiceFragment();
-        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager            = getActivity().getSupportFragmentManager();
+        registerServiceFragment    = new RegisterServiceFragment();
 
         toolbarCode();
-        addListenersTOCheckBoxes();
+        addListenersToCheckBoxes();
         addListenertoButton();
     }
 
-    private void addListenersTOCheckBoxes() {
+    private void addListenersToCheckBoxes() {
 
         CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -238,15 +226,17 @@ public class BusinessScheduleFragment extends BaseFragment {
                 aux.put("init_break",-1);
                 aux.put("finish_break",-1);
                 aux.put("close_hour",-1);
-                aux.put("week_day", mapForDataBase.get(item.getKey()));
+                aux.put("week_day", item.getKey());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            customersSchedulingApp.registerStoreScheduleEnd(elem->
-                    changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "storeResource",elem)),(JSONObject)item.getValue(), storeResource);
-
+            customersSchedulingApp.registerStoreSchedule(elem->
+                    changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "storeResource",elem)),
+                    (JSONObject)item.getValue(),
+                    storeResource,
+                    StoreResourceItem.class);
             it.remove();
         }
     }

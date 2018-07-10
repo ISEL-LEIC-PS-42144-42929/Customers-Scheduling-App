@@ -119,7 +119,7 @@ public class RegisterServiceFragment extends BaseFragment
                         jsonBodyObj.put("description", desc);
                     }
                     customersSchedulingApp.registerService(elem->
-                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new AddOtherServiceOrRegisterEmployee(),"storeResource",elem.getStore()))
+                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new AddOtherServiceOrRegisterEmployee(),"storeResource", elem.getStore()))
                             ,jsonBodyObj
                             ,storeResource
                             ,ServiceResourceItem.class);

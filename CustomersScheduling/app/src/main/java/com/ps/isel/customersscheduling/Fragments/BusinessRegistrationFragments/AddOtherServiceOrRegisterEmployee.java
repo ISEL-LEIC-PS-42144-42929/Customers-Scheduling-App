@@ -69,7 +69,6 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
             @Override
             public void onClick(View v)
             {
-                //TODO send to server
                 changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerAnotherServiceFragment,"storeResource", storeResource));
             }
         });
@@ -78,7 +77,7 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
             @Override
             public void onClick(View v)
             {
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeFragment);
+                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeFragment,"storeResource", storeResource));
             }
         });
     }

@@ -13,6 +13,7 @@ import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 
 import org.json.JSONObject;
@@ -123,19 +124,36 @@ public class CustomersSchedulingApp extends Application implements Serializable
        api.registerStore(cons, storeJSONObject);
    }
 
-    public void registerStoreScheduleEnd(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
-    {
-        api.registerStoreScheduleEnd(cons, storeScheduleJSONObject, storeResource);
-    }
+   // public void registerStoreScheduleEnd(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
+   // {
+   //     api.registerStoreScheduleEnd(cons, storeScheduleJSONObject, storeResource, storeResourceItemClass);
+   // }
 
     public void registerStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
     {
         api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource, storeResourceItemClass);
     }
 
+    public void registerEmployeeSchedule(Consumer<StaffResourceItem> cons, JSONObject staffJSONObject, StaffResourceItem staffResourceItem, Class<StaffResourceItem> staffResourceItemClass)
+    {
+        api.registerEmployeeSchedule(cons, staffJSONObject, staffResourceItem, staffResourceItemClass);
+    }
+
+
     public void registerService(Consumer<ServiceResourceItem> cons, JSONObject serviceJSONObject, StoreResourceItem storeResource, Class<ServiceResourceItem> serviceResourceItemClass)
     {
-        api.registerService(cons,serviceJSONObject,storeResource, serviceResourceItemClass);
+        api.registerService(cons, serviceJSONObject, storeResource, serviceResourceItemClass);
+    }
+
+    public void registerEmployee(Consumer<StaffResourceItem> cons, JSONObject staffJSONObject, StoreResourceItem storeResource, Class<StaffResourceItem> staffResourceItemClass)
+    {
+        api.registerEmployee(cons, staffJSONObject, storeResource, staffResourceItemClass);
+    }
+
+
+
+    public void registerOwner(JSONObject json) {
+        api.registerOwner(json);
     }
 
  //  public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
@@ -145,15 +163,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
 
 
- //  public void registerEmployee(JSONObject employeeJSONObject)
- //  {
- //      api.registerEmployee(employeeJSONObject);
- //  }
 
- //  public void registerEmployeeSchedule(JSONObject employeeScheduleJSONObject, String email)
- //  {
- //      api.registerEmployeeSchedule(employeeScheduleJSONObject, email);
- //  }
+
+
 
     public void registerClient(JSONObject clientJSONObject)
     {
@@ -167,9 +179,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.sendIdToken(idToken);
     }
 
-    public void registerOwner(JSONObject json) {
-        api.registerOwner(json);
-    }
+
 
     public void getOwner(Consumer<OwnerResourceItem> cons) {
         api.getOwner(cons);

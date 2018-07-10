@@ -1,12 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
@@ -23,15 +20,15 @@ import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
-import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HALDto.links.PersonLink;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
 
 public class SelectEmployeeToEditFragment extends BaseFragment {
@@ -42,13 +39,14 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
 
     private SelfLink _links;
 
-    private PersonDto person = new PersonDto("email@gmil.com","joao",1,"91192393");
-    private PersonLink _linkPerson;
+    private StaffDto person = new StaffDto("email@gmil.com","joao",1,"91192393");
+    private StaffLinks _linkStaff;
 
 
-    private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkPerson), new StaffResourceItem(person,_linkPerson)};
-    private PersonEmbedded _embedded = new PersonEmbedded(staffResourceItems);
-    private PersonOfStoreDTO personOfStoreDTO = new PersonOfStoreDTO(_embedded, _links);
+    private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkStaff)};
+   // private PersonEmbedded _embedded = new PersonEmbedded(staffResourceItems);
+
+   // private PersonOfStoreDTO personOfStoreDTO = new PersonOfStoreDTO(_embedded, _links);
 
     //--------
 
@@ -111,7 +109,7 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         lv = (ListView) view.findViewById(R.id.employeesList);
 
         //customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
-        listViewCode(personOfStoreDTO);
+        listViewCode(staffResourceItems);
         toolbarCode();
 
     }
@@ -133,12 +131,11 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
 
     private void listViewCode(Object employees) {
 
-          PersonOfStoreDTO emp = (PersonOfStoreDTO) employees;
-          StaffResourceItem[] personDtos = emp.get_embedded().getServiceResourceList();
-          String[] employeeNames = new String[personDtos.length];
+          StaffResourceItem[] emp = (StaffResourceItem[]) employees;
+          String[] employeeNames = new String[emp.length];
 
-        for (int i = 0; i < personDtos.length ; i++) {
-            employeeNames[i] = personDtos[i].getPerson().getName();
+        for (int i = 0; i < employeeNames.length ; i++) {
+            employeeNames[i] = emp[i].getPerson().getName();
         }
 
           lv.setAdapter(new CustomAdapterSameFragment(employeeNames,

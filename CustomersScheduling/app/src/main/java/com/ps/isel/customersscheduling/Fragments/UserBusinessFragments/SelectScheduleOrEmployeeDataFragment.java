@@ -29,10 +29,11 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
     private String[] edits = new String[]
             {
                     "Edit Employee Data",
-                    "Edit Employee Schedule"
+                    "Edit Employee Schedule",
+                    "Edit Employee Services"
             };
 
-    private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment()};
+    private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment(), new EditEmployeesServicesFragment()};
 
     private FragmentManager fragmentManager;
     private CustomersSchedulingApp customersSchedulingApp;
