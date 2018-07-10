@@ -6,9 +6,13 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
+import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 
 import org.json.JSONObject;
@@ -114,25 +118,32 @@ public class CustomersSchedulingApp extends Application implements Serializable
     //POST REQUESTS
 
    @RequiresApi(api = Build.VERSION_CODES.N)
-   public void registerStore(JSONObject storeJSONObject)
+   public<T> void registerStore(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject)
    {
-       api.registerStore(storeJSONObject);
+       api.registerStore(cons, storeJSONObject);
    }
 
- //  public void registerService(JSONObject storeJSONObject, String nif)
- //  {
- //      api.registerService(storeJSONObject, nif);
- //  }
+    public void registerStoreScheduleEnd(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
+    {
+        api.registerStoreScheduleEnd(cons, storeScheduleJSONObject, storeResource);
+    }
+
+    public void registerStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
+    {
+        api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource, storeResourceItemClass);
+    }
+
+    public void registerService(Consumer<ServiceResourceItem> cons, JSONObject serviceJSONObject, StoreResourceItem storeResource, Class<ServiceResourceItem> serviceResourceItemClass)
+    {
+        api.registerService(cons,serviceJSONObject,storeResource, serviceResourceItemClass);
+    }
 
  //  public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
  //  {
  //      api.registerUserService(storeJSONObject, service);
  //  }
 
-   public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
-   {
-  //     api.registerStoreSchedule(storeScheduleJSONObject);
-   }
+
 
  //  public void registerEmployee(JSONObject employeeJSONObject)
  //  {
@@ -151,8 +162,16 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void sendIdToken(String idToken, Consumer cons)
+    public void sendIdToken(String idToken)
     {
-        api.sendIdToken(idToken, cons);
+        api.sendIdToken(idToken);
+    }
+
+    public void registerOwner(JSONObject json) {
+        api.registerOwner(json);
+    }
+
+    public void getOwner(Consumer<OwnerResourceItem> cons) {
+        api.getOwner(cons);
     }
 }

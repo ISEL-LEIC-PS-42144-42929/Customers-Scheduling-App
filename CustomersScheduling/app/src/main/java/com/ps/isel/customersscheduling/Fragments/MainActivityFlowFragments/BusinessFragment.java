@@ -58,9 +58,9 @@ public class BusinessFragment extends BaseFragment
     private SelfLink _links;
 
 
-    private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
-    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
-    private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
+   // private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
+   // private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
+   // private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
 
 
 

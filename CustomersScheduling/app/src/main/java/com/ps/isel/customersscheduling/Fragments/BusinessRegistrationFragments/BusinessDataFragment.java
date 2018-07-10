@@ -2,6 +2,7 @@ package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -53,13 +55,12 @@ public class BusinessDataFragment extends BaseFragment {
     private final int CAMERA_REQUEST = 10;
 
     private FragmentManager fragmentManager;
+    private android.app.FragmentManager managerDialog;
     private Fragment storeScheduleFragment;
 
     private AlertDialog.Builder builder;
-    private TextView insertNIF;
-    private EditText nif;
-    private Button ok;
-    private Button cancel;
+
+    private DialogFragment dialog;
     private Toolbar toolbar;
     private EditText storeName;
     private EditText storeNif;
@@ -85,21 +86,20 @@ public class BusinessDataFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity().getApplicationContext();
-
         categories = getResources().getStringArray(R.array.categories_array);
+        managerDialog = getActivity().getFragmentManager();
 
-        builder = new AlertDialog.Builder(context);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_nif, null);
+        dialog = new Dialog_Frgment();
+        jsonBodyObj = new JSONObject();
+        storeScheduleFragment = new BusinessScheduleFragment();
+        fragmentManager = getActivity().getSupportFragmentManager();
 
-        insertNIF                = view.findViewById(R.id.nifDialog);
-        nif                      = view.findViewById(R.id.nif);
-        ok                       = view.findViewById(R.id.ok);
-        cancel                   = view.findViewById(R.id.cancel);
         toolbar                  = view.findViewById(R.id.app_bar);
         storeName                = view.findViewById(R.id.storeName);
         storeNif                 = view.findViewById(R.id.storeNif);
@@ -114,12 +114,12 @@ public class BusinessDataFragment extends BaseFragment {
         img                      = view.findViewById(R.id.imageView);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
-        jsonBodyObj = new JSONObject();
-
-        storeScheduleFragment = new BusinessScheduleFragment();
-        fragmentManager = getActivity().getSupportFragmentManager();
+        customersSchedulingApp.getOwner(elem->{
+            if(elem == null){
+                dialog.show(managerDialog,"dialog");
+            }
+        });
 
         dropDownButtonCode();
         toolbarCode();
@@ -167,8 +167,6 @@ public class BusinessDataFragment extends BaseFragment {
     private void addListenertoButton()
     {
 
-
-
         registerBusiness.setOnClickListener(new View.OnClickListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -192,16 +190,18 @@ public class BusinessDataFragment extends BaseFragment {
                         jsonBodyObj.put("name", storeNam);
                         jsonBodyObj.put("ownerNif", "123456");
                         jsonBodyObj.put("nif", storeNIF);
-                        jsonBodyObj.put("contact", storeContact);
+                        jsonBodyObj.put("contact", storeCont);
                         jsonBodyObj.put("category", choseCategoryText);
                         jsonBodyObj.put("street", deserializeString(streetAndLot.getText().toString())[0]);
-                        jsonBodyObj.put("zipcode", zipCode);
+                        jsonBodyObj.put("zip_code", zipCode);
                         jsonBodyObj.put("lot", deserializeString(streetAndLot.getText().toString())[1]);
                         jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
                         jsonBodyObj.put("country",deserializeString(cityAndCountry.getText().toString())[1]);
 
-                        //customersSchedulingApp.registerStore(jsonBodyObj);
-                        changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeNIF", storeNIF));
+                        customersSchedulingApp.registerStore(elem ->
+                                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeResource", elem))
+                                , jsonBodyObj);
+
                     }
 
                 }

@@ -1,8 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import android.widget.EditText;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -38,7 +42,7 @@ public class RegisterServiceFragment extends BaseFragment
     private Toolbar toolbar;
     private Bundle bundle;
 
-    private String nif;
+    private StoreResourceItem storeResource;
 
     public RegisterServiceFragment() {
         // Required empty public constructor
@@ -57,7 +61,7 @@ public class RegisterServiceFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         bundle = getArguments();
-        nif = (String) bundle.getSerializable("nif");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
 
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -96,6 +100,7 @@ public class RegisterServiceFragment extends BaseFragment
     private void addListenertoButton()
     {
         registerService.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
@@ -106,15 +111,20 @@ public class RegisterServiceFragment extends BaseFragment
                     String duration = durations.getText().toString();
                     String desc = descriptions.getText().toString();
 
-                    if(name.equals("") || price.equals("")|| duration.equals("")|| desc.equals(""))
+                    if(!name.equals("") || !price.equals("")|| !duration.equals("")|| !desc.equals(""))
                     {
-                        jsonBodyObj.put("name", name);
+                        jsonBodyObj.put("title", name);
                         jsonBodyObj.put("price", price);
                         jsonBodyObj.put("duration", duration);
-                        jsonBodyObj.put("desc", desc);
+                        jsonBodyObj.put("description", desc);
                     }
-                //    customersSchedulingApp.registerService(jsonBodyObj, nif);
-                    changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new AddOtherServiceOrRegisterEmployee(),"nif",nif));
+                    customersSchedulingApp.registerService(elem->
+                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new AddOtherServiceOrRegisterEmployee(),"storeResource",elem.getStore()))
+                            ,jsonBodyObj
+                            ,storeResource
+                            ,ServiceResourceItem.class);
+
+
 
                 }
                 catch (JSONException e)

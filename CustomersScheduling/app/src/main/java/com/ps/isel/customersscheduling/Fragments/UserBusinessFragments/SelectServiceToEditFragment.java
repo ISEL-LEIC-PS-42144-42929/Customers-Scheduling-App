@@ -50,9 +50,9 @@ public class SelectServiceToEditFragment extends BaseFragment {
     private SelfLink _links;
 
 
-    private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
-    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
-    private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
+  //  private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
+  //  private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
+  //  private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
 
 
 
@@ -116,7 +116,7 @@ public class SelectServiceToEditFragment extends BaseFragment {
         lv = (ListView) view.findViewById(R.id.listServices);
 
         //customersSchedulingApp.getStoreServices(this::listViewCode,storeResource);
-        listViewCode(servicesOfBusinessDTO);
+       // listViewCode(servicesOfBusinessDTO);
         toolbarCode();
 
     }

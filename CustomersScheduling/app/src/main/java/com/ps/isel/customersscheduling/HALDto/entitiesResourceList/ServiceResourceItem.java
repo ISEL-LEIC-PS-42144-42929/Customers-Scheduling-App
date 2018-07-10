@@ -8,20 +8,20 @@ import java.io.Serializable;
 
 public class ServiceResourceItem implements Serializable {
 
-    private StoreDto store;
+    private StoreResourceItem store;
     private ServiceDto service;
     private ServiceLink _links;
 
     public ServiceResourceItem() {
     }
 
-    public ServiceResourceItem(StoreDto store, ServiceDto service, ServiceLink _links) {
+    public ServiceResourceItem(StoreResourceItem store, ServiceDto service, ServiceLink _links) {
         this.store = store;
         this.service = service;
         this._links = _links;
     }
 
-    public void setStore(StoreDto store) {
+    public void setStore(StoreResourceItem store) {
         this.store = store;
     }
 
@@ -33,7 +33,7 @@ public class ServiceResourceItem implements Serializable {
         this._links = _links;
     }
 
-    public StoreDto getStore() {
+    public StoreResourceItem getStore() {
         return store;
     }
 

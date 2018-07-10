@@ -148,10 +148,10 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         jsonBodyObj = new JSONObject();
 
-            customersSchedulingApp
-                    .getUserRegisteredBusiness(
-                            elem-> listViewCode(elem));
-
+          //  customersSchedulingApp
+          //          .getUserRegisteredBusiness(
+          //                  elem-> listViewCode(elem));
+//
        // listViewCode(storesOfUserDTO);// Remove after App done!!
 
         fragmentManager = getActivity().getSupportFragmentManager();

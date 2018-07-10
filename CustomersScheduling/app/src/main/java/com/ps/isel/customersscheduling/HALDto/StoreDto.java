@@ -10,17 +10,17 @@ public class StoreDto implements Serializable {
     private String nif;
     private float scoreReview;
     private String contact;
-    private Link[] links;
+    private Link[] _links;
 
     public StoreDto(){}
 
-    public StoreDto(AddressDto address, CategoryDto category, String storeName, String nif, String contact, Link[] links, float score) {
+    public StoreDto(AddressDto address, CategoryDto category, String storeName, String nif, String contact, Link[] _links, float score) {
         this.address = address;
         this.category = category;
         this.storeName = storeName;
         this.nif = nif;
         this.contact = contact;
-        this.links = links;
+        this._links = _links;
         this.scoreReview = score;
     }
 
@@ -29,11 +29,11 @@ public class StoreDto implements Serializable {
     }
 
     public Link[] getLinks() {
-        return links;
+        return _links;
     }
 
     public void setLinks(Link[] links) {
-        this.links = links;
+        this._links = links;
     }
 
     public String getContact() {

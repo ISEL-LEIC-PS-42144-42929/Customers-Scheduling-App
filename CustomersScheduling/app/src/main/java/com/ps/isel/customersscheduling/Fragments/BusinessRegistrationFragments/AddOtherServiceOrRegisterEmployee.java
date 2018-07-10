@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
@@ -27,7 +29,7 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
     private Button addEmployee;
     private Bundle bundle;
 
-    private String nif;
+    private StoreResourceItem storeResource;
 
     public AddOtherServiceOrRegisterEmployee() {
         // Required empty public constructor
@@ -38,7 +40,7 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         bundle = getArguments();
-        nif = (String) bundle.getSerializable("nif");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
 
         context = getActivity().getApplicationContext();
 
@@ -68,7 +70,7 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
             public void onClick(View v)
             {
                 //TODO send to server
-                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerAnotherServiceFragment,"nif", nif));
+                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerAnotherServiceFragment,"storeResource", storeResource));
             }
         });
 

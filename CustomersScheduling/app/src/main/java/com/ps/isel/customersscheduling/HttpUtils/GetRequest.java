@@ -7,6 +7,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.JsonRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import java.util.function.Function;
 
 
@@ -51,19 +53,19 @@ public class GetRequest<T> extends JsonRequest<T>
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    protected Response parseNetworkResponse(NetworkResponse response)
-    {
-        try
-        {
-            String str = new String(response.data, StandardCharsets.UTF_8);
-            T dto = this.mapper.readValue(str, dtoType);
-            return Response.success(dto, null);
-        }
-        catch (IOException e)
-        {
+    protected Response parseNetworkResponse(NetworkResponse response) {
+        try {
+
+                String str = new String(response.data, StandardCharsets.UTF_8);
+                T dto = this.mapper.readValue(str, dtoType);
+                return Response.success(dto, null);
+
+        } catch (IOException e) {
             e.printStackTrace();
             return Response.error(new VolleyError());
         }
 
     }
+
+
 }

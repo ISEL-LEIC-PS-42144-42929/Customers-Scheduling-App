@@ -3,13 +3,16 @@ package com.ps.isel.customersscheduling;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HttpUtils.PostRequest;
 import com.ps.isel.customersscheduling.HttpUtils.GetRequest;
@@ -31,9 +34,11 @@ public class CustomersSchedulingWebApi<T>
 
 
 
-    private final String DB_HOST = "http://192.168.1.206:8181/";
+    private final String DB_HOST = "http://192.168.1.207:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_REG_STORE = "store/%s/";
+    private final String DB_USER_REG_OWNER = "person/owner/";
+    private final String DB_USER_GET_OWNER = "person/owner/%s/";
     private final String DB_USER_STORE = "store/owner/%s/";
     private final String DB_SERVICE = "service";
     private final String DB_USER_REG_STORE_SCHEDULE = "timetable/store/";
@@ -68,21 +73,44 @@ public class CustomersSchedulingWebApi<T>
     public void getStoreEmployees(Consumer<T[]> cons,StoreResourceItem storeResource)
     {
             //TODO depois do Bito adicionar este link mudar para o link correcto
-        //getRequest(cons, service.getLinks()[TYPE_REQUESTS[0]].getHref(),StoreDto.class);
+        //getRequest(cons, service.get_links()[TYPE_REQUESTS[0]].getHref(),StoreDto.class);
     }
 
     public void getUserStores(Consumer<T> cons)
     {
-        getRequest(cons, String.format(DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()) ,StoresOfUserDTO.class);
+        getRequest(cons, String.format(DB_HOST + DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+    }
+
+    public void getOwner(Consumer<T> cons) {
+        getRequest(cons, String.format(DB_HOST + DB_USER_GET_OWNER, IdTokenAndEmailContainer.getInstance().getEmail()), OwnerResourceItem.class);
     }
 
 
+    public void registerStore(Consumer<T> cons, JSONObject storeJSONObject)
+    {
+        postRequest(String.format(DB_HOST+ DB_USER_STORE, IdTokenAndEmailContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
+    }
+
+    public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
+    {
+        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, StoreResourceItem.class);
+    }
+
+    public void registerStoreScheduleEnd(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource) {
+        postRequest(storeResource.get_links().getTimetable().getHref(),storeScheduleJSONObject,cons,StoreResourceItem.class);
+    }
+
+    public void registerService(Consumer<T> cons, JSONObject serviceJSONObject, StoreResourceItem storeResource, Class<ServiceResourceItem> serviceResourceItemClass)
+    {
+        postRequest(storeResource.get_links().getServices().getHref(), serviceJSONObject,cons,serviceResourceItemClass);
+
+    }
 
 
 
     public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)
     {
-       // getRequest(cons, service.getLinks()[0].getHref(), PersonOfStoreDTO.class);
+       // getRequest(cons, service.get_links()[0].getHref(), PersonOfStoreDTO.class);
     }
 
 
@@ -103,29 +131,14 @@ public class CustomersSchedulingWebApi<T>
 
     //POST REQUESTS
 
-    public void registerService(JSONObject storeJSONObject, String nif)
-    {
-       // postRequest(String.format(DB_HOST + DB_USER_REG_STORE + DB_SERVICE, nif), storeJSONObject);
 
-    }
 
     public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
     {
-       // postRequest(service.getLinks()[0].getHref(), storeJSONObject);
+       // postRequest(service.get_links()[0].getHref(), storeJSONObject);
     }
 
 
-
-
-    public void registerStore(JSONObject storeJSONObject)
-    {
-         postRequest(String.format(DB_HOST+ DB_USER_STORE, IdTokenAndEmailContainer.getInstance().getEmail()), storeJSONObject, null);
-    }
-
-    public void registerStoreSchedule(JSONObject storeScheduleJSONObject)
-    {
-        postRequest(String.format(DB_HOST + DB_USER_REG_STORE_SCHEDULE), storeScheduleJSONObject, null);
-    }
 
     public void registerEmployee(JSONObject employeeJSONObject)
     {
@@ -137,9 +150,9 @@ public class CustomersSchedulingWebApi<T>
         //postRequest(DB_HOST + DB_USER_REG_STAFF_SCHEDULE + email, employeeScheduleJSONObject);
     }
 
-    public void sendIdToken(String idToken, Consumer<T> cons){
+    public void sendIdToken(String idToken){
         String url = "http://192.168.1.196:8181/tokensignin";
-        postRequest(url, new JSONObject() , cons);
+        postRequestWithNoResponse(url, new JSONObject());
 
     }
 
@@ -149,15 +162,32 @@ public class CustomersSchedulingWebApi<T>
         //   postRequest(url, clientJSONObject);
     }
 
+    public void registerOwner(JSONObject json) {
+        postRequestWithNoResponse(DB_HOST + DB_USER_REG_OWNER, json);
+    }
 
-    public void postRequest(String url, JSONObject object, Consumer<T> cons)
+
+    public void postRequest(String url, JSONObject object, Consumer<T> cons, Class c)
     {
         PostRequest<T> request = new PostRequest<>(
                 Request.Method.POST,
                 url,
                 object.toString(),
                 cons,
+                c,
                 element-> cons.accept(element),
+                error -> error.printStackTrace()
+        );
+        requestQueue.add(request);
+    }
+
+    public void postRequestWithNoResponse(String url, JSONObject object)
+    {
+        PostRequest<T> request = new PostRequest<>(
+                Request.Method.POST,
+                url,
+                object.toString(),
+                response -> {},
                 error -> error.printStackTrace()
         );
         requestQueue.add(request);
@@ -172,10 +202,21 @@ public class CustomersSchedulingWebApi<T>
                cons,
                c,
                element->cons.accept(element),
-               error -> error.printStackTrace()
+               error -> parseVolleyError(error, cons)
        );
        requestQueue.add(request);
    }
+
+    public void parseVolleyError(VolleyError error, Consumer cons) {
+        NetworkResponse response = error.networkResponse;
+        if(response != null && response.data != null){
+            switch(response.statusCode){
+                case 404:
+                    cons.accept(null);
+                    break;
+            }
+    }
+    }
 
 
 

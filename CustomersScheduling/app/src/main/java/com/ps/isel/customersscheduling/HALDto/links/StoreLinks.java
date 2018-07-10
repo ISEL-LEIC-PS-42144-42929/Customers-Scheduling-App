@@ -11,6 +11,7 @@ public class StoreLinks {
     private Link get;
     private Link insert;
     private Link services;
+    private Link timetable;
     private Link portfolio;
     private Link update_addr;
     private Link update_info;
@@ -19,13 +20,22 @@ public class StoreLinks {
 
     }
 
-    public StoreLinks(Link get, Link insert, Link services, Link portfolio, Link update_addr, Link update_info) {
+    public StoreLinks(Link get, Link insert, Link services, Link portfolio, Link update_addr, Link update_info, Link timetable) {
         this.get = get;
         this.insert = insert;
         this.services = services;
         this.portfolio = portfolio;
         this.update_addr = update_addr;
         this.update_info = update_info;
+        this.timetable = timetable;
+    }
+
+    public Link getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(Link timetable) {
+        this.timetable = timetable;
     }
 
     public Link getGet() {
