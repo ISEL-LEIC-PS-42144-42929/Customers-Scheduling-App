@@ -227,6 +227,7 @@ public class BusinessFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void listViewCode(Object services)
     {
+
        ServiceResourceItem[] serviceResourceItems = ((ServicesOfBusinessDTO)services).get_embedded().getserviceResourceList();
 
         lv.setAdapter(new CustomAdapterServices(getActivity(), serviceResourceItems));

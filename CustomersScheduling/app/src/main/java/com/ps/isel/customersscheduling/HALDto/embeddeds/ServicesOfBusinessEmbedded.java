@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.HALDto.embeddeds;
 
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 
-public class ServicesOfBusinessEmbedded {
+import java.io.Serializable;
+
+public class ServicesOfBusinessEmbedded implements Serializable {
 
     private ServiceResourceItem[] serviceResourceList;
 

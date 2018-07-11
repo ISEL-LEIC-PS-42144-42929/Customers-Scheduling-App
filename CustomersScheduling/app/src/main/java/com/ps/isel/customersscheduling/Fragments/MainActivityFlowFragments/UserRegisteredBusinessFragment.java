@@ -142,15 +142,14 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         toolBarCode();
 
-
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         jsonBodyObj = new JSONObject();
 
-          //  customersSchedulingApp
-          //          .getUserRegisteredBusiness(
-          //                  elem-> listViewCode(elem));
+            customersSchedulingApp
+                    .getUserRegisteredBusiness(
+                            elem-> listViewCode(elem));
 //
        // listViewCode(storesOfUserDTO);// Remove after App done!!
 
@@ -216,20 +215,17 @@ public class UserRegisteredBusinessFragment extends BaseFragment
       }
 
 
-
-
-
-
     protected void searchBarCode() {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextSubmit(String s)
             {
-
-                //TODO fazer fragmento de filter e mudar
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "business", storesOfUserDTO));
+                addMultBundleToFragment("byFavourite", false);
+                customersSchedulingApp.getStoreByName(elem->
+                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "storeDto", elem)), s);
                 return false;
             }
 
@@ -261,11 +257,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     private void listViewCode(Object stores)             //TODO change parameter to connect to server Object storesDTO
     {
         StoresOfUserDTO storeDTO =  ((StoresOfUserDTO)stores);
-        if(storeDTO.get_embedded() == null)
-        {
-
-        }else{
-
         lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -277,13 +268,11 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                 changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
             }
         });
-        }
     }
 
 
     private void logout()
     {
-
         mAuth.signOut();
     }
 

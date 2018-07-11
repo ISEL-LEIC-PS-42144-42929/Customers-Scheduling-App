@@ -3,8 +3,10 @@ package com.ps.isel.customersscheduling.HALDto.links;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ps.isel.customersscheduling.HALDto.Link;
 
+import java.io.Serializable;
 
-public class SelfLink {
+
+public class SelfLink implements Serializable {
 
     private Link self;
 

@@ -29,21 +29,20 @@ import java.util.function.Consumer;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomersSchedulingWebApi<T>
 {
-    //private final String BASE_URL = "http://10.10.7.177:8181/person/client";
 
     private final int[] TYPE_REQUESTS= {0,1,2,3};
-
-
-
     private final String DB_HOST = "http://192.168.1.207:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_REG_STORE = "store/%s/";
+    private final String DB_STORE = "store/";
     private final String DB_USER_REG_OWNER = "person/owner/";
     private final String DB_USER_GET_OWNER = "person/owner/%s/";
     private final String DB_USER_STORE = "store/owner/%s/";
     private final String DB_SERVICE = "service";
     private final String DB_USER_REG_STORE_SCHEDULE = "timetable/store/";
     private final String DB_USER_REG_STAFF_SCHEDULE = "timetable/staff/";
+    private final String DB_QUERY_NAME = "?name=%s";
+    private final String DB_QUERY_LOCAL_AND_CATEGORY = "?category=%s&location=%s";
 
 
     private RequestQueue requestQueue;
@@ -62,8 +61,12 @@ public class CustomersSchedulingWebApi<T>
 
     public void getStoresByNif(Consumer<T> cons, StoreResourceItem store)
     {
-        String path = store.get_links().getGet().getHref();
         getRequest(cons, store.get_links().getGet().getHref(), StoreResourceItem.class);
+    }
+
+    public void getStoresByName(Consumer<T> cons, String name)
+    {
+        getRequest(cons,String.format(DB_HOST + DB_STORE + DB_QUERY_NAME, name), StoresOfUserDTO.class);
     }
 
     public void getStoreServices(Consumer<T> cons, StoreResourceItem storeResource)
@@ -75,6 +78,10 @@ public class CustomersSchedulingWebApi<T>
     {
             //TODO depois do Bito adicionar este link mudar para o link correcto
         //getRequest(cons, service.get_links()[TYPE_REQUESTS[0]].getHref(),StoreDto.class);
+    }
+
+    public void getStoreByCatAndLocation(Consumer<T> cons, String category, String location) {
+        getRequest(cons,String.format(DB_HOST + DB_STORE + DB_QUERY_LOCAL_AND_CATEGORY, category, location),StoresOfUserDTO.class);
     }
 
     public void getUserStores(Consumer<T> cons)

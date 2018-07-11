@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.HALDto.links;
 
 import com.ps.isel.customersscheduling.HALDto.Link;
 
-public class StaffLinks {
+import java.io.Serializable;
+
+public class StaffLinks implements Serializable {
 
     private Link get;
     private Link insert;

@@ -20,6 +20,7 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.BusinessFragment;
 import com.ps.isel.customersscheduling.HALDto.AddressDto;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
@@ -32,6 +33,7 @@ import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 import com.ps.isel.customersscheduling.Model.Business;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
 
 public class UserBusinessFragment extends BaseFragment
@@ -98,7 +100,9 @@ public class UserBusinessFragment extends BaseFragment
         editBusinessFragment = null;     //TODO new EditStoreFragment();
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
-       // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
+     //   customersSchedulingApp.getUserStores(elem->
+     //           listViewCode(elem));
 
         toolbar   = view.findViewById(R.id.app_bar);
         lv        = view.findViewById(R.id.myBusiness);
@@ -106,8 +110,9 @@ public class UserBusinessFragment extends BaseFragment
         toolBarCode();
         listViewCode(storesOfUserDTO);
 
-      //     customersSchedulingApp
-      //             .getUserStores(this::listViewCode);
+     //   customersSchedulingApp
+     //             .getUserStores(
+     //                     elem-> listViewCode(elem));
     }
 
     private void toolBarCode()
@@ -128,9 +133,7 @@ public class UserBusinessFragment extends BaseFragment
     private void listViewCode(Object stores)
     {
         StoresOfUserDTO storesOfUserDTO = (StoresOfUserDTO)stores;
-
         lv.setAdapter(new CustomAdapterOwnerBusiness(getActivity(), storesOfUserDTO.get_embedded().getStoreResourceList(), this));
     }
-
 
 }

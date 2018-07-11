@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.HALDto.embeddeds;
 
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 
-public class StoresEmbedded {
+import java.io.Serializable;
+
+public class StoresEmbedded implements Serializable {
 
     private StoreDto[] storeResourceList;
 }

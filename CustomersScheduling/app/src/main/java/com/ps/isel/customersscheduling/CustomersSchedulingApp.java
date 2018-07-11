@@ -54,17 +54,10 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     //GET REQUESTS
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUserStores(Consumer<StoreDto[]> cons)
-    {
-        api.getUserStores(cons);
-    }
 
-  // @RequiresApi(api = Build.VERSION_CODES.N)
-  // public void getUserPendentRequests(Consumer<ClientDto[]> cons, String userName)
-  // {
-  //     api.getUserPendentRequests(cons, userName);
-  // }
+    public void getOwner(Consumer<OwnerResourceItem> cons) {
+        api.getOwner(cons);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoreByNif(Consumer<StoreResourceItem> cons, StoreResourceItem storeResource)
@@ -73,9 +66,26 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getStoreByName(Consumer<StoresOfUserDTO> cons, String name)
+    {
+        api.getStoresByName(cons, name);
+    }
+
+    public void getStoreByCatAndLocation(Consumer<StoresOfUserDTO> cons, String category, String location)
+    {
+        api.getStoreByCatAndLocation(cons, category, location);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoreServices(Consumer<ServicesOfBusinessDTO> cons, StoreResourceItem storeResource)
     {
         api.getStoreServices(cons, storeResource);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public <T>void getUserRegisteredBusiness(Consumer<StoresOfUserDTO> cons)
+    {
+        api.getUserRegisteredBusiness(cons);
     }
 
   //  @RequiresApi(api = Build.VERSION_CODES.N)
@@ -98,11 +108,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
  //       api.getStoresByLocationAndCategory(cons, location, category);
  //   }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public <T>void getUserRegisteredBusiness(Consumer<StoresOfUserDTO> cons)
-    {
-        api.getUserRegisteredBusiness(cons);
-    }
+
 
 
     public <T>void getStaffOfService(Consumer<T[]> cons)
@@ -150,8 +156,6 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.registerEmployee(cons, staffJSONObject, storeResource, staffResourceItemClass);
     }
 
-
-
     public void registerOwner(JSONObject json) {
         api.registerOwner(json);
     }
@@ -160,12 +164,6 @@ public class CustomersSchedulingApp extends Application implements Serializable
  //  {
  //      api.registerUserService(storeJSONObject, service);
  //  }
-
-
-
-
-
-
 
     public void registerClient(JSONObject clientJSONObject)
     {
@@ -179,9 +177,4 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.sendIdToken(idToken);
     }
 
-
-
-    public void getOwner(Consumer<OwnerResourceItem> cons) {
-        api.getOwner(cons);
-    }
 }

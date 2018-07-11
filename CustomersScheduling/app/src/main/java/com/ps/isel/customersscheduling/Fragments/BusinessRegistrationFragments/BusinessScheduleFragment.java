@@ -34,8 +34,6 @@ import java.util.Map;
 
 public class BusinessScheduleFragment extends BaseFragment {
 
-    private final int DAYS_OF_WEEK = 7;
-
     private Fragment registerServiceFragment;
     private FragmentManager fragmentManager;
 
@@ -47,7 +45,8 @@ public class BusinessScheduleFragment extends BaseFragment {
     private EditText startLunchHour;
     private EditText endLunchHour;
     private EditText endHour;
-
+    private Button registerScheduleBtn;
+    private Button endScheduleRegistrationBtn;
     private CheckBox monday;
     private CheckBox tuesday;
     private CheckBox wednesday;
@@ -56,22 +55,15 @@ public class BusinessScheduleFragment extends BaseFragment {
     private CheckBox saturday;
     private CheckBox sunday;
 
+    private Bundle bundle;
+    private Context context;
+
     private final String[] days_of_week = {"monday", "tuesday", "wednesday","thursday","friday","saturday","sunday"};
     private HashMap<String, Integer> mapForDataBase = new HashMap<>();
     private HashMap<String, JSONObject> jsons = new HashMap<>();
     private ArrayList<CheckBox> checkBoxesList = new ArrayList<>();
 
-    private CheckBox[] checkBoxes;
-
-    private Button registerScheduleBtn;
-    private Button endScheduleRegistrationBtn;
-    private Bundle bundle;
-
-    private Context context;
-
     StoreResourceItem storeResource;
-    private int count;
-    private int countNumberClicks;
 
     public BusinessScheduleFragment() {
         // Required empty public constructor

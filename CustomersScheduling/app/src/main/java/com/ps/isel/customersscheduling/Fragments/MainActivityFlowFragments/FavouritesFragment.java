@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 
+import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
 
@@ -33,6 +34,7 @@ public class FavouritesFragment extends BaseFragment
 
     private Toolbar toolbar;
     private ListView lv;
+    private Favourite[] favSearches;
 
     private Context context;
 
@@ -71,20 +73,20 @@ public class FavouritesFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-    //   context = getActivity().getApplicationContext();
+      context = getActivity().getApplicationContext();
 
-    //   favSearches = readFromInternalStorageAndSeparate();
+      favSearches = readFromInternalStorageAndSeparate();
 
-    //   if(favSearches == null)
-    //   {
-    //       favSearches = new Favourite[0];
-    //   }
+      if(favSearches == null)
+      {
+          favSearches = new Favourite[0];
+      }
 
-    //   toolbar = view.findViewById(R.id.app_bar);
-    //   lv      = view.findViewById(R.id.listButtons);
+      toolbar = view.findViewById(R.id.app_bar);
+      lv      = view.findViewById(R.id.listButtons);
 
-    //   lv.setAdapter(new CustomAdapterFavourites(getActivity(),favSearches, this));
-    //   toolbarCode();
+      lv.setAdapter(new CustomAdapterFavourites(getActivity(),favSearches, this));
+      toolbarCode();
     }
 
     private void toolbarCode()
@@ -101,32 +103,32 @@ public class FavouritesFragment extends BaseFragment
             }
         });
     }
-  //  private Favourite[] readFromInternalStorageAndSeparate()
-  //  {
-  //      ArrayList<Favourite> objectsList = new ArrayList<>();
-  //      Favourite[] fav = null;
-  //      try {
-  //          FileInputStream fi = new FileInputStream(new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME));
-  //          ObjectInputStream oi = new ObjectInputStream(fi);
-  //          while(fi.available() > 0 ) {
-  //              objectsList.add((Favourite) oi.readObject());
-  //          }
-//
-  //          fav = new Favourite[objectsList.size()];
-  //          fav = objectsList.toArray(fav);
-//
-//
-  //      } catch (FileNotFoundException e) {
-  //          e.printStackTrace();
-//
-  //      } catch (IOException e) {
-  //          e.printStackTrace();
-//
-  //      } catch (ClassNotFoundException e) {
-  //          e.printStackTrace();
-//
-  //      }
-  //      return fav;
-  //  }
+    private Favourite[] readFromInternalStorageAndSeparate()
+    {
+        ArrayList<Favourite> objectsList = new ArrayList<>();
+        Favourite[] fav = null;
+        try {
+            FileInputStream fi = new FileInputStream(new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            while(fi.available() > 0 ) {
+                objectsList.add((Favourite) oi.readObject());
+            }
+
+            fav = new Favourite[objectsList.size()];
+            fav = objectsList.toArray(fav);
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        return fav;
+    }
 
 }

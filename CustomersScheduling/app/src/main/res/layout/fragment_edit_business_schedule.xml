@@ -119,16 +119,27 @@
             android:text="@string/sunday"
             android:layout_below="@id/endHour"/>
 
-        <Button
-            android:id="@+id/registerSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="21dp"
-            android:text="Edit Schedule"
-            android:textSize="20dp" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/registerSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="148dp"
+        android:text="Edit Schedule"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/endregisterSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:text="End Schedule Registration"
+        android:textSize="20dp" />
 
 </RelativeLayout>

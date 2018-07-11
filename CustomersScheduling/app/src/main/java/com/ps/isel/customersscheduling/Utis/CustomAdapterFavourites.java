@@ -2,6 +2,8 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.BusinessFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.SearchResultsFragment;
@@ -37,6 +40,8 @@ public class CustomAdapterFavourites extends BaseAdapter
 {
     private final String FILE_NAME = "favourites.txt";
 
+    private CustomersSchedulingApp customersSchedulingApp;
+
     private FragmentManager fragmentManager;
     private BaseFragment fragment;
 
@@ -54,6 +59,7 @@ public class CustomAdapterFavourites extends BaseAdapter
         this.name = name;
         this.context = context;
 
+        customersSchedulingApp = ((CustomersSchedulingApp)context.getApplicationContext());
         fragmentManager = ((MainActivity)context).getSupportFragmentManager();
         this.fragment = (BaseFragment) fragment;
     }
@@ -111,15 +117,14 @@ public class CustomAdapterFavourites extends BaseAdapter
 
         goToFavBtn.setOnClickListener(new View.OnClickListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
                 fragment.addMultBundleToFragment("byFavourite", true);
-                ;
-                fragment.changeFragment(fragmentManager,
-                        R.id.mainActivityFragment,
-                        fragment.addBundleToFragment(
-                                new SearchResultsFragment(),"Favourite", favourites[position]));
+                customersSchedulingApp.getStoreByCatAndLocation(elem->
+                        fragment.changeFragment(fragmentManager, R.id.mainActivityFragment,fragment.addBundleToFragment(new SearchResultsFragment(),"storeDto", elem)),
+                        favourites[position].getLocation(),favourites[position].getCategory());
             }
         });
 

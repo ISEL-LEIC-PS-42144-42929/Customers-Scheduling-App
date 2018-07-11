@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.HALDto.links;
 
 import com.ps.isel.customersscheduling.HALDto.Link;
 
-public class PersonLink {
+import java.io.Serializable;
+
+public class PersonLink implements Serializable {
 
     private Link get;
     private Link insert;

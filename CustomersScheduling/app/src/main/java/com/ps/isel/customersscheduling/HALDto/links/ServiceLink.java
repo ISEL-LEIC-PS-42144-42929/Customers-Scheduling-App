@@ -2,7 +2,9 @@ package com.ps.isel.customersscheduling.HALDto.links;
 
 import com.ps.isel.customersscheduling.HALDto.Link;
 
-public class ServiceLink {
+import java.io.Serializable;
+
+public class ServiceLink implements Serializable {
 
     private Link get_store_services;
     private Link insert_store_service;

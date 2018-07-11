@@ -44,6 +44,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -68,7 +69,6 @@ public class EditBusinessDataFragment extends BaseFragment
     private ImageView img;
     private MaterialBetterSpinner choseCategory;
 
-    private Fragment registerBusinessScheduleFragment;
     private FragmentManager fragmentManager;
 
     private CustomersSchedulingApp customersSchedulingApp;
@@ -131,18 +131,26 @@ public class EditBusinessDataFragment extends BaseFragment
         takeNewPicture           = view.findViewById(R.id.takePicture);
         img                      = view.findViewById(R.id.imageView);
 
-        customersSchedulingApp = ((CustomersSchedulingApp)context);
-       // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+       customersSchedulingApp = ((CustomersSchedulingApp)context);
 
         jsonBodyObj = new JSONObject();
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        registerBusinessScheduleFragment = new BusinessScheduleFragment();
 
         putHints();
         dropDownButtonCode();
         toolbarCode();
         addListenertoButton();
+    }
+
+    private void addListenersToEditTexts() {
+
+        storeContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void putHints()
@@ -196,7 +204,6 @@ public class EditBusinessDataFragment extends BaseFragment
             public void onClick(View view) {
                 try
                 {
-
                     String storeNIF = storeNif.getText().toString();
                     String storeCont = storeContact.getText().toString();
                     String storeNam = storeName.getText().toString();
@@ -230,16 +237,20 @@ public class EditBusinessDataFragment extends BaseFragment
                     }
 
                     jsonBodyObj.put("name", storeNam);
+                    jsonBodyObj.put("ownerNif", "123456");
                     jsonBodyObj.put("nif", storeNIF);
                     jsonBodyObj.put("contact", storeCont);
-                    jsonBodyObj.put("category", new CategoryDto(choseCategoryText));
+                    jsonBodyObj.put("category", choseCategoryText);
                     jsonBodyObj.put("street", deserializeString(strtAndLot)[0]);
                     jsonBodyObj.put("zipcode", zipCode);
                     jsonBodyObj.put("lot", deserializeString(strtAndLot)[1]);
                     jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
                     jsonBodyObj.put("country",deserializeString(cityAndCoun)[1]);
 
-                    //   customersSchedulingApp.registerStore(jsonBodyObj, customersSchedulingApp.getUserEmail());
+                    //TODO mudar para editOwnerBusiness
+                    //customersSchedulingApp.registerStore(elem ->
+                            //                 changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new UserBusinessFragment(),"storeResource", elem))
+                            //         , jsonBodyObj);
                     changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
                 }
                 catch (JSONException e) {

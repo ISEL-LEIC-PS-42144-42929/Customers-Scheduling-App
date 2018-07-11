@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.PendentRequestsFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.EditBusinessFragment;
@@ -34,6 +35,8 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
 
     private EditBusinessFragment editBusinessFragment;
 
+    private CustomersSchedulingApp customersSchedulingApp;
+
     private StoreResourceItem[] ownerBusiness;
 
     private View row;
@@ -50,6 +53,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         this.context = context;
         this.fragment = (BaseFragment) fragment;
         fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
+        this.customersSchedulingApp = ((CustomersSchedulingApp) context.getApplicationContext());;
 
         editBusinessFragment = new EditBusinessFragment();
     }
@@ -113,6 +117,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             {
                 //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
 
+
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
                         new PendentRequestsFragment());
@@ -124,9 +129,6 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
-
-                ;
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
                         fragment.addBundleToFragment(new EditBusinessFragment(),"storeResource", ownerBusiness[position]));

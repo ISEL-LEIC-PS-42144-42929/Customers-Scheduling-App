@@ -25,6 +25,8 @@ import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
@@ -82,6 +84,7 @@ public class SearchResultsFragment extends BaseFragment {
     private Bundle bundle;
 
     private boolean byFavourite;
+    private StoresOfUserDTO storeDto;
    // private Favourite favourite;
    // private Business[] business;
 
@@ -110,8 +113,7 @@ public class SearchResultsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        bundle = getArguments();
-        byFavourite = bundle.getBoolean("byFavourite");
+
         return inflater.inflate(R.layout.fragment_search_results, container, false);
     }
 
@@ -119,15 +121,36 @@ public class SearchResultsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-       context = getActivity().getApplicationContext();
+        context = getActivity().getApplicationContext();
+        bundle = getArguments();
+        byFavourite = bundle.getBoolean("byFavourite");
+        storeDto = (StoresOfUserDTO) bundle.getSerializable("storeDto");
+
         fragmentManager = getActivity().getSupportFragmentManager();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-    //    //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
-//
         toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         lv      = (ListView) view.findViewById(R.id.resultsSearch);
         toolbarCode();
+
+        listViewCode(storeDto);
+
+    //    if(byFavourite)
+    //    {
+    //        favourite = (Favourite) bundle.getSerializable("favourite");
+    //         customersSchedulingApp.getStoreByLocationAndCategory(
+    //                 this::listViewCode,
+    //                 favourite.getLocation(),
+    //                 favourite.getCategory());
+    //    }else
+    //    {
+    //        business = (Business[]) bundle.getSerializable("business");
+    //            customersSchedulingApp.getSearchedStoreByName(
+    //                    this::listViewCode,
+    //                    business.getName());
+    //    }
+
+
 //
 
 //
@@ -151,18 +174,25 @@ public class SearchResultsFragment extends BaseFragment {
 //
     }
 
-    private void listViewCode(StoreDto[] stores)
+    private void listViewCode(Object stores)
     {
 
-     //   lv.setAdapter(new CustomAdapterBusiness(getActivity(), resultsBusiness));
-//
-     //   lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-     //       @Override
-     //       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-     //       {
-     //           changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "business", stores[position]));
-     //       }
-     //   });
+        StoresOfUserDTO storeDTO =  ((StoresOfUserDTO)stores);
+
+        lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                addMultBundleToFragment("position",position);
+                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
+            }
+        });
+        //  }
+
+
     }
 
     private void toolbarCode() {

@@ -30,13 +30,12 @@ public class EditBusinessFragment extends BaseFragment
                     "Edit Business Info",
                     "Edit Business Schedule",
                     "Edit Services",
-                    "Edit Employee",
-                    "Edit Employee Schedule"
+                    "Edit Employee"
             };
-    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment(), new EditEmployeesScheduleFragment()};
+    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment()};
 
     private FragmentManager fragmentManager;
-    private CustomersSchedulingApp customersSchedulingApp;
+   // private CustomersSchedulingApp customersSchedulingApp;
 
     private Context context;
     private Bundle bundle;
@@ -90,7 +89,6 @@ public class EditBusinessFragment extends BaseFragment
 
         lv = (ListView) view.findViewById(R.id.listEdits);
         lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, storeResourceItem));
-
 
         toolbarCode();
 
