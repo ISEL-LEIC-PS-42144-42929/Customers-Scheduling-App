@@ -71,6 +71,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="gender_0_for_female_1_for_male">Gender: 0 for Female 1 for Male</string>
     <string name="_0_min_5_max">0(Min)- 5(Max)</string>
+    <string name="insert_Rate">Insert Rate</string>
     <string-array name="categories_array">
         <item>Restaurants</item>
         <item>Barber</item>

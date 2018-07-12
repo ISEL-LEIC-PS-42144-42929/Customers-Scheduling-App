@@ -7,19 +7,16 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.JsonRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-
-import java.util.function.Function;
 
 
 public class GetRequest<T> extends JsonRequest<T>
@@ -47,7 +44,7 @@ public class GetRequest<T> extends JsonRequest<T>
     public Map<String, String> getHeaders() throws AuthFailureError {
             HashMap<String, String> headers = new HashMap<String, String>();
             headers.put("Content-Type", "application/json");
-            headers.put("Authorization", "Bearer " + IdTokenAndEmailContainer.getInstance().getIdToken());
+            headers.put("Authorization", "Bearer " + UserInfoContainer.getInstance().getIdToken());
             return headers;
     }
 

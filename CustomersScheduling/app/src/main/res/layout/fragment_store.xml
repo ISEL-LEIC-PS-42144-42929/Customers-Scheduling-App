@@ -15,7 +15,7 @@
     <RelativeLayout
         android:id="@+id/layout1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
         android:layout_below="@+id/app_bar">
 
         <ImageView
@@ -73,6 +73,7 @@
 
         <ImageView
             android:id="@+id/imgIcon1"
+            android:tag="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -82,6 +83,7 @@
 
         <ImageView
             android:id="@+id/imgBack2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -91,6 +93,7 @@
 
         <ImageView
             android:id="@+id/imgIcon2"
+            android:tag="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -109,6 +112,7 @@
 
         <ImageView
             android:id="@+id/imgIcon3"
+            android:tag="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -127,6 +131,7 @@
 
         <ImageView
             android:id="@+id/imgIcon4"
+            android:tag="4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -145,6 +150,7 @@
 
         <ImageView
             android:id="@+id/imgIcon5"
+            android:tag="5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -195,19 +201,10 @@
 
 
         <Button
-            android:id="@+id/rateBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="16dp"
-            android:text="@string/rate" />
-
-        <Button
             android:id="@+id/unregisterBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"
             android:text="@string/unregister" />
@@ -220,6 +217,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"
             android:text="@string/register" />
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.ps.isel.customersscheduling.HttpUtils;
 
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
@@ -20,29 +21,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-/**
- * Created by Colapso on 19/05/18.
- */
-
-public class PostRequest<T> extends JsonRequest<T>
-{
+public class UpdateRequest<T> extends JsonRequest {
 
     private String requestBody;
     private Consumer<T> cons;
     private Class<T> dtoType;
     private ObjectMapper mapper;
 
-    public PostRequest(int method,
-                       String url,
-                       String requestBody,
-                       Response.Listener<T> listener,
-                       Response.ErrorListener errorListener) {
+    public UpdateRequest(int method, String url, String requestBody, Response.Listener listener, Response.ErrorListener errorListener) {
         super(method, url, requestBody, listener, errorListener);
         this.requestBody = requestBody;
         mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public PostRequest(int method,
+    public UpdateRequest(int method,
                        String url,
                        String requestBody,
                        Consumer<T> cons,
@@ -61,12 +53,9 @@ public class PostRequest<T> extends JsonRequest<T>
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
-        headers.put("accept","application/hal+json");
         headers.put("Authorization", "Bearer " + UserInfoContainer.getInstance().getIdToken());
         return headers;
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -82,7 +71,6 @@ public class PostRequest<T> extends JsonRequest<T>
             e.printStackTrace();
             return Response.error(new VolleyError());
         }
-
     }
 
     @Override
@@ -94,5 +82,10 @@ public class PostRequest<T> extends JsonRequest<T>
                     requestBody, "utf-8");
             return null;
         }
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return 0;
     }
 }

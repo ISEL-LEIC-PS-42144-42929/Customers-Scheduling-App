@@ -135,10 +135,9 @@ public class ClientDataFragment extends BaseFragment
                         jsonBodyObj.put("nif", storeResource.getStore().getNif()); //TODO é necessário o nif?
                         jsonBodyObj.put("gender", genderS);
 
-                    //    customersSchedulingApp.registerClientInApp(elem-> fragmentManager.popBackStackImmediate(),
-                    //            jsonBodyObj,
-                    //            storeResource,
-                    //            ClientResourceItem.class);
+                        customersSchedulingApp.registerClientToStore(elem-> fragmentManager.popBackStackImmediate(),
+                                jsonBodyObj,
+                                storeResource);
 
                     }
                 }

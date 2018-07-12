@@ -70,7 +70,12 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
         blocked = (TextView) row.findViewById(R.id.blocked);
 
         sw = (Switch) row.findViewById(R.id.sw);
-        sw.setChecked(true);
+
+        if(currentClients[position].isAccepted()) {
+            sw.setChecked(true);
+        }else {
+            sw.setChecked(false);
+        }
 
         addListenerToSwitch(sw, blocked, position);
 
@@ -94,7 +99,7 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
                         jsonBodyObj.put("accepted", true);
                         text.setText("");
                     }
-                    customersSchedulingApp.registerClientToStore(elem->currentClients[position] = elem,jsonBodyObj,currentClients[position], storeResource.getStore().getNif());
+                    customersSchedulingApp.updateClientToStore(elem->elem = elem,jsonBodyObj,currentClients[position], storeResource.getStore().getNif());
                 }
                  catch (JSONException e) {
                     e.printStackTrace();

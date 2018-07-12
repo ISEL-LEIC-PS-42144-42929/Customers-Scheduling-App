@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -67,7 +67,7 @@ public class Dialog_Frgment extends DialogFragment {
                 JSONObject json = new JSONObject();
 
                 try {
-                    json.put("email", IdTokenAndEmailContainer.getInstance().getEmail());
+                    json.put("email", UserInfoContainer.getInstance().getEmail());
                     json.put("nif",nif.getText());
 
                 } catch (JSONException e) {

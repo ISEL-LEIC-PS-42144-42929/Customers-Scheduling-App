@@ -114,8 +114,17 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     //POST REQUESTS
-    public void registerClientToStore(Consumer<ClientResourceItem> cons, JSONObject json, ClientResourceItem user, String nif) {
-        api.registerClientToStore(cons,json,user, nif);
+    public void registerClientToStore(Consumer<StoresOfUserDTO> cons, JSONObject json, StoreResourceItem storeResourceItem) {
+        api.registerClientToStore(cons,json, storeResourceItem);
+    }
+
+    public void deleteClientOfStore(Consumer<StoreResourceItem> cons, JSONObject json, StoreResourceItem storeResourceItem) {
+        api.deleteClientOfStore(cons,json, storeResourceItem);
+    }
+
+
+    public void  updateClientToStore(Consumer<StoreResourceItem> cons, JSONObject json, ClientResourceItem user, String nif){
+        api.updateClientToStore(cons,json,user, nif);
     }
 
   //  @RequiresApi(api = Build.VERSION_CODES.N)
@@ -170,6 +179,10 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.registerEmployee(cons, staffJSONObject, storeResource, staffResourceItemClass);
     }
 
+    public void rateStore(Consumer<StoreResourceItem> cons, JSONObject jsonObject, StoreResourceItem storeResource) {
+        api.rateStore(cons,jsonObject,storeResource);
+    }
+
     public void registerOwner(JSONObject json) {
         api.registerOwner(json);
     }
@@ -185,12 +198,21 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
 
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void sendIdToken(String idToken)
     {
         api.sendIdToken(idToken);
     }
 
+
+    //DELETES
+    public void rejectClient(Consumer<StoreResourceItem> cons, ClientResourceItem user, StoreResourceItem nif) {
+
+        api.rejectClient(cons,user,nif);
+    }
 
 
 }

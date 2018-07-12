@@ -28,7 +28,7 @@ import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
-import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONObject;
@@ -87,8 +87,8 @@ public class SignInActivity extends AppCompatActivity
                                 if (task.isSuccessful()) {
                                     String idToken = task.getResult().getToken();
                                     String email = firebaseAuth.getCurrentUser().getEmail();
-                                    IdTokenAndEmailContainer.getInstance().setIdToken(idToken);
-                                    IdTokenAndEmailContainer.getInstance().setEmail(email);
+                                    UserInfoContainer.getInstance().setIdToken(idToken);
+                                    UserInfoContainer.getInstance().setEmail(email);
                                     changeActivity();
                                 } else {
                                     // Handle error -> task.getException();

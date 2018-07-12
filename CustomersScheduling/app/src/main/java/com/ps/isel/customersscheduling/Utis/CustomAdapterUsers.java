@@ -120,10 +120,10 @@ public class CustomAdapterUsers extends BaseAdapter
                     e.printStackTrace();
                 }
 
-                customersSchedulingApp.registerClientToStore(elem->{
+                customersSchedulingApp.updateClientToStore(elem->{
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.detach(fragment);
-                        fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",storeResource));
+                        fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",elem));
                         fragmentTransaction.commit();
                         }, jsonBodyObj,users[position],storeResource.getStore().getNif());
 
@@ -132,15 +132,16 @@ public class CustomAdapterUsers extends BaseAdapter
 
         rejectBtn.setOnClickListener(new View.OnClickListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
-                //Todo Enviar ao servidor resposta negativa ao request
-
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.detach(fragment);
-                fragmentTransaction.attach(fragment);
-                fragmentTransaction.commit();
+                customersSchedulingApp.rejectClient(elem->{
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.detach(fragment);
+                    fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",storeResource));
+                    fragmentTransaction.commit();
+                },users[position],storeResource);
 
             }
         });

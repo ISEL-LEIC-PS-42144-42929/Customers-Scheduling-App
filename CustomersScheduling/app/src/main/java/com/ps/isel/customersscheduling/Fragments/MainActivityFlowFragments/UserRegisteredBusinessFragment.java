@@ -2,7 +2,7 @@ package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,20 +40,12 @@ import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
-import com.ps.isel.customersscheduling.IdTokenAndEmailContainer;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class UserRegisteredBusinessFragment extends BaseFragment
@@ -88,11 +80,14 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     private Toolbar toolbar;
     private SearchView searchView;
     private Button filterBtn;
+    static SharedPreferences settings;
+    static SharedPreferences.Editor editor;
 
     private Context context;
 
     private String idToken;
     private String email;
+    private boolean firsttime;
 
     public UserRegisteredBusinessFragment() {
         // Required empty public constructor
@@ -147,11 +142,13 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         jsonBodyObj = new JSONObject();
 
-      //      customersSchedulingApp
-      //              .getUserRegisteredBusiness(
-      //                      elem-> listViewCode(elem));
-//
-        listViewCode(storesOfUserDTO);// Remove after App done!!
+            customersSchedulingApp
+                    .getUserRegisteredBusiness(
+                            elem-> {
+                                UserInfoContainer.getInstance().setRegisteredStores(elem.get_embedded().getStoreResourceList());
+                                listViewCode(elem);});
+
+      //  listViewCode(storesOfUserDTO);// Remove after App done!!
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -224,8 +221,10 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             public boolean onQueryTextSubmit(String s)
             {
                 addMultBundleToFragment("byFavourite", false);
-                customersSchedulingApp.getStoreByName(elem->
-                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "storeDTO", elem)), s);
+                customersSchedulingApp.getStoreByName(elem->{
+                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "storeDto", elem));}, s);
+
+
                 return false;
             }
 
@@ -259,15 +258,16 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         StoresOfUserDTO storeDTO =  ((StoresOfUserDTO)stores);
         lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                addMultBundleToFragment("position",position);
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
-            }
-        });
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    addMultBundleToFragment("position", position);
+                    changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
+                }
+            });
+
     }
 
 

@@ -151,27 +151,6 @@ public class SearchResultsFragment extends BaseFragment {
     //    }
 
 
-//
-
-//
-    //
-    //    listViewCode(resultsBusiness);
-//
-    //    if(byFavourite)
-    //    {
-    //        favourite = (Favourite) bundle.getSerializable("favourite");
-    //        // customersSchedulingApp.getStoreByLocationAndCategory(
-    //        //         this::listViewCode,
-    //        //         favourite.getLocation(),
-    //        //         favourite.getCategory());
-    //    }else
-    //    {
-    //        business = (Business[]) bundle.getSerializable("business");
-    //        //    customersSchedulingApp.getSearchedStoreByName(
-    //        //            this::listViewCode,
-    //        //            business.getName());
-    //    }
-//
     }
 
     private void listViewCode(Object stores)

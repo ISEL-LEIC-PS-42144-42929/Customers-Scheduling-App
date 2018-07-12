@@ -2,13 +2,16 @@ package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -25,8 +28,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
@@ -45,10 +48,14 @@ import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import static android.content.Context.MODE_WORLD_WRITEABLE;
 
 
 public class BusinessFragment extends BaseFragment
@@ -60,19 +67,19 @@ public class BusinessFragment extends BaseFragment
     private Link[] links = new Link[1];
     private StoreLinks linkzao;
 
-    private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20);
-
-
-
-    private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
-    private StoreResourceItem storeResourceItem = new StoreResourceItem(store, 3.0, linkzao);
-    private ServiceLink _linkService;
-    private SelfLink _links;
-
-
-    private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(storeResourceItem, services,_linkService), new ServiceResourceItem(storeResourceItem, services,_linkService)};
-    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
-    private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
+ //   private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20);
+//
+//
+//
+ //   private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+ //   private StoreResourceItem storeResourceItem = new StoreResourceItem(store, 3.0, linkzao);
+ //   private ServiceLink _linkService;
+ //   private SelfLink _links;
+//
+//
+ //   private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(storeResourceItem, services,_linkService), new ServiceResourceItem(storeResourceItem, services,_linkService)};
+ //   private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
+ //   private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
 
 
 
@@ -84,7 +91,7 @@ public class BusinessFragment extends BaseFragment
     private JSONObject jsonBodyObj;
 
     private FragmentManager fragmentManager;
-    private Fragment serviceFragment;
+    private Fragment fragment;
 
     private Context context;
 
@@ -99,7 +106,11 @@ public class BusinessFragment extends BaseFragment
     private Toolbar toolbar;
     private Button registerBtn;
     private Button unregisterBtn;
-    private Button rateBtn;
+    private ImageView star1;
+    private ImageView star2;
+    private ImageView star3;
+    private ImageView star4;
+    private ImageView star5;
     private TextView name;
     private TextView address;
     private TextView contact;
@@ -110,9 +121,12 @@ public class BusinessFragment extends BaseFragment
     private String idOfImage = "imgIcon";
     private ListView lv;
     private Bundle bundle;
+    static SharedPreferences settings;
+    static SharedPreferences.Editor editor;
 
     private StoresOfUserDTO storeDTO;
     private StoreDto storeBundle;
+    private StoreResourceItem storeResourceItem;
     private int position;
 
     private double score;
@@ -121,6 +135,7 @@ public class BusinessFragment extends BaseFragment
     private double proporcionToDraw;
     private int finalLevelToDraw;
     private double floatingPoint;
+    private boolean firsttime;
 
     public BusinessFragment() {
         // Required empty public constructor
@@ -155,23 +170,24 @@ public class BusinessFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
+
         bundle = getArguments();
 
         context = getActivity().getApplicationContext();
 
         position = (int) bundle.getSerializable("position");
         storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
-        store = storeDTO.get_embedded().getStoreResourceList()[position].getStore();
+        storeResourceItem = storeDTO.get_embedded().getStoreResourceList()[position];
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
 
 
-      //  customersSchedulingApp
-      //          .getStoreByNif(store->
-      //              constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
-      //  customersSchedulingApp
-      //         .getStoreServices(service->
-      //                 listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
+        customersSchedulingApp
+                .getStoreByNif(store->
+                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
+        customersSchedulingApp
+               .getStoreServices(service->
+                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
 
         toolbar       = view.findViewById(R.id.app_bar);
         name          = view.findViewById(R.id.name);
@@ -180,50 +196,112 @@ public class BusinessFragment extends BaseFragment
         description   = view.findViewById(R.id.description);
         category      = view.findViewById(R.id.category);
         lv            = view.findViewById(R.id.services);
+        star1         = view.findViewById(R.id.imgIcon1);
+        star2         = view.findViewById(R.id.imgIcon2);
+        star3         = view.findViewById(R.id.imgIcon3);
+        star4         = view.findViewById(R.id.imgIcon4);
+        star5         = view.findViewById(R.id.imgIcon5);
         registerBtn   = view.findViewById(R.id.registerBtn);
         unregisterBtn = view.findViewById(R.id.unregisterBtn);
-        rateBtn   = view.findViewById(R.id.rateBtn);
 
         toolBarCode();
+        addListenerToStars();
         constructButtonsAndAddListeners();
-        constructRatingStarsAndTextViews(view,storeResourceItem);
-        listViewCode(servicesOfBusinessDTO);
+        setButtonsClicable();
+       // constructRatingStarsAndTextViews(view,storeResourceItem);
+       // listViewCode(servicesOfBusinessDTO);
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        serviceFragment = new ServiceFragment();
+        fragment = this;
+    }
+
+    private void setButtonsClicable()
+    {
+        if(UserInfoContainer.getInstance().getRegisteredStores().containsKey(storeResourceItem.getStore().getNif())){
+            registerBtn.setClickable(false);
+            unregisterBtn.setClickable(true);
+        }else{
+            registerBtn.setClickable(true);
+            unregisterBtn.setClickable(false);
+        }
+
     }
 
 
     private void constructButtonsAndAddListeners()
     {
         registerBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                changeFragment(fragmentManager,R.id.mainActivityFragment,addBundleToFragment(new ClientDataFragment(),"storeDTO", storeDTO));
+                customersSchedulingApp.registerClientToStore(elem->{
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                   fragmentTransaction.detach(fragment);
+                                   fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",elem));},
+                        jsonBodyObj = new JSONObject(),
+                        storeResourceItem);
 
             }
         });
+
 
         unregisterBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
 
-               // customersSchedulingApp.unregisterClientInStore();//TODO DELETES
+               customersSchedulingApp.deleteClientOfStore(elem->{
+                    UserInfoContainer.getInstance().getRegisteredStores().remove(storeResourceItem);
+                   registerBtn.setClickable(true);
+                   unregisterBtn.setClickable(false);
+                           FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                           fragmentTransaction.detach(fragment);
+                           fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",elem));
+                       },
+                       jsonBodyObj = new JSONObject(),
+                       storeResourceItem);
 
             }
         });
+    }
 
-        rateBtn.setOnClickListener(new View.OnClickListener() {
+    private void addListenerToStars(){
+
+        View.OnClickListener starListener = new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                showEditTextToRate(view);
+
+                Toast.makeText(context, "Thanks!!You Rated our store with " + view.getTag() + " stars",Toast.LENGTH_LONG).show();
+                JSONObject jsonBodyObj = new JSONObject();
+
+                try {
+                    jsonBodyObj.put("score", view.getTag());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                customersSchedulingApp.rateStore(elem->{
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.detach(fragment);
+                            fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",elem));
+
+                        },
+                        jsonBodyObj,
+                        storeResourceItem);
             }
-        });
+        };
+
+        star1.setOnClickListener(starListener);
+        star2.setOnClickListener(starListener);
+        star3.setOnClickListener(starListener);
+        star4.setOnClickListener(starListener);
+        star5.setOnClickListener(starListener);
     }
 
 
     private void constructRatingStarsAndTextViews(View view, StoreResourceItem storeData)
     {
+
         AddressDto addressAux = storeData.getStore().getAddress();
 
         String addAux = addressAux.getStreet() + " " + addressAux.getLot() + " " + addressAux.getCity() + " " + addressAux.getCountry();
@@ -266,22 +344,25 @@ public class BusinessFragment extends BaseFragment
 
         lv.setAdapter(new CustomAdapterServices(getActivity(), serviceResourceItems));
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                addMultBundleToFragment("position",position);
-                addMultBundleToFragment("storeDTO",storeDTO);
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "serviceResource", serviceResourceItems[position]));
-            }
+        if(UserInfoContainer.getInstance().getRegisteredStores().containsKey(storeResourceItem.getStore().getNif())) {
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    addMultBundleToFragment("position", position);
+                    addMultBundleToFragment("storeDTO", storeDTO);
+                    changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "serviceResource", serviceResourceItems[position]));
+                }
 
-        });
+            });
+        }else{
+            Toast.makeText(context, "You have to register in store so you can make a booking",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void toolBarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(store.getStoreName());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(storeResourceItem.getStore().getStoreName());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -299,59 +380,6 @@ public class BusinessFragment extends BaseFragment
 
     }
 
-    public void showEditTextToRate(View view) {
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-               getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.insertscore, null);
-
-
-
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
-        constructDropdowns(popupView);
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-       // popupView.setOnTouchListener(new View.OnTouchListener() {
-       //     @Override
-       //     public boolean onTouch(View v, MotionEvent event) {
-       //         popupWindow.dismiss();
-//
-       //         //TODO enviar ao servidor a classificação
-       //         return true;
-       //     }
-       // });
-    }
-
-    private void constructDropdowns(View popupView)
-    {
-        int[] aus = getResources().getIntArray(R.array.rank);
-        @SuppressLint("ResourceType") ArrayAdapter<Integer> adapterLocations = new ArrayAdapter<Integer>(
-                context,
-                android.R.layout.simple_dropdown_item_1line,
-                R.array.rank);
-        Spinner m = popupView.findViewById(R.id.rate);
-
-        m.setAdapter(adapterLocations);
-
-        m.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                scoreI = aus[position];
-            }
-        });
-
-
-    }
 
 
 }

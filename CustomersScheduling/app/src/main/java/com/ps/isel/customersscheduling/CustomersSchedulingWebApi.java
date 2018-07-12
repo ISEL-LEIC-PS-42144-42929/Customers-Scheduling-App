@@ -16,8 +16,10 @@ import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourc
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HttpUtils.DeleteRequest;
 import com.ps.isel.customersscheduling.HttpUtils.PostRequest;
 import com.ps.isel.customersscheduling.HttpUtils.GetRequest;
+import com.ps.isel.customersscheduling.HttpUtils.UpdateRequest;
 
 
 import org.json.JSONObject;
@@ -32,10 +34,10 @@ public class CustomersSchedulingWebApi<T>
 {
 
     private final int[] TYPE_REQUESTS= {0,1,2,3};
-    private final String DB_HOST = "http://192.168.1.215:8181/";
+    private final String DB_HOST = "http://192.168.1.4:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_REG_STORE = "store/%s/";
-    private final String DB_STORE = "store/";
+    private final String DB_STORE = "store";
     private final String DB_USER_REG_OWNER = "person/owner/";
     private final String DB_USER_GET_STORES = "person/owner/%s/stores";
     private final String DB_USER_GET_OWNER = "person/owner/%s/";
@@ -57,7 +59,7 @@ public class CustomersSchedulingWebApi<T>
 
     public void getUserRegisteredBusiness(Consumer<T> cons)
     {
-        String path = String.format(DB_HOST +DB_USER_STORES, IdTokenAndEmailContainer.getInstance().getEmail());
+        String path = String.format(DB_HOST +DB_USER_STORES, UserInfoContainer.getInstance().getEmail());
         getRequest(cons, path, StoresOfUserDTO.class);
     }
 
@@ -96,11 +98,11 @@ public class CustomersSchedulingWebApi<T>
 
     public void getOwner(Consumer<T> cons)
     {
-        getRequest(cons, String.format(DB_HOST + DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+        getRequest(cons, String.format(DB_HOST + DB_USER_STORE, UserInfoContainer.getInstance().getEmail()), StoresOfUserDTO.class);
     }
 
     public void getStoresOfOwner(Consumer<T> cons) {
-        getRequest(cons, String.format(DB_HOST + DB_USER_GET_STORES,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+        getRequest(cons, String.format(DB_HOST + DB_USER_GET_STORES, UserInfoContainer.getInstance().getEmail()), StoresOfUserDTO.class);
     }
 
     public void getBookingsOfClient(Consumer<T> cons) {
@@ -109,7 +111,7 @@ public class CustomersSchedulingWebApi<T>
 
     public void registerStore(Consumer<T> cons, JSONObject storeJSONObject)
     {
-        postRequest(String.format(DB_HOST+ DB_USER_STORE, IdTokenAndEmailContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
+        postRequest(String.format(DB_HOST+ DB_USER_STORE, UserInfoContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
     }
 
     public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
@@ -137,12 +139,27 @@ public class CustomersSchedulingWebApi<T>
         postRequest(staffResource.get_links().getInsert_timetable().getHref(), staffJSONObject, cons, staffResourceItemClass);
     }
 
-    public void registerClientToStore(Consumer<T> cons, JSONObject clientJSONObject, ClientResourceItem user, String nif) {
-        String aux = user.get_links().getSet_store().getHref().replace("{nif}",nif);
-        postRequest(aux,clientJSONObject,cons,ClientResourceItem.class);
+    public void registerClientToStore(Consumer<T> cons, JSONObject clientJSONObject,StoreResourceItem storeResourceItem) {
+        String aux = storeResourceItem.get_links().getSet_client().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()).concat(".x");
+        postRequest(aux,clientJSONObject,cons,StoresOfUserDTO.class);
     }
 
+    public void updateClientToStore(Consumer<T> cons, JSONObject json, ClientResourceItem user, String nif) {
+        String aux = user.get_links().getSet_store().getHref().replace("{nif}",nif).concat(".x");
+        updateRequest(aux,json,cons,StoreResourceItem.class);
+    }
 
+    public void rejectClient(Consumer<T> cons, ClientResourceItem user, StoreResourceItem storeResourceItem) {
+
+        String a = storeResourceItem.get_links().getDelete_client().getHref().replace("{email}",user.getPerson().getEmail()).concat(".x");
+        deleteRequest(storeResourceItem.get_links().getDelete_client().getHref().replace("{email}",user.getPerson().getEmail()).concat(".x"),
+                cons,
+                storeResourceItem.getClass());
+    }
+
+    public void deleteClientOfStore(Consumer<T> cons, JSONObject json, StoreResourceItem storeResourceItem) {
+        deleteRequest(storeResourceItem.get_links().getDelete_client().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()).concat(".x"),cons,storeResourceItem.getClass());
+    }
 
     public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)
     {
@@ -175,11 +192,6 @@ public class CustomersSchedulingWebApi<T>
     }
 
 
-
-
-
-
-
     public void sendIdToken(String idToken){
         String url = "http://192.168.1.196:8181/tokensignin";
         postRequestWithNoResponse(url, new JSONObject());
@@ -195,6 +207,12 @@ public class CustomersSchedulingWebApi<T>
     public void registerOwner(JSONObject json) {
         postRequestWithNoResponse(DB_HOST + DB_USER_REG_OWNER, json);
     }
+
+    public void rateStore(Consumer<T> cons, JSONObject jsonObject, StoreResourceItem storeResource) {
+
+        updateRequest(storeResource.get_links().getScore().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()),jsonObject,cons,storeResource.getClass());
+    }
+
 
 
     public void postRequest(String url, JSONObject object, Consumer<T> cons, Class c)
@@ -223,6 +241,20 @@ public class CustomersSchedulingWebApi<T>
         requestQueue.add(request);
     }
 
+    public void deleteRequest(String url, Consumer<T> cons, Class c)
+    {
+        DeleteRequest<T> request = new DeleteRequest<>(
+                Request.Method.DELETE,
+                url,
+     "",
+                cons,
+                c,
+                response -> cons.accept(response),
+                error -> error.printStackTrace()
+        );
+        requestQueue.add(request);
+    }
+
    public void getRequest(Consumer<T> cons, String url, Class c)
    {
        GetRequest<T> request = new GetRequest<>(
@@ -237,6 +269,20 @@ public class CustomersSchedulingWebApi<T>
        requestQueue.add(request);
    }
 
+    public void updateRequest(String url, JSONObject object, Consumer<T> cons, Class c)
+    {
+        UpdateRequest<T> request = new UpdateRequest<>(
+                Request.Method.PUT,
+                url,
+                object.toString(),
+                cons,
+                c,
+                element->cons.accept(element),
+                error -> parseVolleyError(error, cons)
+        );
+        requestQueue.add(request);
+    }
+
     public void parseVolleyError(VolleyError error, Consumer cons) {
         NetworkResponse response = error.networkResponse;
         if(response != null && response.data != null){
@@ -247,5 +293,8 @@ public class CustomersSchedulingWebApi<T>
             }
     }
     }
+
+
+
 }
 

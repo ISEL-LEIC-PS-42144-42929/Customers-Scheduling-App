@@ -5,18 +5,15 @@
     android:layout_height="wrap_content"
     android:background="#62def8">
 
-    <Spinner
-        android:id="@+id/rate"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchName"
-        android:spinnerMode="dialog"
-        android:layout_marginTop="35dp"
+        android:text="@string/insert_Rate"/>
+
+    <EditText
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/_0_min_5_max"
-        android:textColorHint="#05ab9a">
-
-    </Spinner>
-
-
-
+        />
 </RelativeLayout>

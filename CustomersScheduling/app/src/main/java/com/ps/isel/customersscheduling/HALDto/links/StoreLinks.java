@@ -22,12 +22,16 @@ public class StoreLinks implements Serializable {
     private Link get_staff;
     private Link add_service_staff;
     private Link insert_staff;
+    private Link set_client;
+    private Link delete_client;
+    private Link set_store;
+    private Link score;
 
     public StoreLinks() {
 
     }
 
-    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update_addr, Link update_info, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff) {
+    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update_addr, Link update_info, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff, Link set_client, Link delete_client, Link set_store, Link score) {
         this.get = get;
         this.insert = insert;
         this.services = services;
@@ -40,6 +44,42 @@ public class StoreLinks implements Serializable {
         this.get_staff = get_staff;
         this.add_service_staff = add_service_staff;
         this.insert_staff = insert_staff;
+        this.set_client = set_client;
+        this.delete_client = delete_client;
+        this.set_store = set_store;
+        this.score = score;
+    }
+
+    public void setScore(Link score) {
+        this.score = score;
+    }
+
+    public Link getScore() {
+        return score;
+    }
+
+    public void setSet_client(Link set_client) {
+        this.set_client = set_client;
+    }
+
+    public void setDelete_client(Link delete_client) {
+        this.delete_client = delete_client;
+    }
+
+    public void setSet_store(Link set_store) {
+        this.set_store = set_store;
+    }
+
+    public Link getSet_client() {
+        return set_client;
+    }
+
+    public Link getDelete_client() {
+        return delete_client;
+    }
+
+    public Link getSet_store() {
+        return set_store;
     }
 
     public void setClients(Link clients) {
