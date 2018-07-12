@@ -1,5 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,11 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterTogleButtons;
 
@@ -28,30 +28,32 @@ public class currentClientsFragment extends BaseFragment {
 
 
     //HARDCODED
-    private PersonDto[] clients = new PersonDto[]
-            {
-                    new PersonDto(
-                            "john",
-                            "j@gmail.com",
-                            1,
-                            "91111111"),
-                    new PersonDto(
-                            "john",
-                            "j@gmail.com",
-                            1,
-                            "91111111"),
-                    new PersonDto(
-                            "john",
-                            "j@gmail.com",
-                            1,
-                            "91111111")
-            };
+ //   private PersonDto[] clients = new PersonDto[]
+ //           {
+ //                   new PersonDto(
+ //                           "john",
+ //                           "j@gmail.com",
+ //                           1,
+ //                           "91111111"),
+ //                   new PersonDto(
+ //                           "john",
+ //                           "j@gmail.com",
+ //                           1,
+ //                           "91111111"),
+ //                   new PersonDto(
+ //                           "john",
+ //                           "j@gmail.com",
+ //                           1,
+ //                           "91111111")
+ //           };
     //-----------
     private CustomersSchedulingApp customersSchedulingApp;
     private FragmentManager fragmentManager;
 
     private Toolbar toolbar;
     private ListView lv;
+    private Bundle bundle;
+    private StoreResourceItem storeResource;
 
     private Context context;
 
@@ -84,22 +86,26 @@ public class currentClientsFragment extends BaseFragment {
     {
         context = getActivity().getApplicationContext();
         fragmentManager            = getActivity().getSupportFragmentManager();
-
+        bundle = getArguments();
+        storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
         customersSchedulingApp = ((CustomersSchedulingApp) context);
-        // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
+        customersSchedulingApp.getClientsOfStore(elem ->
+                listViewCode(elem), storeResource);
 
         toolbar   = view.findViewById(R.id.app_bar);
         lv        = view.findViewById(R.id.myClients);
 
-        lv.setAdapter(new CustomAdapterTogleButtons(getActivity(), clients, customersSchedulingApp));
-
         toolBarCode();
+    }
 
-        //   customersSchedulingApp
-        //           .getCurrClients(this::listViewCode,
-        //                   "username");
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void listViewCode(Object object)             //TODO change parameter to connect to server Object storesDTO
+    {
+        ClientOfStoreDTO clients =  ((ClientOfStoreDTO)object);
 
-
+        lv.setAdapter(new CustomAdapterTogleButtons(getActivity(),clients.get_embedded().getClientResourceList(), customersSchedulingApp, storeResource));
 
     }
 

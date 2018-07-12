@@ -17,21 +17,61 @@ public class StoreLinks implements Serializable {
     private Link portfolio;
     private Link update_addr;
     private Link update_info;
+    private Link clients;
+    private Link pendent_requests;
+    private Link get_staff;
+    private Link add_service_staff;
     private Link insert_staff;
 
     public StoreLinks() {
 
     }
 
-    public StoreLinks(Link get, Link insert, Link services, Link portfolio, Link update_addr, Link update_info, Link timetable, Link insert_staff) {
+    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update_addr, Link update_info, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff) {
         this.get = get;
         this.insert = insert;
         this.services = services;
+        this.timetable = timetable;
         this.portfolio = portfolio;
         this.update_addr = update_addr;
         this.update_info = update_info;
-        this.timetable = timetable;
+        this.clients = clients;
+        this.pendent_requests = pendent_requests;
+        this.get_staff = get_staff;
+        this.add_service_staff = add_service_staff;
         this.insert_staff = insert_staff;
+    }
+
+    public void setClients(Link clients) {
+        this.clients = clients;
+    }
+
+    public void setPendent_requests(Link pendent_requests) {
+        this.pendent_requests = pendent_requests;
+    }
+
+    public void setGet_staff(Link get_staff) {
+        this.get_staff = get_staff;
+    }
+
+    public void setAdd_service_staff(Link add_service_staff) {
+        this.add_service_staff = add_service_staff;
+    }
+
+    public Link getClients() {
+        return clients;
+    }
+
+    public Link getPendent_requests() {
+        return pendent_requests;
+    }
+
+    public Link getGet_staff() {
+        return get_staff;
+    }
+
+    public Link getAdd_service_staff() {
+        return add_service_staff;
     }
 
     public void setInsert_staff(Link insert_staff) {

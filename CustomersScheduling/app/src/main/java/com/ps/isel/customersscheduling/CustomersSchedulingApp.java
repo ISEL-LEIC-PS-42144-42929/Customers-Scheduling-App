@@ -6,11 +6,14 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
+import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
+import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
@@ -60,6 +63,13 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getStoresOfOwner(Consumer<StoresOfUserDTO> cons)
+    {
+        api.getStoresOfOwner(cons);
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoreByNif(Consumer<StoreResourceItem> cons, StoreResourceItem storeResource)
     {
         api.getStoresByNif(cons, storeResource);
@@ -82,10 +92,30 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getStoreServices(cons, storeResource);
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public <T>void getUserRegisteredBusiness(Consumer<StoresOfUserDTO> cons)
     {
         api.getUserRegisteredBusiness(cons);
+    }
+
+    public void getClientsOfStore(Consumer<ClientOfStoreDTO> cons, StoreResourceItem ownerBusiness) {
+        api.getClientsOfStore(cons, ownerBusiness);
+    }
+
+    public void getPendentRequestsOfClients(Consumer<ClientOfStoreDTO> cons, StoreResourceItem ownerBusiness)
+    {
+        api.getPendentRequestsOfClients(cons, ownerBusiness);
+    }
+
+    public void getBookingsOfClient(Consumer<ClientOfStoreDTO> cons) //TODO mudar a class
+    {
+        api.getBookingsOfClient(cons);
+    }
+
+    //POST REQUESTS
+    public void registerClientToStore(Consumer<ClientResourceItem> cons, JSONObject json, ClientResourceItem user, String nif) {
+        api.registerClientToStore(cons,json,user, nif);
     }
 
   //  @RequiresApi(api = Build.VERSION_CODES.N)
@@ -93,22 +123,6 @@ public class CustomersSchedulingApp extends Application implements Serializable
   //  {
   //     api.getEmployeeDisponibility(cons,service);
   //  }
-
-  //  @RequiresApi(api = Build.VERSION_CODES.N)
-  //  public void getSearchedStoreByName(Consumer<Business[]> cons, String businessName)
-  //  {
-  //     // api.getStoresByNif(cons, businessName);
-  //  }
-
- //   @RequiresApi(api = Build.VERSION_CODES.N)
- //   public void getStoreByLocationAndCategory(Consumer<Business[]> cons,
- //                                             String location,
- //                                             String category)
- //   {
- //       api.getStoresByLocationAndCategory(cons, location, category);
- //   }
-
-
 
 
     public <T>void getStaffOfService(Consumer<T[]> cons)
@@ -122,7 +136,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
        api.getStoreEmployees(cons,storeResource);
     }
 
-    //POST REQUESTS
+
 
    @RequiresApi(api = Build.VERSION_CODES.N)
    public<T> void registerStore(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject)
@@ -176,5 +190,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
     {
         api.sendIdToken(idToken);
     }
+
+
 
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#62def8">
+
+    <Spinner
+        android:id="@+id/rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchName"
+        android:spinnerMode="dialog"
+        android:layout_marginTop="35dp"
+        android:hint="@string/_0_min_5_max"
+        android:textColorHint="#05ab9a">
+
+    </Spinner>
+
+
+
+</RelativeLayout>

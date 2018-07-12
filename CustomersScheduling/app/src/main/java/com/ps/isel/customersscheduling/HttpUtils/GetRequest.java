@@ -55,7 +55,6 @@ public class GetRequest<T> extends JsonRequest<T>
     @Override
     protected Response parseNetworkResponse(NetworkResponse response) {
         try {
-
                 String str = new String(response.data, StandardCharsets.UTF_8);
                 T dto = this.mapper.readValue(str, dtoType);
                 return Response.success(dto, null);

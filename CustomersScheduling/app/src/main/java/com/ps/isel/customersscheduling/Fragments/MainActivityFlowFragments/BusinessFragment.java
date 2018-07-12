@@ -1,5 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Build;
@@ -10,15 +11,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
@@ -36,8 +43,10 @@ import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResour
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
+import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONObject;
 
@@ -49,18 +58,21 @@ public class BusinessFragment extends BaseFragment
     private CategoryDto cat = new CategoryDto("Tech");
     private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
     private Link[] links = new Link[1];
+    private StoreLinks linkzao;
 
     private ServiceDto services = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte",20);
 
 
+
     private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+    private StoreResourceItem storeResourceItem = new StoreResourceItem(store, 3.0, linkzao);
     private ServiceLink _linkService;
     private SelfLink _links;
 
 
-   // private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(store, services,_linkService), new ServiceResourceItem(store, services,_linkService)};
-   // private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
-   // private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
+    private ServiceResourceItem[] serviceResourceItem = new ServiceResourceItem[]{new ServiceResourceItem(storeResourceItem, services,_linkService), new ServiceResourceItem(storeResourceItem, services,_linkService)};
+    private ServicesOfBusinessEmbedded _embedded = new ServicesOfBusinessEmbedded(serviceResourceItem);
+    private ServicesOfBusinessDTO servicesOfBusinessDTO = new ServicesOfBusinessDTO(_embedded, _links);
 
 
 
@@ -85,7 +97,9 @@ public class BusinessFragment extends BaseFragment
     private final String DESCRIPTION = "Description: ";
 
     private Toolbar toolbar;
-    private Button signInBtn;
+    private Button registerBtn;
+    private Button unregisterBtn;
+    private Button rateBtn;
     private TextView name;
     private TextView address;
     private TextView contact;
@@ -102,6 +116,7 @@ public class BusinessFragment extends BaseFragment
     private int position;
 
     private double score;
+    private int scoreI;
     private int numberStars;
     private double proporcionToDraw;
     private int finalLevelToDraw;
@@ -148,33 +163,31 @@ public class BusinessFragment extends BaseFragment
         storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
         store = storeDTO.get_embedded().getStoreResourceList()[position].getStore();
 
-
-        //store = (StoreDto) bundle.getSerializable("store");
-        //store = storeResource.getStore();
-
-
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
-        customersSchedulingApp
-                .getStoreByNif(store->
-                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
-       customersSchedulingApp
-               .getStoreServices(service->
-                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
 
-        toolbar     = view.findViewById(R.id.app_bar);
-        name        = view.findViewById(R.id.name);
-        address     = view.findViewById(R.id.address);
-        contact     = view.findViewById(R.id.contact);
-        description = view.findViewById(R.id.description);
-        category    = view.findViewById(R.id.category);
-        lv          = view.findViewById(R.id.services);
+      //  customersSchedulingApp
+      //          .getStoreByNif(store->
+      //              constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
+      //  customersSchedulingApp
+      //         .getStoreServices(service->
+      //                 listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
+
+        toolbar       = view.findViewById(R.id.app_bar);
+        name          = view.findViewById(R.id.name);
+        address       = view.findViewById(R.id.address);
+        contact       = view.findViewById(R.id.contact);
+        description   = view.findViewById(R.id.description);
+        category      = view.findViewById(R.id.category);
+        lv            = view.findViewById(R.id.services);
+        registerBtn   = view.findViewById(R.id.registerBtn);
+        unregisterBtn = view.findViewById(R.id.unregisterBtn);
+        rateBtn   = view.findViewById(R.id.rateBtn);
 
         toolBarCode();
         constructButtonsAndAddListeners();
-    //    constructRatingStarsAndTextViews(view,store);
-    //    listViewCode(servicesOfBusinessDTO);
+        constructRatingStarsAndTextViews(view,storeResourceItem);
+        listViewCode(servicesOfBusinessDTO);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ServiceFragment();
@@ -183,8 +196,29 @@ public class BusinessFragment extends BaseFragment
 
     private void constructButtonsAndAddListeners()
     {
-//        signInBtn.setVisibility(isUserSigned? View.VISIBLE: View.INVISIBLE );   //change condition to without "!"
-        //add Listener to button
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeFragment(fragmentManager,R.id.mainActivityFragment,addBundleToFragment(new ClientDataFragment(),"storeDTO", storeDTO));
+
+            }
+        });
+
+        unregisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               // customersSchedulingApp.unregisterClientInStore();//TODO DELETES
+
+            }
+        });
+
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEditTextToRate(view);
+            }
+        });
     }
 
 
@@ -262,6 +296,60 @@ public class BusinessFragment extends BaseFragment
                 goToActivity(context, MainActivity.class);
             }
         });
+
+    }
+
+    public void showEditTextToRate(View view) {
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+               getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.insertscore, null);
+
+
+
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        constructDropdowns(popupView);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+       // popupView.setOnTouchListener(new View.OnTouchListener() {
+       //     @Override
+       //     public boolean onTouch(View v, MotionEvent event) {
+       //         popupWindow.dismiss();
+//
+       //         //TODO enviar ao servidor a classificação
+       //         return true;
+       //     }
+       // });
+    }
+
+    private void constructDropdowns(View popupView)
+    {
+        int[] aus = getResources().getIntArray(R.array.rank);
+        @SuppressLint("ResourceType") ArrayAdapter<Integer> adapterLocations = new ArrayAdapter<Integer>(
+                context,
+                android.R.layout.simple_dropdown_item_1line,
+                R.array.rank);
+        Spinner m = popupView.findViewById(R.id.rate);
+
+        m.setAdapter(adapterLocations);
+
+        m.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                scoreI = aus[position];
+            }
+        });
+
 
     }
 

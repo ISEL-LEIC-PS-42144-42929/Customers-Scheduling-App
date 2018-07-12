@@ -147,11 +147,11 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
         jsonBodyObj = new JSONObject();
 
-            customersSchedulingApp
-                    .getUserRegisteredBusiness(
-                            elem-> listViewCode(elem));
+      //      customersSchedulingApp
+      //              .getUserRegisteredBusiness(
+      //                      elem-> listViewCode(elem));
 //
-       // listViewCode(storesOfUserDTO);// Remove after App done!!
+        listViewCode(storesOfUserDTO);// Remove after App done!!
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -225,7 +225,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             {
                 addMultBundleToFragment("byFavourite", false);
                 customersSchedulingApp.getStoreByName(elem->
-                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "storeDto", elem)), s);
+                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "storeDTO", elem)), s);
                 return false;
             }
 

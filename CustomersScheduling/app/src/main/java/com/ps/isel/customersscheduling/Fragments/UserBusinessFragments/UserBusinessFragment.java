@@ -101,18 +101,16 @@ public class UserBusinessFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
-     //   customersSchedulingApp.getUserStores(elem->
-     //           listViewCode(elem));
+        customersSchedulingApp.getStoresOfOwner(elem->
+                listViewCode(elem));
 
         toolbar   = view.findViewById(R.id.app_bar);
         lv        = view.findViewById(R.id.myBusiness);
 
         toolBarCode();
-        listViewCode(storesOfUserDTO);
+        //listViewCode(storesOfUserDTO);
 
-     //   customersSchedulingApp
-     //             .getUserStores(
-     //                     elem-> listViewCode(elem));
+
     }
 
     private void toolBarCode()

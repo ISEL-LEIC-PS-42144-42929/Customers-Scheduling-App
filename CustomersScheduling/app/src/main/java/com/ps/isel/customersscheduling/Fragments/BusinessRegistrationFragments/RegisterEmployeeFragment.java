@@ -34,11 +34,10 @@ public class RegisterEmployeeFragment extends BaseFragment
     private FragmentManager fragmentManager;
 
     private CustomersSchedulingApp customersSchedulingApp;
-    private JSONObject jsonBodyObj;
 
     private Context context;
 
-    private Toolbar toolbar;
+    protected Toolbar toolbar;
     private EditText employeeName;
     private EditText employeeEmail;
     private EditText employeeContact;
@@ -69,8 +68,6 @@ public class RegisterEmployeeFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
 
-        jsonBodyObj = new JSONObject();
-
         toolbar             = view.findViewById(R.id.app_bar);
         employeeName        = view.findViewById(R.id.employeeName);
         employeeEmail       = view.findViewById(R.id.employeeEmail);
@@ -86,7 +83,7 @@ public class RegisterEmployeeFragment extends BaseFragment
 
     }
 
-    private void toolbarCode()
+    public void toolbarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -101,13 +98,15 @@ public class RegisterEmployeeFragment extends BaseFragment
         });
     }
 
-    private void addListenertoButton()
+    public void addListenertoButton()
     {
         registerEmployee.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
+
+                 JSONObject jsonBodyObj = new JSONObject();
                 try
                 {
                     String clientEmail = employeeEmail.getText().toString();

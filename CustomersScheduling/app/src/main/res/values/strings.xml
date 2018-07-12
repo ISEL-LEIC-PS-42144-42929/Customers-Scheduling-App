@@ -64,6 +64,13 @@
     <string name="nif">nif</string>
     <string name="cancel">Cancel</string>
     <string name="end_employee_schedule_registration">End Employee Schedule Registration</string>
+    <string name="rate">Rate</string>
+    <string name="unregister">Unregister</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="gender_0_for_female_1_for_male">Gender: 0 for Female 1 for Male</string>
+    <string name="_0_min_5_max">0(Min)- 5(Max)</string>
     <string-array name="categories_array">
         <item>Restaurants</item>
         <item>Barber</item>
@@ -72,4 +79,13 @@
         <item>Health</item>
         <item>Dentists</item>
     </string-array>
+
+    <integer-array name="rank">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
 </resources>

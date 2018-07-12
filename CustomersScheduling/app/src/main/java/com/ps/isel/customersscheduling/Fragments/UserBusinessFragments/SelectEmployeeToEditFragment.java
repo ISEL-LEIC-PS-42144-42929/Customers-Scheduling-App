@@ -138,11 +138,11 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
             employeeNames[i] = emp[i].getPerson().getName();
         }
 
-          lv.setAdapter(new CustomAdapterSameFragment(employeeNames,
-                  fragmentManager,
-                  this,new SelectScheduleOrEmployeeDataFragment(),
-                  getActivity(),
-                  R.id.userBusinessFragment));
+      //   lv.setAdapter(new CustomAdapterSameFragment(employeeNames,
+      //           fragmentManager,
+      //           this,new SelectScheduleOrEmployeeDataFragment(),
+      //           getActivity(),
+      //           R.id.userBusinessFragment));
 
         //  lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         //          @Override

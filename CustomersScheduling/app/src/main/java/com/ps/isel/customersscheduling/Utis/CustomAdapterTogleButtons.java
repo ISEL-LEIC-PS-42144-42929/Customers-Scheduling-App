@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +13,34 @@ import android.widget.TextView;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class CustomAdapterTogleButtons extends BaseAdapter {
 
     private Context context;
-    private PersonDto[] currentClients;
+    private ClientResourceItem[] currentClients;
 
     private View row;
     private TextView name;
     private TextView blocked;
     private Switch sw;
 
+    private StoreResourceItem storeResource;
+
     private CustomersSchedulingApp customersSchedulingApp;
 
-    public CustomAdapterTogleButtons(Context context, PersonDto[] users, CustomersSchedulingApp customersSchedulingApp)
+    public CustomAdapterTogleButtons(Context context, ClientResourceItem[] clientResource, CustomersSchedulingApp customersSchedulingApp, StoreResourceItem storeResourceItem)
     {
         this.context = context;
-        this.currentClients = users;
+        this.currentClients = clientResource;
         this.customersSchedulingApp = customersSchedulingApp;
+        this.storeResource = storeResourceItem;
     }
 
     @Override
@@ -55,31 +65,41 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
         row = inflater.inflate(R.layout.rowofcurrentclients, parent, false);
 
         name = (TextView) row.findViewById(R.id.userName);
-        name.setText(currentClients[position].getName());
+        name.setText(currentClients[position].getPerson().getName());
 
         blocked = (TextView) row.findViewById(R.id.blocked);
 
         sw = (Switch) row.findViewById(R.id.sw);
         sw.setChecked(true);
 
-        addListenerToSwitch(sw, blocked);
+        addListenerToSwitch(sw, blocked, position);
 
         return (row);
     }
 
-    private void addListenerToSwitch(Switch sw, TextView text)
+    private void addListenerToSwitch(Switch sw, TextView text, int position)
     {
         sw.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                if(!sw.isChecked())
-                {
-                    //customersSchedulingApp.blockUser
-                    text.setText("Blocked");
-                }else{
-                    //customersSchedulingApp.UnblockUser
-                    text.setText("");
+
+                JSONObject jsonBodyObj = new JSONObject();
+
+                try {
+                    if (!sw.isChecked()) {
+                        jsonBodyObj.put("accepted", false);
+                        text.setText("Blocked");
+                    } else {
+                        jsonBodyObj.put("accepted", true);
+                        text.setText("");
+                    }
+                    customersSchedulingApp.registerClientToStore(elem->currentClients[position] = elem,jsonBodyObj,currentClients[position], storeResource.getStore().getNif());
                 }
+                 catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

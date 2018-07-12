@@ -2,6 +2,8 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -98,15 +100,13 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
     {
         currentClients.setOnClickListener(new View.OnClickListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
-                //Todo Enviar ao servidor eliminar favorito ao request
-
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
-                        new currentClientsFragment());
-
+                        fragment.addBundleToFragment(new currentClientsFragment(),"storeResource", ownerBusiness[position]));
             }
         });
 
@@ -120,7 +120,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
 
                 fragment.changeFragment(fragmentManager,
                         R.id.userBusinessFragment,
-                        new PendentRequestsFragment());
+                        fragment.addBundleToFragment(new PendentRequestsFragment(),"storeResource", ownerBusiness[position]));
             }
         });
 

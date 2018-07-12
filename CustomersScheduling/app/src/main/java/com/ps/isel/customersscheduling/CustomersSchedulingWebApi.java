@@ -8,10 +8,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
-import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
@@ -31,11 +32,12 @@ public class CustomersSchedulingWebApi<T>
 {
 
     private final int[] TYPE_REQUESTS= {0,1,2,3};
-    private final String DB_HOST = "http://192.168.1.207:8181/";
+    private final String DB_HOST = "http://192.168.1.215:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_REG_STORE = "store/%s/";
     private final String DB_STORE = "store/";
     private final String DB_USER_REG_OWNER = "person/owner/";
+    private final String DB_USER_GET_STORES = "person/owner/%s/stores";
     private final String DB_USER_GET_OWNER = "person/owner/%s/";
     private final String DB_USER_STORE = "store/owner/%s/";
     private final String DB_SERVICE = "service";
@@ -84,14 +86,25 @@ public class CustomersSchedulingWebApi<T>
         getRequest(cons,String.format(DB_HOST + DB_STORE + DB_QUERY_LOCAL_AND_CATEGORY, category, location),StoresOfUserDTO.class);
     }
 
-    public void getUserStores(Consumer<T> cons)
-    {
-        getRequest(cons, String.format(DB_HOST + DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+    public void getClientsOfStore(Consumer<T> cons, StoreResourceItem ownerBusiness) {
+       getRequest(cons, ownerBusiness.get_links().getClients().getHref(), ClientOfStoreDTO.class);
+    }
+
+    public void getPendentRequestsOfClients(Consumer<T> cons, StoreResourceItem ownerBusiness) {
+        getRequest(cons,ownerBusiness.get_links().getPendent_requests().getHref(), ClientOfStoreDTO.class);
     }
 
     public void getOwner(Consumer<T> cons)
     {
-        getRequest(cons, String.format(DB_HOST + DB_USER_GET_OWNER, IdTokenAndEmailContainer.getInstance().getEmail()), OwnerResourceItem.class);
+        getRequest(cons, String.format(DB_HOST + DB_USER_STORE,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+    }
+
+    public void getStoresOfOwner(Consumer<T> cons) {
+        getRequest(cons, String.format(DB_HOST + DB_USER_GET_STORES,IdTokenAndEmailContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+    }
+
+    public void getBookingsOfClient(Consumer<T> cons) {
+        getRequest(cons,"", ClientOfStoreDTO.class);//TODO mudar class
     }
 
     public void registerStore(Consumer<T> cons, JSONObject storeJSONObject)
@@ -122,6 +135,11 @@ public class CustomersSchedulingWebApi<T>
     public void registerEmployeeSchedule(Consumer<T> cons, JSONObject staffJSONObject, StaffResourceItem staffResource, Class<StaffResourceItem> staffResourceItemClass)
     {
         postRequest(staffResource.get_links().getInsert_timetable().getHref(), staffJSONObject, cons, staffResourceItemClass);
+    }
+
+    public void registerClientToStore(Consumer<T> cons, JSONObject clientJSONObject, ClientResourceItem user, String nif) {
+        String aux = user.get_links().getSet_store().getHref().replace("{nif}",nif);
+        postRequest(aux,clientJSONObject,cons,ClientResourceItem.class);
     }
 
 
@@ -229,8 +247,5 @@ public class CustomersSchedulingWebApi<T>
             }
     }
     }
-
-
-
 }
 

@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -9,17 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.ps.isel.customersscheduling.Activities.MainActivity;
-import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
-import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.SelectEmployeeToEditFragment;
-import com.ps.isel.customersscheduling.Model.Service;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by Colapso on 04/04/18.
@@ -27,7 +19,7 @@ import java.util.ArrayList;
 
 public class CustomAdapterSameFragment extends BaseAdapter
 {
-    private String[] buttonsName;
+    private ClientResourceItem[] buttonsName;
     private Context context;
 
     private FragmentManager fragmentManager;
@@ -35,7 +27,7 @@ public class CustomAdapterSameFragment extends BaseAdapter
     private BaseFragment fragmentTo;
     private int id;
 
-    public CustomAdapterSameFragment(String[] buttonsName, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id)
+    public CustomAdapterSameFragment(ClientResourceItem[] buttonsName, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id)
     {
         this.buttonsName = buttonsName;
         this.context = context;
@@ -73,7 +65,7 @@ public class CustomAdapterSameFragment extends BaseAdapter
         }
 
         Button defName= (Button)view.findViewById(R.id.btn);
-        defName.setText(buttonsName[position]);
+        defName.setText(buttonsName[position].getPerson().getName());
 
         defName.setOnClickListener(new View.OnClickListener()
         {

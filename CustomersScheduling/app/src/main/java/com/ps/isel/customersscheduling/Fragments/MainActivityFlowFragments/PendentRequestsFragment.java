@@ -21,6 +21,8 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
+import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
 
@@ -33,9 +35,8 @@ public class PendentRequestsFragment extends BaseFragment
 
     private Toolbar toolbar;
     private ListView lv;
-
-  //  private ClientDto user ;
-  //  private ClientDto[] pendentRequests = new ClientDto[4];
+    private Bundle bundle;
+    private StoreResourceItem storeResource;
 
     private Context context;
 
@@ -72,14 +73,21 @@ public class PendentRequestsFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
+        context = getActivity().getApplicationContext();
+        fragmentManager = getActivity().getSupportFragmentManager();
+        bundle = getArguments();
+        storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
+
+        customersSchedulingApp = ((CustomersSchedulingApp) context);
+
+
         toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         lv      = (ListView) view.findViewById(R.id.pendentRequests);
 
-        context = getActivity().getApplicationContext();
+        customersSchedulingApp.getPendentRequestsOfClients(elem ->
+                listViewCode(elem), storeResource);
 
-        fragmentManager = getActivity().getSupportFragmentManager();
-
-    //    user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
+        //    user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
     //    pendentRequests[0] = user;      //hardcodeddata
     //    pendentRequests[1] = user;      //hardcodeddata
     //    pendentRequests[2] = user;      //hardcodeddata
@@ -112,8 +120,10 @@ public class PendentRequestsFragment extends BaseFragment
         });
     }
 
-  //  private void constructListViewAndAddListeners(ClientDto[] pendentRequests)
-  //  {
-  //      lv.setAdapter(new CustomAdapterUsers(getActivity(), pendentRequests, this));
-  //  }
+    private void listViewCode(Object object)
+    {
+        ClientOfStoreDTO clients =  ((ClientOfStoreDTO)object);
+
+        lv.setAdapter(new CustomAdapterUsers(getActivity(), clients.get_embedded().getClientResourceList(), this, customersSchedulingApp, storeResource));
+    }
 }

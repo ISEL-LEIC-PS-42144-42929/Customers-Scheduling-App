@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.Activities.MainActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.AddressDto;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
@@ -48,6 +50,7 @@ public class ScheduledFragment extends BaseFragment
     private String[] names = {"corteReserva","barbaReserva","comidaReserva","saudeReserva"};
     //-------------
 
+    private CustomersSchedulingApp customersSchedulingApp;
     private Fragment registerBusinessScheduleFragment;
     private FragmentManager fragmentManager;
 
@@ -94,11 +97,13 @@ public class ScheduledFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         fragmentManager = getActivity().getSupportFragmentManager();
+        customersSchedulingApp = ((CustomersSchedulingApp) context);
 
         toolbar = view.findViewById(R.id.app_bar);
         lv      = view.findViewById(R.id.listSchedules);
 
-       // lv.setAdapter(new CustomAdapterSameFragment(names, fragmentManager, this, getActivity(),R.id.mainActivityFragment));
+        customersSchedulingApp.getBookingsOfClient(elem-> listViewCode(elem));
+
         toolbarCode();
     }
 
@@ -115,5 +120,11 @@ public class ScheduledFragment extends BaseFragment
                 goToActivity(context, MainActivity.class);
             }
         });
+    }
+
+    private void listViewCode(Object bookings)
+    {
+        ClientOfStoreDTO c = (ClientOfStoreDTO) bookings;
+        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getClientResourceList(), fragmentManager, this, new ScheduleInfoFragment(), getActivity(),R.id.mainActivityFragment));
     }
 }
