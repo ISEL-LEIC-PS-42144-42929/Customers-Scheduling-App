@@ -22,6 +22,7 @@ import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.Searc
 
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +32,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Colapso on 14/04/18.
@@ -53,15 +57,23 @@ public class CustomAdapterFavourites extends BaseAdapter
     private Button deleteFavBtn;
     private Button goToFavBtn;
 
-    public CustomAdapterFavourites(Activity context, Favourite[] favourites, Fragment fragment)
+    public CustomAdapterFavourites(Activity context, HashMap<Integer, Favourite> userFavourites, Fragment fragment)
     {
-        this.favourites = favourites;
         this.name = name;
         this.context = context;
 
         customersSchedulingApp = ((CustomersSchedulingApp)context.getApplicationContext());
         fragmentManager = ((MainActivity)context).getSupportFragmentManager();
         this.fragment = (BaseFragment) fragment;
+        favourites = new Favourite[userFavourites.size()];
+        fillArray(userFavourites);
+    }
+
+    private void fillArray(HashMap<Integer, Favourite> userFavourites)
+    {
+        for (int i = 0; i <favourites.length ; i++) {
+            favourites[i] = userFavourites.get(i);
+        }
     }
 
     @Override
@@ -107,7 +119,7 @@ public class CustomAdapterFavourites extends BaseAdapter
         @Override
         public void onClick(View v)
         {
-            readFromInternalStorageAndDelete(favourites[position]);
+            readFromInternalStorageAndDelete(favourites[position], position);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.detach(fragment);
             fragmentTransaction.attach(fragment);
@@ -131,9 +143,10 @@ public class CustomAdapterFavourites extends BaseAdapter
     }
 
 
-    private void readFromInternalStorageAndDelete(Favourite favourite)
+    private void readFromInternalStorageAndDelete(Favourite favourite, int position)
     {
         ArrayList<Favourite> objectsList = new ArrayList<>();
+        UserInfoContainer.getInstance().getFavourites().remove(position);
         Favourite[] favArray = null;
         Favourite favouriteElement;
         try {
@@ -148,7 +161,7 @@ public class CustomAdapterFavourites extends BaseAdapter
             }
             favArray = new Favourite[objectsList.size()];
             favArray = objectsList.toArray(favArray);
-            reWriteFavouritesToInternalStorage(favArray);
+            reWriteFavouritesToInternalStorage(UserInfoContainer.getInstance().getFavourites());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -163,7 +176,7 @@ public class CustomAdapterFavourites extends BaseAdapter
 
     }
 
-    private void reWriteFavouritesToInternalStorage(Favourite[] favourites)
+    private void reWriteFavouritesToInternalStorage(HashMap<Integer, Favourite> favourites)
     {
 
         ObjectOutputStream oos = null;
@@ -177,12 +190,16 @@ public class CustomAdapterFavourites extends BaseAdapter
                 isNewFile=true;
             }
 
+
             FileOutputStream fos=new FileOutputStream(f);
             oos=new ObjectOutputStream(fos);
 
-            for (int i = 0; i <favourites.length ; i++)
-            {
-                oos.writeObject(favourites[i]);
+
+            Iterator it = favourites.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                oos.writeObject(pair.getValue());
+
             }
 
         }

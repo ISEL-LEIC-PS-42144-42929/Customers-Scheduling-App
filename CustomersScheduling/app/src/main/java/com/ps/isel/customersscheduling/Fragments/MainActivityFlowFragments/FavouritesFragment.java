@@ -19,6 +19,7 @@ import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
 
 import java.io.File;
@@ -75,7 +76,7 @@ public class FavouritesFragment extends BaseFragment
     {
       context = getActivity().getApplicationContext();
 
-      favSearches = readFromInternalStorageAndSeparate();
+      UserInfoContainer.getInstance().setFavourites(readFromInternalStorageAndSeparate());
 
       if(favSearches == null)
       {
@@ -85,7 +86,7 @@ public class FavouritesFragment extends BaseFragment
       toolbar = view.findViewById(R.id.app_bar);
       lv      = view.findViewById(R.id.listButtons);
 
-      lv.setAdapter(new CustomAdapterFavourites(getActivity(),favSearches, this));
+      lv.setAdapter(new CustomAdapterFavourites(getActivity(),UserInfoContainer.getInstance().getFavourites(), this));
       toolbarCode();
     }
 

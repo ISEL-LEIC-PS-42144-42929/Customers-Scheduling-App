@@ -28,6 +28,7 @@ import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 
 import com.ps.isel.customersscheduling.Model.Favourite;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.AppendingObjectOutputStream;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -215,6 +216,7 @@ public class FilterFragment extends BaseFragment {
     private void saveInInternalStorage()
     {
         Favourite toSave = new Favourite(searchName.getText().toString(), category, location);
+        UserInfoContainer.getInstance().getFavourites().put(UserInfoContainer.getInstance().getFavourites().size(),toSave);
 
         ObjectOutputStream oos = null;
 
