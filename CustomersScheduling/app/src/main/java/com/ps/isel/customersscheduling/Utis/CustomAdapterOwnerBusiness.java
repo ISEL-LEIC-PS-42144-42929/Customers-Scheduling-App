@@ -89,7 +89,7 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
 
         editBusinessBtn = (Button) row.findViewById(R.id.editBusinessInfo);
         pendentRequests = (Button) row.findViewById(R.id.pendentRequests);
-        currentClients = (Button) row.findViewById(R.id.clients);
+        currentClients  = (Button) row.findViewById(R.id.clients);
 
         addListenersToButtons(currentClients, pendentRequests, editBusinessBtn, position);
 

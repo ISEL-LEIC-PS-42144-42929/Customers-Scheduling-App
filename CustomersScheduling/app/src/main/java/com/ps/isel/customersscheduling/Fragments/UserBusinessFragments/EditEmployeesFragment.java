@@ -1,8 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -33,7 +36,8 @@ public class EditEmployeesFragment extends BaseFragment
     private Context context;
     private Bundle bundle;
 
-    private StaffResourceItem staffResourceItem;
+    private StaffResourceItem staffResource;
+    private StoreResourceItem storeResource;
 
     private Toolbar toolbar;
     private EditText employeeName;
@@ -59,9 +63,11 @@ public class EditEmployeesFragment extends BaseFragment
 
         context = getActivity().getApplicationContext();
 
-        //TODO fazer o pedido ao servidor para ir buscar o employee e dados do respectivo
+        bundle = getArguments();
+        staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
+        storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
+
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-       // customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
 
         toolbar                  = view.findViewById(R.id.app_bar);
@@ -97,6 +103,7 @@ public class EditEmployeesFragment extends BaseFragment
     private void addListenertoButton()
     {
         registerEmployee.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
@@ -134,7 +141,11 @@ public class EditEmployeesFragment extends BaseFragment
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                //customersSchedulingApp.registerEmployee(jsonBodyObj);
+                customersSchedulingApp.registerEmployee(elem->
+                                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
+                        jsonBodyObj,
+                        storeResource,
+                        StaffResourceItem.class);
                 changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
             }
         });

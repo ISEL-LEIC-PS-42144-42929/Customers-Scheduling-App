@@ -229,8 +229,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
             customersSchedulingApp.registerStoreSchedule(elem->
                             changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new UserBusinessFragment(), "storeResource",elem)),
                     (JSONObject)item.getValue(),
-                    storeResource,
-                    StoreResourceItem.class);
+                    storeResource);
             it.remove();
         }
     }
@@ -267,8 +266,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
                 customersSchedulingApp.registerStoreSchedule(elem->
                                 storeResource=elem,
                         jsons.get(item.getText()),
-                        storeResource,
-                        StoreResourceItem.class);
+                        storeResource);
                 jsons.remove(item.getText());
                 it.remove();
             }

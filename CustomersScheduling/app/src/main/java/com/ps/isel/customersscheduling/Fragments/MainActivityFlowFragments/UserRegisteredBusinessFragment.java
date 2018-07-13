@@ -53,19 +53,19 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
     //HARDCODED
 
-    private Link link = new Link();
-    private Link[] links = new Link[1];
-
-    private SelfLink _links;
-
-    private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
-    private double score = 3.0;
-    private StoreLinks _linkStores;
-
-
-    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,score,_linkStores)};
-    private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
-    private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
+  //  private Link link = new Link();
+  //  private Link[] links = new Link[1];
+//
+  //  private SelfLink _links;
+//
+  // // private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+  //  private double score = 3.0;
+  //  private StoreLinks _linkStores;
+//
+//
+  //  private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,score,_linkStores)};
+  //  private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
+  //  private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
 
 
     private FirebaseAuth mAuth;

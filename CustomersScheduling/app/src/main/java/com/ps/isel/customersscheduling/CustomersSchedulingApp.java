@@ -18,6 +18,7 @@ import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResource
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.Model.Service;
 
 import org.json.JSONObject;
 
@@ -127,6 +128,8 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.updateClientToStore(cons,json,user, nif);
     }
 
+
+
   //  @RequiresApi(api = Build.VERSION_CODES.N)
   //  public void getEmployeeDisponibility(Consumer<String[]> cons, ServiceDto service)
   //  {
@@ -153,14 +156,28 @@ public class CustomersSchedulingApp extends Application implements Serializable
        api.registerStore(cons, storeJSONObject);
    }
 
+    public void editOwnerBusinessData(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject, StoreResourceItem storeResource)
+    {
+        api.editOwnerBusinessData(cons, storeJSONObject, storeResource);
+    }
+    public void editStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject value, StoreResourceItem storeResource)
+    {
+        api.editStoreSchedule(cons, value, storeResource);
+    }
+
+    public void  editStoreService(Consumer<ServiceResourceItem> cons, JSONObject json, ServiceResourceItem serviceResource){
+        api.editStoreService(cons, json, serviceResource);
+    }
+
+
    // public void registerStoreScheduleEnd(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
    // {
    //     api.registerStoreScheduleEnd(cons, storeScheduleJSONObject, storeResource, storeResourceItemClass);
    // }
 
-    public void registerStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
+    public void registerStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
     {
-        api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource, storeResourceItemClass);
+        api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource);
     }
 
     public void registerEmployeeSchedule(Consumer<StaffResourceItem> cons, JSONObject staffJSONObject, StaffResourceItem staffResourceItem, Class<StaffResourceItem> staffResourceItemClass)
@@ -213,6 +230,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
         api.rejectClient(cons,user,nif);
     }
+
 
 
 }

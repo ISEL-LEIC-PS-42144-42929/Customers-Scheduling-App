@@ -40,35 +40,35 @@ public class SearchResultsFragment extends BaseFragment {
     private Link[] links = new Link[1];
     private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
     private CategoryDto cat = new CategoryDto("Tech");
-    private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
-    //HARDCODED
-    private StoreDto[] resultsBusiness = new StoreDto[]
-            {
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f),
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f),
-                    new StoreDto(
-                            new AddressDto(),
-                            new CategoryDto(),
-                            "rua do velho",
-                            "91111111",
-                            "loja do barbas",
-                            links,
-                            3.2f)
-            };
+ //  private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
+ //  //HARDCODED
+ //  private StoreDto[] resultsBusiness = new StoreDto[]
+ //          {
+ //                  new StoreDto(
+ //                          new AddressDto(),
+ //                          new CategoryDto(),
+ //                          "rua do velho",
+ //                          "91111111",
+ //                          "loja do barbas",
+ //                          links,
+ //                          3.2f),
+ //                  new StoreDto(
+ //                          new AddressDto(),
+ //                          new CategoryDto(),
+ //                          "rua do velho",
+ //                          "91111111",
+ //                          "loja do barbas",
+ //                          links,
+ //                          3.2f),
+ //                  new StoreDto(
+ //                          new AddressDto(),
+ //                          new CategoryDto(),
+ //                          "rua do velho",
+ //                          "91111111",
+ //                          "loja do barbas",
+ //                          links,
+ //                          3.2f)
+ //          };
     //---------
 
     private CustomersSchedulingApp customersSchedulingApp;

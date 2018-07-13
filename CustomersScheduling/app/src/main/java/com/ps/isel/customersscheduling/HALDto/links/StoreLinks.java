@@ -15,8 +15,7 @@ public class StoreLinks implements Serializable {
     private Link services;
     private Link timetable;
     private Link portfolio;
-    private Link update_addr;
-    private Link update_info;
+    private Link update;
     private Link clients;
     private Link pendent_requests;
     private Link get_staff;
@@ -31,14 +30,13 @@ public class StoreLinks implements Serializable {
 
     }
 
-    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update_addr, Link update_info, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff, Link set_client, Link delete_client, Link set_store, Link score) {
+    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff, Link set_client, Link delete_client, Link set_store, Link score) {
         this.get = get;
         this.insert = insert;
         this.services = services;
         this.timetable = timetable;
         this.portfolio = portfolio;
-        this.update_addr = update_addr;
-        this.update_info = update_info;
+        this.update = update;
         this.clients = clients;
         this.pendent_requests = pendent_requests;
         this.get_staff = get_staff;
@@ -146,13 +144,6 @@ public class StoreLinks implements Serializable {
         return portfolio;
     }
 
-    public Link getUpdate_addr() {
-        return update_addr;
-    }
-
-    public Link getUpdate_info() {
-        return update_info;
-    }
 
     public void setGet(Link get) {
         this.get = get;
@@ -170,11 +161,11 @@ public class StoreLinks implements Serializable {
         this.portfolio = portfolio;
     }
 
-    public void setUpdate_addr(Link update_addr) {
-        this.update_addr = update_addr;
+    public Link getUpdate() {
+        return update;
     }
 
-    public void setUpdate_info(Link update_info) {
-        this.update_info = update_info;
+    public void setUpdate(Link update) {
+        this.update = update;
     }
 }

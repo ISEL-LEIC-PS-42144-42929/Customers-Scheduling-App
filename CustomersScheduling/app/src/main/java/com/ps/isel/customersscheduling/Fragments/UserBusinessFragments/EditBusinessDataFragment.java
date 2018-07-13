@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,13 +26,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.BusinessScheduleFragment;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
-import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -44,7 +38,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -155,12 +148,12 @@ public class EditBusinessDataFragment extends BaseFragment
 
     private void putHints()
     {
-        storeName.setHint(storeResource.getStore().getStoreName());
-        storeNif.setHint(storeResource.getStore().getNif());
-        storeContact.setHint(storeResource.getStore().getContact());
-        streetAndLot.setHint(storeResource.getStore().getAddress().getStreet() + " " + storeResource.getStore().getAddress().getLot());
-        zipcode.setHint(storeResource.getStore().getAddress().getZip_code());
-        cityAndCountry.setHint(storeResource.getStore().getAddress().getCity() + " " + storeResource.getStore().getAddress().getCountry()); //  construir string com os dois campos
+        storeName.setHint("Name:" + storeResource.getStore().getStoreName());
+        storeNif.setHint("NIF:" + storeResource.getStore().getNif());
+        storeContact.setHint("Contact:" + storeResource.getStore().getContact());
+        streetAndLot.setHint("Lot and Street:" + storeResource.getStore().getAddress().getStreet() + " " + storeResource.getStore().getAddress().getLot());
+        zipcode.setHint("Zip-code:" + storeResource.getStore().getAddress().getZip_code());
+        cityAndCountry.setHint("City and Country:" + storeResource.getStore().getAddress().getCity() + " " + storeResource.getStore().getAddress().getCountry()); //  construir string com os dois campos
         choseCategory.setHint(storeResource.getStore().getCategory().getName());
     }
 
@@ -200,6 +193,7 @@ public class EditBusinessDataFragment extends BaseFragment
     {
         editBusiness.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 try
@@ -210,6 +204,7 @@ public class EditBusinessDataFragment extends BaseFragment
                     String strtAndLot = streetAndLot.getText().toString();
                     String zipCode = zipcode.getText().toString();
                     String cityAndCoun = cityAndCountry.getText().toString();
+                    String cat = choseCategory.getText().toString();
 
                     if(storeNIF.equals(""))
                     {
@@ -227,6 +222,10 @@ public class EditBusinessDataFragment extends BaseFragment
                     {
                         strtAndLot = streetAndLot.getHint().toString();
                     }
+                    if(cat.equals(""))
+                    {
+                        cat = streetAndLot.getHint().toString();
+                    }
                     if(zipCode.equals(""))
                     {
                         zipCode = zipcode.getHint().toString();
@@ -237,21 +236,20 @@ public class EditBusinessDataFragment extends BaseFragment
                     }
 
                     jsonBodyObj.put("name", storeNam);
-                    jsonBodyObj.put("ownerNif", "123456");
                     jsonBodyObj.put("nif", storeNIF);
                     jsonBodyObj.put("contact", storeCont);
-                    jsonBodyObj.put("category", choseCategoryText);
+                    jsonBodyObj.put("category", cat);
                     jsonBodyObj.put("street", deserializeString(strtAndLot)[0]);
-                    jsonBodyObj.put("zipcode", zipCode);
+                    jsonBodyObj.put("zip_code", zipCode);
                     jsonBodyObj.put("lot", deserializeString(strtAndLot)[1]);
                     jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
                     jsonBodyObj.put("country",deserializeString(cityAndCoun)[1]);
 
-                    //TODO mudar para editOwnerBusiness
-                    //customersSchedulingApp.registerStore(elem ->
-                            //                 changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new UserBusinessFragment(),"storeResource", elem))
-                            //         , jsonBodyObj);
-                    changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
+
+                   customersSchedulingApp.editOwnerBusinessData(elem ->
+                                            changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment())
+                                    , jsonBodyObj, storeResource);
+                   // changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
                 }
                 catch (JSONException e) {
                     //TODO resolve exception

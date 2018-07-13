@@ -63,7 +63,7 @@ public class BusinessFragment extends BaseFragment
     //HARDCODED
     private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
     private CategoryDto cat = new CategoryDto("Tech");
-    private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
+   // private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
     private Link[] links = new Link[1];
     private StoreLinks linkzao;
 

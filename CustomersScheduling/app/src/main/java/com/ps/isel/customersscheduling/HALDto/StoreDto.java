@@ -10,18 +10,40 @@ public class StoreDto implements Serializable {
     private String nif;
     private float scoreReview;
     private String contact;
+    private OwnerDto owner;
     private Link[] _links;
 
     public StoreDto(){}
 
-    public StoreDto(AddressDto address, CategoryDto category, String storeName, String nif, String contact, Link[] _links, float score) {
+    public StoreDto(AddressDto address, CategoryDto category, String storeName, String nif, float scoreReview, String contact, OwnerDto owner, Link[] _links) {
         this.address = address;
         this.category = category;
         this.storeName = storeName;
         this.nif = nif;
+        this.scoreReview = scoreReview;
         this.contact = contact;
+        this.owner = owner;
         this._links = _links;
-        this.scoreReview = score;
+    }
+
+    public void setScoreReview(float scoreReview) {
+        this.scoreReview = scoreReview;
+    }
+
+    public void setOwner(OwnerDto owner) {
+        this.owner = owner;
+    }
+
+    public void set_links(Link[] _links) {
+        this._links = _links;
+    }
+
+    public OwnerDto getOwner() {
+        return owner;
+    }
+
+    public Link[] get_links() {
+        return _links;
     }
 
     public float getScoreReview() {

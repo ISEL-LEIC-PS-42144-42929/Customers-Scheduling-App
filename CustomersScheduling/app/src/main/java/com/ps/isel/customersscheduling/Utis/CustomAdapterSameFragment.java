@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 /**
@@ -19,7 +21,7 @@ import com.ps.isel.customersscheduling.R;
 
 public class CustomAdapterSameFragment extends BaseAdapter
 {
-    private ClientResourceItem[] buttonsName;
+    private StaffResourceItem[] staff;
     private Context context;
 
     private FragmentManager fragmentManager;
@@ -27,9 +29,9 @@ public class CustomAdapterSameFragment extends BaseAdapter
     private BaseFragment fragmentTo;
     private int id;
 
-    public CustomAdapterSameFragment(ClientResourceItem[] buttonsName, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id)
+    public CustomAdapterSameFragment(StaffResourceItem[] staff, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id)
     {
-        this.buttonsName = buttonsName;
+        this.staff = staff;
         this.context = context;
         this.fragmentFrom = (BaseFragment) fragmentFrom;
         this.fragmentTo = (BaseFragment) fragmentTo;
@@ -40,13 +42,13 @@ public class CustomAdapterSameFragment extends BaseAdapter
     @Override
     public int getCount()
     {
-        return buttonsName.length;
+        return staff.length;
     }
 
     @Override
     public Object getItem(int i)
     {
-        return buttonsName[i];
+        return staff[i];
     }
 
     @Override
@@ -65,14 +67,14 @@ public class CustomAdapterSameFragment extends BaseAdapter
         }
 
         Button defName= (Button)view.findViewById(R.id.btn);
-        defName.setText(buttonsName[position].getPerson().getName());
+        defName.setText(staff[position].getPerson().getName());
 
         defName.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                fragmentFrom.changeFragment(fragmentManager,id,fragmentFrom.addBundleToFragment(fragmentTo,null,null));
+                fragmentFrom.changeFragment(fragmentManager,id,fragmentFrom.addBundleToFragment(fragmentTo,"staffResouce",staff[position]));
             }
         });
 

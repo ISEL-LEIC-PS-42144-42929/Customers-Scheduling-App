@@ -34,7 +34,7 @@ public class CustomersSchedulingWebApi<T>
 {
 
     private final int[] TYPE_REQUESTS= {0,1,2,3};
-    private final String DB_HOST = "http://192.168.1.4:8181/";
+    private final String DB_HOST = "http://192.168.1.215:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_REG_STORE = "store/%s/";
     private final String DB_STORE = "store";
@@ -114,9 +114,25 @@ public class CustomersSchedulingWebApi<T>
         postRequest(String.format(DB_HOST+ DB_USER_STORE, UserInfoContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
     }
 
-    public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
+    public void editOwnerBusinessData(Consumer<T> cons, JSONObject storeJSONObject, StoreResourceItem storeResource)
     {
-        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, storeResourceItemClass);
+        updateRequest(String.format(storeResource.get_links().getUpdate().getHref(), UserInfoContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
+    }
+
+    public void editStoreService(Consumer<T> cons, JSONObject json, ServiceResourceItem serviceResource) {
+        //TODO MUDAR o LINK PARA EDITSERVICE E RESPONDER COM STOR PARA A ACTUALIZAÇAO DA VISTA
+        updateRequest(serviceResource.get_links().insert_store_service().getHref(),json,cons,serviceResource.getClass());
+    }
+
+    public void editStoreSchedule(Consumer<T> cons, JSONObject value, StoreResourceItem storeResource)
+    {
+        //TODO MUDAR o LINK PARA EDITBusinessSchedule E RESPONDER COM STOR PARA A ACTUALIZAÇAO DA VISTA
+        updateRequest(storeResource.get_links().getScore().getHref(),value,cons,storeResource.getClass());
+    }
+
+    public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
+    {
+        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, storeResource.getClass());
     }
 
   // public void registerStoreScheduleEnd(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
@@ -148,6 +164,8 @@ public class CustomersSchedulingWebApi<T>
         String aux = user.get_links().getSet_store().getHref().replace("{nif}",nif).concat(".x");
         updateRequest(aux,json,cons,StoreResourceItem.class);
     }
+
+
 
     public void rejectClient(Consumer<T> cons, ClientResourceItem user, StoreResourceItem storeResourceItem) {
 

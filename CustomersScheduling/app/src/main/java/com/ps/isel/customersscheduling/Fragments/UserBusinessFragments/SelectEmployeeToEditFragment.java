@@ -97,18 +97,19 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        context = getActivity().getApplicationContext();
+
+        bundle = getArguments();
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+
         fragmentManager = getActivity().getSupportFragmentManager();
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
-        context = getActivity().getApplicationContext();
         toolbar = view.findViewById(R.id.app_bar);
-        bundle = getArguments();
-        storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
-
         lv = (ListView) view.findViewById(R.id.employeesList);
 
-        //customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
+        customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
         listViewCode(staffResourceItems);
         toolbarCode();
 
@@ -132,26 +133,12 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
     private void listViewCode(Object employees) {
 
           StaffResourceItem[] emp = (StaffResourceItem[]) employees;
-          String[] employeeNames = new String[emp.length];
 
-        for (int i = 0; i < employeeNames.length ; i++) {
-            employeeNames[i] = emp[i].getPerson().getName();
-        }
-
-      //   lv.setAdapter(new CustomAdapterSameFragment(employeeNames,
-      //           fragmentManager,
-      //           this,new SelectScheduleOrEmployeeDataFragment(),
-      //           getActivity(),
-      //           R.id.userBusinessFragment));
-
-        //  lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        //          @Override
-        //                  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //                  changeFragment(fragmentManager,
-        //                          R.id.userBusinessFragment,
-        //                          addBundleToFragment(new SelectScheduleOrEmployeeDataFragment(), null,null));
-        //              }
-        //      });
+         lv.setAdapter(new CustomAdapterSameFragment(emp,
+                 fragmentManager,
+                 this,new SelectScheduleOrEmployeeDataFragment(),
+                 getActivity(),
+                 R.id.userBusinessFragment));
     }
 
 

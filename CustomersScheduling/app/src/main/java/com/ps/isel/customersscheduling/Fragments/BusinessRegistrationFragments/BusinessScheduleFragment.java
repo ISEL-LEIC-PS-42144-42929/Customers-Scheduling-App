@@ -224,11 +224,10 @@ public class BusinessScheduleFragment extends BaseFragment {
                 e.printStackTrace();
             }
 
-            customersSchedulingApp.registerStoreSchedule(elem->
+            customersSchedulingApp.editStoreSchedule(elem->
                     changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "storeResource",elem)),
                     (JSONObject)item.getValue(),
-                    storeResource,
-                    StoreResourceItem.class);
+                    storeResource);
             it.remove();
         }
     }
@@ -263,11 +262,10 @@ public class BusinessScheduleFragment extends BaseFragment {
             CheckBox item = (CheckBox) it.next();
             if(jsons.containsKey(item.getText()))
             {
-                customersSchedulingApp.registerStoreSchedule(elem->
+                customersSchedulingApp.editStoreSchedule(elem->
                         storeResource=elem,
                         jsons.get(item.getText()),
-                        storeResource,
-                        StoreResourceItem.class);
+                        storeResource);
                 jsons.remove(item.getText());
                 it.remove();
             }

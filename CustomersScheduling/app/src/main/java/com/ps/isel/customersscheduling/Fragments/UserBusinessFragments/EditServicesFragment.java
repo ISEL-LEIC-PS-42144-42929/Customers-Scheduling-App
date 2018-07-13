@@ -151,9 +151,11 @@ public class EditServicesFragment extends BaseFragment
                     //TODO resolve exception
                     e.printStackTrace();
                 }
-                 //customersSchedulingApp.registerService(jsonBodyObj);
 
-                //TODO change to userBusiness
+                customersSchedulingApp.editStoreService(elem->
+                                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new UserBusinessFragment(),"storeResource", elem.getStore()))
+                        ,jsonBodyObj
+                        ,serviceResourceItem);
                 changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
             }
         });

@@ -36,7 +36,7 @@ public class ScheduledFragment extends BaseFragment
 
     private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
     private CategoryDto cat = new CategoryDto("Tech");
-    private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
+  //  private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
 
     private ServiceDto[] services = new ServiceDto[]
             {
@@ -125,6 +125,6 @@ public class ScheduledFragment extends BaseFragment
     private void listViewCode(Object bookings)
     {
         ClientOfStoreDTO c = (ClientOfStoreDTO) bookings;
-        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getClientResourceList(), fragmentManager, this, new ScheduleInfoFragment(), getActivity(),R.id.mainActivityFragment));
+        //lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getClientResourceList(), fragmentManager, this, new ScheduleInfoFragment(), getActivity(),R.id.mainActivityFragment));
     }
 }

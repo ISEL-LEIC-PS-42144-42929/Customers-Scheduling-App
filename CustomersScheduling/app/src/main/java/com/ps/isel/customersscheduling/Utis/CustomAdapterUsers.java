@@ -26,7 +26,6 @@ import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.java.dto.ClientDto;
 
 import org.json.JSONException;
 import org.json.JSONObject;

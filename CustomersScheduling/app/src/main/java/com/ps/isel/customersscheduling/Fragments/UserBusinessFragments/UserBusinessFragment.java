@@ -47,13 +47,13 @@ public class UserBusinessFragment extends BaseFragment
 
     private SelfLink _links;
 
-    private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
-    private StoreLinks _linkStores;
-
-
-    private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,3.0,_linkStores)};
-    private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
-    private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
+  // // private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
+  //  private StoreLinks _linkStores;
+//
+//
+  //  private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,3.0,_linkStores)};
+  //  private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
+  //  private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
 
     //----
 
@@ -71,11 +71,6 @@ public class UserBusinessFragment extends BaseFragment
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -101,14 +96,14 @@ public class UserBusinessFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
-        customersSchedulingApp.getStoresOfOwner(elem->
-                listViewCode(elem));
+       customersSchedulingApp.getStoresOfOwner(elem->
+               listViewCode(elem));
 
         toolbar   = view.findViewById(R.id.app_bar);
         lv        = view.findViewById(R.id.myBusiness);
 
         toolBarCode();
-        //listViewCode(storesOfUserDTO);
+       // listViewCode(storesOfUserDTO);
 
 
     }

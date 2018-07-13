@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
@@ -44,7 +45,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
     private Toolbar toolbar;
     private ListView lv;
 
-    private StoreResourceItem storeResourceItem;
+    private StaffResourceItem staffResourceItem;
 
 
     public SelectScheduleOrEmployeeDataFragment() {
@@ -81,7 +82,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         bundle = getArguments();
-        storeResourceItem = (StoreResourceItem) bundle.get("storeResource");
+        staffResourceItem = (StaffResourceItem) bundle.get("staffResource");
         context = getActivity().getApplicationContext();
 
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -89,7 +90,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         toolbar = view.findViewById(R.id.app_bar);
 
         lv = (ListView) view.findViewById(R.id.listEditsEmp);
-        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, storeResourceItem));
+        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, staffResourceItem));
         toolbarCode();
 
     }
