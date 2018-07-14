@@ -30,8 +30,10 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -80,7 +82,7 @@ public class ServiceFragment extends BaseFragment
     private String idToken;
 
     private ServiceResourceItem serviceResource;
-    private StoresOfUserDTO storeDTO;
+    private StoreResourceItem storeResource;
     private int position;
 
     public ServiceFragment() {
@@ -121,11 +123,17 @@ public class ServiceFragment extends BaseFragment
         bundle = getArguments();
 
         position = (int) bundle.getSerializable("position");
-        storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
+        //storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
         serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
 
-        customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));            //nao sei se é necessário fazer isto em todas as activities
+      //  customersSchedulingApp = ((CustomersSchedulingApp)context);
+      //  customersSchedulingApp.getDisponibilityOfService(elem->{
+      //          dropDownButtonCode(elem.getStaffDto());
+      //          //TODO preciso de saber as horas disponiveis para o serviço
+      //          },serviceResource);
+
+        calendarViewCode();
+
         //customersSchedulingApp.getStoreEmployees(this::dropDownButtonCode, service);
 
         jsonBodyObj = new JSONObject();
@@ -141,8 +149,8 @@ public class ServiceFragment extends BaseFragment
 
         toolbarCode();
         setDateToCalendar();
-        dropDownButtonCode(hardcodedEmployesNames);
-        calendarViewCode();
+      //  dropDownButtonCode(hardcodedEmployesNames);
+
         recyclerViewCode(hardcodedHoursAvaiable);
         addListenerToButtons();
 
@@ -191,7 +199,7 @@ public class ServiceFragment extends BaseFragment
         });
     }
 
-    private void dropDownButtonCode(PersonDto[] staff)
+    private void dropDownButtonCode(StaffDto[] staff)
     {
         String[] staffName = new String[staff.length];
 
@@ -249,7 +257,7 @@ public class ServiceFragment extends BaseFragment
                         }
 
                         //customersSchedulingApp.registerUserService(jsonBodyObj, serviceResource);
-                        changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "storeDTO", storeDTO.get_embedded().getStoreResourceList()[position]));
+                       // changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "storeDTO", storeDTO.get_embedded().getStoreResourceList()[position]));
                 }
             }
         });

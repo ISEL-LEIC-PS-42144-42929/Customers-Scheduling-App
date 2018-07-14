@@ -16,6 +16,7 @@ public class StoreLinks implements Serializable {
     private Link timetable;
     private Link portfolio;
     private Link update;
+    private Link update_timetable;
     private Link clients;
     private Link pendent_requests;
     private Link get_staff;
@@ -30,13 +31,14 @@ public class StoreLinks implements Serializable {
 
     }
 
-    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff, Link set_client, Link delete_client, Link set_store, Link score) {
+    public StoreLinks(Link get, Link insert, Link services, Link timetable, Link portfolio, Link update, Link update_timetable, Link clients, Link pendent_requests, Link get_staff, Link add_service_staff, Link insert_staff, Link set_client, Link delete_client, Link set_store, Link score) {
         this.get = get;
         this.insert = insert;
         this.services = services;
         this.timetable = timetable;
         this.portfolio = portfolio;
         this.update = update;
+        this.update_timetable = update_timetable;
         this.clients = clients;
         this.pendent_requests = pendent_requests;
         this.get_staff = get_staff;
@@ -46,6 +48,14 @@ public class StoreLinks implements Serializable {
         this.delete_client = delete_client;
         this.set_store = set_store;
         this.score = score;
+    }
+
+    public Link getUpdate_timetable() {
+        return update_timetable;
+    }
+
+    public void setUpdate_timetable(Link update_timetable) {
+        this.update_timetable = update_timetable;
     }
 
     public void setScore(Link score) {

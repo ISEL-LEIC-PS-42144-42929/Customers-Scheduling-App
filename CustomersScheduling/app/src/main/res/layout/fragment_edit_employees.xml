@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="@color/cardview_light_background"
     tools:context=".Fragments.UserBusinessFragments.EditEmployeesFragment">
 
@@ -26,22 +27,12 @@
             android:hint="Employee Name" />
 
         <EditText
-            android:id="@+id/employeeEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/employeeName"
-            android:cursorVisible="false"
-            android:hint="Employee Email" />
-
-        <EditText
             android:id="@+id/employeeContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/employeeEmail"
+            android:layout_below="@+id/employeeName"
             android:cursorVisible="false"
             android:hint="Employee Phone Number" />
 

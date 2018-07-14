@@ -109,7 +109,6 @@ public class EditBusinessScheduleFragment extends BaseFragment
         sunday                     = view.findViewById(R.id.sunday);
         registerScheduleBtn        = view.findViewById(R.id.registerSchedule);
         endScheduleRegistrationBtn = view.findViewById(R.id.endregisterSchedule);
-
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeFragment = new RegisterEmployeeFragment();
 
@@ -210,28 +209,8 @@ public class EditBusinessScheduleFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void testCheckBoxesEnd() //TODO ver como se faz para os dias de folga
     {
-        JSONObject aux = new JSONObject();
-        Iterator it = jsons.entrySet().iterator();
-        while (it.hasNext())
-        {
-            Map.Entry item = (Map.Entry) it.next();
-            try {
-                aux.put("open_hour",-1);
-                aux.put("init_break",-1);
-                aux.put("finish_break",-1);
-                aux.put("close_hour",-1);
-                aux.put("week_day", item.getKey());
+        changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new UserBusinessFragment(), "storeResource",storeResource));
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            customersSchedulingApp.registerStoreSchedule(elem->
-                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new UserBusinessFragment(), "storeResource",elem)),
-                    (JSONObject)item.getValue(),
-                    storeResource);
-            it.remove();
-        }
     }
 
     private void testCheckBoxes()
@@ -263,7 +242,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
             CheckBox item = (CheckBox) it.next();
             if(jsons.containsKey(item.getText()))
             {
-                customersSchedulingApp.registerStoreSchedule(elem->
+                customersSchedulingApp.editStoreSchedule(elem->
                                 storeResource=elem,
                         jsons.get(item.getText()),
                         storeResource);

@@ -239,8 +239,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             customersSchedulingApp.registerEmployeeSchedule(elem->
                     changeFragment(fragmentManager,R.id.businessData,addBundleToFragment(addOtherEmpOrAddServiceFragment,"staffResource",elem)),
                     (JSONObject)item.getValue(),
-                    staffResource,
-                    StaffResourceItem.class);
+                    staffResource);
             it.remove();
         }
     }
@@ -265,8 +264,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
                 customersSchedulingApp.registerEmployeeSchedule(elem->
                         staffResource = elem,
                         jsons.get(item.getText()),
-                        staffResource,
-                        StaffResourceItem.class);
+                        staffResource);
                 jsons.remove(item.getText());
                 it.remove();
             }

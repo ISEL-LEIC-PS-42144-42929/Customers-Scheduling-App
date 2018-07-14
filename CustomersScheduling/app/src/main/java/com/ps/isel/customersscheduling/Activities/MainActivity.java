@@ -1,5 +1,6 @@
 package com.ps.isel.customersscheduling.Activities;
 
+import android.app.job.JobScheduler;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
         {      //RTL to LTR

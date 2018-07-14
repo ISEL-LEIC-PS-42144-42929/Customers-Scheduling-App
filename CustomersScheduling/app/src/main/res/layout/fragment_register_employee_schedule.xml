@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="@color/cardview_light_background"
     tools:context=".Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment">
 
@@ -16,12 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_bar">
 
+
         <EditText
             android:id="@+id/employeeBegginHour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cursorVisible="false"
-            android:hint="Start Hour (Ex: 10:00)" />
+            android:hint="@string/start_hour_ex_10_00" />
 
         <EditText
             android:id="@+id/employeeBegginLunch"
@@ -29,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/employeeBegginHour"
             android:cursorVisible="false"
-            android:hint="Lunch Time Start (Ex: 10:00)" />
+            android:hint="@string/lunch_time_start_ex_10_00" />
 
         <EditText
             android:id="@+id/employeeEndLunch"
@@ -37,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/employeeBegginLunch"
             android:cursorVisible="false"
-            android:hint="Lunch Time End (Ex: 10:00)" />
+            android:hint="@string/lunch_time_end_ex_10_00" />
 
         <EditText
             android:id="@+id/employeeEndHour"
@@ -45,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/employeeEndLunch"
             android:cursorVisible="false"
-            android:hint="end Hour (Ex: 10:00)" />
+            android:hint="@string/end_hour_ex_10_00" />
 
 
         <CheckBox

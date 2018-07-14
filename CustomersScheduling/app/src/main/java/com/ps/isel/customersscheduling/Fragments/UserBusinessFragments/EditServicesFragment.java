@@ -19,6 +19,7 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -43,6 +44,7 @@ public class EditServicesFragment extends BaseFragment
     private Toolbar toolbar;
 
     private ServiceResourceItem serviceResourceItem;
+    private StoreResourceItem storeResource;
 
     public EditServicesFragment() {
         // Required empty public constructor
@@ -75,6 +77,7 @@ public class EditServicesFragment extends BaseFragment
 
         bundle = getArguments();
         serviceResourceItem = (ServiceResourceItem) bundle.getSerializable("serviceResource");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
         jsonBodyObj = new JSONObject();
@@ -82,7 +85,7 @@ public class EditServicesFragment extends BaseFragment
         toolbar           = view.findViewById(R.id.app_bar);
         serviceName       = view.findViewById(R.id.serviceName);
         servicePrice      = view.findViewById(R.id.servicePrice);
-        durations       = view.findViewById(R.id.duration);
+        durations         = view.findViewById(R.id.duration);
         descriptions      = view.findViewById(R.id.servdescription);
         registerService   = view.findViewById(R.id.registerService);
 
@@ -112,6 +115,7 @@ public class EditServicesFragment extends BaseFragment
     private void addListenertoButton()
     {
         registerService.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
@@ -140,7 +144,7 @@ public class EditServicesFragment extends BaseFragment
                     }
 
 
-                    jsonBodyObj.put("name", servName);
+                    jsonBodyObj.put("title", servName);
                     jsonBodyObj.put("price", servPrice);
                     jsonBodyObj.put("duration", duration);
                     jsonBodyObj.put("description", description);
@@ -153,7 +157,7 @@ public class EditServicesFragment extends BaseFragment
                 }
 
                 customersSchedulingApp.editStoreService(elem->
-                                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(new UserBusinessFragment(),"storeResource", elem.getStore()))
+                                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectServiceToEditFragment(),"storeResource", storeResource))
                         ,jsonBodyObj
                         ,serviceResourceItem);
                 changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
@@ -166,6 +170,6 @@ public class EditServicesFragment extends BaseFragment
         serviceName.setHint(serviceResourceItem.getService().getTitle());
         servicePrice.setHint(serviceResourceItem.getService().getPrice() + "");
         durations.setHint(serviceResourceItem.getService().getDuration() + "");
-        descriptions.setHint(serviceResourceItem.getService().getDesctription());
+        descriptions.setHint(serviceResourceItem.getService().getDescription());
     }
 }

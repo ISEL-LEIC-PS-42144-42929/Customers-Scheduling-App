@@ -6,13 +6,17 @@ import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 
 import com.android.volley.RequestQueue;
+import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
@@ -32,14 +36,7 @@ import java.util.function.Consumer;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomersSchedulingApp extends Application implements Serializable
 {
-
-    private RequestQueue queue;
     private CustomersSchedulingWebApi api;
-    private String userEmail;
-
-    public String getUserEmail() {
-        return userEmail;
-    }
 
     public CustomersSchedulingWebApi getApi() {
         return api;
@@ -87,12 +84,15 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getStoreByCatAndLocation(cons, category, location);
     }
 
+    public void getStaffService(Consumer<ServiceResourceItem> cons, ServiceResourceItem resourceItem){
+
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getStoreServices(Consumer<ServicesOfBusinessDTO> cons, StoreResourceItem storeResource)
     {
         api.getStoreServices(cons, storeResource);
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public <T>void getUserRegisteredBusiness(Consumer<StoresOfUserDTO> cons)
@@ -109,9 +109,13 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getPendentRequestsOfClients(cons, ownerBusiness);
     }
 
-    public void getBookingsOfClient(Consumer<ClientOfStoreDTO> cons) //TODO mudar a class
+    public void getBookingsOfClient(Consumer<BookingsOfStoreDTO> cons) //TODO mudar a class
     {
         api.getBookingsOfClient(cons);
+    }
+
+    public void getDisponibilityOfService(Consumer<BookingResourceItem> cons, ServiceResourceItem serviceResource){
+        api.getDisponibilityOfService(cons, serviceResource);
     }
 
     //POST REQUESTS
@@ -130,6 +134,8 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
 
 
+
+
   //  @RequiresApi(api = Build.VERSION_CODES.N)
   //  public void getEmployeeDisponibility(Consumer<String[]> cons, ServiceDto service)
   //  {
@@ -143,7 +149,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public<T> void getStoreEmployees(Consumer<T[]> cons, StoreResourceItem storeResource)
+    public<T> void getStoreEmployees(Consumer<StaffOfBusinessDTO> cons, StoreResourceItem storeResource)
     {
        api.getStoreEmployees(cons,storeResource);
     }
@@ -169,6 +175,14 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.editStoreService(cons, json, serviceResource);
     }
 
+    public void editEmployee(Consumer<StaffResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
+        api.editEmployee(cons, jsonBodyObj, staffResource);
+    }
+
+    public void editEmployeeSchedule(Consumer<StoreResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
+        api.editEmployeeSchedule(cons, jsonBodyObj, staffResource);
+    }
+
 
    // public void registerStoreScheduleEnd(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
    // {
@@ -180,9 +194,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource);
     }
 
-    public void registerEmployeeSchedule(Consumer<StaffResourceItem> cons, JSONObject staffJSONObject, StaffResourceItem staffResourceItem, Class<StaffResourceItem> staffResourceItemClass)
+    public void registerEmployeeSchedule(Consumer<StaffResourceItem> cons, JSONObject staffJSONObject, StaffResourceItem staffResourceItem)
     {
-        api.registerEmployeeSchedule(cons, staffJSONObject, staffResourceItem, staffResourceItemClass);
+        api.registerEmployeeSchedule(cons, staffJSONObject, staffResourceItem, staffResourceItem.getClass());
     }
 
 

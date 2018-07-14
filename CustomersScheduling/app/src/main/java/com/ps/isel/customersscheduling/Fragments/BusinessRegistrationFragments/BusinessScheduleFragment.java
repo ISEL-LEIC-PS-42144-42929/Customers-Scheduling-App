@@ -225,7 +225,7 @@ public class BusinessScheduleFragment extends BaseFragment {
             }
 
             customersSchedulingApp.editStoreSchedule(elem->
-                    changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "storeResource",elem)),
+                    changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(registerServiceFragment, "storeResource",elem)),
                     (JSONObject)item.getValue(),
                     storeResource);
             it.remove();

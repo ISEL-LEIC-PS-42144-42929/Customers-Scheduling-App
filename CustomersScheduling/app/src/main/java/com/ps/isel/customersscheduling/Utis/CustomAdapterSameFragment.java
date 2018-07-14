@@ -2,6 +2,7 @@ package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduledFragment;
+import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
@@ -22,14 +27,18 @@ import com.ps.isel.customersscheduling.R;
 public class CustomAdapterSameFragment extends BaseAdapter
 {
     private StaffResourceItem[] staff;
+    private BookingResourceItem[] bookings;
     private Context context;
 
     private FragmentManager fragmentManager;
     private BaseFragment fragmentFrom;
     private BaseFragment fragmentTo;
+    private boolean isBooking;
     private int id;
+    private StoreResourceItem storeResource;
 
-    public CustomAdapterSameFragment(StaffResourceItem[] staff, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id)
+
+    public CustomAdapterSameFragment(StaffResourceItem[] staff, FragmentManager fragmentManager, Fragment fragmentFrom, Fragment fragmentTo, Context context, int id, StoreResourceItem storeResource)
     {
         this.staff = staff;
         this.context = context;
@@ -37,6 +46,19 @@ public class CustomAdapterSameFragment extends BaseAdapter
         this.fragmentTo = (BaseFragment) fragmentTo;
         this.fragmentManager = fragmentManager;
         this.id = id;
+        this.storeResource = storeResource;
+        isBooking = false;
+    }
+
+    public CustomAdapterSameFragment(BookingResourceItem[] booking, FragmentManager fragmentManager, ScheduledFragment scheduledFragment, ScheduleInfoFragment scheduleInfoFragment, FragmentActivity activity, int mainActivityFragment) {
+        this.bookings = booking;
+        this.context = context;
+        this.fragmentFrom = (BaseFragment) fragmentFrom;
+        this.fragmentTo = (BaseFragment) fragmentTo;
+        this.fragmentManager = fragmentManager;
+        this.id = id;
+        this.storeResource = storeResource;
+        isBooking = true;
     }
 
     @Override
@@ -74,7 +96,8 @@ public class CustomAdapterSameFragment extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                fragmentFrom.changeFragment(fragmentManager,id,fragmentFrom.addBundleToFragment(fragmentTo,"staffResouce",staff[position]));
+                fragmentTo.addMultBundleToFragment("storeResource",storeResource);
+                fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"staffResource",staff[position]));
             }
         });
 

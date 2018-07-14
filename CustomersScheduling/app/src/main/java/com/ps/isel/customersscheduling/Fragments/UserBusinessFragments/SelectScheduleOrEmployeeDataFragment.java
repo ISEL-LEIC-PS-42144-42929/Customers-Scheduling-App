@@ -46,6 +46,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
     private ListView lv;
 
     private StaffResourceItem staffResourceItem;
+    private StoreResourceItem storeResourceItem;
 
 
     public SelectScheduleOrEmployeeDataFragment() {
@@ -83,6 +84,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
 
         bundle = getArguments();
         staffResourceItem = (StaffResourceItem) bundle.get("staffResource");
+        storeResourceItem = (StoreResourceItem) bundle.getSerializable("storeResource");
         context = getActivity().getApplicationContext();
 
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -90,7 +92,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         toolbar = view.findViewById(R.id.app_bar);
 
         lv = (ListView) view.findViewById(R.id.listEditsEmp);
-        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, staffResourceItem));
+        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, staffResourceItem, storeResourceItem));
         toolbarCode();
 
     }
@@ -100,7 +102,7 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Schedules");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Employee");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

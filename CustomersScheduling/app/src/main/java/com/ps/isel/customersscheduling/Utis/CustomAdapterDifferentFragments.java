@@ -41,14 +41,16 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
         this.isStore = true;
     }
 
-    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id, StaffResourceItem staffResource){
+    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id, StaffResourceItem staffResource, StoreResourceItem storeResourceItem){
         this.buttonsName = buttonsName;
         this.context = context;
         this.fragment = (BaseFragment)fragment;
         this.fragments = fragments;
         this.id = id;
         fragmentManager = ((UserBusinessActivity)context).getSupportFragmentManager();
+        this.storeResource = storeResourceItem;
         this.staffResource = staffResource;
+        this.isStore = false;
     }
 
     @Override
@@ -93,6 +95,7 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
             defName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    fragment.addMultBundleToFragment("storeResource",storeResource);
                     fragment.changeFragment(fragmentManager, id, fragment.addBundleToFragment(fragments[position], "staffResource", staffResource));
                 }
             });

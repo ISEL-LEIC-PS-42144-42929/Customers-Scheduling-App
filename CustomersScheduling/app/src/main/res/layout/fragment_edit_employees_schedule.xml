@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="@color/cardview_light_background"
     tools:context=".Fragments.UserBusinessFragments.EditEmployeesScheduleFragment">
 
@@ -17,96 +18,103 @@
         android:layout_below="@+id/app_bar">
 
         <EditText
-            android:id="@+id/employeeBegginHour"
+            android:id="@+id/begginHour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:cursorVisible="false"
-            android:hint="Start Hour (Ex: 10:00)" />
+            android:hint="@string/start_hour_ex_10_00" />
 
         <EditText
-            android:id="@+id/employeeBegginLunch"
+            android:id="@+id/begginLunch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeBegginHour"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/begginHour"
             android:cursorVisible="false"
-            android:hint="Lunch Time Start (Ex: 10:00)" />
+            android:hint="@string/lunch_time_start_ex_10_00" />
 
         <EditText
-            android:id="@+id/employeeEndLunch"
+            android:id="@+id/endLunch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeBegginLunch"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/begginLunch"
             android:cursorVisible="false"
-            android:hint="Lunch Time End (Ex: 10:00)" />
+            android:hint="@string/lunch_time_end_ex_10_00" />
 
         <EditText
-            android:id="@+id/employeeEndHour"
+            android:id="@+id/endHour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndLunch"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/endLunch"
             android:cursorVisible="false"
-            android:hint="end Hour (Ex: 10:00)" />
+            android:hint="@string/end_hour_ex_10_00" />
 
 
         <CheckBox
             android:id="@+id/monday"
-            android:layout_below="@+id/employeeEndHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/monday" />
+            android:text="@string/monday"
+            android:layout_below="@id/endHour"/>
 
         <CheckBox
             android:id="@+id/tuesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndHour"
-            android:layout_toEndOf="@+id/monday"
-            android:layout_toRightOf="@+id/monday"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/endHour"
+            android:layout_marginStart="90dp"
             android:text="@string/tuesday" />
 
         <CheckBox
             android:id="@+id/wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndHour"
-            android:layout_toEndOf="@+id/tuesday"
-            android:layout_toRightOf="@+id/tuesday"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/endHour"
+            android:layout_marginEnd="96dp"
             android:text="@string/wednesday" />
 
         <CheckBox
             android:id="@+id/thursday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndHour"
-            android:layout_toEndOf="@+id/wednesday"
-            android:layout_toRightOf="@+id/wednesday"
-            android:text="@string/sunday" />
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/endHour"
+            android:text="@string/thursday" />
 
         <CheckBox
             android:id="@+id/friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndHour"
-            android:layout_toEndOf="@+id/thursday"
-            android:layout_toRightOf="@+id/thursday"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/monday"
+            android:layout_marginStart="44dp"
             android:text="@string/friday" />
 
         <CheckBox
             android:id="@+id/saturday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndHour"
-            android:layout_toEndOf="@+id/friday"
-            android:layout_toRightOf="@+id/friday"
+            android:layout_below="@+id/monday"
+            android:layout_centerHorizontal="true"
             android:text="@string/saturday" />
 
         <CheckBox
             android:id="@+id/sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/employeeEndHour"
-            android:layout_toEndOf="@+id/friday"
-            android:layout_toRightOf="@+id/friday"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/monday"
+            android:layout_marginEnd="44dp"
             android:text="@string/sunday" />
 
 

@@ -21,7 +21,9 @@ import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.StaffDto;
+import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.HALDto.links.PersonLink;
@@ -34,19 +36,19 @@ import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
 public class SelectEmployeeToEditFragment extends BaseFragment {
 
     //HARDCODED
-    private Link link = new Link();
-    private Link[] links = new Link[1];
+ //  private Link link = new Link();
+ //  private Link[] links = new Link[1];
 
-    private SelfLink _links;
+ //  private SelfLink _links;
 
-    private StaffDto person = new StaffDto("email@gmil.com","joao",1,"91192393");
-    private StaffLinks _linkStaff;
+ //  private StaffDto person = new StaffDto("email@gmil.com","joao",1,"91192393");
+ //  private StaffLinks _linkStaff;
 
 
-    private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkStaff)};
-   // private PersonEmbedded _embedded = new PersonEmbedded(staffResourceItems);
+ //  private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkStaff)};
+ // // private PersonEmbedded _embedded = new PersonEmbedded(staffResourceItems);
 
-   // private PersonOfStoreDTO personOfStoreDTO = new PersonOfStoreDTO(_embedded, _links);
+ // // private PersonOfStoreDTO personOfStoreDTO = new PersonOfStoreDTO(_embedded, _links);
 
     //--------
 
@@ -110,7 +112,7 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         lv = (ListView) view.findViewById(R.id.employeesList);
 
         customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
-        listViewCode(staffResourceItems);
+       // listViewCode(staffResourceItems);
         toolbarCode();
 
     }
@@ -120,7 +122,7 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Services");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Employees");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,13 +134,14 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
 
     private void listViewCode(Object employees) {
 
-          StaffResourceItem[] emp = (StaffResourceItem[]) employees;
+          StaffOfBusinessDTO emp = (StaffOfBusinessDTO) employees;
 
-         lv.setAdapter(new CustomAdapterSameFragment(emp,
+         lv.setAdapter(new CustomAdapterSameFragment(emp.get_embedded().getStaffResourceList(),
                  fragmentManager,
                  this,new SelectScheduleOrEmployeeDataFragment(),
                  getActivity(),
-                 R.id.userBusinessFragment));
+                 R.id.userBusinessFragment,
+                 storeResource));
     }
 
 

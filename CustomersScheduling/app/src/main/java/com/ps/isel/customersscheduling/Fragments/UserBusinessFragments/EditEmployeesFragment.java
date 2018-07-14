@@ -41,7 +41,6 @@ public class EditEmployeesFragment extends BaseFragment
 
     private Toolbar toolbar;
     private EditText employeeName;
-    private EditText employeeEmail;
     private EditText employeeContact;
     private EditText employeeGender;
     private Button registerEmployee;
@@ -65,14 +64,13 @@ public class EditEmployeesFragment extends BaseFragment
 
         bundle = getArguments();
         staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
-        storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         jsonBodyObj = new JSONObject();
 
         toolbar                  = view.findViewById(R.id.app_bar);
         employeeName        = view.findViewById(R.id.employeeName);
-        employeeEmail       = view.findViewById(R.id.employeeEmail);
         employeeContact     = view.findViewById(R.id.employeeContact);
         employeeGender      = view.findViewById(R.id.employeeGender);
         registerEmployee    = view.findViewById(R.id.registerEmployee);
@@ -81,6 +79,7 @@ public class EditEmployeesFragment extends BaseFragment
         registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
 
         toolbarCode();
+        putHints();
         addListenertoButton();
 
     }
@@ -110,7 +109,6 @@ public class EditEmployeesFragment extends BaseFragment
                 try
                 {
                     String empName = employeeName.getText().toString();
-                    String empEmail = employeeEmail.getText().toString();
                     String empContact = employeeContact.getText().toString();
                     String empGender = employeeGender.getText().toString();
 
@@ -118,10 +116,7 @@ public class EditEmployeesFragment extends BaseFragment
                     {
                         empName = employeeName.getHint().toString();
                     }
-                    if(empEmail.equals(""))
-                    {
-                        empEmail = employeeEmail.getHint().toString();
-                    }
+
                     if(empContact.equals(""))
                     {
                         empContact = employeeContact.getHint().toString();
@@ -132,23 +127,28 @@ public class EditEmployeesFragment extends BaseFragment
                     }
 
                     jsonBodyObj.put("name", empName);
-                    jsonBodyObj.put("email", empEmail);
                     jsonBodyObj.put("contact", empContact);
                     jsonBodyObj.put("gender", empGender);
+                    jsonBodyObj.put("email", staffResource.getPerson().getEmail());
                 }
                 catch (JSONException e)
                 {
-                    //TODO resolve exception
                     e.printStackTrace();
                 }
-                customersSchedulingApp.registerEmployee(elem->
-                                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
+                customersSchedulingApp.editEmployee(elem->{
+                                addMultBundleToFragment("staffResource", elem);
+                                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectEmployeeToEditFragment(), "storeResource", storeResource));},
                         jsonBodyObj,
-                        storeResource,
-                        StaffResourceItem.class);
-                changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
+                        staffResource);
             }
         });
+
+    }
+    private void putHints()
+    {
+        employeeName.setHint("Name:" + staffResource.getPerson().getName());
+        employeeContact.setHint("Contact:" + staffResource.getPerson().getContact());
+        employeeGender.setHint("Gender:" + staffResource.getPerson().getGender());
 
     }
 }

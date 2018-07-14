@@ -27,7 +27,7 @@ public class ServiceDto implements Serializable {
         this.id = id;
     }
 
-    public void setDesctription(String desctription) {
+    public void setDescription(String desctription) {
         this.description = desctription;
     }
 
@@ -47,7 +47,7 @@ public class ServiceDto implements Serializable {
         return id;
     }
 
-    public String getDesctription() {
+    public String getDescription() {
         return description;
     }
 

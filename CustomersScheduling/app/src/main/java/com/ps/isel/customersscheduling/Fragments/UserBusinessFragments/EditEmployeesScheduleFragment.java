@@ -22,6 +22,7 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.AddOtherEmpOrEndFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -64,6 +65,7 @@ public class EditEmployeesScheduleFragment extends BaseFragment
     private CheckBox sunday;
 
     private StaffResourceItem staffResource;
+    private StoreResourceItem storeResourceItem;
 
     public EditEmployeesScheduleFragment() {
         // Required empty public constructor
@@ -82,6 +84,7 @@ public class EditEmployeesScheduleFragment extends BaseFragment
 
         bundle = getArguments();
         staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
+        storeResourceItem = (StoreResourceItem) bundle.getSerializable("storeResource");
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -92,12 +95,12 @@ public class EditEmployeesScheduleFragment extends BaseFragment
             fillHashMap();
         }
 
-        toolbar                  = view.findViewById(R.id.app_bar);
-        employeeStartHour           = view.findViewById(R.id.employeeBegginHour);
-        employeeStartLunchHour      = view.findViewById(R.id.employeeBegginLunch);
-        employeeEndLunchHour        = view.findViewById(R.id.employeeEndLunch);
-        employeeEndHour             = view.findViewById(R.id.employeeEndHour);
-        employeeRegisterScheduleBtn = view.findViewById(R.id.employeeRegisterSchedule);
+        toolbar                         = view.findViewById(R.id.app_bar);
+        employeeStartHour               = view.findViewById(R.id.begginHour);
+        employeeStartLunchHour          = view.findViewById(R.id.begginLunch);
+        employeeEndLunchHour            = view.findViewById(R.id.endLunch);
+        employeeEndHour                 = view.findViewById(R.id.endHour);
+        employeeRegisterScheduleBtn     = view.findViewById(R.id.employeeRegisterSchedule);
         endEmployeeRegisterScheduleBtn  = view.findViewById(R.id.endEmployeeRegisterSchedule);
         monday                          = view.findViewById(R.id.monday);
         tuesday                         = view.findViewById(R.id.tuesday);
@@ -168,7 +171,7 @@ public class EditEmployeesScheduleFragment extends BaseFragment
             aux.put("init_break",iB);
             aux.put("finish_break",eB);
             aux.put("close_hour",eH);
-            aux.put("week_day", weekday);
+            aux.put("week_day", mapForDataBase.get(weekday));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -230,28 +233,8 @@ public class EditEmployeesScheduleFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void testCheckBoxesEnd() //TODO ver como se faz para os dias de folga
     {
-        JSONObject aux = new JSONObject();
-        Iterator it = jsons.entrySet().iterator();
-        while (it.hasNext())
-        {
-            Map.Entry item = (Map.Entry) it.next();
-            try {
-                aux.put("open_hour",-1);
-                aux.put("init_break",-1);
-                aux.put("finish_break",-1);
-                aux.put("close_hour",-1);
-                aux.put("week_day", item.getKey());
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            customersSchedulingApp.registerEmployeeSchedule(elem->
-                            changeFragment(fragmentManager,R.id.businessData,addBundleToFragment(addOtherEmpOrAddServiceFragment,"staffResource",elem)),
-                    (JSONObject)item.getValue(),
-                    staffResource,
-                    StaffResourceItem.class);
-            it.remove();
-        }
+        addMultBundleToFragment("storeResource", storeResourceItem);
+        changeFragment(fragmentManager,R.id.userBusinessFragment,addBundleToFragment(new SelectScheduleOrEmployeeDataFragment(),"staffResource",staffResource));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -267,8 +250,7 @@ public class EditEmployeesScheduleFragment extends BaseFragment
                 customersSchedulingApp.registerEmployeeSchedule(elem->
                                 staffResource = elem,
                         jsons.get(item.getText()),
-                        staffResource,
-                        StaffResourceItem.class);
+                        staffResource);
                 jsons.remove(item.getText());
                 it.remove();
             }

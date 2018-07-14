@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +13,14 @@ import android.widget.TextView;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 public class CustomAdapterTogleServicesButtons extends BaseAdapter{
 
-    private ServiceDto[] currentServices;
+    private ServiceResourceItem[] currentServices;
+    private StoreResourceItem storeResourceItems;
     private Context context;
 
     private View row;
@@ -25,10 +30,11 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
 
     private CustomersSchedulingApp customersSchedulingApp;
 
-    public CustomAdapterTogleServicesButtons(Context context, ServiceDto[] obj, CustomersSchedulingApp customersSchedulingApp) {
+    public CustomAdapterTogleServicesButtons(Context context, StoreResourceItem storeResourceItem, ServiceResourceItem[] obj, CustomersSchedulingApp customersSchedulingApp) {
         this.context = context;
         this.currentServices = obj;
         this.customersSchedulingApp = customersSchedulingApp;
+        this.storeResourceItems = storeResourceItem;
 
     }
 
@@ -47,18 +53,29 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofcurrentclients, parent, false);
 
         name = (TextView) row.findViewById(R.id.userName);
-        name.setText(currentServices[position].getTitle());
+        name.setText(currentServices[position].getService().getTitle());
 
         blocked = (TextView) row.findViewById(R.id.blocked);
 
         sw = (Switch) row.findViewById(R.id.sw);
         sw.setChecked(true);
+
+        customersSchedulingApp.getStaffService(elem->{
+            if(currentServices[position].getService().getId() == elem.getService().getId()) {
+                sw.setChecked(true);
+            }else {
+                sw.setChecked(false);
+            }
+        }, currentServices[position]);
+
+
 
         addListenerToSwitch(sw, blocked);
 
@@ -72,10 +89,10 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
             public void onClick(View view) {
                 if(!sw.isChecked())
                 {
-                    //customersSchedulingApp.blockUser
+                    //customersSchedulingApp.removeEmpFromService
                     text.setText("Employee removed from service");
                 }else{
-                    //customersSchedulingApp.UnblockUser
+                    //customersSchedulingApp.registerEmptoService
                     text.setText("");
                 }
             }

@@ -249,7 +249,6 @@ public class EditBusinessDataFragment extends BaseFragment
                    customersSchedulingApp.editOwnerBusinessData(elem ->
                                             changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment())
                                     , jsonBodyObj, storeResource);
-                   // changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
                 }
                 catch (JSONException e) {
                     //TODO resolve exception

@@ -20,6 +20,7 @@ import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.Link;
@@ -124,7 +125,7 @@ public class ScheduledFragment extends BaseFragment
 
     private void listViewCode(Object bookings)
     {
-        ClientOfStoreDTO c = (ClientOfStoreDTO) bookings;
-        //lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getClientResourceList(), fragmentManager, this, new ScheduleInfoFragment(), getActivity(),R.id.mainActivityFragment));
+        BookingsOfStoreDTO c = (BookingsOfStoreDTO) bookings;
+        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getBookingResourceList(), fragmentManager, this, new ScheduleInfoFragment(), getActivity(),R.id.mainActivityFragment));
     }
 }
