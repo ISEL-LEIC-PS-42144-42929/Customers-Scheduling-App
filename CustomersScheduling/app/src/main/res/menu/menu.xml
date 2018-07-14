@@ -17,11 +17,6 @@
         android:title="@string/scheduled">
     </item>
     <item
-        android:id="@+id/definitions"
-        android:visible="false"
-        android:title="@string/definitions">
-    </item>
-    <item
         android:id="@+id/favorites"
         android:visible="false"
         android:title="@string/favourites">

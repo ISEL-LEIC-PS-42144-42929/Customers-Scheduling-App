@@ -2,7 +2,6 @@ package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,9 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
@@ -33,7 +30,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 public class EditBusinessScheduleFragment extends BaseFragment
 {
@@ -79,6 +75,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
         return inflater.inflate(R.layout.fragment_edit_business_schedule, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -88,7 +85,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
         jsonBodyObj = new JSONObject();
 
         if(jsons.isEmpty()){
@@ -119,17 +116,14 @@ public class EditBusinessScheduleFragment extends BaseFragment
 
     private void addListenersToCheckBoxes() {
 
-        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                CheckBox aux = (CheckBox) compoundButton;
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (compoundButton, b) -> {
+            CheckBox aux = (CheckBox) compoundButton;
 
-                if(!aux.isChecked())
-                {
-                    checkBoxesList.remove(aux);
-                }else {
-                    checkBoxesList.add((CheckBox) compoundButton);
-                }
+            if(!aux.isChecked())
+            {
+                checkBoxesList.remove(aux);
+            }else {
+                checkBoxesList.add((CheckBox) compoundButton);
             }
         };
 
@@ -149,12 +143,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Business Schedule");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
     private void fillHashMap()
@@ -164,25 +153,15 @@ public class EditBusinessScheduleFragment extends BaseFragment
             mapForDataBase.put(days_of_week[i], i);
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        registerScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                testCheckBoxes();
-                sendSchedules();
-            }
+        registerScheduleBtn.setOnClickListener(v -> {
+            testCheckBoxes();
+            sendSchedules();
         });
 
-        endScheduleRegistrationBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                testCheckBoxesEnd();
-            }
-        });
+        endScheduleRegistrationBtn.setOnClickListener(view -> testCheckBoxesEnd());
     }
 
     public void createJsonSaveInArray(String sH, String iB, String eB, String eH, String weekday)
@@ -207,7 +186,7 @@ public class EditBusinessScheduleFragment extends BaseFragment
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void testCheckBoxesEnd() //TODO ver como se faz para os dias de folga
+    private void testCheckBoxesEnd()
     {
         changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new UserBusinessFragment(), "storeResource",storeResource));
 

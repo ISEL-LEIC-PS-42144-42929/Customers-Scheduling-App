@@ -15,9 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
@@ -35,7 +33,6 @@ public class EditBusinessFragment extends BaseFragment
     private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment()};
 
     private FragmentManager fragmentManager;
-   // private CustomersSchedulingApp customersSchedulingApp;
 
     private Context context;
     private Bundle bundle;
@@ -99,14 +96,9 @@ public class EditBusinessFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Schedules");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Business");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
 }

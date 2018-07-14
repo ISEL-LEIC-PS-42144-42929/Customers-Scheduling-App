@@ -72,10 +72,10 @@ public class BusinessScheduleFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_business_schedule, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -116,17 +116,14 @@ public class BusinessScheduleFragment extends BaseFragment {
 
     private void addListenersToCheckBoxes() {
 
-        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                CheckBox aux = (CheckBox) compoundButton;
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (compoundButton, b) -> {
+            CheckBox aux = (CheckBox) compoundButton;
 
-                if(!aux.isChecked())
-                {
-                    checkBoxesList.remove(aux);
-                }else {
-                    checkBoxesList.add((CheckBox) compoundButton);
-                }
+            if(!aux.isChecked())
+            {
+                checkBoxesList.remove(aux);
+            }else {
+                checkBoxesList.add((CheckBox) compoundButton);
             }
         };
 
@@ -147,7 +144,6 @@ public class BusinessScheduleFragment extends BaseFragment {
         }
     }
 
-
     private void toolbarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -155,33 +151,18 @@ public class BusinessScheduleFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Business Schedule");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        registerScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                testCheckBoxes();
-                sendSchedules();
-            }
+        registerScheduleBtn.setOnClickListener(v -> {
+            testCheckBoxes();
+            sendSchedules();
         });
 
-        endScheduleRegistrationBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                testCheckBoxesEnd();
-            }
-        });
+        endScheduleRegistrationBtn.setOnClickListener(view -> testCheckBoxesEnd());
     }
 
     public void createJsonSaveInArray(String sH, String iB, String eB, String eH, String weekday)
@@ -210,6 +191,7 @@ public class BusinessScheduleFragment extends BaseFragment {
     {
         JSONObject aux = new JSONObject();
         Iterator it = jsons.entrySet().iterator();
+
         while (it.hasNext())
         {
             Map.Entry item = (Map.Entry) it.next();
@@ -225,13 +207,12 @@ public class BusinessScheduleFragment extends BaseFragment {
             }
 
             customersSchedulingApp.editStoreSchedule(elem->
-                    changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(registerServiceFragment, "storeResource",elem)),
+                    changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "storeResource",elem)),
                     (JSONObject)item.getValue(),
                     storeResource);
             it.remove();
         }
     }
-
 
     private void testCheckBoxes()
     {

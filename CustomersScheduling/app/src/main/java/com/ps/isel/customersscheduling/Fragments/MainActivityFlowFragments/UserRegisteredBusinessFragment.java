@@ -17,57 +17,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ps.isel.customersscheduling.Activities.AboutActivity;
-import com.ps.isel.customersscheduling.Activities.DefinitionsActivity;
 import com.ps.isel.customersscheduling.Activities.SignInActivity;
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Activities.RegisterStoreActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.AddressDto;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
-import com.ps.isel.customersscheduling.HALDto.Link;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
-import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
-import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
-import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
-import com.ps.isel.customersscheduling.HALDto.links.StoreLinks;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
-
 
 import org.json.JSONObject;
 
 
 public class UserRegisteredBusinessFragment extends BaseFragment
 {
-
-    //HARDCODED
-
-  //  private Link link = new Link();
-  //  private Link[] links = new Link[1];
-//
-  //  private SelfLink _links;
-//
-  // // private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
-  //  private double score = 3.0;
-  //  private StoreLinks _linkStores;
-//
-//
-  //  private StoreResourceItem[] storeResourceList = new StoreResourceItem[]{new StoreResourceItem(store,score,_linkStores)};
-  //  private StoresOfUserEmbedded _embedded = new StoresOfUserEmbedded(storeResourceList);
-  //  private StoresOfUserDTO storesOfUserDTO = new StoresOfUserDTO(_embedded, _links);
-
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -86,8 +57,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
     private Context context;
 
     private String idToken;
-    private String email;
-    private boolean firsttime;
 
     public UserRegisteredBusinessFragment() {
         // Required empty public constructor
@@ -101,11 +70,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
 
        mAuth = FirebaseAuth.getInstance();
     }
-
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,6 +99,8 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         toolbar   = view.findViewById(R.id.filter_toolbar);
         filterBtn = view.findViewById(R.id.filter);
 
+        fragmentManager = getActivity().getSupportFragmentManager();
+
         toolBarCode();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -147,11 +113,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                             elem-> {
                                 UserInfoContainer.getInstance().setRegisteredStores(elem.get_embedded().getStoreResourceList());
                                 listViewCode(elem);});
-
-      //  listViewCode(storesOfUserDTO);// Remove after App done!!
-
-        fragmentManager = getActivity().getSupportFragmentManager();
-
     }
 
     public void setVisibilityMenuItemsIdToken(Menu menu)
@@ -161,7 +122,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             MenuItem itemMystores     =  menu.findItem(R.id.myStores);
             MenuItem registerBusiness =  menu.findItem(R.id.registerStore);
             MenuItem schedules        =  menu.findItem(R.id.scheduled);
-            MenuItem definitions      =  menu.findItem(R.id.definitions);
             MenuItem favourites       =  menu.findItem(R.id.favorites);
             MenuItem logout           =  menu.findItem(R.id.logout);
             MenuItem login            =  menu.findItem(R.id.login);
@@ -169,15 +129,15 @@ public class UserRegisteredBusinessFragment extends BaseFragment
             itemMystores.setVisible(true);
             registerBusiness.setVisible(true);
             schedules.setVisible(true);
-            definitions.setVisible(true);
+
             favourites.setVisible(true);
             logout.setVisible(true);
             login.setVisible(false);
         }
     }
 
-      @Override
-      public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
           switch(item.getItemId())
           {
@@ -190,9 +150,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                   break;
               case (R.id.scheduled):
                   changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment());
-                  break;
-              case (R.id.definitions):
-                  goToActivity(context,DefinitionsActivity.class);
                   break;
               case (R.id.favorites):
                   changeFragment(fragmentManager,R.id.mainActivityFragment,new FavouritesFragment());
@@ -209,8 +166,7 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                   break;
           }
           return super.onOptionsItemSelected(item);
-      }
-
+    }
 
     protected void searchBarCode() {
 
@@ -223,8 +179,6 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                 addMultBundleToFragment("byFavourite", false);
                 customersSchedulingApp.getStoreByName(elem->{
                         changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new SearchResultsFragment(), "storeDto", elem));}, s);
-
-
                 return false;
             }
 
@@ -241,39 +195,24 @@ public class UserRegisteredBusinessFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(null);
 
-        filterBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new FilterFragment(), null, null));
-            }
-        });
+        filterBtn.setOnClickListener(view -> changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new FilterFragment(), null, null)));
     }
 
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void listViewCode(Object stores)             //TODO change parameter to connect to server Object storesDTO
+    private void listViewCode(Object stores)
     {
         StoresOfUserDTO storeDTO =  ((StoresOfUserDTO)stores);
         lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
 
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    addMultBundleToFragment("position", position);
-                    changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
-                }
-            });
+        lv.setOnItemClickListener((parent, view, position, id) -> {
+            addMultBundleToFragment("position", position);
+            changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO)); });
 
     }
-
 
     private void logout()
     {
         mAuth.signOut();
     }
-
 }

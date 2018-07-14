@@ -20,56 +20,13 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.AddressDto;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
-import com.ps.isel.customersscheduling.HALDto.Link;
-import com.ps.isel.customersscheduling.HALDto.ServiceDto;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
-import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
 
 import org.json.JSONObject;
 
 public class SearchResultsFragment extends BaseFragment {
-
-    //HARDCODED
-
-    private Link link = new Link();
-    private Link[] links = new Link[1];
-    private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
-    private CategoryDto cat = new CategoryDto("Tech");
- //  private StoreDto store = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
- //  //HARDCODED
- //  private StoreDto[] resultsBusiness = new StoreDto[]
- //          {
- //                  new StoreDto(
- //                          new AddressDto(),
- //                          new CategoryDto(),
- //                          "rua do velho",
- //                          "91111111",
- //                          "loja do barbas",
- //                          links,
- //                          3.2f),
- //                  new StoreDto(
- //                          new AddressDto(),
- //                          new CategoryDto(),
- //                          "rua do velho",
- //                          "91111111",
- //                          "loja do barbas",
- //                          links,
- //                          3.2f),
- //                  new StoreDto(
- //                          new AddressDto(),
- //                          new CategoryDto(),
- //                          "rua do velho",
- //                          "91111111",
- //                          "loja do barbas",
- //                          links,
- //                          3.2f)
- //          };
-    //---------
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
@@ -149,8 +106,6 @@ public class SearchResultsFragment extends BaseFragment {
     //                    this::listViewCode,
     //                    business.getName());
     //    }
-
-
     }
 
     private void listViewCode(Object stores)
@@ -160,18 +115,10 @@ public class SearchResultsFragment extends BaseFragment {
 
         lv.setAdapter(new CustomAdapterBusiness(getActivity(),storeDTO.get_embedded().getStoreResourceList()));
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                addMultBundleToFragment("position",position);
-                changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
-            }
+        lv.setOnItemClickListener((parent, view, position, id) -> {
+            addMultBundleToFragment("position",position);
+            changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new BusinessFragment(), "storeDTO", storeDTO));
         });
-        //  }
-
-
     }
 
     private void toolbarCode() {
@@ -180,13 +127,6 @@ public class SearchResultsFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToActivity(context, MainActivity.class);
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> goToActivity(context, MainActivity.class));
     }
-
-
 }

@@ -14,7 +14,7 @@ public class AboutActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TextView textAbout;
 
-    private String about = "Application created and designed by two studients from " +
+    private final String about = "Application created and designed by two studients from " +
             "I.S.E.L.(Instituto Superior de Engenharia de Lisboa) Gonçalo Barros and Nuno Cardoso " +
             "for Project and Seminary this app will resolve the existing" +
             "problem on most of the business that have to schedule appointments." +
@@ -26,7 +26,7 @@ public class AboutActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        toolbar   = (Toolbar) findViewById(R.id.filter_toolbar);
+        toolbar   = findViewById(R.id.filter_toolbar);
         textAbout = findViewById(R.id.about);
 
         textAbout.setText(about);

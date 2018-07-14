@@ -8,6 +8,7 @@ public class ServiceLink implements Serializable {
 
     private Link get_store_services;
     private Link update;
+    private Link disp;
     private Link insert_store_service;
     private Link post_staff_service;
     private Link delete_staff_service;
@@ -17,13 +18,22 @@ public class ServiceLink implements Serializable {
 
     }
 
-    public ServiceLink(Link get_store_services, Link update, Link insert_store_service, Link post_staff_service, Link delete_staff_service, Link get_staff_services) {
+    public ServiceLink(Link get_store_services, Link update, Link disp, Link insert_store_service, Link post_staff_service, Link delete_staff_service, Link get_staff_services) {
         this.get_store_services = get_store_services;
         this.update = update;
+        this.disp = disp;
         this.insert_store_service = insert_store_service;
         this.post_staff_service = post_staff_service;
         this.delete_staff_service = delete_staff_service;
         this.get_staff_services = get_staff_services;
+    }
+
+    public Link getDisp() {
+        return disp;
+    }
+
+    public void setDisp(Link disp) {
+        this.disp = disp;
     }
 
     public void setPost_staff_service(Link post_staff_service) {

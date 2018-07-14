@@ -57,34 +57,25 @@ public class Dialog_Frgment extends DialogFragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenersToButtons() {
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                //TODO Save Nif and send to server
-                JSONObject json = new JSONObject();
+        ok.setOnClickListener(view -> {
+            JSONObject json = new JSONObject();
 
-                try {
-                    json.put("email", UserInfoContainer.getInstance().getEmail());
-                    json.put("nif",nif.getText());
+            try {
+                json.put("email", UserInfoContainer.getInstance().getEmail());
+                json.put("nif",nif.getText());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                customersSchedulingApp.registerOwner(json);
-                dismiss();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
+            customersSchedulingApp.registerOwner(json);
+            dismiss();
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        cancel.setOnClickListener(view -> dismiss());
     }
 
     @Override

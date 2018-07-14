@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -129,7 +130,7 @@ public class RegisterServiceFragment extends BaseFragment
                 }
                 catch (JSONException e)
                 {
-                    //TODO resolve exception
+                    Toast.makeText(getActivity(), "Service registration went wrong!try again later",Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }

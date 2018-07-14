@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +24,7 @@ import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 
-import com.ps.isel.customersscheduling.Model.Favourite;
+import com.ps.isel.customersscheduling.objectUtils.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.AppendingObjectOutputStream;
@@ -93,7 +91,6 @@ public class FilterFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_filter, container, false);
     }
 
@@ -122,8 +119,6 @@ public class FilterFragment extends BaseFragment {
 
         constructDropdowns();
         addListenersToButtons();
-
-
     }
 
     private void toolBarCode()
@@ -133,16 +128,7 @@ public class FilterFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                goToActivity(context, MainActivity.class);
-            }
-        });
-
+        toolbar.setNavigationOnClickListener(v -> goToActivity(context, MainActivity.class));
     }
 
     private void constructDropdowns()
@@ -154,12 +140,7 @@ public class FilterFragment extends BaseFragment {
 
         locationChosen.setAdapter(adapterLocations);
 
-        locationChosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                location = hardcodedLocations[position];
-            }
-        });
+        locationChosen.setOnItemClickListener((parent, view, position, id) -> location = hardcodedLocations[position]);
 
         ArrayAdapter<String> adapterCategorys = new ArrayAdapter<String>(
                 context,
@@ -168,47 +149,30 @@ public class FilterFragment extends BaseFragment {
 
         categoryChosen.setAdapter(adapterCategorys);
 
-        categoryChosen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                category = categories[position];
-            }
-        });
-
-
+        categoryChosen.setOnItemClickListener((parent, view, position, id) -> category = categories[position]);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenersToButtons()
     {
-       resultsBtn.setOnClickListener(new View.OnClickListener()
-       {
-           @Override
-           public void onClick(View view)
-           {
-                addMultBundleToFragment("byFavourite",true);
-                customersSchedulingApp.getStoreByCatAndLocation(elem->
-                        changeFragment(fragmentManager, R.id.mainActivityFragment,addBundleToFragment(new SearchResultsFragment(),"storeDto",elem)),
-                        category, location);
+       resultsBtn.setOnClickListener(view -> {
+            addMultBundleToFragment("byFavourite",true);
+            customersSchedulingApp.getStoreByCatAndLocation(elem->
+                    changeFragment(fragmentManager, R.id.mainActivityFragment,addBundleToFragment(new SearchResultsFragment(),"storeDto",elem)),
+                    category, location);
 
-           }
        });
 
-        saveFilter.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
+        saveFilter.setOnClickListener(v -> {
 
-                if(TextUtils.isEmpty(categoryChosen.getText()) || TextUtils.isEmpty(searchName.getText()) || TextUtils.isEmpty(locationChosen.getText()))
-                {
-                    Toast.makeText(context,"Please insert all values", Toast.LENGTH_LONG).show();
-                }else {
-                    saveInInternalStorage();
-                    changeFragment(fragmentManager,
-                            R.id.mainActivityFragment,
-                            addBundleToFragment(new FavouritesFragment(), null, null));
-                }
+            if(TextUtils.isEmpty(categoryChosen.getText()) || TextUtils.isEmpty(searchName.getText()) || TextUtils.isEmpty(locationChosen.getText()))
+            {
+                Toast.makeText(context,"Please insert all values", Toast.LENGTH_LONG).show();
+            }else {
+                saveInInternalStorage();
+                changeFragment(fragmentManager,
+                        R.id.mainActivityFragment,
+                        addBundleToFragment(new FavouritesFragment(), null, null));
             }
         });
     }
@@ -239,7 +203,6 @@ public class FilterFragment extends BaseFragment {
             }
             oos.writeObject(toSave);
 
-
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -250,12 +213,9 @@ public class FilterFragment extends BaseFragment {
                 oos.close();
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+                Toast.makeText(getActivity(), "Favourite registration went wrong!try again later",Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
-
     }
-
-
 }

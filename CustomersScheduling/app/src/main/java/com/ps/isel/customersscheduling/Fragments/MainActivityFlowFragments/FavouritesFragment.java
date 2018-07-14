@@ -17,7 +17,7 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 
-import com.ps.isel.customersscheduling.Model.Favourite;
+import com.ps.isel.customersscheduling.objectUtils.Favourite;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
@@ -38,8 +38,6 @@ public class FavouritesFragment extends BaseFragment
     private Favourite[] favSearches;
 
     private Context context;
-
-    //private Favourite[] favSearches;
 
     public FavouritesFragment() {
         // Required empty public constructor
@@ -97,13 +95,9 @@ public class FavouritesFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favourites");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             goToActivity(context, MainActivity.class);
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> goToActivity(context, MainActivity.class));
     }
+
     private Favourite[] readFromInternalStorageAndSeparate()
     {
         ArrayList<Favourite> objectsList = new ArrayList<>();

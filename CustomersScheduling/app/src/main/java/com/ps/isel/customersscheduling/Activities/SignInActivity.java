@@ -3,7 +3,6 @@ package com.ps.isel.customersscheduling.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,23 +14,16 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.R;
-
-import org.json.JSONObject;
 
 public class SignInActivity extends AppCompatActivity
 {
@@ -44,8 +36,6 @@ public class SignInActivity extends AppCompatActivity
 
     private Context context;
     private CustomersSchedulingApp customersSchedulingApp;
-    private JSONObject jsonBodyObj;
-
 
     @Override
     protected void onStart()
@@ -54,6 +44,7 @@ public class SignInActivity extends AppCompatActivity
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,7 +52,6 @@ public class SignInActivity extends AppCompatActivity
         setContentView(R.layout.activity_sign_in);
 
         context = getApplicationContext();
-
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
         customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
@@ -81,18 +71,15 @@ public class SignInActivity extends AppCompatActivity
             if(firebaseAuth.getCurrentUser() != null)
             {
                 firebaseAuth.getCurrentUser().getIdToken(true)
-                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                            @RequiresApi(api = Build.VERSION_CODES.N)
-                            public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                if (task.isSuccessful()) {
-                                    String idToken = task.getResult().getToken();
-                                    String email = firebaseAuth.getCurrentUser().getEmail();
-                                    UserInfoContainer.getInstance().setIdToken(idToken);
-                                    UserInfoContainer.getInstance().setEmail(email);
-                                    changeActivity();
-                                } else {
-                                    // Handle error -> task.getException();
-                                }
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                String idToken = task.getResult().getToken();
+                                String email = firebaseAuth.getCurrentUser().getEmail();
+                                UserInfoContainer.getInstance().setIdToken(idToken);
+                                UserInfoContainer.getInstance().setEmail(email);
+                                changeActivity();
+                            } else {
+                                Toast.makeText(SignInActivity.this, "User authentication Went wrong",Toast.LENGTH_LONG).show();
                             }
                         });
             }
@@ -104,12 +91,7 @@ public class SignInActivity extends AppCompatActivity
                 .build();
 
         mGoogleSignInClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(SignInActivity.this, "something went wrong",Toast.LENGTH_LONG).show();
-                    }
-                })
+                .enableAutoManage(this, connectionResult -> Toast.makeText(SignInActivity.this, "something went wrong",Toast.LENGTH_LONG).show())
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
@@ -124,13 +106,10 @@ public class SignInActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-
                 firebaseAuthWithGoogle(account);
             } else {
                 Toast.makeText(SignInActivity.this, "Auth went wrong",Toast.LENGTH_LONG).show();
@@ -144,33 +123,20 @@ public class SignInActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-
-
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount account)
     {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
-
-                            FirebaseUser user = mAuth.getCurrentUser();
-
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("TAG", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
-                        }
-
-                        // ...
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("TAG", "signInWithCredential:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                    }else
+                        {
+                        Log.w("TAG", "signInWithCredential:failure", task.getException());
+                        Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 

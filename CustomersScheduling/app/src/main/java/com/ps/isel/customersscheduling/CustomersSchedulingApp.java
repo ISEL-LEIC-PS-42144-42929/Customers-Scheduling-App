@@ -55,7 +55,6 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     //GET REQUESTS
 
-
     public void getOwner(Consumer<OwnerResourceItem> cons) {
         api.getOwner(cons);
     }
@@ -122,93 +121,25 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getBookingsOfClient(cons);
     }
 
-    public void getDisponibilityOfService(Consumer<BookingResourceItem> cons, ServiceResourceItem serviceResource){
+    public void getDisponibilityOfService(Consumer<BookingsOfStoreDTO> cons, ServiceResourceItem serviceResource){
         api.getDisponibilityOfService(cons, serviceResource);
     }
+
+
 
     //POST REQUESTS
     public void registerClientToStore(Consumer<StoresOfUserDTO> cons, JSONObject json, StoreResourceItem storeResourceItem) {
         api.registerClientToStore(cons,json, storeResourceItem);
     }
 
-    public void deleteClientOfStore(Consumer<StoreResourceItem> cons, JSONObject json, StoreResourceItem storeResourceItem) {
-        api.deleteClientOfStore(cons,json, storeResourceItem);
-    }
-
-
-    public void  updateClientToStore(Consumer<StoreResourceItem> cons, JSONObject json, ClientResourceItem user, String nif){
-        api.updateClientToStore(cons,json,user, nif);
-    }
-
-    public void deleteBooking(Consumer<BookingsOfStoreDTO> cons, String nif, String id) {
-        api.deleteBooking(cons, nif, id);
-    }
-
-
-
-
-
-  //  @RequiresApi(api = Build.VERSION_CODES.N)
-  //  public void getEmployeeDisponibility(Consumer<String[]> cons, ServiceDto service)
-  //  {
-  //     api.getEmployeeDisponibility(cons,service);
-  //  }
-
-
-    public <T>void getStaffOfService(Consumer<T[]> cons)
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public<T> void registerStore(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject)
     {
-
+        api.registerStore(cons, storeJSONObject);
     }
-
-
-
-
-
-   @RequiresApi(api = Build.VERSION_CODES.N)
-   public<T> void registerStore(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject)
-   {
-       api.registerStore(cons, storeJSONObject);
-   }
-
-    public void editOwnerBusinessData(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject, StoreResourceItem storeResource)
-    {
-        api.editOwnerBusinessData(cons, storeJSONObject, storeResource);
-    }
-    public void editStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject value, StoreResourceItem storeResource)
-    {
-        api.editStoreSchedule(cons, value, storeResource);
-    }
-
-    public void  editStoreService(Consumer<ServiceResourceItem> cons, JSONObject json, ServiceResourceItem serviceResource){
-        api.editStoreService(cons, json, serviceResource);
-    }
-
-    public void editEmployee(Consumer<StaffResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
-        api.editEmployee(cons, jsonBodyObj, staffResource);
-    }
-
-    public void editEmployeeSchedule(Consumer<StoreResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
-        api.editEmployeeSchedule(cons, jsonBodyObj, staffResource);
-    }
-
-    public void removeEmpFromService(Consumer<ServiceResourceItem> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
-        api.removeEmpFromService(cons, currentService, staffResourceItems, store);
-    }
-
 
     public void registerEmployeeToService(Consumer<ServicesOfBusinessDTO> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
         api.registerEmployeeToService(cons, currentService, staffResourceItems, store);
-    }
-
-
-   // public void registerStoreScheduleEnd(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
-   // {
-   //     api.registerStoreScheduleEnd(cons, storeScheduleJSONObject, storeResource, storeResourceItemClass);
-   // }
-
-    public void registerStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
-    {
-        api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource);
     }
 
     public void registerEmployeeSchedule(Consumer<StaffResourceItem> cons, JSONObject staffJSONObject, StaffResourceItem staffResourceItem)
@@ -231,6 +162,57 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.rateStore(cons,jsonObject,storeResource);
     }
 
+
+
+    //UPDATE REQUESTS
+    public void  updateClientToStore(Consumer<StoreResourceItem> cons, JSONObject json, ClientResourceItem user, String nif){
+        api.updateClientToStore(cons,json,user, nif);
+    }
+
+    public void editOwnerBusinessData(Consumer<StoreResourceItem> cons, JSONObject storeJSONObject, StoreResourceItem storeResource)
+    {
+        api.editOwnerBusinessData(cons, storeJSONObject, storeResource);
+    }
+    public void editStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject value, StoreResourceItem storeResource)
+    {
+        api.editStoreSchedule(cons, value, storeResource);
+    }
+
+    public void  editStoreService(Consumer<ServiceResourceItem> cons, JSONObject json, ServiceResourceItem serviceResource){
+        api.editStoreService(cons, json, serviceResource);
+    }
+
+    public void editEmployee(Consumer<StaffResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
+        api.editEmployee(cons, jsonBodyObj, staffResource);
+    }
+
+    public void editEmployeeSchedule(Consumer<StoreResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
+        api.editEmployeeSchedule(cons, jsonBodyObj, staffResource);
+    }
+
+
+
+    //DELETE REQUESTS
+    public void deleteBooking(Consumer<BookingsOfStoreDTO> cons, String nif, String id) {
+        api.deleteBooking(cons, nif, id);
+    }
+
+    public void deleteClientOfStore(Consumer<StoreResourceItem> cons, JSONObject json, StoreResourceItem storeResourceItem) {
+        api.deleteClientOfStore(cons,json, storeResourceItem);
+    }
+
+    public void removeEmpFromService(Consumer<ServiceResourceItem> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
+        api.removeEmpFromService(cons, currentService, staffResourceItems, store);
+    }
+
+
+    public void registerStoreSchedule(Consumer<StoreResourceItem> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
+    {
+        api.registerStoreSchedule(cons, storeScheduleJSONObject, storeResource);
+    }
+
+
+
     public void registerOwner(JSONObject json) {
         api.registerOwner(json);
     }
@@ -240,20 +222,6 @@ public class CustomersSchedulingApp extends Application implements Serializable
  //      api.registerUserService(storeJSONObject, service);
  //  }
 
-    public void registerClient(JSONObject clientJSONObject)
-    {
-        api.registerClient(clientJSONObject);
-    }
-
-
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void sendIdToken(String idToken)
-    {
-        api.sendIdToken(idToken);
-    }
 
 
     //DELETES

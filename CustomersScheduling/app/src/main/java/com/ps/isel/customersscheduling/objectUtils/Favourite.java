@@ -1,4 +1,4 @@
-package com.ps.isel.customersscheduling.Model;
+package com.ps.isel.customersscheduling.objectUtils;
 
 import java.io.Serializable;
 

@@ -16,11 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
@@ -90,52 +87,40 @@ public class RegisterEmployeeFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Employee");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void addListenertoButton()
     {
-        registerEmployee.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
+        registerEmployee.setOnClickListener(v -> {
+
+             JSONObject jsonBodyObj = new JSONObject();
+            try
             {
+                String clientEmail = employeeEmail.getText().toString();
 
-                 JSONObject jsonBodyObj = new JSONObject();
-                try
+                if(clientEmail.equals(""))
                 {
-                    String clientEmail = employeeEmail.getText().toString();
-
-                    if(clientEmail.equals(""))
-                    {
-                        Toast.makeText(context, "Have to insert employee e-mail",Toast.LENGTH_LONG).show();
-                    }
-                    else{
-
-
-                        jsonBodyObj.put("name", employeeName.getText().toString());
-                        jsonBodyObj.put("email", clientEmail);
-                        jsonBodyObj.put("contact", employeeContact.getText().toString());
-                        jsonBodyObj.put("nif", storeResource.getStore().getNif());
-                        jsonBodyObj.put("gender", employeeGender.getText().toString());
-
-                       customersSchedulingApp.registerEmployee(elem->
-                                       changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
-                               jsonBodyObj,
-                               storeResource,
-                               StaffResourceItem.class);
-
-                    }
+                    Toast.makeText(context, "Have to insert employee e-mail",Toast.LENGTH_LONG).show();
                 }
-                catch (JSONException e) {
-                    //TODO resolve exception
-                    e.printStackTrace();
+                else{
+                    jsonBodyObj.put("name", employeeName.getText().toString());
+                    jsonBodyObj.put("email", clientEmail);
+                    jsonBodyObj.put("contact", employeeContact.getText().toString());
+                    jsonBodyObj.put("nif", storeResource.getStore().getNif());
+                    jsonBodyObj.put("gender", employeeGender.getText().toString());
+
+                   customersSchedulingApp.registerEmployee(elem->
+                                   changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
+                           jsonBodyObj,
+                           storeResource,
+                           StaffResourceItem.class);
                 }
+            }
+            catch (JSONException e) {
+                Toast.makeText(getActivity(), "Employee registration went wrong!try again later",Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         });
 

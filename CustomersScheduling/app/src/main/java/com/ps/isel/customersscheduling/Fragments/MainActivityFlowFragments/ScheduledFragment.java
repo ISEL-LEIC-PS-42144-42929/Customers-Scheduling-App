@@ -115,17 +115,13 @@ public class ScheduledFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Schedules");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToActivity(context, MainActivity.class);
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> goToActivity(context, MainActivity.class));
     }
 
     private void listViewCode(Object bookings)
     {
         BookingsOfStoreDTO c = (BookingsOfStoreDTO) bookings;
-        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getBookingResourceList(),fragmentManager, this, new ScheduleInfoFragment(), context,R.id.mainActivityFragment));
+        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getBookingResourceList(),
+                fragmentManager, this, new ScheduleInfoFragment(), context,R.id.mainActivityFragment));
     }
 }

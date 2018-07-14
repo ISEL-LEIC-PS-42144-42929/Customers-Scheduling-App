@@ -17,41 +17,13 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.Link;
-import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.PersonOfStoreDTO;
-import com.ps.isel.customersscheduling.HALDto.StaffDto;
 import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
-import com.ps.isel.customersscheduling.HALDto.embeddeds.PersonEmbedded;
-import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
-import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
-import com.ps.isel.customersscheduling.HALDto.links.PersonLink;
-import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
-import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
 
 
 public class SelectEmployeeToEditFragment extends BaseFragment {
-
-    //HARDCODED
- //  private Link link = new Link();
- //  private Link[] links = new Link[1];
-
- //  private SelfLink _links;
-
- //  private StaffDto person = new StaffDto("email@gmil.com","joao",1,"91192393");
- //  private StaffLinks _linkStaff;
-
-
- //  private StaffResourceItem[] staffResourceItems= new StaffResourceItem[]{new StaffResourceItem(person,_linkStaff)};
- // // private PersonEmbedded _embedded = new PersonEmbedded(staffResourceItems);
-
- // // private PersonOfStoreDTO personOfStoreDTO = new PersonOfStoreDTO(_embedded, _links);
-
-    //--------
-
 
     private CustomersSchedulingApp customersSchedulingApp;
 
@@ -109,12 +81,10 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
         toolbar = view.findViewById(R.id.app_bar);
-        lv = (ListView) view.findViewById(R.id.employeesList);
+        lv = view.findViewById(R.id.employeesList);
 
         customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
-       // listViewCode(staffResourceItems);
         toolbarCode();
-
     }
 
     private void toolbarCode()
@@ -124,12 +94,7 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Employees");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
     private void listViewCode(Object employees) {
@@ -143,7 +108,4 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
                  R.id.userBusinessFragment,
                  storeResource));
     }
-
-
-
 }

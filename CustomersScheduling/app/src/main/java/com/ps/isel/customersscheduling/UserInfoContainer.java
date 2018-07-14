@@ -2,7 +2,7 @@ package com.ps.isel.customersscheduling;
 
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
-import com.ps.isel.customersscheduling.Model.Favourite;
+import com.ps.isel.customersscheduling.objectUtils.Favourite;
 
 import java.util.HashMap;
 

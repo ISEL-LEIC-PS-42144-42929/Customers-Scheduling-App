@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -136,16 +135,6 @@ public class EditBusinessDataFragment extends BaseFragment
         addListenertoButton();
     }
 
-    private void addListenersToEditTexts() {
-
-        storeContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
-
     private void putHints()
     {
         storeName.setHint("Name:" + storeResource.getStore().getStoreName());
@@ -166,12 +155,7 @@ public class EditBusinessDataFragment extends BaseFragment
 
         choseCategory.setAdapter(adapter);
 
-        choseCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                choseCategoryText = categories[position];
-            }
-        });
+        choseCategory.setOnItemClickListener((parent, view, position, id) -> choseCategoryText = categories[position]);
     }
 
     private void toolbarCode()
@@ -181,100 +165,76 @@ public class EditBusinessDataFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Business");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        editBusiness.setOnClickListener(new View.OnClickListener() {
+        editBusiness.setOnClickListener(view -> {
+            try
+            {
+                String storeNIF = storeNif.getText().toString();
+                String storeCont = storeContact.getText().toString();
+                String storeNam = storeName.getText().toString();
+                String strtAndLot = streetAndLot.getText().toString();
+                String zipCode = zipcode.getText().toString();
+                String cityAndCoun = cityAndCountry.getText().toString();
+                String cat = choseCategory.getText().toString();
 
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                try
+                if(storeNIF.equals(""))
                 {
-                    String storeNIF = storeNif.getText().toString();
-                    String storeCont = storeContact.getText().toString();
-                    String storeNam = storeName.getText().toString();
-                    String strtAndLot = streetAndLot.getText().toString();
-                    String zipCode = zipcode.getText().toString();
-                    String cityAndCoun = cityAndCountry.getText().toString();
-                    String cat = choseCategory.getText().toString();
-
-                    if(storeNIF.equals(""))
-                    {
-                        storeNIF = storeNif.getHint().toString();
-                    }
-                    if(storeCont.equals(""))
-                    {
-                        storeCont = storeContact.getHint().toString();
-                    }
-                    if(storeNam.equals(""))
-                    {
-                        storeNam = storeName.getHint().toString();
-                    }
-                    if(strtAndLot.equals(""))
-                    {
-                        strtAndLot = streetAndLot.getHint().toString();
-                    }
-                    if(cat.equals(""))
-                    {
-                        cat = streetAndLot.getHint().toString();
-                    }
-                    if(zipCode.equals(""))
-                    {
-                        zipCode = zipcode.getHint().toString();
-                    }
-                    if(cityAndCoun.equals(""))
-                    {
-                        cityAndCoun = cityAndCountry.getHint().toString();
-                    }
-
-                    jsonBodyObj.put("name", storeNam);
-                    jsonBodyObj.put("nif", storeNIF);
-                    jsonBodyObj.put("contact", storeCont);
-                    jsonBodyObj.put("category", cat);
-                    jsonBodyObj.put("street", deserializeString(strtAndLot)[0]);
-                    jsonBodyObj.put("zip_code", zipCode);
-                    jsonBodyObj.put("lot", deserializeString(strtAndLot)[1]);
-                    jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
-                    jsonBodyObj.put("country",deserializeString(cityAndCoun)[1]);
-
-
-                   customersSchedulingApp.editOwnerBusinessData(elem ->
-                                            changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment())
-                                    , jsonBodyObj, storeResource);
+                    storeNIF = storeNif.getHint().toString();
                 }
-                catch (JSONException e) {
-                    //TODO resolve exception
-                    e.printStackTrace();
+                if(storeCont.equals(""))
+                {
+                    storeCont = storeContact.getHint().toString();
+                }
+                if(storeNam.equals(""))
+                {
+                    storeNam = storeName.getHint().toString();
+                }
+                if(strtAndLot.equals(""))
+                {
+                    strtAndLot = streetAndLot.getHint().toString();
+                }
+                if(cat.equals(""))
+                {
+                    cat = streetAndLot.getHint().toString();
+                }
+                if(zipCode.equals(""))
+                {
+                    zipCode = zipcode.getHint().toString();
+                }
+                if(cityAndCoun.equals(""))
+                {
+                    cityAndCoun = cityAndCountry.getHint().toString();
                 }
 
+                jsonBodyObj.put("name", storeNam);
+                jsonBodyObj.put("nif", storeNIF);
+                jsonBodyObj.put("contact", storeCont);
+                jsonBodyObj.put("category", cat);
+                jsonBodyObj.put("street", deserializeString(strtAndLot)[0]);
+                jsonBodyObj.put("zip_code", zipCode);
+                jsonBodyObj.put("lot", deserializeString(strtAndLot)[1]);
+                jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
+                jsonBodyObj.put("country",deserializeString(cityAndCoun)[1]);
+
+
+               customersSchedulingApp.editOwnerBusinessData(elem ->
+                                        changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment())
+                                , jsonBodyObj, storeResource);
             }
+            catch (JSONException e) {
+                Toast.makeText(getActivity(), "Business edit went wrong!try again later",Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
         });
 
-        insertExistingPictureBtn.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View view) {
-
-                onImageGalleryClicked(view);
-            }
-        });
-
-        takeNewPicture.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                onTakeNewPhotoClicked(view);
-            }
-        });
+        insertExistingPictureBtn.setOnClickListener(view -> onImageGalleryClicked(view));
+        takeNewPicture.setOnClickListener(view -> onTakeNewPhotoClicked(view));
     }
 
     public String[] deserializeString(String string)

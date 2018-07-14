@@ -29,9 +29,11 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.StaffDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
@@ -41,8 +43,10 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.stream.Stream;
 
 public class ServiceFragment extends BaseFragment
 {
@@ -84,6 +88,7 @@ public class ServiceFragment extends BaseFragment
     private ServiceResourceItem serviceResource;
     private StoreResourceItem storeResource;
     private int position;
+    private ArrayList<String> list;
 
     public ServiceFragment() {
         // Required empty public constructor
@@ -122,19 +127,15 @@ public class ServiceFragment extends BaseFragment
 
         bundle = getArguments();
 
+        list = new ArrayList();
         position = (int) bundle.getSerializable("position");
         //storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
         serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
 
-      //  customersSchedulingApp = ((CustomersSchedulingApp)context);
-      //  customersSchedulingApp.getDisponibilityOfService(elem->{
-      //          dropDownButtonCode(elem.getStaffDto());
+        customersSchedulingApp = ((CustomersSchedulingApp)context);
+
       //          //TODO preciso de saber as horas disponiveis para o serviço
       //          },serviceResource);
-
-        calendarViewCode();
-
-        //customersSchedulingApp.getStoreEmployees(this::dropDownButtonCode, service);
 
         jsonBodyObj = new JSONObject();
 
@@ -145,14 +146,15 @@ public class ServiceFragment extends BaseFragment
         spinner            = view.findViewById(R.id.employeesDropDown);
         serviceName        = view.findViewById(R.id.serviceName);
 
-      //  serviceName.setText(serviceResource.getService().getTitle());
-
         toolbarCode();
         setDateToCalendar();
-      //  dropDownButtonCode(hardcodedEmployesNames);
+        customersSchedulingApp.getDisponibilityOfService(elem->{
+            dropDownButtonCode(elem.get_embedded().getBookingResourceList());},serviceResource);
+        //dropDownButtonCode(hardcodedEmployesNames);
 
         recyclerViewCode(hardcodedHoursAvaiable);
         addListenerToButtons();
+        calendarViewCode();
 
 
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -199,27 +201,37 @@ public class ServiceFragment extends BaseFragment
         });
     }
 
-    private void dropDownButtonCode(StaffDto[] staff)
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void dropDownButtonCode(BookingResourceItem[] booking)
     {
-        String[] staffName = new String[staff.length];
 
-        for (int i = 0; i <staff.length ; i++) {
-            staffName[i] = staff[i].getName();
-        }
+    //   for (int i = 0; i <booking.length ; i++) {
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getActivity(),
-                android.R.layout.simple_dropdown_item_1line,
-                staffName);
+    //       if(!list.contains(booking[i].getBook().getStaff().getName())){
+    //           list.add(booking[i].getBook().getStaff().getName());
+    //       }
 
-        spinner.setAdapter(adapter);
-        employee = hardcodedEmployesNames[0].getName();
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                employee = staff[position].getName();
-            }
-        });
+    //   }
+    //   String[] staffName = new String[list.size()];
+
+    //   for (S:
+    //        ) {
+
+    //   }
+
+
+     //  ArrayAdapter<String> adapter = new ArrayAdapter<>(
+     //          getActivity(),
+     //          android.R.layout.simple_dropdown_item_1line,
+     //          staffName);
+//
+     //   spinner.setAdapter(adapter);
+     //   spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+     //       @Override
+     //       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+     //           employee = staffName[position];
+     //       }
+     //   });
     }
 
     private void addListenerToButtons()
@@ -234,7 +246,7 @@ public class ServiceFragment extends BaseFragment
                 }else{
                         if (employee == null)
                         {
-                            employee = hardcodedEmployesNames[0].getName();
+                         //   employee = hardcodedEmployesNames[0].getName();
                         }
                         if (dateSchedule == null)
                         {

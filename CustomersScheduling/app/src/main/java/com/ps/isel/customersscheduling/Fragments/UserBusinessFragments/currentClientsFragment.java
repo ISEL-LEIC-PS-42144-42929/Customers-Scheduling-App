@@ -26,27 +26,6 @@ import com.ps.isel.customersscheduling.Utis.CustomAdapterTogleButtons;
 
 public class currentClientsFragment extends BaseFragment {
 
-
-    //HARDCODED
- //   private PersonDto[] clients = new PersonDto[]
- //           {
- //                   new PersonDto(
- //                           "john",
- //                           "j@gmail.com",
- //                           1,
- //                           "91111111"),
- //                   new PersonDto(
- //                           "john",
- //                           "j@gmail.com",
- //                           1,
- //                           "91111111"),
- //                   new PersonDto(
- //                           "john",
- //                           "j@gmail.com",
- //                           1,
- //                           "91111111")
- //           };
-    //-----------
     private CustomersSchedulingApp customersSchedulingApp;
     private FragmentManager fragmentManager;
 
@@ -104,9 +83,7 @@ public class currentClientsFragment extends BaseFragment {
     private void listViewCode(Object object)             //TODO change parameter to connect to server Object storesDTO
     {
         ClientOfStoreDTO clients =  ((ClientOfStoreDTO)object);
-
         lv.setAdapter(new CustomAdapterTogleButtons(getActivity(),clients.get_embedded().getClientResourceList(), customersSchedulingApp, storeResource));
-
     }
 
     private void toolBarCode()
@@ -116,13 +93,7 @@ public class currentClientsFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
-
 
 }

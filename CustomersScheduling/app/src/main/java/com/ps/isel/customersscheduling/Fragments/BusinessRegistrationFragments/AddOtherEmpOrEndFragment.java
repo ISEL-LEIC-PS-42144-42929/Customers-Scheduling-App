@@ -55,13 +55,7 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
 
     private void addListenertoButton()
     {
-        addAnotherEmployee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                changeFragment(fragmentManager, R.id.businessData, registerEmployeeFragment);
-            }
-        });
+        addAnotherEmployee.setOnClickListener(v -> changeFragment(fragmentManager, R.id.businessData, registerEmployeeFragment));
 
         endRegistration.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -31,7 +32,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 public class EditEmployeesScheduleFragment extends BaseFragment
 {
@@ -124,33 +124,18 @@ public class EditEmployeesScheduleFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Employee Schedule");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        employeeRegisterScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                testCheckBoxes();
-                sendSchedules();
-            }
+        employeeRegisterScheduleBtn.setOnClickListener(v -> {
+            testCheckBoxes();
+            sendSchedules();
         });
 
-        endEmployeeRegisterScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                testCheckBoxesEnd();
-            }
-        });
+        endEmployeeRegisterScheduleBtn.setOnClickListener(view -> testCheckBoxesEnd());
 
     }
 
@@ -174,6 +159,7 @@ public class EditEmployeesScheduleFragment extends BaseFragment
             aux.put("week_day", mapForDataBase.get(weekday));
 
         } catch (JSONException e) {
+            Toast.makeText(getActivity(), "Employee edit went wrong!try again later",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
         if(jsons.containsKey(weekday))
@@ -185,17 +171,14 @@ public class EditEmployeesScheduleFragment extends BaseFragment
 
     private void addListenersTOCheckBoxes() {
 
-        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                CheckBox aux = (CheckBox) compoundButton;
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (compoundButton, b) -> {
+            CheckBox aux = (CheckBox) compoundButton;
 
-                if(!aux.isChecked())
-                {
-                    checkBoxesList.remove(aux);
-                }else {
-                    checkBoxesList.add((CheckBox) compoundButton);
-                }
+            if(!aux.isChecked())
+            {
+                checkBoxesList.remove(aux);
+            }else {
+                checkBoxesList.add((CheckBox) compoundButton);
             }
         };
 
@@ -218,7 +201,6 @@ public class EditEmployeesScheduleFragment extends BaseFragment
         for (CheckBox checkBox: checkBoxesList) {
             changedChecked(checkBox);
             createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, checkBox.getText().toString());
-
         }
     }
 
@@ -227,8 +209,6 @@ public class EditEmployeesScheduleFragment extends BaseFragment
         checkBox.setBackgroundColor(Color.GRAY);
         checkBox.setClickable(false);
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void testCheckBoxesEnd() //TODO ver como se faz para os dias de folga
@@ -256,5 +236,4 @@ public class EditEmployeesScheduleFragment extends BaseFragment
             }
         }
     }
-
 }

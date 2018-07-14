@@ -1,13 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -59,7 +56,6 @@ public class PendentRequestsFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pendent_requests, container, false);
     }
 
@@ -80,25 +76,13 @@ public class PendentRequestsFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
-
-        toolbar = (Toolbar) view.findViewById(R.id.app_bar);
-        lv      = (ListView) view.findViewById(R.id.pendentRequests);
+        toolbar = view.findViewById(R.id.app_bar);
+        lv      = view.findViewById(R.id.pendentRequests);
 
         customersSchedulingApp.getPendentRequestsOfClients(elem ->
                 listViewCode(elem), storeResource);
 
-        //    user = new ClientDto ("Gonçalo","@email",1,1, null,null); //hardcodeddata
-    //    pendentRequests[0] = user;      //hardcodeddata
-    //    pendentRequests[1] = user;      //hardcodeddata
-    //    pendentRequests[2] = user;      //hardcodeddata
-    //    pendentRequests[3] = user;      //hardcodeddata
-
         toolbarCode();
-      //  constructListViewAndAddListeners(pendentRequests);
-
-        // customersSchedulingApp.getUserPendentRequests(
-        //         this::constructListViewAndAddListeners,
-        //         "username");
     }
 
     private void toolbarCode()
@@ -108,22 +92,12 @@ public class PendentRequestsFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                changeFragment(fragmentManager,
-                        R.id.userBusinessFragment,
-                        new UserBusinessFragment());
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment()));
     }
 
     private void listViewCode(Object object)
     {
         ClientOfStoreDTO clients =  ((ClientOfStoreDTO)object);
-
         lv.setAdapter(new CustomAdapterUsers(getActivity(), clients.get_embedded().getClientResourceList(), this, customersSchedulingApp, storeResource));
     }
 }

@@ -11,12 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
-
 
     Fragment registerAnotherServiceFragment;
     Fragment registerEmployeeFragment;
@@ -65,22 +63,12 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
 
     private void addListenertoButton()
     {
-        addAnotherService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerAnotherServiceFragment,"storeResource", storeResource));
-            }
-        });
+        addAnotherService.setOnClickListener(v ->
+                changeFragment(fragmentManager,
+                        R.id.businessData,
+                        addBundleToFragment(registerAnotherServiceFragment,"storeResource", storeResource)));
 
-        addEmployee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeFragment,"storeResource", storeResource));
-            }
-        });
+        addEmployee.setOnClickListener(v ->
+                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeFragment,"storeResource", storeResource)));
     }
-
-
 }

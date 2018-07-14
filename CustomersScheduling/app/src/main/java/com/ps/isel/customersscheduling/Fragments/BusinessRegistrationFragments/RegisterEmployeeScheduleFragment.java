@@ -120,33 +120,18 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Employee Schedule");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenerToButton()
     {
-        employeeRegisterScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                testCheckBoxes();
-                sendSchedules();
-            }
+        employeeRegisterScheduleBtn.setOnClickListener(v -> {
+            testCheckBoxes();
+            sendSchedules();
         });
 
-        endEmployeeRegisterScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                testCheckBoxesEnd();
-            }
-        });
+        endEmployeeRegisterScheduleBtn.setOnClickListener(view -> testCheckBoxesEnd());
 
     }
 
@@ -181,17 +166,14 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
 
     private void addListenersTOCheckBoxes() {
 
-        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                CheckBox aux = (CheckBox) compoundButton;
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (compoundButton, b) -> {
+            CheckBox aux = (CheckBox) compoundButton;
 
-                if(!aux.isChecked())
-                {
-                    checkBoxesList.remove(aux);
-                }else {
-                    checkBoxesList.add((CheckBox) compoundButton);
-                }
+            if(!aux.isChecked())
+            {
+                checkBoxesList.remove(aux);
+            }else {
+                checkBoxesList.add((CheckBox) compoundButton);
             }
         };
 
@@ -214,7 +196,6 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         for (CheckBox checkBox: checkBoxesList) {
             changedChecked(checkBox);
             createJsonSaveInArray(openHour,startLunchH, endLunchH, endH, checkBox.getText().toString());
-
         }
     }
 
@@ -223,6 +204,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     {
         JSONObject aux = new JSONObject();
         Iterator it = jsons.entrySet().iterator();
+
         while (it.hasNext())
         {
             Map.Entry item = (Map.Entry) it.next();
@@ -249,7 +231,6 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
         checkBox.setBackgroundColor(Color.GRAY);
         checkBox.setClickable(false);
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void sendSchedules()

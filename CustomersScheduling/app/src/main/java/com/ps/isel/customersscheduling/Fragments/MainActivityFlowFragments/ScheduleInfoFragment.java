@@ -1,7 +1,6 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,13 +17,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -53,8 +50,6 @@ public class ScheduleInfoFragment extends BaseFragment
     private Button deleteService;
 
     private BookingResourceItem bookingResourceItem;
-
-
 
     public ScheduleInfoFragment() {
         // Required empty public constructor
@@ -111,7 +106,6 @@ public class ScheduleInfoFragment extends BaseFragment
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ScheduledFragment();
-
     }
 
     private void constructTextViews(BookingResourceItem service)
@@ -128,29 +122,15 @@ public class ScheduleInfoFragment extends BaseFragment
        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(bookingResourceItem.getBook().getService().getTitle());
        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-       toolbar.setNavigationOnClickListener(new View.OnClickListener()
-       {
-           @Override
-           public void onClick(View v)
-           {
-               fragmentManager.popBackStackImmediate();
-           }
-       });
+       toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        deleteService.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                customersSchedulingApp.deleteBooking(elem->changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment()),bookingResourceItem.getBook().getStore().getNif(), bookingResourceItem.getBook().getId() + "");
-
-            }
-        });
-
+        deleteService.setOnClickListener(v -> customersSchedulingApp.deleteBooking(elem->changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment()),
+                bookingResourceItem.getBook().getStore().getNif(), bookingResourceItem.getBook().getId() + ""));
     }
 
 }

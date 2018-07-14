@@ -37,32 +37,25 @@ import java.util.function.Consumer;
 public class CustomersSchedulingWebApi<T>
 {
 
-    private final int[] TYPE_REQUESTS= {0,1,2,3};
     private final String DB_HOST = "http://192.168.1.220:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_BOOKINGS = "person/client/%s/books";
     private final String DB_USER_DELETE_BOOKINGS = "store/%s/book/%s";
-    private final String DB_USER_REG_STORE = "store/%s/";
     private final String DB_STORE = "store";
     private final String DB_USER_REG_OWNER = "person/owner/";
     private final String DB_USER_GET_STORES = "person/owner/%s/stores";
-    private final String DB_USER_GET_OWNER = "person/owner/%s/";
     private final String DB_USER_STORE = "store/owner/%s/";
-    private final String DB_SERVICE = "service";
-    private final String DB_USER_REG_STORE_SCHEDULE = "timetable/store/";
-    private final String DB_USER_REG_STAFF_SCHEDULE = "timetable/staff/";
     private final String DB_QUERY_NAME = "?name=%s";
     private final String DB_QUERY_LOCAL_AND_CATEGORY = "?category=%s&location=%s";
 
-
     private RequestQueue requestQueue;
-    final Gson gson = new Gson();
 
     public CustomersSchedulingWebApi(RequestQueue queue)
     {
         this.requestQueue = queue;
     }
 
+    //GET REQUESTS
     public void getUserRegisteredBusiness(Consumer<T> cons)
     {
         String path = String.format(DB_HOST +DB_USER_STORES, UserInfoContainer.getInstance().getEmail());
@@ -107,7 +100,7 @@ public class CustomersSchedulingWebApi<T>
     }
 
     public void getDisponibilityOfService(Consumer<T> cons, ServiceResourceItem serviceResource) {
-        getRequest(cons,serviceResource.get_links().insert_store_service().getHref(), serviceResource.getClass());
+        getRequest(cons,serviceResource.get_links().getDisp().getHref(), BookingsOfStoreDTO.class);
     }
 
     public void getOwner(Consumer<T> cons)
@@ -123,11 +116,60 @@ public class CustomersSchedulingWebApi<T>
         getRequest(cons,String.format(DB_HOST + DB_USER_BOOKINGS, UserInfoContainer.getInstance().getEmail()), BookingsOfStoreDTO.class);
     }
 
+
+
+
+    //POST REQUESTS
+    public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
+    {
+        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, storeResource.getClass());
+    }
+
     public void registerStore(Consumer<T> cons, JSONObject storeJSONObject)
     {
         postRequest(String.format(DB_HOST+ DB_USER_STORE, UserInfoContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
     }
 
+    public void registerService(Consumer<T> cons, JSONObject serviceJSONObject, StoreResourceItem storeResource, Class<ServiceResourceItem> serviceResourceItemClass)
+    {
+        postRequest(storeResource.get_links().getServices().getHref(), serviceJSONObject,cons,serviceResourceItemClass);
+    }
+
+    public void registerEmployee(Consumer<T> cons, JSONObject employeeJSONObject, StoreResourceItem storeResource, Class<StaffResourceItem> staffResourceItemClass)
+    {
+        postRequest(storeResource.get_links().getInsert_staff().getHref(), employeeJSONObject,cons,staffResourceItemClass);
+    }
+
+    public void registerEmployeeSchedule(Consumer<T> cons, JSONObject staffJSONObject, StaffResourceItem staffResource, Class<StaffResourceItem> staffResourceItemClass)
+    {
+        postRequest(staffResource.get_links().getInsert_timetable().getHref(), staffJSONObject, cons, staffResourceItemClass);
+    }
+
+    public void registerClientToStore(Consumer<T> cons, JSONObject clientJSONObject,StoreResourceItem storeResourceItem) {
+        String aux = storeResourceItem.get_links().getSet_client().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()).concat(".x");
+        postRequest(aux,clientJSONObject,cons,StoresOfUserDTO.class);
+    }
+
+    public void registerEmployeeToService(Consumer<T> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
+        String url = currentService.get_links().getDelete_staff_service().getHref()
+                .replace("%7Bnif%7D", store.getStore().getNif())
+                .replace("-1", currentService.getService().getId()+"")
+                .replace("{email}", staffResourceItems.getPerson().getEmail());
+        postRequest(url,new JSONObject(),cons, ServicesOfBusinessDTO.class);
+    }
+
+    public void registerOwner(JSONObject json) {
+        postRequestWithNoResponse(DB_HOST + DB_USER_REG_OWNER, json);
+    }
+
+    public void rateStore(Consumer<T> cons, JSONObject jsonObject, StoreResourceItem storeResource) {
+
+        updateRequest(storeResource.get_links().getScore().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()),jsonObject,cons,storeResource.getClass());
+    }
+
+
+
+    //UPDATE REQUESTS
     public void editOwnerBusinessData(Consumer<T> cons, JSONObject storeJSONObject, StoreResourceItem storeResource)
     {
         updateRequest(String.format(storeResource.get_links().getUpdate().getHref(), UserInfoContainer.getInstance().getEmail()), storeJSONObject, cons, StoreResourceItem.class);
@@ -151,47 +193,13 @@ public class CustomersSchedulingWebApi<T>
         updateRequest(staffResource.get_links().getUpdate_timetable().getHref(),jsonBodyObj,cons,staffResource.getClass());
     }
 
-
-
-    public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
-    {
-        postRequest(storeResource.get_links().getTimetable().getHref(), storeScheduleJSONObject,cons, storeResource.getClass());
-    }
-
-  // public void registerStoreScheduleEnd(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource, Class<StoreResourceItem> storeResourceItemClass)
-  // {
-  //     postRequest(storeResource.get_links().getTimetable().getHref(),storeScheduleJSONObject,cons,storeResourceItemClass);
-  // }
-
-    public void registerService(Consumer<T> cons, JSONObject serviceJSONObject, StoreResourceItem storeResource, Class<ServiceResourceItem> serviceResourceItemClass)
-    {
-        postRequest(storeResource.get_links().getServices().getHref(), serviceJSONObject,cons,serviceResourceItemClass);
-    }
-
-    public void registerEmployee(Consumer<T> cons, JSONObject employeeJSONObject, StoreResourceItem storeResource, Class<StaffResourceItem> staffResourceItemClass)
-    {
-       postRequest(storeResource.get_links().getInsert_staff().getHref(), employeeJSONObject,cons,staffResourceItemClass);
-    }
-
-    public void registerEmployeeSchedule(Consumer<T> cons, JSONObject staffJSONObject, StaffResourceItem staffResource, Class<StaffResourceItem> staffResourceItemClass)
-    {
-        postRequest(staffResource.get_links().getInsert_timetable().getHref(), staffJSONObject, cons, staffResourceItemClass);
-    }
-
-    public void registerClientToStore(Consumer<T> cons, JSONObject clientJSONObject,StoreResourceItem storeResourceItem) {
-        String aux = storeResourceItem.get_links().getSet_client().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()).concat(".x");
-        postRequest(aux,clientJSONObject,cons,StoresOfUserDTO.class);
-    }
-
     public void updateClientToStore(Consumer<T> cons, JSONObject json, ClientResourceItem user, String nif) {
 
         updateRequest(user.get_links().getSet_store().getHref().replace("{nif}",nif).concat(".x"),json,cons,StoreResourceItem.class);
     }
 
 
-
-
-
+    //DELETE REQUESTS
     public void rejectClient(Consumer<T> cons, ClientResourceItem user, StoreResourceItem storeResourceItem) {
 
         deleteRequest(storeResourceItem.get_links().getDelete_client().getHref().replace("{email}",user.getPerson().getEmail()).concat(".x"),
@@ -215,48 +223,7 @@ public class CustomersSchedulingWebApi<T>
         deleteRequest(url,cons,ServicesOfBusinessDTO.class);
     }
 
-    public void registerEmployeeToService(Consumer<T> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
-        String url = currentService.get_links().getDelete_staff_service().getHref()
-                .replace("%7Bnif%7D", store.getStore().getNif())
-                .replace("-1", currentService.getService().getId()+"")
-                .replace("{email}", staffResourceItems.getPerson().getEmail());
-        postRequest(url,new JSONObject(),cons, ServicesOfBusinessDTO.class);
-    }
 
-    public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)
-    {
-       // getRequest(cons, service.get_links()[0].getHref(), PersonOfStoreDTO.class);
-    }
-
-
-    //POST REQUESTS
-
-    public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
-    {
-       // postRequest(service.get_links()[0].getHref(), storeJSONObject);
-    }
-
-
-    public void sendIdToken(String idToken){
-        String url = "http://192.168.1.196:8181/tokensignin";
-        postRequestWithNoResponse(url, new JSONObject());
-
-    }
-
-    public void registerClient(JSONObject clientJSONObject)
-    {
-        //   String url ="http://192.168.1.188:8080/cinema";
-        //   postRequest(url, clientJSONObject);
-    }
-
-    public void registerOwner(JSONObject json) {
-        postRequestWithNoResponse(DB_HOST + DB_USER_REG_OWNER, json);
-    }
-
-    public void rateStore(Consumer<T> cons, JSONObject jsonObject, StoreResourceItem storeResource) {
-
-        updateRequest(storeResource.get_links().getScore().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()),jsonObject,cons,storeResource.getClass());
-    }
 
 
 
@@ -338,8 +305,6 @@ public class CustomersSchedulingWebApi<T>
             }
     }
     }
-
-
 
 }
 

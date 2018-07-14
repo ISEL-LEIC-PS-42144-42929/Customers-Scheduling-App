@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -62,7 +63,6 @@ public class EditServicesFragment extends BaseFragment
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class EditServicesFragment extends BaseFragment
         return inflater.inflate(R.layout.fragment_edit_services, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
@@ -78,8 +79,7 @@ public class EditServicesFragment extends BaseFragment
         bundle = getArguments();
         serviceResourceItem = (ServiceResourceItem) bundle.getSerializable("serviceResource");
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
-        customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
+
         jsonBodyObj = new JSONObject();
 
         toolbar           = view.findViewById(R.id.app_bar);
@@ -104,64 +104,54 @@ public class EditServicesFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Service");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        registerService.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
+        registerService.setOnClickListener(v -> {
+            try
             {
-                try
+                String servName = serviceName.getText().toString();
+                String servPrice = servicePrice.getText().toString();
+                String duration = durations.getText().toString();
+                String description = descriptions.getText().toString();
+
+                if(servName.equals(""))
                 {
-                    String servName = serviceName.getText().toString();
-                    String servPrice = servicePrice.getText().toString();
-                    String duration = durations.getText().toString();
-                    String description = descriptions.getText().toString();
-
-                    if(servName.equals(""))
-                    {
-                        servName = serviceName.getHint().toString();
-                    }
-                    if(servPrice.equals(""))
-                    {
-                        servPrice = servicePrice.getHint().toString();
-                    }
-                    if(duration.equals(""))
-                    {
-                        duration = durations.getHint().toString();
-                    }
-                    if(description.equals(""))
-                    {
-                        description = descriptions.getHint().toString();
-                    }
-
-
-                    jsonBodyObj.put("title", servName);
-                    jsonBodyObj.put("price", servPrice);
-                    jsonBodyObj.put("duration", duration);
-                    jsonBodyObj.put("description", description);
-
+                    servName = serviceName.getHint().toString();
                 }
-                catch (JSONException e)
+                if(servPrice.equals(""))
                 {
-                    //TODO resolve exception
-                    e.printStackTrace();
+                    servPrice = servicePrice.getHint().toString();
+                }
+                if(duration.equals(""))
+                {
+                    duration = durations.getHint().toString();
+                }
+                if(description.equals(""))
+                {
+                    description = descriptions.getHint().toString();
                 }
 
-                customersSchedulingApp.editStoreService(elem->
-                                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectServiceToEditFragment(),"storeResource", storeResource))
-                        ,jsonBodyObj
-                        ,serviceResourceItem);
-                changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
+                jsonBodyObj.put("title", servName);
+                jsonBodyObj.put("price", servPrice);
+                jsonBodyObj.put("duration", duration);
+                jsonBodyObj.put("description", description);
+
             }
+            catch (JSONException e)
+            {
+                Toast.makeText(getActivity(), "Service edit went wrong!try again later",Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
+            customersSchedulingApp.editStoreService(elem->
+                            changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectServiceToEditFragment(),"storeResource", storeResource))
+                    ,jsonBodyObj
+                    ,serviceResourceItem);
+            changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
         });
     }
 

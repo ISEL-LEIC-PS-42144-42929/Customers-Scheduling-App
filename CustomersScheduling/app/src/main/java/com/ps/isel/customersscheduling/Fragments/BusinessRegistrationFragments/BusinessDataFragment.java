@@ -1,6 +1,5 @@
 package com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,15 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
-import com.ps.isel.customersscheduling.CustomersSchedulingWebApi;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -57,8 +51,6 @@ public class BusinessDataFragment extends BaseFragment {
     private FragmentManager fragmentManager;
     private android.app.FragmentManager managerDialog;
     private Fragment storeScheduleFragment;
-
-    private AlertDialog.Builder builder;
 
     private DialogFragment dialog;
     private Toolbar toolbar;
@@ -139,12 +131,8 @@ public class BusinessDataFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Business");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToActivity(context, MainActivity.class);
-            }
-        });
+        toolbar.setNavigationOnClickListener(v ->
+                goToActivity(context, MainActivity.class));
     }
 
     private void dropDownButtonCode()
@@ -155,81 +143,53 @@ public class BusinessDataFragment extends BaseFragment {
                 categories);
 
         choseCategory.setAdapter(adapter);
-
-        choseCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                choseCategoryText = categories[position];
-            }
-        });
+        choseCategory.setOnItemClickListener((parent, view, position, id) -> choseCategoryText = categories[position]);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
 
-        registerBusiness.setOnClickListener(new View.OnClickListener() {
+        registerBusiness.setOnClickListener(view -> {
+            try
+            {
+                String storeNIF = storeNif.getText().toString();
+                String storeCont = storeContact.getText().toString();
+                String storeNam = storeName.getText().toString();
+                String strtAndLot = streetAndLot.getText().toString();
+                String zipCode = zipcode.getText().toString();
+                String cityAndCoun = cityAndCountry.getText().toString();
 
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                try
+                if(storeNIF.equals("") || storeCont.equals("") || storeNam.equals("") || strtAndLot.equals("") || zipCode.equals("") || cityAndCoun.equals("") )
                 {
-                    String storeNIF = storeNif.getText().toString();
-                    String storeCont = storeContact.getText().toString();
-                    String storeNam = storeName.getText().toString();
-                    String strtAndLot = streetAndLot.getText().toString();
-                    String zipCode = zipcode.getText().toString();
-                    String cityAndCoun = cityAndCountry.getText().toString();
-
-                    if(storeNIF.equals("") || storeCont.equals("") || storeNam.equals("") || strtAndLot.equals("") || zipCode.equals("") || cityAndCoun.equals("") )
-                    {
-                        Toast.makeText(context, "Have to insert all store data",Toast.LENGTH_LONG).show();
-                    }
-                    else{
-
-                        jsonBodyObj.put("name", storeNam);
-                        jsonBodyObj.put("ownerNif", "123456");
-                        jsonBodyObj.put("nif", storeNIF);
-                        jsonBodyObj.put("contact", storeCont);
-                        jsonBodyObj.put("category", choseCategoryText);
-                        jsonBodyObj.put("street", deserializeString(streetAndLot.getText().toString())[0]);
-                        jsonBodyObj.put("zip_code", zipCode);
-                        jsonBodyObj.put("lot", deserializeString(streetAndLot.getText().toString())[1]);
-                        jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
-                        jsonBodyObj.put("country",deserializeString(cityAndCountry.getText().toString())[1]);
-
-                        customersSchedulingApp.registerStore(elem ->
-                                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeResource", elem))
-                                , jsonBodyObj);
-
-                    }
-
+                    Toast.makeText(context, "Have to insert all store data",Toast.LENGTH_LONG).show();
                 }
-                catch (JSONException e) {
-                    //TODO resolve exception
-                    e.printStackTrace();
+                else{
+                    jsonBodyObj.put("name", storeNam);
+                    jsonBodyObj.put("ownerNif", "123456");
+                    jsonBodyObj.put("nif", storeNIF);
+                    jsonBodyObj.put("contact", storeCont);
+                    jsonBodyObj.put("category", choseCategoryText);
+                    jsonBodyObj.put("street", deserializeString(streetAndLot.getText().toString())[0]);
+                    jsonBodyObj.put("zip_code", zipCode);
+                    jsonBodyObj.put("lot", deserializeString(streetAndLot.getText().toString())[1]);
+                    jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
+                    jsonBodyObj.put("country",deserializeString(cityAndCountry.getText().toString())[1]);
+
+                    customersSchedulingApp.registerStore(elem ->
+                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeResource", elem))
+                            , jsonBodyObj);
                 }
-
             }
+            catch (JSONException e) {
+                Toast.makeText(getActivity(), "Business registration went wrong!try again later",Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
         });
 
-        insertExistingPictureBtn.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View view) {
-
-                onImageGalleryClicked(view);
-            }
-        });
-
-        takeNewPicture.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                onTakeNewPhotoClicked(view);
-            }
-        });
+        insertExistingPictureBtn.setOnClickListener(view -> onImageGalleryClicked(view));
+        takeNewPicture.setOnClickListener(view -> onTakeNewPhotoClicked(view));
 }
 
     public String[] deserializeString(String string)
@@ -237,37 +197,37 @@ public class BusinessDataFragment extends BaseFragment {
         return string.split(" ");
     }
 
-     @Override
-     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-         super.onActivityResult(requestCode, resultCode, data);
-         Bitmap image;
-         if(resultCode == RESULT_OK)
-         {
-             if(requestCode == IMAGE_REQUEST_CODE)
-             {
-                 Uri imageData = data.getData();
-                 InputStream inputStream;
-                 try
-                 {
-                     inputStream = context.getContentResolver().openInputStream(imageData);
-                     image = BitmapFactory.decodeStream(inputStream);
-                     img.setImageBitmap(image);
-                 }
-                 catch (FileNotFoundException e)
-                 {
-                     e.printStackTrace();
-                     Toast.makeText(context, "Unable to open Image",Toast.LENGTH_LONG).show();
-                 }
-             }else if(requestCode == CAMERA_REQUEST)
-             {
-                 image = (Bitmap) data.getExtras().get("data");
-                 img.setImageBitmap(image);
-             }
-         }
-     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap image;
+        if(resultCode == RESULT_OK)
+        {
+            if(requestCode == IMAGE_REQUEST_CODE)
+            {
+                Uri imageData = data.getData();
+                InputStream inputStream;
+                try
+                {
+                    inputStream = context.getContentResolver().openInputStream(imageData);
+                    image = BitmapFactory.decodeStream(inputStream);
+                    img.setImageBitmap(image);
+                }
+                catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                    Toast.makeText(context, "Unable to open Image",Toast.LENGTH_LONG).show();
+                }
+            }else if(requestCode == CAMERA_REQUEST)
+            {
+                image = (Bitmap) data.getExtras().get("data");
+                img.setImageBitmap(image);
+            }
+        }
+    }
 
-     public void onImageGalleryClicked(View v)
-     {
+    public void onImageGalleryClicked(View v)
+    {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 
         File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);

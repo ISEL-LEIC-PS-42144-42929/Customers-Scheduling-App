@@ -1,12 +1,10 @@
 package com.ps.isel.customersscheduling.Fragments.UserBusinessFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,42 +17,16 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-import com.ps.isel.customersscheduling.HALDto.AddressDto;
-import com.ps.isel.customersscheduling.HALDto.CategoryDto;
-import com.ps.isel.customersscheduling.HALDto.Link;
-import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
-import com.ps.isel.customersscheduling.HALDto.StoreDto;
-import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
-import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
-import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.R;
-import com.ps.isel.customersscheduling.Utis.CustomAdapterTogleButtons;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterTogleServicesButtons;
 
 
 public class EditEmployeesServicesFragment extends BaseFragment
 {
-    //HARDCODED
-  //  private AddressDto addres = new AddressDto(1, "1400", "rua", "1", "Lisbon", "Portugal");
-  //  private CategoryDto cat = new CategoryDto("Tech");
-  //  private StoreDto store2 = new StoreDto(addres,cat,"toreName", "13521212", "91111", new Link[1], 3.9f);
-    private Link[] links = new Link[1];
-
-    private ServiceDto serv = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte1",20);
-    private ServiceDto serv2 = new ServiceDto(1,"corte de cabelo fabuloso",15,"corte2",20);
-
-    private ServiceDto[] services = new ServiceDto[]{serv, serv2};
-
-  //  private StoreDto store = new StoreDto(new AddressDto(), new CategoryDto(), "rua do velho", "91111111", "loja do barbas", links, 3.2f);
-    private ServiceLink _linkService;
-    private SelfLink _links;
-
-
-
     private CustomersSchedulingApp customersSchedulingApp;
     private FragmentManager fragmentManager;
 
@@ -114,16 +86,11 @@ public class EditEmployeesServicesFragment extends BaseFragment
     private void toolBarCode()
     {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Clients");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Services of Staff");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -137,6 +104,4 @@ public class EditEmployeesServicesFragment extends BaseFragment
 
         },staffResource);
        }
-
-
 }

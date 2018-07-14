@@ -56,6 +56,7 @@ public class EditEmployeesFragment extends BaseFragment
         return inflater.inflate(R.layout.fragment_edit_employees, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,7 +82,6 @@ public class EditEmployeesFragment extends BaseFragment
         toolbarCode();
         putHints();
         addListenertoButton();
-
     }
 
     private void toolbarCode()
@@ -91,65 +91,56 @@ public class EditEmployeesFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Employee Data");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
-        registerEmployee.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
+        registerEmployee.setOnClickListener(v -> {
+            try
             {
-                try
+                String empName = employeeName.getText().toString();
+                String empContact = employeeContact.getText().toString();
+                String empGender = employeeGender.getText().toString();
+
+                if(empName.equals(""))
                 {
-                    String empName = employeeName.getText().toString();
-                    String empContact = employeeContact.getText().toString();
-                    String empGender = employeeGender.getText().toString();
-
-                    if(empName.equals(""))
-                    {
-                        empName = employeeName.getHint().toString();
-                    }
-
-                    if(empContact.equals(""))
-                    {
-                        empContact = employeeContact.getHint().toString();
-                    }
-                    if(empGender.equals(""))
-                    {
-                        empGender = employeeGender.getHint().toString();
-                    }
-
-                    jsonBodyObj.put("name", empName);
-                    jsonBodyObj.put("contact", empContact);
-                    jsonBodyObj.put("gender", empGender);
-                    jsonBodyObj.put("email", staffResource.getPerson().getEmail());
+                    empName = employeeName.getHint().toString();
                 }
-                catch (JSONException e)
+
+                if(empContact.equals(""))
                 {
-                    e.printStackTrace();
+                    empContact = employeeContact.getHint().toString();
                 }
-                customersSchedulingApp.editEmployee(elem->{
-                                addMultBundleToFragment("staffResource", elem);
-                                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectEmployeeToEditFragment(), "storeResource", storeResource));},
-                        jsonBodyObj,
-                        staffResource);
+                if(empGender.equals(""))
+                {
+                    empGender = employeeGender.getHint().toString();
+                }
+
+                jsonBodyObj.put("name", empName);
+                jsonBodyObj.put("contact", empContact);
+                jsonBodyObj.put("gender", empGender);
+                jsonBodyObj.put("email", staffResource.getPerson().getEmail());
             }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            customersSchedulingApp.editEmployee(elem->{
+                            addMultBundleToFragment("staffResource", elem);
+                            changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectEmployeeToEditFragment(), "storeResource", storeResource));},
+                    jsonBodyObj,
+                    staffResource);
         });
 
     }
+
     private void putHints()
     {
         employeeName.setHint("Name:" + staffResource.getPerson().getName());
         employeeContact.setHint("Contact:" + staffResource.getPerson().getContact());
         employeeGender.setHint("Gender:" + staffResource.getPerson().getGender());
-
     }
 }
 

@@ -26,7 +26,6 @@ import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
 
 public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
 
-
     private String[] edits = new String[]
             {
                     "Edit Employee Data",
@@ -37,7 +36,6 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
     private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment(), new EditEmployeesServicesFragment()};
 
     private FragmentManager fragmentManager;
-    private CustomersSchedulingApp customersSchedulingApp;
 
     private Context context;
     private Bundle bundle;
@@ -104,12 +102,6 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Employee");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.popBackStackImmediate();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
-
 }
