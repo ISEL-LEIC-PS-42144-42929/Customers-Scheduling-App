@@ -38,7 +38,7 @@ public class CustomersSchedulingWebApi<T>
 {
 
     private final int[] TYPE_REQUESTS= {0,1,2,3};
-    private final String DB_HOST = "http://192.168.1.215:8181/";
+    private final String DB_HOST = "http://192.168.1.220:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_BOOKINGS = "person/client/%s/books";
     private final String DB_USER_DELETE_BOOKINGS = "store/%s/book/%s";
@@ -97,6 +97,11 @@ public class CustomersSchedulingWebApi<T>
        getRequest(cons, ownerBusiness.get_links().getClients().getHref(), ClientOfStoreDTO.class);
     }
 
+    public void getStaffService(Consumer<T> cons, StaffResourceItem staffResourceItem)
+    {
+        getRequest(cons,staffResourceItem.get_links().getGet_services().getHref().replace("{email}", staffResourceItem.getPerson().getEmail()),ServicesOfBusinessDTO.class);
+    }
+
     public void getPendentRequestsOfClients(Consumer<T> cons, StoreResourceItem ownerBusiness) {
         getRequest(cons,ownerBusiness.get_links().getPendent_requests().getHref(), ClientOfStoreDTO.class);
     }
@@ -145,6 +150,8 @@ public class CustomersSchedulingWebApi<T>
     public void editEmployeeSchedule(Consumer<T> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
         updateRequest(staffResource.get_links().getUpdate_timetable().getHref(),jsonBodyObj,cons,staffResource.getClass());
     }
+
+
 
     public void registerStoreSchedule(Consumer<T> cons, JSONObject storeScheduleJSONObject, StoreResourceItem storeResource)
     {
@@ -200,30 +207,29 @@ public class CustomersSchedulingWebApi<T>
         deleteRequest(String.format(DB_HOST + DB_USER_DELETE_BOOKINGS, nif,bookId),cons, BookingsOfStoreDTO.class);
     }
 
+    public void removeEmpFromService(Consumer<T> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
+        String url = currentService.get_links().getDelete_staff_service().getHref()
+                .replace("%7Bnif%7D", store.getStore().getNif())
+                .replace("-1", currentService.getService().getId()+"")
+                .replace("{email}", staffResourceItems.getPerson().getEmail());
+        deleteRequest(url,cons,ServicesOfBusinessDTO.class);
+    }
+
+    public void registerEmployeeToService(Consumer<T> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
+        String url = currentService.get_links().getDelete_staff_service().getHref()
+                .replace("%7Bnif%7D", store.getStore().getNif())
+                .replace("-1", currentService.getService().getId()+"")
+                .replace("{email}", staffResourceItems.getPerson().getEmail());
+        postRequest(url,new JSONObject(),cons, ServicesOfBusinessDTO.class);
+    }
+
     public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)
     {
        // getRequest(cons, service.get_links()[0].getHref(), PersonOfStoreDTO.class);
     }
 
 
-    public void getStoresByLocationAndCategory(Consumer<T[]> cons, String location, String category)
-    {
-       // String url = "http://10.10.7.177:8181/person/client";
-       // getRequest(cons, url,Business.class);
-    }
-
-
-    public void getUserPendentRequests(Consumer<T[]> cons, String userName)
-    {
-        //String url = "http://10.10.7.177:8181/person/client";
-        //getRequest(cons, url, ClientDto.class);
-    }
-
-
-
     //POST REQUESTS
-
-
 
     public void registerUserService(JSONObject storeJSONObject, ServiceDto service)
     {

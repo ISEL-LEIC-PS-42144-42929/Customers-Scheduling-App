@@ -23,7 +23,9 @@ import com.ps.isel.customersscheduling.HALDto.AddressDto;
 import com.ps.isel.customersscheduling.HALDto.CategoryDto;
 import com.ps.isel.customersscheduling.HALDto.Link;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
@@ -63,6 +65,7 @@ public class EditEmployeesServicesFragment extends BaseFragment
     private Bundle bundle;
 
     private StaffResourceItem staffResource;
+    private ServiceResourceItem[] servicesOfstaff;
     private StoreResourceItem storeResourceItem;
 
     public EditEmployeesServicesFragment() {
@@ -123,11 +126,17 @@ public class EditEmployeesServicesFragment extends BaseFragment
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void listviewCode(Object obj)
     {
-        ServiceResourceItem[] serviceResourceItem = (ServiceResourceItem[])obj;
-        lv.setAdapter(new CustomAdapterTogleServicesButtons(getActivity(),storeResourceItem, serviceResourceItem, customersSchedulingApp));
-    }
+        ServicesOfBusinessDTO serviceResourceItem = (ServicesOfBusinessDTO) obj;
+
+        customersSchedulingApp.getStaffService(elem->{
+                servicesOfstaff = elem.get_embedded().getserviceResourceList();
+            lv.setAdapter(new CustomAdapterTogleServicesButtons(getActivity(),staffResource,servicesOfstaff, serviceResourceItem.get_embedded().getserviceResourceList(), customersSchedulingApp, storeResourceItem));
+
+        },staffResource);
+       }
 
 
 }

@@ -13,14 +13,21 @@ import android.widget.TextView;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
+import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 public class CustomAdapterTogleServicesButtons extends BaseAdapter{
 
-    private ServiceResourceItem[] currentServices;
-    private StoreResourceItem storeResourceItems;
+    private ServiceResourceItem[] currentStorServices;
+    private ServiceResourceItem[] staffServices;
+    private StoreResourceItem store;
+    private StaffResourceItem staffResourceItems;
+    private int numberemployeeServices;
+
     private Context context;
 
     private View row;
@@ -30,17 +37,19 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
 
     private CustomersSchedulingApp customersSchedulingApp;
 
-    public CustomAdapterTogleServicesButtons(Context context, StoreResourceItem storeResourceItem, ServiceResourceItem[] obj, CustomersSchedulingApp customersSchedulingApp) {
+    public CustomAdapterTogleServicesButtons(Context context, StaffResourceItem staffResourceItem, ServiceResourceItem[] servicesOfstaff, ServiceResourceItem[] service, CustomersSchedulingApp customersSchedulingApp, StoreResourceItem storeResourceItem) {
         this.context = context;
-        this.currentServices = obj;
+        this.currentStorServices = service;
         this.customersSchedulingApp = customersSchedulingApp;
-        this.storeResourceItems = storeResourceItem;
-
+        this.staffResourceItems = staffResourceItem;
+        this.staffServices = servicesOfstaff;
+        this.store = storeResourceItem;
+        numberemployeeServices = staffServices.length;
     }
 
     @Override
     public int getCount() {
-        return currentServices.length;
+        return currentStorServices.length;
     }
 
     @Override
@@ -60,40 +69,44 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
         row = inflater.inflate(R.layout.rowofcurrentclients, parent, false);
 
         name = (TextView) row.findViewById(R.id.userName);
-        name.setText(currentServices[position].getService().getTitle());
+        name.setText(currentStorServices[position].getService().getTitle());
 
         blocked = (TextView) row.findViewById(R.id.blocked);
 
         sw = (Switch) row.findViewById(R.id.sw);
-        sw.setChecked(true);
 
-        customersSchedulingApp.getStaffService(elem->{
-            if(currentServices[position].getService().getId() == elem.getService().getId()) {
-                sw.setChecked(true);
-            }else {
-                sw.setChecked(false);
-            }
-        }, currentServices[position]);
+        constructWithServices(position,sw);
 
-
-
-        addListenerToSwitch(sw, blocked);
+        addListenerToSwitch(sw, blocked,position);
 
         return (row);
     }
 
-    private void addListenerToSwitch(Switch sw, TextView text)
+    private void constructWithServices(int position, Switch sw)
+    {
+            for (int j = 0; j <staffServices.length ; j++) {
+                if(currentStorServices[position].getService().getId() == staffServices[j].getService().getId()) {
+                    sw.setChecked(true);
+                    break;
+                }
+            }
+    }
+
+    private void addListenerToSwitch(Switch sw, TextView text, int position)
     {
         sw.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 if(!sw.isChecked())
                 {
-                    //customersSchedulingApp.removeEmpFromService
+                   customersSchedulingApp.removeEmpFromService(elem->elem = currentStorServices[position], currentStorServices[position], staffResourceItems, store);
                     text.setText("Employee removed from service");
+                    sw.setChecked(false);
                 }else{
-                    //customersSchedulingApp.registerEmptoService
-                    text.setText("");
+                    customersSchedulingApp.registerEmployeeToService(elem->elem.get_embedded(), currentStorServices[position], staffResourceItems, store);
+                    text.setText("EMployee available for the service service");
+                    sw.setChecked(true);
                 }
             }
         });

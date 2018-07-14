@@ -84,7 +84,9 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.getStoreByCatAndLocation(cons, category, location);
     }
 
-    public void getStaffService(Consumer<ServiceResourceItem> cons, ServiceResourceItem resourceItem){
+    public void getStaffService(Consumer<ServicesOfBusinessDTO> cons, StaffResourceItem resourceItem)
+    {
+        api.getStaffService(cons, resourceItem);
 
     }
 
@@ -102,6 +104,12 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     public void getClientsOfStore(Consumer<ClientOfStoreDTO> cons, StoreResourceItem ownerBusiness) {
         api.getClientsOfStore(cons, ownerBusiness);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public<T> void getStoreEmployees(Consumer<StaffOfBusinessDTO> cons, StoreResourceItem storeResource)
+    {
+        api.getStoreEmployees(cons,storeResource);
     }
 
     public void getPendentRequestsOfClients(Consumer<ClientOfStoreDTO> cons, StoreResourceItem ownerBusiness)
@@ -152,11 +160,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public<T> void getStoreEmployees(Consumer<StaffOfBusinessDTO> cons, StoreResourceItem storeResource)
-    {
-       api.getStoreEmployees(cons,storeResource);
-    }
+
 
 
 
@@ -185,6 +189,15 @@ public class CustomersSchedulingApp extends Application implements Serializable
 
     public void editEmployeeSchedule(Consumer<StoreResourceItem> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
         api.editEmployeeSchedule(cons, jsonBodyObj, staffResource);
+    }
+
+    public void removeEmpFromService(Consumer<ServiceResourceItem> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
+        api.removeEmpFromService(cons, currentService, staffResourceItems, store);
+    }
+
+
+    public void registerEmployeeToService(Consumer<ServicesOfBusinessDTO> cons, ServiceResourceItem currentService, StaffResourceItem staffResourceItems, StoreResourceItem store) {
+        api.registerEmployeeToService(cons, currentService, staffResourceItems, store);
     }
 
 
