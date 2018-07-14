@@ -50,21 +50,25 @@ public class CustomAdapterSameFragment extends BaseAdapter
         isBooking = false;
     }
 
-    public CustomAdapterSameFragment(BookingResourceItem[] booking, FragmentManager fragmentManager, ScheduledFragment scheduledFragment, ScheduleInfoFragment scheduleInfoFragment, FragmentActivity activity, int mainActivityFragment) {
+    public CustomAdapterSameFragment(BookingResourceItem[] booking, FragmentManager fragmentManager , Fragment fragmentFrom, Fragment fragmentTo, Context context,int id) {
         this.bookings = booking;
         this.context = context;
         this.fragmentFrom = (BaseFragment) fragmentFrom;
         this.fragmentTo = (BaseFragment) fragmentTo;
         this.fragmentManager = fragmentManager;
         this.id = id;
-        this.storeResource = storeResource;
         isBooking = true;
     }
 
     @Override
     public int getCount()
     {
-        return staff.length;
+        if(!isBooking){
+            return staff.length;
+        }else {
+            return bookings.length;
+        }
+
     }
 
     @Override
@@ -89,17 +93,32 @@ public class CustomAdapterSameFragment extends BaseAdapter
         }
 
         Button defName= (Button)view.findViewById(R.id.btn);
-        defName.setText(staff[position].getPerson().getName());
+        if(!isBooking){
+            defName.setText(staff[position].getPerson().getName());
 
-        defName.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+            defName.setOnClickListener(new View.OnClickListener()
             {
-                fragmentTo.addMultBundleToFragment("storeResource",storeResource);
-                fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"staffResource",staff[position]));
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    fragmentTo.addMultBundleToFragment("storeResource",storeResource);
+                    fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"staffResource",staff[position]));
+                }
+            });
+        }else {
+            defName.setText(bookings[position].getBook().getService().getTitle());
+
+            defName.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    fragmentTo.addMultBundleToFragment("storeResource",storeResource);
+                    fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"bookResource",bookings[position]));
+                }
+            });
+        }
+
 
         return view;
     }

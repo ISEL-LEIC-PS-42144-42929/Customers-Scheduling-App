@@ -132,6 +132,10 @@ public class CustomersSchedulingApp extends Application implements Serializable
         api.updateClientToStore(cons,json,user, nif);
     }
 
+    public void deleteBooking(Consumer<BookingsOfStoreDTO> cons, String nif, String id) {
+        api.deleteBooking(cons, nif, id);
+    }
+
 
 
 

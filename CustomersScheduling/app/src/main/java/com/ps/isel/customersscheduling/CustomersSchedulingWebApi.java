@@ -41,6 +41,7 @@ public class CustomersSchedulingWebApi<T>
     private final String DB_HOST = "http://192.168.1.215:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_BOOKINGS = "person/client/%s/books";
+    private final String DB_USER_DELETE_BOOKINGS = "store/%s/book/%s";
     private final String DB_USER_REG_STORE = "store/%s/";
     private final String DB_STORE = "store";
     private final String DB_USER_REG_OWNER = "person/owner/";
@@ -142,7 +143,6 @@ public class CustomersSchedulingWebApi<T>
     }
 
     public void editEmployeeSchedule(Consumer<T> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
-        //TODO MUDAR o LINK PARA EDITEmployeeSCHEDULE E RESPONDER COM STOR PARA A ACTUALIZAÇAO DA VISTA
         updateRequest(staffResource.get_links().getUpdate_timetable().getHref(),jsonBodyObj,cons,staffResource.getClass());
     }
 
@@ -194,6 +194,10 @@ public class CustomersSchedulingWebApi<T>
 
     public void deleteClientOfStore(Consumer<T> cons, JSONObject json, StoreResourceItem storeResourceItem) {
         deleteRequest(storeResourceItem.get_links().getDelete_client().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()).concat(".x"),cons,storeResourceItem.getClass());
+    }
+
+    public void deleteBooking(Consumer<T> cons, String nif, String bookId) {
+        deleteRequest(String.format(DB_HOST + DB_USER_DELETE_BOOKINGS, nif,bookId),cons, BookingsOfStoreDTO.class);
     }
 
     public void getEmployeeDisponibility(Consumer<T[]> cons, ServiceDto service)

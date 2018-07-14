@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -51,7 +52,7 @@ public class ScheduleInfoFragment extends BaseFragment
     private TextView employeeName;
     private Button deleteService;
 
-    //private Service service;
+    private BookingResourceItem bookingResourceItem;
 
 
 
@@ -89,14 +90,13 @@ public class ScheduleInfoFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         bundle = getArguments();
-       // service = (Service) bundle.getSerializable("Service");
+        bookingResourceItem = (BookingResourceItem) bundle.getSerializable("bookResource");
 
         context = getActivity().getApplicationContext();
 
         jsonBodyObj = new JSONObject();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-        //customersSchedulingApp.setApi(new CustomersSchedulingWebApi(Volley.newRequestQueue(context)));
 
         toolbar      = view.findViewById(R.id.app_bar);
         serviceName  = view.findViewById(R.id.serviceName);
@@ -107,60 +107,47 @@ public class ScheduleInfoFragment extends BaseFragment
 
         toolBarCode();
         addListenertoButton();
-       // constructTextViews(service);
+        constructTextViews(bookingResourceItem);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         serviceFragment = new ScheduledFragment();
 
     }
 
-  //  private void constructTextViews(Service service)
-  //  {
-  //      serviceName.setText(SERVICE_NAME + service.getName());
-  //      servicePrice.setText(SERVICE_PRICE + service.getPrice());
-  //      businessName.setText(BUSINESS_NAME + service.getName() + "adicionar nome loja");
-  //      employeeName.setText(EMPLOYEE_NAME + service.getName() + "adicionar nome empregado");
-  //  }
+    private void constructTextViews(BookingResourceItem service)
+    {
+        serviceName.setText(SERVICE_NAME + service.getBook().getService().getTitle());
+        servicePrice.setText(SERVICE_PRICE + service.getBook().getService().getPrice());
+        businessName.setText(BUSINESS_NAME + service.getBook().getStore().getStoreName());
+        employeeName.setText(EMPLOYEE_NAME + service.getBook().getStaff().getName());
+    }
 
     private void toolBarCode()
     {
-   //    ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-   //    ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(service.getName());
-   //    ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-   //    ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-   //    toolbar.setNavigationOnClickListener(new View.OnClickListener()
-   //    {
-   //        @Override
-   //        public void onClick(View v)
-   //        {
-   //            fragmentManager.popBackStackImmediate();
-   //        }
-   //    });
+       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+       ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(bookingResourceItem.getBook().getService().getTitle());
+       ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+       toolbar.setNavigationOnClickListener(new View.OnClickListener()
+       {
+           @Override
+           public void onClick(View v)
+           {
+               fragmentManager.popBackStackImmediate();
+           }
+       });
 
     }
 
     private void addListenertoButton()
     {
         deleteService.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v)
             {
-                try
-                {
-                    jsonBodyObj.put("key1", employeeName.getText().toString());
-                    jsonBodyObj.put("key2", serviceName.getText().toString());
-                    jsonBodyObj.put("key3", servicePrice.getText().toString());
-                    jsonBodyObj.put("key4", businessName.getText().toString());
-                }
-                catch (JSONException e)
-                {
-                    //TODO resolve exception
-                    e.printStackTrace();
-                }
-                //customersSchedulingApp.registerEmployee(jsonBodyObj);
-                changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment());
+                customersSchedulingApp.deleteBooking(elem->changeFragment(fragmentManager, R.id.mainActivityFragment, new ScheduledFragment()),bookingResourceItem.getBook().getStore().getNif(), bookingResourceItem.getBook().getId() + "");
+
             }
         });
 

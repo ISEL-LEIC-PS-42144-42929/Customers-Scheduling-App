@@ -126,6 +126,6 @@ public class ScheduledFragment extends BaseFragment
     private void listViewCode(Object bookings)
     {
         BookingsOfStoreDTO c = (BookingsOfStoreDTO) bookings;
-        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getBookingResourceList(), fragmentManager, this, new ScheduleInfoFragment(), getActivity(),R.id.mainActivityFragment));
+        lv.setAdapter(new CustomAdapterSameFragment(c.get_embedded().getBookingResourceList(),fragmentManager, this, new ScheduleInfoFragment(), context,R.id.mainActivityFragment));
     }
 }
