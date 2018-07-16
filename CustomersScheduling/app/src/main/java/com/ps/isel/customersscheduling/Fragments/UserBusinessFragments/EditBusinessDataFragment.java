@@ -101,6 +101,7 @@ public class EditBusinessDataFragment extends BaseFragment
         return inflater.inflate(R.layout.fragment_edit_business_data, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

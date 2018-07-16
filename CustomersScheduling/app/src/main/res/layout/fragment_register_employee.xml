@@ -45,15 +45,14 @@
             android:cursorVisible="false"
             android:hint="Employee Phone Number" />
 
-        <EditText
-            android:id="@+id/employeeGender"
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/genderDropDown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/employeeContact"
-            android:cursorVisible="false"
-            android:hint="Gender: 0 for Female 1 for Male" />
+            android:layout_centerHorizontal="true"
+            android:hint="@string/choose_gender"
+            android:textColorHint="#05ab9a" />
 
         <Button
             android:id="@+id/registerEmployee"

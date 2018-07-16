@@ -37,7 +37,7 @@ import java.util.function.Consumer;
 public class CustomersSchedulingWebApi<T>
 {
 
-    private final String DB_HOST = "http://192.168.1.220:8181/";
+    private final String DB_HOST = "http://194.210.188.180:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_BOOKINGS = "person/client/%s/books";
     private final String DB_USER_DELETE_BOOKINGS = "store/%s/book/%s";
@@ -211,6 +211,12 @@ public class CustomersSchedulingWebApi<T>
         deleteRequest(storeResourceItem.get_links().getDelete_client().getHref().replace("{email}", UserInfoContainer.getInstance().getEmail()).concat(".x"),cons,storeResourceItem.getClass());
     }
 
+    public void deleteStaffOfStore(Consumer<T> cons, StoreResourceItem storeResource1) {
+
+        //TODO change link
+        deleteRequest(storeResource1.get_links().getDelete_client().getHref(),cons,StaffOfBusinessDTO.class);
+    }
+
     public void deleteBooking(Consumer<T> cons, String nif, String bookId) {
         deleteRequest(String.format(DB_HOST + DB_USER_DELETE_BOOKINGS, nif,bookId),cons, BookingsOfStoreDTO.class);
     }
@@ -222,9 +228,6 @@ public class CustomersSchedulingWebApi<T>
                 .replace("{email}", staffResourceItems.getPerson().getEmail());
         deleteRequest(url,cons,ServicesOfBusinessDTO.class);
     }
-
-
-
 
 
     public void postRequest(String url, JSONObject object, Consumer<T> cons, Class c)
@@ -305,6 +308,7 @@ public class CustomersSchedulingWebApi<T>
             }
     }
     }
+
 
 }
 

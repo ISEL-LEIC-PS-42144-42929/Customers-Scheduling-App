@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterDifferentFragments;
@@ -28,9 +29,10 @@ public class EditBusinessFragment extends BaseFragment
                     "Edit Business Info",
                     "Edit Business Schedule",
                     "Edit Services",
-                    "Edit Employee"
+                    "Edit Employee",
+                    "Add Employee"
             };
-    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment()};
+    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment(), new RegisterEmployeeFragment()};
 
     private FragmentManager fragmentManager;
 

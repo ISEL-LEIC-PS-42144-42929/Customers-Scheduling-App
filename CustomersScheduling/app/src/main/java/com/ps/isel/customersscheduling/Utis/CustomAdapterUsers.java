@@ -85,64 +85,51 @@ public class CustomAdapterUsers extends BaseAdapter
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, final View convertView, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofusers, parent, false);
 
-        name = (TextView) row.findViewById(R.id.userName);
+        name = row.findViewById(R.id.userName);
         name.setText(users[position].getPerson().getName());
 
-        acceptBtn = (Button) row.findViewById(R.id.accept);
-        rejectBtn = (Button) row.findViewById(R.id.reject);
+        acceptBtn = row.findViewById(R.id.accept);
+        rejectBtn = row.findViewById(R.id.reject);
 
         addListenersToButtons(position);
 
         return (row);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenersToButtons(int position)
     {
-        acceptBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                jsonBodyObj = new JSONObject();
+        acceptBtn.setOnClickListener(v -> {
+            jsonBodyObj = new JSONObject();
 
-                try {
-                    jsonBodyObj.put("accepted", true);
-                    jsonBodyObj.put("score", -1);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                customersSchedulingApp.updateClientToStore(elem->{
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.detach(fragment);
-                        fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",elem));
-                        fragmentTransaction.commit();
-                        }, jsonBodyObj,users[position],storeResource.getStore().getNif());
-
+            try {
+                jsonBodyObj.put("accepted", true);
+                jsonBodyObj.put("score", -1);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
 
-        rejectBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                customersSchedulingApp.rejectClient(elem->{
+            customersSchedulingApp.updateClientToStore(elem->{
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.detach(fragment);
-                    fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",storeResource));
+                    fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",elem));
                     fragmentTransaction.commit();
-                },users[position],storeResource);
+                    }, jsonBodyObj,users[position],storeResource.getStore().getNif());
 
-            }
         });
+
+        rejectBtn.setOnClickListener(v -> customersSchedulingApp.rejectClient(elem->{
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.detach(fragment);
+            fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",storeResource));
+            fragmentTransaction.commit();
+        },users[position],storeResource));
     }
 }

@@ -92,30 +92,20 @@ public class CustomAdapterSameFragment extends BaseAdapter
             view = inflater.inflate(R.layout.custom_adapter_buttons_layout, null);
         }
 
-        Button defName= (Button)view.findViewById(R.id.btn);
+        Button defName= view.findViewById(R.id.btn);
         if(!isBooking){
             defName.setText(staff[position].getPerson().getName());
 
-            defName.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    fragmentTo.addMultBundleToFragment("storeResource",storeResource);
-                    fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"staffResource",staff[position]));
-                }
+            defName.setOnClickListener(v -> {
+                fragmentTo.addMultBundleToFragment("storeResource",storeResource);
+                fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"staffResource",staff[position]));
             });
         }else {
             defName.setText(bookings[position].getBook().getService().getTitle());
 
-            defName.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    fragmentTo.addMultBundleToFragment("storeResource",storeResource);
-                    fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"bookResource",bookings[position]));
-                }
+            defName.setOnClickListener(v -> {
+                fragmentTo.addMultBundleToFragment("storeResource",storeResource);
+                fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"bookResource",bookings[position]));
             });
         }
 

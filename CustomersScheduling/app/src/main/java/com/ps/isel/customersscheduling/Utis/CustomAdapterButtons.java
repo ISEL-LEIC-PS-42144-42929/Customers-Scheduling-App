@@ -64,15 +64,10 @@ public class CustomAdapterButtons extends BaseAdapter
         Button defName= (Button)view.findViewById(R.id.btn);
         defName.setText(buttonsName[position]);
 
-        defName.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(context, goToOnClick[position]);
-                intent.putExtra("app", customersSchedulingApp);
-                context.startActivity(intent);
-            }
+        defName.setOnClickListener(v -> {
+            Intent intent = new Intent(context, goToOnClick[position]);
+            intent.putExtra("app", customersSchedulingApp);
+            context.startActivity(intent);
         });
 
         return view;

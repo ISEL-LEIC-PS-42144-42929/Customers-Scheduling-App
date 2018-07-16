@@ -18,8 +18,14 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
+import com.ps.isel.customersscheduling.HALDto.ClientDto;
 import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.ClientEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.ClientLinks;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterUsers;
 
@@ -79,9 +85,18 @@ public class PendentRequestsFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
         lv      = view.findViewById(R.id.pendentRequests);
 
-        customersSchedulingApp.getPendentRequestsOfClients(elem ->
-                listViewCode(elem), storeResource);
+       // customersSchedulingApp.getPendentRequestsOfClients(elem ->
+       //         listViewCode(elem), storeResource);
 
+        ClientEmbedded _embedded;
+        ClientLinks _links = new ClientLinks();
+        ClientDto clientdto = new ClientDto("ola@gmail.com","nome", 1, "910000000");
+        ClientResourceItem clientresource = new ClientResourceItem(clientdto,true,_links);
+        ClientEmbedded emb = new ClientEmbedded(new ClientResourceItem[]{clientresource});
+        SelfLink self = new SelfLink();
+        ClientOfStoreDTO client = new ClientOfStoreDTO(emb, self);
+
+        listViewCode(client);
         toolbarCode();
     }
 
@@ -94,6 +109,9 @@ public class PendentRequestsFragment extends BaseFragment
 
         toolbar.setNavigationOnClickListener(v -> changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment()));
     }
+
+
+
 
     private void listViewCode(Object object)
     {

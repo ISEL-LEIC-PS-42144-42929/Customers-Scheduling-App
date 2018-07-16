@@ -22,7 +22,6 @@ import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResource
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
-import com.ps.isel.customersscheduling.Model.Service;
 
 import org.json.JSONObject;
 
@@ -231,5 +230,7 @@ public class CustomersSchedulingApp extends Application implements Serializable
     }
 
 
-
+    public void deleteStaffofStore(Consumer<StaffOfBusinessDTO>cons, StoreResourceItem storeResource1) {
+        api.deleteStaffOfStore(cons, storeResource1);
+    }
 }

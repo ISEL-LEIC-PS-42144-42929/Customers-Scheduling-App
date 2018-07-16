@@ -2,24 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/storeName"
-        android:layout_width="254dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="300dp"
-        android:text="Date"
-        android:textColor="@android:color/background_dark" />
+        <TextView
+            android:id="@+id/storeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_marginRight="250dp"
+            android:text="Date"
+            android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/scoreReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingTop="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="200dp"
             android:text="Date"
             android:textColor="@android:color/background_dark" />
 
@@ -27,18 +32,17 @@
             android:id="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/scoreReview"
-            android:paddingLeft="50dp"
+            android:layout_alignParentRight="true"
             android:src="@android:drawable/btn_star" />
 
         <ImageView
             android:id="@+id/imgIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/scoreReview"
-            android:paddingLeft="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/imgBack"
             android:src="@drawable/clipdrawable" />
 
 
-
+    </RelativeLayout>
 </RelativeLayout>

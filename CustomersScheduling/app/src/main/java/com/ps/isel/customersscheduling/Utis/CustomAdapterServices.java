@@ -52,10 +52,10 @@ public class CustomAdapterServices extends BaseAdapter
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofservices, parent, false);
 
-        title = (TextView) row.findViewById(R.id.serviceName);
+        title = row.findViewById(R.id.serviceName);
         title.setText(servicesResourceItem[position].getService().getTitle());
 
-        price = (TextView) row.findViewById(R.id.servicePrice);
+        price = row.findViewById(R.id.servicePrice);
         price.setText(servicesResourceItem[position].getService().getPrice()+ "");
 
         return row;

@@ -152,7 +152,7 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             aux.put("init_break",iB);
             aux.put("finish_break",eB);
             aux.put("close_hour",eH);
-            aux.put("week_day", weekday);
+            aux.put("week_day",  mapForDataBase.get(weekday));
 
         } catch (JSONException e) {
             e.printStackTrace();

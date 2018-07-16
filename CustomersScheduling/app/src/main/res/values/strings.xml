@@ -76,6 +76,7 @@
     <string name="lunch_time_end_ex_10_00">Lunch Time End (Ex: 10.00)</string>
     <string name="lunch_time_start_ex_10_00">Lunch Time Start (Ex: 10.00)</string>
     <string name="start_hour_ex_10_00">Start Hour (Ex: 10.00)</string>
+    <string name="choose_gender">Choose gender</string>
     <string-array name="categories_array">
         <item>Restaurants</item>
         <item>Barber</item>
@@ -83,6 +84,27 @@
         <item>Spa</item>
         <item>Health</item>
         <item>Dentists</item>
+    </string-array>
+
+    <string-array name="locations_array">
+        <item>Lisbon</item>
+        <item>Porto</item>
+        <item>Lagos</item>
+        <item>Albufeira</item>
+        <item>Portalegre</item>
+        <item>Elvas</item>
+        <item>Beja</item>
+        <item>Cascais</item>
+        <item>Bragança</item>
+        <item>Ponte de Lima</item>
+        <item>Braga</item>
+        <item>Viseu</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+
     </string-array>
 
     <integer-array name="rank">

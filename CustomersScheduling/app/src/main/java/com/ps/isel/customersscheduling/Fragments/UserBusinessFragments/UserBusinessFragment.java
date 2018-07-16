@@ -19,7 +19,15 @@ import android.widget.ListView;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterOwnerBusiness;
 
@@ -68,6 +76,23 @@ public class UserBusinessFragment extends BaseFragment
 
        customersSchedulingApp.getStoresOfOwner(elem->
                listViewCode(elem));
+
+       //   CategoryDto category = new CategoryDto();
+       //   AddressDto address = new AddressDto();
+       //   String storeName = "O";
+       //   String nif = "11919212";
+       //   float scoreReview = 1.3f;
+       //   String contact = "91121212";
+       //   OwnerDto owner = new OwnerDto();
+       //   Link[] links = new Link[2];
+//
+       //   StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
+       //   StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
+       //   StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource});
+       //   SelfLink self = new SelfLink();
+       //   StoresOfUserDTO stores = new StoresOfUserDTO(emb,null);
+//
+       // listViewCode(stores);
 
         toolBarCode();
     }

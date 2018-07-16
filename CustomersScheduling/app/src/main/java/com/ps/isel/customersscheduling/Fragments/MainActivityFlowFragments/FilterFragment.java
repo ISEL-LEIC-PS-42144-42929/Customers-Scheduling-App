@@ -39,11 +39,9 @@ import java.io.ObjectOutputStream;
 
 public class FilterFragment extends BaseFragment {
 
-    //HARDCODED
-    private String[] hardcodedLocations = {"Lisbon", "Porto", "Sesimbra", "Algarve"};
-    //--------------
     private final String FILE_NAME = "favourites.txt";
     private String[] categories;
+    private String[] locations;
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
@@ -102,6 +100,7 @@ public class FilterFragment extends BaseFragment {
         context = getActivity().getApplicationContext();
 
         categories = getResources().getStringArray(R.array.categories_array);
+        locations = getResources().getStringArray(R.array.locations_array);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
 
@@ -136,11 +135,11 @@ public class FilterFragment extends BaseFragment {
         ArrayAdapter<String> adapterLocations = new ArrayAdapter<String>(
                 context,
                 android.R.layout.simple_dropdown_item_1line,
-                hardcodedLocations);
+                locations);
 
         locationChosen.setAdapter(adapterLocations);
 
-        locationChosen.setOnItemClickListener((parent, view, position, id) -> location = hardcodedLocations[position]);
+        locationChosen.setOnItemClickListener((parent, view, position, id) -> location = locations[position]);
 
         ArrayAdapter<String> adapterCategorys = new ArrayAdapter<String>(
                 context,

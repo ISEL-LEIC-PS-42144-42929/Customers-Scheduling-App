@@ -93,6 +93,7 @@ public class CustomAdapterFavourites extends BaseAdapter
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, final View convertView, ViewGroup parent)
     {
@@ -110,33 +111,23 @@ public class CustomAdapterFavourites extends BaseAdapter
         return (row);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenersToButtons(final int position)
     {
 
-        deleteFavBtn.setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
+        deleteFavBtn.setOnClickListener(v -> {
             readFromInternalStorageAndDelete(favourites[position], position);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.detach(fragment);
             fragmentTransaction.attach(fragment);
             fragmentTransaction.commit();
-        }
-    });
+        });
 
-        goToFavBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                fragment.addMultBundleToFragment("byFavourite", true);
-                customersSchedulingApp.getStoreByCatAndLocation(elem->
-                        fragment.changeFragment(fragmentManager, R.id.mainActivityFragment,fragment.addBundleToFragment(new SearchResultsFragment(),"storeDto", elem)),
-                        favourites[position].getLocation(),favourites[position].getCategory());
-            }
+        goToFavBtn.setOnClickListener(v -> {
+            fragment.addMultBundleToFragment("byFavourite", true);
+            customersSchedulingApp.getStoreByCatAndLocation(elem->
+                    fragment.changeFragment(fragmentManager, R.id.mainActivityFragment,fragment.addBundleToFragment(new SearchResultsFragment(),"storeDto", elem)),
+                    favourites[position].getLocation(),favourites[position].getCategory());
         });
 
     }

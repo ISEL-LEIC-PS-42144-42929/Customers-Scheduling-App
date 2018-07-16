@@ -243,7 +243,7 @@ public class BusinessScheduleFragment extends BaseFragment {
             CheckBox item = (CheckBox) it.next();
             if(jsons.containsKey(item.getText()))
             {
-                customersSchedulingApp.editStoreSchedule(elem->
+                customersSchedulingApp.registerStoreSchedule(elem->
                         storeResource=elem,
                         jsons.get(item.getText()),
                         storeResource);

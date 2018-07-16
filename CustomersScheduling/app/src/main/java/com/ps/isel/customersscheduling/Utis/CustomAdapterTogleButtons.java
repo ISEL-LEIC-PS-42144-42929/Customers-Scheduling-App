@@ -59,17 +59,18 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofcurrentclients, parent, false);
 
-        name = (TextView) row.findViewById(R.id.userName);
+        name = row.findViewById(R.id.userName);
         name.setText(currentClients[position].getPerson().getName());
 
-        blocked = (TextView) row.findViewById(R.id.blocked);
+        blocked = row.findViewById(R.id.blocked);
 
-        sw = (Switch) row.findViewById(R.id.sw);
+        sw = row.findViewById(R.id.sw);
 
         if(currentClients[position].isAccepted()) {
             sw.setChecked(true);
@@ -82,30 +83,27 @@ public class CustomAdapterTogleButtons extends BaseAdapter {
         return (row);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenerToSwitch(Switch sw, TextView text, int position)
     {
-        sw.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
+        sw.setOnClickListener(view -> {
 
-                JSONObject jsonBodyObj = new JSONObject();
+            JSONObject jsonBodyObj = new JSONObject();
 
-                try {
-                    if (!sw.isChecked()) {
-                        jsonBodyObj.put("accepted", false);
-                        text.setText("Blocked");
-                    } else {
-                        jsonBodyObj.put("accepted", true);
-                        text.setText("");
-                    }
-                    customersSchedulingApp.updateClientToStore(elem->elem = elem,jsonBodyObj,currentClients[position], storeResource.getStore().getNif());
+            try {
+                if (!sw.isChecked()) {
+                    jsonBodyObj.put("accepted", false);
+                    text.setText("Blocked");
+                } else {
+                    jsonBodyObj.put("accepted", true);
+                    text.setText("");
                 }
-                 catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                customersSchedulingApp.updateClientToStore(elem->elem = elem,jsonBodyObj,currentClients[position], storeResource.getStore().getNif());
             }
+             catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         });
 
     }

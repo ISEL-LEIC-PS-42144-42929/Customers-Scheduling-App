@@ -84,12 +84,12 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofbusinessowned, parent, false);
 
-        name = (TextView) row.findViewById(R.id.businessName);
+        name = row.findViewById(R.id.businessName);
         name.setText(ownerBusiness[position].getStore().getStoreName());
 
-        editBusinessBtn = (Button) row.findViewById(R.id.editBusinessInfo);
-        pendentRequests = (Button) row.findViewById(R.id.pendentRequests);
-        currentClients  = (Button) row.findViewById(R.id.clients);
+        editBusinessBtn = row.findViewById(R.id.editBusinessInfo);
+        pendentRequests = row.findViewById(R.id.pendentRequests);
+        currentClients  = row.findViewById(R.id.clients);
 
         addListenersToButtons(currentClients, pendentRequests, editBusinessBtn, position);
 
@@ -98,42 +98,19 @@ public class CustomAdapterOwnerBusiness extends BaseAdapter
 
     private void addListenersToButtons(Button currentClients, Button pendentRequests, Button editBusinessBtn, int position)
     {
-        currentClients.setOnClickListener(new View.OnClickListener()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v)
-            {
-                fragment.changeFragment(fragmentManager,
-                        R.id.userBusinessFragment,
-                        fragment.addBundleToFragment(new currentClientsFragment(),"storeResource", ownerBusiness[position]));
-            }
+        currentClients.setOnClickListener(v -> fragment.changeFragment(fragmentManager,
+                R.id.userBusinessFragment,
+                fragment.addBundleToFragment(new currentClientsFragment(),"storeResource", ownerBusiness[position])));
+
+        pendentRequests.setOnClickListener(v -> {
+            fragment.changeFragment(fragmentManager,
+                    R.id.userBusinessFragment,
+                    fragment.addBundleToFragment(new PendentRequestsFragment(),"storeResource", ownerBusiness[position]));
         });
 
-        pendentRequests.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Todo Enviar ao servidor e apresentar resultados do request e criar flow de fragmentos
-
-
-                fragment.changeFragment(fragmentManager,
-                        R.id.userBusinessFragment,
-                        fragment.addBundleToFragment(new PendentRequestsFragment(),"storeResource", ownerBusiness[position]));
-            }
-        });
-
-        editBusinessBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                fragment.changeFragment(fragmentManager,
-                        R.id.userBusinessFragment,
-                        fragment.addBundleToFragment(new EditBusinessFragment(),"storeResource", ownerBusiness[position]));
-            }
-        });
+        editBusinessBtn.setOnClickListener(v -> fragment.changeFragment(fragmentManager,
+                R.id.userBusinessFragment,
+                fragment.addBundleToFragment(new EditBusinessFragment(),"storeResource", ownerBusiness[position])));
 
 
 

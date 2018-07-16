@@ -129,13 +129,10 @@ public class ServiceFragment extends BaseFragment
 
         list = new ArrayList();
         position = (int) bundle.getSerializable("position");
-        //storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
         serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
-
-      //          //TODO preciso de saber as horas disponiveis para o serviço
-      //          },serviceResource);
 
         jsonBodyObj = new JSONObject();
 
@@ -149,7 +146,12 @@ public class ServiceFragment extends BaseFragment
         toolbarCode();
         setDateToCalendar();
         customersSchedulingApp.getDisponibilityOfService(elem->{
-            dropDownButtonCode(elem.get_embedded().getBookingResourceList());},serviceResource);
+            dropDownButtonCode(elem.get_embedded().getBookingResourceList());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(elem.get_embedded().getBookingResourceList()[0].getBook().getDate());
+            int time = calendar.get(Calendar.HOUR);
+            int c = 0;
+            },serviceResource);
         //dropDownButtonCode(hardcodedEmployesNames);
 
         recyclerViewCode(hardcodedHoursAvaiable);
@@ -205,33 +207,25 @@ public class ServiceFragment extends BaseFragment
     private void dropDownButtonCode(BookingResourceItem[] booking)
     {
 
-    //   for (int i = 0; i <booking.length ; i++) {
+       for (int i = 0; i <booking.length ; i++) {
+           if(!list.contains(booking[i].getBook().getStaff().getName())){
+               list.add(booking[i].getBook().getStaff().getName());
+           }
+       }
 
-    //       if(!list.contains(booking[i].getBook().getStaff().getName())){
-    //           list.add(booking[i].getBook().getStaff().getName());
-    //       }
+       String[] staffName = list.toArray( new String[list.size()]);
+       ArrayAdapter<String> adapter = new ArrayAdapter<>(
+               getActivity(),
+               android.R.layout.simple_dropdown_item_1line,
+               staffName);
 
-    //   }
-    //   String[] staffName = new String[list.size()];
-
-    //   for (S:
-    //        ) {
-
-    //   }
-
-
-     //  ArrayAdapter<String> adapter = new ArrayAdapter<>(
-     //          getActivity(),
-     //          android.R.layout.simple_dropdown_item_1line,
-     //          staffName);
-//
-     //   spinner.setAdapter(adapter);
-     //   spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-     //       @Override
-     //       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-     //           employee = staffName[position];
-     //       }
-     //   });
+        spinner.setAdapter(adapter);
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                employee = staffName[position];
+            }
+        });
     }
 
     private void addListenerToButtons()
@@ -268,8 +262,8 @@ public class ServiceFragment extends BaseFragment
                             e.printStackTrace();
                         }
 
-                        //customersSchedulingApp.registerUserService(jsonBodyObj, serviceResource);
-                       // changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "storeDTO", storeDTO.get_embedded().getStoreResourceList()[position]));
+                       // customersSchedulingApp.registerUserService(jsonBodyObj, serviceResource);
+                     //   changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "storeDTO", serviceResource));
                 }
             }
         });

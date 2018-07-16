@@ -1,8 +1,11 @@
 package com.ps.isel.customersscheduling.Utis;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +13,18 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
+import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
+import org.json.JSONObject;
+
 public class CustomAdapterDifferentFragments extends BaseAdapter
 {
+    private CustomersSchedulingApp customersSchedulingApp;
     private String[] buttonsName;
     private Context context;
 
@@ -41,7 +48,7 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
         this.isStore = true;
     }
 
-    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id, StaffResourceItem staffResource, StoreResourceItem storeResourceItem){
+    public CustomAdapterDifferentFragments(String[] buttonsName, Context context, BaseFragment[] fragments, Fragment fragment, int id, StaffResourceItem staffResource, StoreResourceItem storeResourceItem, CustomersSchedulingApp app){
         this.buttonsName = buttonsName;
         this.context = context;
         this.fragment = (BaseFragment)fragment;
@@ -51,6 +58,7 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
         this.storeResource = storeResourceItem;
         this.staffResource = staffResource;
         this.isStore = false;
+        customersSchedulingApp = app;
     }
 
     @Override
@@ -68,6 +76,7 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
         return 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
 
@@ -79,29 +88,34 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
             view = inflater.inflate(R.layout.custom_adapter_buttons_layout, null);
         }
 
-        Button defName= (Button)view.findViewById(R.id.btn);
+        Button defName= view.findViewById(R.id.btn);
         defName.setText(buttonsName[position]);
 
         if(isStore) {
 
-            defName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.changeFragment(fragmentManager, id, fragment.addBundleToFragment(fragments[position], "storeResource", storeResource));
-                }
-            });
+            defName.setOnClickListener(v -> fragment.changeFragment(fragmentManager, id, fragment.addBundleToFragment(fragments[position], "storeResource", storeResource)));
 
         }else{
-            defName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.addMultBundleToFragment("storeResource",storeResource);
-                    fragment.changeFragment(fragmentManager, id, fragment.addBundleToFragment(fragments[position], "staffResource", staffResource));
-                }
+            defName.setOnClickListener(v -> {
+                fragment.addMultBundleToFragment("storeResource",storeResource);
+                fragment.changeFragment(fragmentManager, id, fragment.addBundleToFragment(fragments[position], "staffResource", staffResource));
             });
 
         }
 
+        if(isStore && position == buttonsName.length-1)
+        {
+            defName.setOnClickListener(view1 -> fragment.changeFragment(fragmentManager,id,fragment.addBundleToFragment(fragments[position],"storeResource",storeResource)));
+        }else if(!isStore && position == buttonsName.length-1)
+        {
+            customersSchedulingApp.deleteStaffofStore(elem->{
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.detach(fragment);
+                fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",elem));
+                fragmentTransaction.commit();
+            }, storeResource);
+
+        }
         return view;
     }
 }

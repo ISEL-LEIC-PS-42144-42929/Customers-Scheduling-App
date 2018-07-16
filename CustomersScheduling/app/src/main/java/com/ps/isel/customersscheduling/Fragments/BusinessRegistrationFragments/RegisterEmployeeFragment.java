@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,11 +40,14 @@ public class RegisterEmployeeFragment extends BaseFragment
     private EditText employeeName;
     private EditText employeeEmail;
     private EditText employeeContact;
-    private EditText employeeGender;
+    private MaterialBetterSpinner choseGender;
     private Button registerEmployee;
     private Bundle bundle;
 
     private StoreResourceItem storeResource;
+    private String[] gender;
+    private String genderChoosen;
+    private int genderValue;
 
     public RegisterEmployeeFragment() {
         // Required empty public constructor
@@ -54,6 +59,7 @@ public class RegisterEmployeeFragment extends BaseFragment
         return inflater.inflate(R.layout.fragment_register_employee, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,6 +68,7 @@ public class RegisterEmployeeFragment extends BaseFragment
 
         bundle = getArguments();
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+        gender = getResources().getStringArray(R.array.gender_array);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
 
@@ -69,13 +76,14 @@ public class RegisterEmployeeFragment extends BaseFragment
         employeeName        = view.findViewById(R.id.employeeName);
         employeeEmail       = view.findViewById(R.id.employeeEmail);
         employeeContact     = view.findViewById(R.id.employeeContact);
-        employeeGender      = view.findViewById(R.id.employeeGender);
+        choseGender         = view.findViewById(R.id.genderDropDown);
         registerEmployee    = view.findViewById(R.id.registerEmployee);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
 
         toolbarCode();
+        dropDownButtonCode();
         addListenertoButton();
 
     }
@@ -88,6 +96,25 @@ public class RegisterEmployeeFragment extends BaseFragment
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Register Employee");
 
         toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
+    }
+
+    private void dropDownButtonCode()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                gender);
+
+        choseGender.setAdapter(adapter);
+        choseGender.setOnItemClickListener((parent, view, position, id) -> {
+            genderChoosen = gender[position];
+            if(genderChoosen.equals("Male")){
+                genderValue = 1;
+            }else{
+                genderValue = 0;
+            }
+
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -109,10 +136,10 @@ public class RegisterEmployeeFragment extends BaseFragment
                     jsonBodyObj.put("email", clientEmail);
                     jsonBodyObj.put("contact", employeeContact.getText().toString());
                     jsonBodyObj.put("nif", storeResource.getStore().getNif());
-                    jsonBodyObj.put("gender", employeeGender.getText().toString());
+                    jsonBodyObj.put("gender", genderValue);
 
                    customersSchedulingApp.registerEmployee(elem->
-                                   changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
+                                   changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
                            jsonBodyObj,
                            storeResource,
                            StaffResourceItem.class);

@@ -67,19 +67,16 @@ public class CustomAdapterBusiness extends BaseAdapter
 
         title = (TextView) row.findViewById(R.id.storeName);
         title.setText(items[position].getStore().getStoreName());
-        //title.setText(businessNames[position].getName());
 
         imageView = row.findViewById(R.id.imgIcon);
         drawable = (ClipDrawable) imageView.getDrawable();
 
         proporcionToDraw = (items[position].getScore() * 100) / 5;
-        //proporcionToDraw = (businessNames[position].getScoreReview() * 100) / 5;
         finalLevelToDraw = (int)(proporcionToDraw * 10000)/100;
         drawable.setLevel(finalLevelToDraw);
 
         reviewScore = (TextView) row.findViewById(R.id.scoreReview);
         reviewScore.setText(items[position].getScore() + "");
-        //reviewScore.setText(businessNames[position].getScoreReview() + "");
 
         return (row);
     }

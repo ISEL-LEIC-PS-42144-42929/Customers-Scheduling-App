@@ -23,6 +23,7 @@ import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterBusiness;
+import com.ps.isel.customersscheduling.objectUtils.Favourite;
 
 import org.json.JSONObject;
 
@@ -30,7 +31,7 @@ public class SearchResultsFragment extends BaseFragment {
 
     private CustomersSchedulingApp customersSchedulingApp;
     private JSONObject jsonBodyObj;
-
+    private Favourite favourite;
     Fragment serviceFragment;
     FragmentManager fragmentManager;
 
@@ -42,8 +43,7 @@ public class SearchResultsFragment extends BaseFragment {
 
     private boolean byFavourite;
     private StoresOfUserDTO storeDto;
-   // private Favourite favourite;
-   // private Business[] business;
+
 
     public SearchResultsFragment() {
         // Required empty public constructor
@@ -91,21 +91,6 @@ public class SearchResultsFragment extends BaseFragment {
         toolbarCode();
 
         listViewCode(storeDto);
-
-    //    if(byFavourite)
-    //    {
-    //        favourite = (Favourite) bundle.getSerializable("favourite");
-    //         customersSchedulingApp.getStoreByLocationAndCategory(
-    //                 this::listViewCode,
-    //                 favourite.getLocation(),
-    //                 favourite.getCategory());
-    //    }else
-    //    {
-    //        business = (Business[]) bundle.getSerializable("business");
-    //            customersSchedulingApp.getSearchedStoreByName(
-    //                    this::listViewCode,
-    //                    business.getName());
-    //    }
     }
 
     private void listViewCode(Object stores)

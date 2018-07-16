@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -21,6 +22,7 @@ import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.R
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,8 +44,12 @@ public class EditEmployeesFragment extends BaseFragment
     private Toolbar toolbar;
     private EditText employeeName;
     private EditText employeeContact;
-    private EditText employeeGender;
+    private MaterialBetterSpinner choseGender;
     private Button registerEmployee;
+
+    private String[] gender;
+    private String genderChoosen;
+    private int genderValue;
 
     public EditEmployeesFragment() {
         // Required empty public constructor
@@ -64,6 +70,8 @@ public class EditEmployeesFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         bundle = getArguments();
+        gender = getResources().getStringArray(R.array.gender_array);
+        genderChoosen = "";
         staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
 
@@ -73,13 +81,14 @@ public class EditEmployeesFragment extends BaseFragment
         toolbar                  = view.findViewById(R.id.app_bar);
         employeeName        = view.findViewById(R.id.employeeName);
         employeeContact     = view.findViewById(R.id.employeeContact);
-        employeeGender      = view.findViewById(R.id.employeeGender);
+        choseGender         = view.findViewById(R.id.genderDropDown);
         registerEmployee    = view.findViewById(R.id.registerEmployee);
 
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeScheduleFragment = new RegisterEmployeeScheduleFragment();
 
         toolbarCode();
+        dropDownButtonCode();
         putHints();
         addListenertoButton();
     }
@@ -94,6 +103,25 @@ public class EditEmployeesFragment extends BaseFragment
         toolbar.setNavigationOnClickListener(v -> fragmentManager.popBackStackImmediate());
     }
 
+    private void dropDownButtonCode()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                gender);
+
+        choseGender.setAdapter(adapter);
+        choseGender.setOnItemClickListener((parent, view, position, id) -> {
+            genderChoosen = gender[position];
+            if(genderChoosen.equals("Male")){
+                genderValue = 1;
+            }else{
+                genderValue = 0;
+            }
+
+        });
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addListenertoButton()
     {
@@ -102,7 +130,7 @@ public class EditEmployeesFragment extends BaseFragment
             {
                 String empName = employeeName.getText().toString();
                 String empContact = employeeContact.getText().toString();
-                String empGender = employeeGender.getText().toString();
+                int empGender = genderValue;
 
                 if(empName.equals(""))
                 {
@@ -113,9 +141,9 @@ public class EditEmployeesFragment extends BaseFragment
                 {
                     empContact = employeeContact.getHint().toString();
                 }
-                if(empGender.equals(""))
+                if(genderChoosen.equals(""))
                 {
-                    empGender = employeeGender.getHint().toString();
+                    empGender = staffResource.getPerson().getGender();
                 }
 
                 jsonBodyObj.put("name", empName);
@@ -138,9 +166,9 @@ public class EditEmployeesFragment extends BaseFragment
 
     private void putHints()
     {
-        employeeName.setHint("Name:" + staffResource.getPerson().getName());
-        employeeContact.setHint("Contact:" + staffResource.getPerson().getContact());
-        employeeGender.setHint("Gender:" + staffResource.getPerson().getGender());
+        employeeName.setHint(staffResource.getPerson().getName());
+        employeeContact.setHint(staffResource.getPerson().getContact());
+        choseGender.setHint(staffResource.getPerson().getGender());
     }
 }
 

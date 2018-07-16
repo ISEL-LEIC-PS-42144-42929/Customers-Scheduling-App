@@ -16,11 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activities.RegisterStoreActivity">
         </activity>
@@ -29,12 +25,13 @@
 
         </activity>
         <activity android:name=".Activities.SignInActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <service android:name=".Services.NotificationService"
-            android:permission="android.permission.BIND_JOB_SERVICE">
 
-        </service>
     </application>
 
 </manifest>

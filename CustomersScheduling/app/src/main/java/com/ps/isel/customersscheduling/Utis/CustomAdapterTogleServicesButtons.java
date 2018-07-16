@@ -68,12 +68,12 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.rowofcurrentclients, parent, false);
 
-        name = (TextView) row.findViewById(R.id.userName);
+        name = row.findViewById(R.id.userName);
         name.setText(currentStorServices[position].getService().getTitle());
 
-        blocked = (TextView) row.findViewById(R.id.blocked);
+        blocked = row.findViewById(R.id.blocked);
 
-        sw = (Switch) row.findViewById(R.id.sw);
+        sw = row.findViewById(R.id.sw);
 
         constructWithServices(position,sw);
 
@@ -94,20 +94,16 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
 
     private void addListenerToSwitch(Switch sw, TextView text, int position)
     {
-        sw.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                if(!sw.isChecked())
-                {
-                   customersSchedulingApp.removeEmpFromService(elem->elem = currentStorServices[position], currentStorServices[position], staffResourceItems, store);
-                    text.setText("Employee removed from service");
-                    sw.setChecked(false);
-                }else{
-                    customersSchedulingApp.registerEmployeeToService(elem->elem.get_embedded(), currentStorServices[position], staffResourceItems, store);
-                    text.setText("EMployee available for the service service");
-                    sw.setChecked(true);
-                }
+        sw.setOnClickListener(view -> {
+            if(!sw.isChecked())
+            {
+               customersSchedulingApp.removeEmpFromService(elem->elem = currentStorServices[position], currentStorServices[position], staffResourceItems, store);
+                text.setText("Employee removed from service");
+                sw.setChecked(false);
+            }else{
+                customersSchedulingApp.registerEmployeeToService(elem->elem.get_embedded(), currentStorServices[position], staffResourceItems, store);
+                text.setText("EMployee available for the service service");
+                sw.setChecked(true);
             }
         });
 

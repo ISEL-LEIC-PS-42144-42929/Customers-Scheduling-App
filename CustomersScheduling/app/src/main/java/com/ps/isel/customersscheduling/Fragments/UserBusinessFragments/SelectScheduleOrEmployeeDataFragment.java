@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeFragment;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
@@ -30,12 +31,14 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
             {
                     "Edit Employee Data",
                     "Edit Employee Schedule",
-                    "Edit Employee Services"
+                    "Edit Employee Services",
+                    "Delete Employee"
             };
 
-    private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment(), new EditEmployeesServicesFragment()};
+    private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment(), new EditEmployeesServicesFragment(), new RegisterEmployeeFragment()};
 
     private FragmentManager fragmentManager;
+    private CustomersSchedulingApp customersSchedulingApp;
 
     private Context context;
     private Bundle bundle;
@@ -85,12 +88,14 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         storeResourceItem = (StoreResourceItem) bundle.getSerializable("storeResource");
         context = getActivity().getApplicationContext();
 
+        customersSchedulingApp = ((CustomersSchedulingApp)context);
+
         fragmentManager = getActivity().getSupportFragmentManager();
 
         toolbar = view.findViewById(R.id.app_bar);
 
         lv = (ListView) view.findViewById(R.id.listEditsEmp);
-        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, staffResourceItem, storeResourceItem));
+        lv.setAdapter(new CustomAdapterDifferentFragments(edits, getActivity(), fragments,this, R.id.userBusinessFragment, staffResourceItem, storeResourceItem, customersSchedulingApp));
         toolbarCode();
 
     }

@@ -1,5 +1,7 @@
 package com.ps.isel.customersscheduling.HALDto;
 
+import java.util.Date;
+
 public class BookDto {
 
     private int id;
@@ -7,16 +9,26 @@ public class BookDto {
     private StaffDto staff;
     private ClientDto client;
     private ServiceDto service;
+    private Date date;
 
     public BookDto() {
     }
 
-    public BookDto(int id, StoreDto store, StaffDto staff, ClientDto client, ServiceDto service) {
+    public BookDto(int id, StoreDto store, StaffDto staff, ClientDto client, ServiceDto service, Date date) {
         this.id = id;
         this.store = store;
         this.staff = staff;
         this.client = client;
         this.service = service;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setId(int id) {
