@@ -13,6 +13,8 @@ import android.widget.Button;
 import com.ps.isel.customersscheduling.Activities.UserBusinessActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.UserBusinessFragments.UserBusinessFragment;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
 
 public class AddOtherEmpOrEndFragment extends BaseFragment
@@ -22,9 +24,14 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
     FragmentManager fragmentManager;
 
     private Context context;
+    private Bundle bundle;
 
     private Button addAnotherEmployee;
     private Button endRegistration;
+
+    private StaffResourceItem staffResource;
+    private StoreResourceItem storeResource;
+    private boolean teste;
 
     public AddOtherEmpOrEndFragment() {
         // Required empty public constructor
@@ -46,6 +53,10 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
         addAnotherEmployee = view.findViewById(R.id.registerAnotherEmployee);
         endRegistration = view.findViewById(R.id.endRegistration);
 
+        bundle = getArguments();
+        staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+        teste = bundle.getBoolean("addFromEdit");
         fragmentManager = getActivity().getSupportFragmentManager();
         registerEmployeeFragment = new RegisterEmployeeFragment();
         userBusinessFragment = new UserBusinessFragment();
@@ -55,7 +66,17 @@ public class AddOtherEmpOrEndFragment extends BaseFragment
 
     private void addListenertoButton()
     {
-        addAnotherEmployee.setOnClickListener(v -> changeFragment(fragmentManager, R.id.businessData, registerEmployeeFragment));
+        addAnotherEmployee.setOnClickListener(v -> {
+            if (teste) {
+                addMultBundleToFragment("addFromEdit", true);
+                addMultBundleToFragment("storeResource", storeResource);
+                changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(registerEmployeeFragment, "staffResource", staffResource));
+            } else {
+                addMultBundleToFragment("addFromEdit", false);
+                addMultBundleToFragment("storeResource", storeResource);
+                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeFragment, "staffResource", staffResource));
+            }
+        });
 
         endRegistration.setOnClickListener(new View.OnClickListener() {
             @Override

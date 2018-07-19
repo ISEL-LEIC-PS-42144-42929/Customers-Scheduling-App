@@ -20,7 +20,17 @@ import android.widget.EditText;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
+import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 import com.ps.isel.customersscheduling.R;
 
 import org.json.JSONException;
@@ -63,6 +73,8 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
     private CheckBox sunday;
 
     private StaffResourceItem staffResource;
+    private StoreResourceItem storeResource;
+    private boolean teste;
 
     public RegisterEmployeeScheduleFragment() {
         // Required empty public constructor
@@ -81,6 +93,8 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
 
         bundle = getArguments();
         staffResource = (StaffResourceItem) bundle.getSerializable("staffResource");
+        teste = bundle.getBoolean("addFromEdit");
+        storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -218,11 +232,42 @@ public class RegisterEmployeeScheduleFragment extends BaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+         //   CategoryDto category = new CategoryDto();
+         //   AddressDto address = new AddressDto();
+         //   String storeName = "O";
+         //   String nif = "11919212";
+         //   float scoreReview = 1.3f;
+         //   String contact = "91121212";
+         //   OwnerDto owner = new OwnerDto();
+         //   Link[] links = new Link[2];
+         //   String email = "email";
+         //   String name = "name";
+         //   int gender = 0;
+//
+         //   StaffLinks links1 = new StaffLinks();
+         //   StaffDto staffDto = new StaffDto(email,name, gender, contact);
+         //   StaffResourceItem staffResourceItem = new StaffResourceItem(staffDto,links1);
+         //   StaffEmbedded emb2 = new StaffEmbedded(new StaffResourceItem[]{staffResourceItem,staffResourceItem});
+         //   SelfLink self = new SelfLink();
+         //   StaffOfBusinessDTO staff = new StaffOfBusinessDTO(emb2,self);
             customersSchedulingApp.registerEmployeeSchedule(elem->
                     changeFragment(fragmentManager,R.id.businessData,addBundleToFragment(addOtherEmpOrAddServiceFragment,"staffResource",elem)),
                     (JSONObject)item.getValue(),
                     staffResource);
-            it.remove();
+            if(teste){
+                addMultBundleToFragment("addFromEdit", true);
+                addMultBundleToFragment("storeResource", storeResource);
+                changeFragment(fragmentManager,R.id.userBusinessFragment,addBundleToFragment(addOtherEmpOrAddServiceFragment,"staffResource",staffResource));
+                it.remove();
+
+            }else{
+                addMultBundleToFragment("addFromEdit", false);
+                addMultBundleToFragment("storeResource", storeResource);
+                changeFragment(fragmentManager,R.id.businessData,addBundleToFragment(addOtherEmpOrAddServiceFragment,"staffResource",staffResource));
+                it.remove();
+            }
+
         }
     }
 

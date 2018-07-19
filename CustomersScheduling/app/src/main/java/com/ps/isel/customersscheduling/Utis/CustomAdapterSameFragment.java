@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduleInfoFragment;
 import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.ScheduledFragment;
 import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
@@ -64,7 +65,7 @@ public class CustomAdapterSameFragment extends BaseAdapter
     public int getCount()
     {
         if(!isBooking){
-            return staff.length;
+            return staff.length +1;
         }else {
             return bookings.length;
         }
@@ -94,12 +95,22 @@ public class CustomAdapterSameFragment extends BaseAdapter
 
         Button defName= view.findViewById(R.id.btn);
         if(!isBooking){
-            defName.setText(staff[position].getPerson().getName());
+            if(position == staff.length){
+                defName.setText("Add Staff");
+                defName.setOnClickListener(v->{
+                        fragmentTo = new RegisterEmployeeFragment();
+                        fragmentTo.addMultBundleToFragment("addFromEdit", true);
+                        fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"storeResource",storeResource)
+                );});
 
-            defName.setOnClickListener(v -> {
-                fragmentTo.addMultBundleToFragment("storeResource",storeResource);
-                fragmentFrom.changeFragment(fragmentManager,id,fragmentTo.addBundleToFragment(fragmentTo,"staffResource",staff[position]));
-            });
+            }else {
+                defName.setText(staff[position].getPerson().getName());
+
+                defName.setOnClickListener(v -> {
+                    fragmentTo.addMultBundleToFragment("storeResource", storeResource);
+                    fragmentFrom.changeFragment(fragmentManager, id, fragmentTo.addBundleToFragment(fragmentTo, "staffResource", staff[position]));
+                });
+            }
         }else {
             defName.setText(bookings[position].getBook().getService().getTitle());
 

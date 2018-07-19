@@ -19,8 +19,20 @@ import android.widget.Toast;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
+import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -48,6 +60,7 @@ public class RegisterEmployeeFragment extends BaseFragment
     private String[] gender;
     private String genderChoosen;
     private int genderValue;
+    boolean teste;
 
     public RegisterEmployeeFragment() {
         // Required empty public constructor
@@ -67,7 +80,9 @@ public class RegisterEmployeeFragment extends BaseFragment
         context = getActivity().getApplicationContext();
 
         bundle = getArguments();
+
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+        teste = bundle.getBoolean("addFromEdit");
         gender = getResources().getStringArray(R.array.gender_array);
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -138,11 +153,44 @@ public class RegisterEmployeeFragment extends BaseFragment
                     jsonBodyObj.put("nif", storeResource.getStore().getNif());
                     jsonBodyObj.put("gender", genderValue);
 
-                   customersSchedulingApp.registerEmployee(elem->
-                                   changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem)),
-                           jsonBodyObj,
-                           storeResource,
-                           StaffResourceItem.class);
+
+                 //   CategoryDto category = new CategoryDto();
+                 //   AddressDto address = new AddressDto();
+                 //   String storeName = "O Barbas";
+                 //   String nif = "11919212";
+                 //   float scoreReview = 1.3f;
+                 //   String contact = "91121212";
+                 //   OwnerDto owner = new OwnerDto();
+                 //   Link[] links = new Link[2];
+                 //   String email = "email";
+                 //   String name = "Joao";
+                 //   int gender = 0;
+//
+//
+                 //   StaffLinks links1 = new StaffLinks();
+                 //   StaffDto staffDto = new StaffDto(email,name, gender, contact);
+                 //   StaffDto staffDto2 = new StaffDto("teste@gmail","Nuno", gender, contact);
+                 //   StaffResourceItem staffResourceItem = new StaffResourceItem(staffDto,links1);
+                 //   StaffResourceItem staffResourceItem2 = new StaffResourceItem(staffDto2,links1);
+                 //   StaffEmbedded emb2 = new StaffEmbedded(new StaffResourceItem[]{staffResourceItem,staffResourceItem2});
+                 //   SelfLink self = new SelfLink();
+                 //   StaffOfBusinessDTO staff = new StaffOfBusinessDTO(emb2,self);
+
+                   customersSchedulingApp.registerEmployee(elem->{
+                            addMultBundleToFragment("storeResource", storeResource);
+                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", elem));},
+                                jsonBodyObj,
+                                storeResource,
+                                StaffResourceItem.class);
+                 //   if(teste){
+                 //       addMultBundleToFragment("addFromEdit", true);
+                 //       addMultBundleToFragment("storeResource", storeResource);
+                 //       changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", staffResource));
+                 //   }else {
+                 //       addMultBundleToFragment("addFromEdit", false);
+                 //       addMultBundleToFragment("storeResource", storeResource);
+                 //       changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeScheduleFragment, "staffResource", staffResourceItem));
+                 //   }
                 }
             }
             catch (JSONException e) {

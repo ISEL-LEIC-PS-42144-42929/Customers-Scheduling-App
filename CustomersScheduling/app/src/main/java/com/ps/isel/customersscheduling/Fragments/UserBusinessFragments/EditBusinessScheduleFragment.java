@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class EditBusinessScheduleFragment extends BaseFragment
 {
@@ -188,7 +189,49 @@ public class EditBusinessScheduleFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void testCheckBoxesEnd()
     {
-        changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new UserBusinessFragment(), "storeResource",storeResource));
+        JSONObject aux = new JSONObject();
+        Iterator it = jsons.entrySet().iterator();
+
+        while (it.hasNext())
+        {
+            Map.Entry item = (Map.Entry) it.next();
+            try {
+                aux.put("open_hour",-1);
+                aux.put("init_break",-1);
+                aux.put("finish_break",-1);
+                aux.put("close_hour",-1);
+                aux.put("week_day", item.getKey());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //   CategoryDto category = new CategoryDto();
+            //   AddressDto address = new AddressDto();
+            //   String storeName = "O";
+            //   String nif = "11919212";
+            //   float scoreReview = 1.3f;
+            //   String contact = "91121212";
+            //   OwnerDto owner = new OwnerDto();
+            //   Link[] links = new Link[2];
+
+            //   StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
+            //   StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
+            //   StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource});
+            //   SelfLink self = new SelfLink();
+            //   StoresOfUserDTO stores = new StoresOfUserDTO(emb,self);
+
+            customersSchedulingApp.editStoreSchedule(elem->
+                            changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new UserBusinessFragment(), "storeResource",elem)),
+                    (JSONObject)item.getValue(),
+                    storeResource);
+
+            // changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerServiceFragment, "storeResource",storeresource));
+
+
+
+            it.remove();
+        }
 
     }
 

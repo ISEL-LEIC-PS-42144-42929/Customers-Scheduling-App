@@ -102,20 +102,6 @@ public class CustomAdapterDifferentFragments extends BaseAdapter
             });
 
         }
-
-        if(isStore && position == buttonsName.length-1)
-        {
-            defName.setOnClickListener(view1 -> fragment.changeFragment(fragmentManager,id,fragment.addBundleToFragment(fragments[position],"storeResource",storeResource)));
-        }else if(!isStore && position == buttonsName.length-1)
-        {
-            customersSchedulingApp.deleteStaffofStore(elem->{
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.detach(fragment);
-                fragmentTransaction.attach(fragment.addBundleToFragment(fragment,"storeResource",elem));
-                fragmentTransaction.commit();
-            }, storeResource);
-
-        }
         return view;
     }
 }

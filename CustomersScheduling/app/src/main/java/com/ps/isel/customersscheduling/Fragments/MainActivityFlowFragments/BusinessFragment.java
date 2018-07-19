@@ -26,10 +26,19 @@ import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.ServicesOfBusinessEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
@@ -135,13 +144,6 @@ public class BusinessFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
 
-        customersSchedulingApp
-                .getStoreByNif(store->
-                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
-        customersSchedulingApp
-               .getStoreServices(service->
-                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
-
         toolbar       = view.findViewById(R.id.app_bar);
         name          = view.findViewById(R.id.name);
         address       = view.findViewById(R.id.address);
@@ -156,6 +158,52 @@ public class BusinessFragment extends BaseFragment
         star5         = view.findViewById(R.id.imgIcon5);
         registerBtn   = view.findViewById(R.id.registerBtn);
         unregisterBtn = view.findViewById(R.id.unregisterBtn);
+
+        customersSchedulingApp
+                .getStoreByNif(store->
+                    constructRatingStarsAndTextViews(view,store), storeDTO.get_embedded().getStoreResourceList()[position]);
+        customersSchedulingApp
+               .getStoreServices(service->
+                       listViewCode(service),storeDTO.get_embedded().getStoreResourceList()[position]);
+
+
+
+     //   CategoryDto category = new CategoryDto("Barbeiro");
+     //   AddressDto address = new AddressDto(1, "1200-123","Rua do alho","2","Lisboa","Portugal" );
+     //   String storeName = "O Barbas";
+     //   String nif = "11919212";
+     //   float scoreReview = 3f;
+     //   String contact = "91121212";
+     //   OwnerDto owner = new OwnerDto();
+     //   Link[] links = new Link[2];
+//
+     //   StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
+     //   StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
+     //   StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource});
+     //   SelfLink self = new SelfLink();
+     //   StoresOfUserDTO stores = new StoresOfUserDTO(emb,self);
+//
+     //   int id = 132;
+     //   String description = "corte maravilhoso";
+     //   String description2 = "corte maravilhoso";
+     //   double price = 10.0;
+     //   double price2 = 5.0;
+     //   String title = "Corte de cabelo";
+     //   String title2 = "Corte de barba";
+     //   int duration = 100;
+//
+     //   ServiceDto serviceDto = new ServiceDto(id,description,price,title,duration);
+     //   ServiceDto serviceDto2 = new ServiceDto(id,description,price2,title2,duration);
+     //   ServiceLink linksService = new ServiceLink();
+     //   ServiceResourceItem serviceResource = new ServiceResourceItem(storeResourceItem,serviceDto,linksService);
+     //   ServiceResourceItem serviceResource2 = new ServiceResourceItem(storeResourceItem,serviceDto2,linksService);
+     //   ServicesOfBusinessEmbedded embService = new ServicesOfBusinessEmbedded(new ServiceResourceItem[]{serviceResource,serviceResource2});
+     //   SelfLink selfService = new SelfLink();
+     //   ServicesOfBusinessDTO services = new ServicesOfBusinessDTO(embService, selfService);
+     //   //listViewCode(stores);
+//
+     //   constructRatingStarsAndTextViews(view, storeresource);
+     //   listViewCode(services);
 
         toolBarCode();
         addListenerToStars();
@@ -179,10 +227,10 @@ public class BusinessFragment extends BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void constructButtonsAndAddListeners()
     {
-        registerBtn.setOnClickListener(view -> customersSchedulingApp.registerClientToStore(elem->{
+          registerBtn.setOnClickListener(view -> customersSchedulingApp.registerClientToStore(elem->{
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.detach(fragment);
-            fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",elem));
+
             },
                 jsonBodyObj = new JSONObject(),
                 storeResourceItem));
@@ -213,14 +261,19 @@ public class BusinessFragment extends BaseFragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            customersSchedulingApp.rateStore(elem->{
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.detach(fragment);
-                        fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",elem));
+          //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+          //  fragmentTransaction.detach(fragment);
+          //  addMultBundleToFragment("position", position);
+          //  fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",storeResourceItem));
 
-                    },
-                    jsonBodyObj,
-                    storeResourceItem);
+           customersSchedulingApp.rateStore(elem->{
+                       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                       fragmentTransaction.detach(fragment);
+                       fragmentTransaction.attach(addBundleToFragment(fragment,"storeResource",elem));
+
+                   },
+                   jsonBodyObj,
+                   storeResourceItem);
         };
 
         star1.setOnClickListener(starListener);
@@ -283,10 +336,8 @@ public class BusinessFragment extends BaseFragment
                 changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(new ServiceFragment(), "serviceResource", serviceResourceItems[position]));
             });
 
-        }else
-            {
-            Toast.makeText(context, "You have to register in store so you can make a booking",Toast.LENGTH_LONG).show();
-        }
+       }else
+           { Toast.makeText(context, "You have to register in store so you can make a booking",Toast.LENGTH_LONG).show(); }
     }
 
     private void toolBarCode()

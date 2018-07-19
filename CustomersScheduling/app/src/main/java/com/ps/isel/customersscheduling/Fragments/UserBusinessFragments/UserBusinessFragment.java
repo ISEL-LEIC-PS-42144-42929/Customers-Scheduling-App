@@ -74,25 +74,25 @@ public class UserBusinessFragment extends BaseFragment
 
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
-       customersSchedulingApp.getStoresOfOwner(elem->
+        customersSchedulingApp.getStoresOfOwner(elem->
                listViewCode(elem));
-
-       //   CategoryDto category = new CategoryDto();
-       //   AddressDto address = new AddressDto();
-       //   String storeName = "O";
-       //   String nif = "11919212";
-       //   float scoreReview = 1.3f;
-       //   String contact = "91121212";
-       //   OwnerDto owner = new OwnerDto();
-       //   Link[] links = new Link[2];
 //
-       //   StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
-       //   StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
-       //   StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource});
-       //   SelfLink self = new SelfLink();
-       //   StoresOfUserDTO stores = new StoresOfUserDTO(emb,null);
+     //   CategoryDto category = new CategoryDto("Barbeiro");
+     //   AddressDto address = new AddressDto(1, "1200-123","Rua do alho","2","Lisboa","Portugal" );
+     //   String storeName = "O Barbas";
+     //   String nif = "11919212";
+     //   float scoreReview = 3f;
+     //   String contact = "91121212";
+     //   OwnerDto owner = new OwnerDto();
+     //   Link[] links = new Link[2];
 //
-       // listViewCode(stores);
+     //   StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
+     //   StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
+     //   StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource});
+     //   SelfLink self = new SelfLink();
+     //   StoresOfUserDTO stores = new StoresOfUserDTO(emb,self);
+//
+     //   listViewCode(stores);
 
         toolBarCode();
     }

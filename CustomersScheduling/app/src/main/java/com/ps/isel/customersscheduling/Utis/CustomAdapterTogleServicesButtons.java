@@ -102,7 +102,7 @@ public class CustomAdapterTogleServicesButtons extends BaseAdapter{
                 sw.setChecked(false);
             }else{
                 customersSchedulingApp.registerEmployeeToService(elem->elem.get_embedded(), currentStorServices[position], staffResourceItems, store);
-                text.setText("EMployee available for the service service");
+                text.setText("Employee available for the service");
                 sw.setChecked(true);
             }
         });

@@ -127,22 +127,26 @@ public class UserRegisteredBusinessFragment extends BaseFragment
                             elem-> {
                                 UserInfoContainer.getInstance().setRegisteredStores(elem.get_embedded().getStoreResourceList());
                                 listViewCode(elem);});
-
-      // CategoryDto category = new CategoryDto();
-      // AddressDto address = new AddressDto();
-      // String storeName = "O";
-      // String nif = "11919212";
-      // float scoreReview = 1.3f;
-      // String contact = "91121212";
-      // OwnerDto owner = new OwnerDto();
-      // Link[] links = new Link[2];
-
-      // StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
-      // StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
-      // StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource});
-      // SelfLink self = new SelfLink();
-      // StoresOfUserDTO stores = new StoresOfUserDTO(emb,null);
-      // listViewCode(stores);
+//
+      //  CategoryDto category = new CategoryDto();
+      //  AddressDto address = new AddressDto();
+      //  String storeName = "O Barbas";
+      //  String storeName2 = "O Lingas";
+      //  String nif = "11919212";
+      //  float scoreReview = 3f;
+      //  float scoreReview2 = 4f;
+      //  String contact = "91121212";
+      //  OwnerDto owner = new OwnerDto();
+      //  Link[] links = new Link[2];
+//
+      //  StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
+      //  StoreDto storedto2 = new StoreDto(address, category,storeName2,nif,scoreReview2,contact,owner,links);
+      //  StoreResourceItem storeresource = new StoreResourceItem(storedto,scoreReview,null);
+      //  StoreResourceItem storeresource2 = new StoreResourceItem(storedto2,scoreReview2,null);
+      //  StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource2});
+      //  SelfLink self = new SelfLink();
+      //  StoresOfUserDTO stores = new StoresOfUserDTO(emb,null);
+      //  listViewCode(stores);
 
     }
 

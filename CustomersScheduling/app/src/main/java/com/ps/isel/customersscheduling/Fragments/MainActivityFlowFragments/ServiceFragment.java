@@ -31,12 +31,13 @@ import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.PersonDto;
-import com.ps.isel.customersscheduling.HALDto.StaffDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.R;
+import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.RecyclerViewAdapter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -46,13 +47,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ServiceFragment extends BaseFragment
 {
     //HARDCODED
-    private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo@gmail","paulo",1, "91111"),new PersonDto("paulo@gmail","paulo",1, "91111")};
-    private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
+    //private PersonDto[] hardcodedEmployesNames = {new PersonDto("paulo@gmail","paulo",1, "91111"),new PersonDto("paulo@gmail","paulo",1, "91111")};
+    //private String[] hardcodedHoursAvaiable = {"9:00", "10:00", "12:00", "13:00","14:00"};
     //-----------------
 
     private CustomersSchedulingApp customersSchedulingApp;
@@ -83,12 +86,18 @@ public class ServiceFragment extends BaseFragment
     private String dateSchedule;
     private String temporaryHour;
     private String hour;
-    private String idToken;
+    private int id;
+    private BookingsOfStoreDTO bookings;
+    int month;
+    int dayofMonth;
+    int year;
 
     private ServiceResourceItem serviceResource;
+    private StoresOfUserDTO storeDTO;
     private StoreResourceItem storeResource;
     private int position;
-    private ArrayList<String> list;
+    private ArrayList<String> listEmployees;
+    private ArrayList<String> listHours;
 
     public ServiceFragment() {
         // Required empty public constructor
@@ -127,9 +136,15 @@ public class ServiceFragment extends BaseFragment
 
         bundle = getArguments();
 
-        list = new ArrayList();
+        listEmployees = new ArrayList();
+        listHours = new ArrayList<>();
+        employee = "";
+        temporaryday = "";
+        temporaryHour = "";
         position = (int) bundle.getSerializable("position");
+
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+        storeDTO = (StoresOfUserDTO) bundle.getSerializable("storeDTO");
         serviceResource = (ServiceResourceItem) bundle.getSerializable("serviceResource");
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);
@@ -146,15 +161,12 @@ public class ServiceFragment extends BaseFragment
         toolbarCode();
         setDateToCalendar();
         customersSchedulingApp.getDisponibilityOfService(elem->{
-            dropDownButtonCode(elem.get_embedded().getBookingResourceList());
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(elem.get_embedded().getBookingResourceList()[0].getBook().getDate());
-            int time = calendar.get(Calendar.HOUR);
-            int c = 0;
-            },serviceResource);
-        //dropDownButtonCode(hardcodedEmployesNames);
 
-        recyclerViewCode(hardcodedHoursAvaiable);
+            dropDownButtonCode(elem.get_embedded().getBookingResourceList());
+            recyclerViewCode(elem.get_embedded().getBookingResourceList());
+                bookings = elem;
+            },serviceResource);
+
         addListenerToButtons();
         calendarViewCode();
 
@@ -189,88 +201,39 @@ public class ServiceFragment extends BaseFragment
                 .setCalendarDisplayMode(CalendarMode.WEEKS)
                 .commit();
 
+
+
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected)
             {
-             //   customersSchedulingApp.getEmployeeDisponibility(
-             //           hours-> recyclerViewCode(hours),service);
-//
+                 month = date.getMonth();
+                 dayofMonth = date.getDay();
+                 year = date.getYear();
             }
 
         });
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void dropDownButtonCode(BookingResourceItem[] booking)
+    private void recyclerViewCode(BookingResourceItem[] booking)
     {
 
-       for (int i = 0; i <booking.length ; i++) {
-           if(!list.contains(booking[i].getBook().getStaff().getName())){
-               list.add(booking[i].getBook().getStaff().getName());
-           }
-       }
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("HH:mm");
 
-       String[] staffName = list.toArray( new String[list.size()]);
-       ArrayAdapter<String> adapter = new ArrayAdapter<>(
-               getActivity(),
-               android.R.layout.simple_dropdown_item_1line,
-               staffName);
+        for (int i = 0; i <booking.length ; i++) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(booking[i].getBook().getDate());
+            String currentTime = c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE);
 
-        spinner.setAdapter(adapter);
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                employee = staffName[position];
+            if(!listHours.contains(currentTime)){
+                listHours.add(currentTime);
             }
-        });
-    }
+        }
 
-    private void addListenerToButtons()
-    {
-        registerRequestBtn.setOnClickListener(new View.OnClickListener() {
+        String[] hoursAvailables = listHours.toArray( new String[listHours.size()]);
 
-            @Override
-            public void onClick(View v) {
-                if(idToken == null)
-                {
-                    Toast.makeText(context, "Log yourself in so you can make a booking",Toast.LENGTH_LONG).show();
-                }else{
-                        if (employee == null)
-                        {
-                         //   employee = hardcodedEmployesNames[0].getName();
-                        }
-                        if (dateSchedule == null)
-                        {
-                            dateSchedule = currentTime.toString();
-                        }
-                        if (temporaryHour == null)
-                        {
-                            temporaryHour = hardcodedHoursAvaiable[0];
-                        }
-
-                        try
-                        {
-                            jsonBodyObj.put("employee", employee);
-                            jsonBodyObj.put("date", dateSchedule);
-                            jsonBodyObj.put("hour", temporaryHour);
-                        }
-                        catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-
-                       // customersSchedulingApp.registerUserService(jsonBodyObj, serviceResource);
-                     //   changeFragment(fragmentManager, R.id.mainActivityFragment, addBundleToFragment(businessFragment, "storeDTO", serviceResource));
-                }
-            }
-        });
-    }
-
-    private void recyclerViewCode(String[] hoursAvailables)
-    {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -292,11 +255,88 @@ public class ServiceFragment extends BaseFragment
                 isBottomReached[0] = !mRecyclerView.canScrollVertically(1);
                 if(isBottomReached[0])
                 {
-                    temporaryHour = hoursAvailables[hardcodedHoursAvaiable.length - 1];
+                    temporaryHour = hoursAvailables[listHours.size() - 1];
                 }
             }
         });
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void dropDownButtonCode(BookingResourceItem[] booking)
+    {
+
+       for (int i = 0; i <booking.length ; i++) {
+           if(!listEmployees.contains(booking[i].getBook().getStaff().getName())){
+               listEmployees.add(booking[i].getBook().getStaff().getName());
+           }
+       }
+
+       String[] staffName = listEmployees.toArray( new String[listEmployees.size()]);
+       ArrayAdapter<String> adapter = new ArrayAdapter<>(
+               getActivity(),
+               android.R.layout.simple_dropdown_item_1line,
+               staffName);
+
+        spinner.setAdapter(adapter);
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                employee = staffName[position];
+            }
+        });
+    }
+
+    private void addListenerToButtons()
+    {
+        registerRequestBtn.setOnClickListener(new View.OnClickListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+
+                if (employee.equals("") || temporaryHour.equals("") || temporaryday.equals(""))
+                {
+                   // Toast.makeText(context, "You have to select all data so you can register a service",Toast.LENGTH_LONG).show();
+                    }
+                    try
+                    {
+                        findId();
+
+                        jsonBodyObj.put("client_email", UserInfoContainer.getInstance().getEmail());
+                        customersSchedulingApp.registerBooking(elem-> {
+                                    Toast.makeText(context, "Booking done",Toast.LENGTH_LONG).show();
+                                    addMultBundleToFragment("position", position);
+                                    changeFragment(fragmentManager,R.id.mainActivityFragment,addBundleToFragment(new BusinessFragment(),"storeDTO", storeDTO));
+                                }
+                                ,jsonBodyObj, serviceResource, 25);
+
+                    } catch (JSONException e)
+                    {
+                        e.printStackTrace(); }// customersSchedulingApp.registerUserService(jsonBodyObj, serviceResource);
+
+                }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private int findId(){
+
+        Stream<BookingResourceItem> s = Stream.of(bookings.get_embedded().getBookingResourceList());
+
+        List<BookingResourceItem> book = s.filter(elem-> elem.getBook().getStaff().getName().equals(employee) && elem.getBook().getDate().toString().contains(year+"-" + month+1
+                + "-" + temporaryday + " " + temporaryHour )).collect(Collectors.toList());
+
+        if(book.size() == 0){
+           // Toast.makeText(context, "Select another employee or another date",Toast.LENGTH_LONG).show();
+        }else{
+            id =  book.get(0).getBook().getId();
+        }
+        return id;
+    }
+
+
+
+
 
     private void setDateToCalendar()
     {

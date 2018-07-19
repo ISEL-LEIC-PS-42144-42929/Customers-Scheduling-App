@@ -101,7 +101,9 @@ public class CustomAdapterFavourites extends BaseAdapter
         row = inflater.inflate(R.layout.rowoffavourites, parent, false);
 
         name = (TextView) row.findViewById(R.id.favouriteName);
-        name.setText(favourites[position].getName());
+        if(favourites[position] != null)
+            name.setText(favourites[position].getName());
+
 
         deleteFavBtn = (Button) row.findViewById(R.id.delete);
         goToFavBtn = (Button) row.findViewById(R.id.goTo);
@@ -135,34 +137,7 @@ public class CustomAdapterFavourites extends BaseAdapter
 
     private void readFromInternalStorageAndDelete(Favourite favourite, int position)
     {
-        ArrayList<Favourite> objectsList = new ArrayList<>();
         UserInfoContainer.getInstance().getFavourites().remove(position);
-        Favourite[] favArray = null;
-        Favourite favouriteElement;
-        try {
-            FileInputStream fi = new FileInputStream(new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME));
-            ObjectInputStream oi = new ObjectInputStream(fi);
-            while(fi.available() > 0 ) {
-                favouriteElement = (Favourite) oi.readObject();
-                if(!favouriteElement.getName().equals(favourite.getName()))
-                {
-                    objectsList.add(favouriteElement);
-                }
-            }
-            favArray = new Favourite[objectsList.size()];
-            favArray = objectsList.toArray(favArray);
-            reWriteFavouritesToInternalStorage(UserInfoContainer.getInstance().getFavourites());
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-        }
 
     }
 

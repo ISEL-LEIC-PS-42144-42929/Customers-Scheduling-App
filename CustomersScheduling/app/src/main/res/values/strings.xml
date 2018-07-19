@@ -52,8 +52,9 @@
     <string name="deleteService">Delete Service</string>
     <string name="multilines">Client\nRequests</string>
     <string name="login">Login</string>
-    <string name="street_and_lot_number_ex_street_2">Street and Lot number Ex: Street 2</string>
+    <string name="street_and_lot_number_ex_street_2">Street Ex: Street </string>
     <string name="insert_zipcode">insert zipcode</string>
+    <string name="insert_lot">insert Lot Ex: Lot 2</string>
     <string name="ex_london_england">City and Country Ex: London England</string>
     <string name="insert_contact">insert Contact</string>
     <string name="insert_name">insert Name</string>
@@ -87,7 +88,7 @@
     </string-array>
 
     <string-array name="locations_array">
-        <item>Lisbon</item>
+        <item>Lisboa</item>
         <item>Porto</item>
         <item>Lagos</item>
         <item>Albufeira</item>

@@ -18,8 +18,20 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.ServicesOfBusinessEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.ServiceLink;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterServices;
 
@@ -84,6 +96,37 @@ public class SelectServiceToEditFragment extends BaseFragment {
         lv = view.findViewById(R.id.listServices);
 
         customersSchedulingApp.getStoreServices(elem->listViewCode(elem),storeResource);
+
+       // CategoryDto category = new CategoryDto();
+       // AddressDto address = new AddressDto();
+       // String storeName = "O";
+       // String nif = "11919212";
+       // float scoreReview = 1.3f;
+       // String contact = "91121212";
+       // OwnerDto owner = new OwnerDto();
+       // Link[] links = new Link[2];
+//
+       // StoreDto storedto = new StoreDto(address, category,storeName,nif,scoreReview,contact,owner,links);
+       // StoreResourceItem storeresource = new StoreResourceItem(storedto,3.1,null);
+       // StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource,storeresource});
+       // SelfLink self = new SelfLink();
+       // StoresOfUserDTO stores = new StoresOfUserDTO(emb,self);
+//
+       // int id = 132;
+       // String description = "corte maravilhoso";
+       // double price = 1.0;
+       // String title = "titulo";
+       // int duration = 100;
+//
+       // ServiceDto serviceDto = new ServiceDto(id,description,price,title,duration);
+       // ServiceLink linksService = new ServiceLink();
+       // ServiceResourceItem serviceResource = new ServiceResourceItem(storeresource,serviceDto,linksService);
+       // ServicesOfBusinessEmbedded embService = new ServicesOfBusinessEmbedded(new ServiceResourceItem[]{serviceResource});
+       // SelfLink selfService = new SelfLink();
+       // ServicesOfBusinessDTO services = new ServicesOfBusinessDTO(embService, selfService);
+
+     //   listViewCode(services);
+
         toolbarCode();
 
     }

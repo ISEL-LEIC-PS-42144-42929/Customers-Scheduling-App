@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.HALDto.BookingsOfStoreDTO;
 import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
 import com.ps.isel.customersscheduling.HALDto.ServiceDto;
 import com.ps.isel.customersscheduling.HALDto.ServicesOfBusinessDTO;
 import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
@@ -17,6 +18,7 @@ import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.BookingResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.OwnerResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ServiceResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
@@ -37,12 +39,13 @@ import java.util.function.Consumer;
 public class CustomersSchedulingWebApi<T>
 {
 
-    private final String DB_HOST = "http://194.210.188.180:8181/";
+    private final String DB_HOST = "http://192.168.1.220:8181/";
     private final String DB_USER_STORES = "person/client/%s/stores";
     private final String DB_USER_BOOKINGS = "person/client/%s/books";
     private final String DB_USER_DELETE_BOOKINGS = "store/%s/book/%s";
     private final String DB_STORE = "store";
     private final String DB_USER_REG_OWNER = "person/owner/";
+    private final String DB_GET_OWNER = "person/owner/%s";
     private final String DB_USER_GET_STORES = "person/owner/%s/stores";
     private final String DB_USER_STORE = "store/owner/%s/";
     private final String DB_QUERY_NAME = "?name=%s";
@@ -105,7 +108,7 @@ public class CustomersSchedulingWebApi<T>
 
     public void getOwner(Consumer<T> cons)
     {
-        getRequest(cons, String.format(DB_HOST + DB_USER_STORE, UserInfoContainer.getInstance().getEmail()), StoresOfUserDTO.class);
+        getRequest(cons, String.format(DB_HOST + DB_GET_OWNER, UserInfoContainer.getInstance().getEmail()).concat(".x"), OwnerResourceItem.class);
     }
 
     public void getStoresOfOwner(Consumer<T> cons) {
@@ -154,12 +157,16 @@ public class CustomersSchedulingWebApi<T>
         String url = currentService.get_links().getDelete_staff_service().getHref()
                 .replace("%7Bnif%7D", store.getStore().getNif())
                 .replace("-1", currentService.getService().getId()+"")
-                .replace("{email}", staffResourceItems.getPerson().getEmail());
+                .replace("{email}", staffResourceItems.getPerson().getEmail()).concat(".x");
         postRequest(url,new JSONObject(),cons, ServicesOfBusinessDTO.class);
     }
 
     public void registerOwner(JSONObject json) {
         postRequestWithNoResponse(DB_HOST + DB_USER_REG_OWNER, json);
+    }
+
+    public void registerBooking(Consumer<T> cons, JSONObject jsonBodyObj, ServiceResourceItem serviceResource, int id) {
+        postRequest(serviceResource.get_links().getSet_book().getHref().replace("-1", id + ""),jsonBodyObj,cons,StoresOfUserDTO.class);
     }
 
     public void rateStore(Consumer<T> cons, JSONObject jsonObject, StoreResourceItem storeResource) {
@@ -186,7 +193,7 @@ public class CustomersSchedulingWebApi<T>
 
     public void editEmployee(Consumer<T> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource)
     {
-        updateRequest(staffResource.get_links().getUpdate().getHref(),jsonBodyObj,cons,staffResource.getClass());
+        updateRequest(staffResource.get_links().getUpdate().getHref().concat(".x"),jsonBodyObj,cons,staffResource.getClass());
     }
 
     public void editEmployeeSchedule(Consumer<T> cons, JSONObject jsonBodyObj, StaffResourceItem staffResource) {
@@ -225,7 +232,7 @@ public class CustomersSchedulingWebApi<T>
         String url = currentService.get_links().getDelete_staff_service().getHref()
                 .replace("%7Bnif%7D", store.getStore().getNif())
                 .replace("-1", currentService.getService().getId()+"")
-                .replace("{email}", staffResourceItems.getPerson().getEmail());
+                .replace("{email}", staffResourceItems.getPerson().getEmail()).concat(".x");
         deleteRequest(url,cons,ServicesOfBusinessDTO.class);
     }
 
@@ -305,9 +312,13 @@ public class CustomersSchedulingWebApi<T>
                 case 404:
                     cons.accept(null);
                     break;
+                case 406:
+                    cons.accept(null);
+                    break;
             }
     }
     }
+
 
 
 }

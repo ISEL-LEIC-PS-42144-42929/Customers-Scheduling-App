@@ -4,7 +4,9 @@ import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
 import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
 import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 
-public class StaffOfBusinessDTO {
+import java.io.Serializable;
+
+public class StaffOfBusinessDTO implements Serializable {
 
     private StaffEmbedded _embedded;
     private SelfLink _links;

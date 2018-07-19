@@ -32,10 +32,9 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
                     "Edit Employee Data",
                     "Edit Employee Schedule",
                     "Edit Employee Services",
-                    "Delete Employee"
             };
 
-    private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment(), new EditEmployeesServicesFragment(), new RegisterEmployeeFragment()};
+    private BaseFragment[] fragments = { new EditEmployeesFragment(), new EditEmployeesScheduleFragment(), new EditEmployeesServicesFragment()};
 
     private FragmentManager fragmentManager;
     private CustomersSchedulingApp customersSchedulingApp;
@@ -84,8 +83,10 @@ public class SelectScheduleOrEmployeeDataFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         bundle = getArguments();
-        staffResourceItem = (StaffResourceItem) bundle.get("staffResource");
-        storeResourceItem = (StoreResourceItem) bundle.getSerializable("storeResource");
+        if(staffResourceItem == null && storeResourceItem == null) {
+            staffResourceItem = (StaffResourceItem) bundle.get("staffResource");
+            storeResourceItem = (StoreResourceItem) bundle.getSerializable("storeResource");
+        }
         context = getActivity().getApplicationContext();
 
         customersSchedulingApp = ((CustomersSchedulingApp)context);

@@ -17,8 +17,20 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
 import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterSameFragment;
 
@@ -83,7 +95,27 @@ public class SelectEmployeeToEditFragment extends BaseFragment {
         toolbar = view.findViewById(R.id.app_bar);
         lv = view.findViewById(R.id.employeesList);
 
-        customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
+      //  CategoryDto category = new CategoryDto();
+      //  AddressDto address = new AddressDto();
+      //  String name = "João";
+      //  String name2 = "Estefania";
+      //  String email = "11919212";
+      //  float scoreReview = 1.3f;
+      //  String contact = "91121212";
+      //  int gender = 0;
+      //  OwnerDto owner = new OwnerDto();
+      //  StaffLinks links = new StaffLinks();
+//
+      //  StaffDto staffdto = new StaffDto(email, name,gender, contact);
+      //  StaffDto staffdto2 = new StaffDto(email, name2,gender, contact);
+      //  StaffResourceItem staffResource = new StaffResourceItem(staffdto,links);
+      //  StaffResourceItem staffResource2 = new StaffResourceItem(staffdto2,links);
+      //  StaffEmbedded emb = new StaffEmbedded(new StaffResourceItem[]{staffResource,staffResource2});
+      //  SelfLink self = new SelfLink();
+      //  StaffOfBusinessDTO staff = new StaffOfBusinessDTO(emb,self);
+      //  listViewCode(staff);
+
+       customersSchedulingApp.getStoreEmployees(this::listViewCode,storeResource);
         toolbarCode();
     }
 

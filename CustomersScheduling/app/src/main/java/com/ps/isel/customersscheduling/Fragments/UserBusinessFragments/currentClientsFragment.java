@@ -18,8 +18,20 @@ import android.widget.ListView;
 
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.ClientDto;
 import com.ps.isel.customersscheduling.HALDto.ClientOfStoreDTO;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.ClientEmbedded;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.ClientResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.ClientLinks;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterTogleButtons;
 
@@ -69,12 +81,39 @@ public class currentClientsFragment extends BaseFragment {
         storeResource = (StoreResourceItem)bundle.getSerializable("storeResource");
         customersSchedulingApp = ((CustomersSchedulingApp) context);
 
+
+      // CategoryDto category = new CategoryDto();
+      // AddressDto address = new AddressDto();
+      // String storeName = "O";
+      // String nif = "11919212";
+      // float scoreReview = 1.3f;
+      // String contact = "91121212";
+      // OwnerDto owner = new OwnerDto();
+      // Link[] links = new Link[2];
+      // ClientLinks clinks = new ClientLinks();
+
+      // String email = "email";
+      // String name = "Joao";
+      // String name2 = "Francisco";
+      // int gender = 0;
+
+      // ClientDto clientDto = new ClientDto(email, name,gender,contact);
+      // ClientDto clientDto2 = new ClientDto(email, name2,gender,contact);
+      // ClientResourceItem clientResource = new ClientResourceItem(clientDto,true,clinks);
+      // ClientResourceItem clientResource2 = new ClientResourceItem(clientDto2,false,clinks);
+      // ClientEmbedded emb = new ClientEmbedded(new ClientResourceItem[]{clientResource,clientResource2});
+      // SelfLink self = new SelfLink();
+      // ClientOfStoreDTO stores = new ClientOfStoreDTO(emb,self);
+
         customersSchedulingApp.getClientsOfStore(elem ->
                 listViewCode(elem), storeResource);
+
+
 
         toolbar   = view.findViewById(R.id.app_bar);
         lv        = view.findViewById(R.id.myClients);
 
+       // listViewCode(stores);
         toolBarCode();
     }
 

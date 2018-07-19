@@ -31,4 +31,6 @@ public class Favourite implements Serializable
     public String getName() {
         return name;
     }
+
+
 }

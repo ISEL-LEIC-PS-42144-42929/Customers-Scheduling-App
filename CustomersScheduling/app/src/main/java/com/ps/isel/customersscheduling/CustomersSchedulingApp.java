@@ -233,4 +233,8 @@ public class CustomersSchedulingApp extends Application implements Serializable
     public void deleteStaffofStore(Consumer<StaffOfBusinessDTO>cons, StoreResourceItem storeResource1) {
         api.deleteStaffOfStore(cons, storeResource1);
     }
+
+    public void registerBooking(Consumer<StoresOfUserDTO> cons, JSONObject jsonBodyObj, ServiceResourceItem serviceResource, int id) {
+        api.registerBooking(cons, jsonBodyObj, serviceResource, id);
+    }
 }

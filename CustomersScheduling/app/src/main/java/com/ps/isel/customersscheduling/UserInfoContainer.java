@@ -1,10 +1,17 @@
 package com.ps.isel.customersscheduling;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
+import com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments.FavouritesFragment;
 import com.ps.isel.customersscheduling.HALDto.StoreDto;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
 import com.ps.isel.customersscheduling.objectUtils.Favourite;
 
+
 import java.util.HashMap;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class UserInfoContainer {
 
@@ -12,6 +19,10 @@ public class UserInfoContainer {
     private HashMap<String, StoreDto> registeredStores;
     private String idToken;
     private String email;
+    private SharedPreferences sharedPreferences;
+    SharedPreferences.Editor prefsEditor;
+    public int count = 0;
+    public boolean firstTime = true;
 
     private static UserInfoContainer instance = new UserInfoContainer();
 
@@ -60,5 +71,18 @@ public class UserInfoContainer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setPrefs(SharedPreferences sharedPreferences){
+        this.sharedPreferences = sharedPreferences;
+        prefsEditor = sharedPreferences.edit();
+    }
+
+    public SharedPreferences.Editor getPrefsEditor() {
+        return prefsEditor;
+    }
+
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
     }
 }

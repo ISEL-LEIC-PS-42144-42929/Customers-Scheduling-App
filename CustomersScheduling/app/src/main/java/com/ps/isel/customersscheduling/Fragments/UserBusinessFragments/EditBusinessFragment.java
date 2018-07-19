@@ -29,10 +29,9 @@ public class EditBusinessFragment extends BaseFragment
                     "Edit Business Info",
                     "Edit Business Schedule",
                     "Edit Services",
-                    "Edit Employee",
-                    "Add Employee"
+                    "Edit Employees",
             };
-    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment(), new RegisterEmployeeFragment()};
+    private BaseFragment[] fragments = {new EditBusinessDataFragment(),new EditBusinessScheduleFragment(), new SelectServiceToEditFragment(),new SelectEmployeeToEditFragment()};
 
     private FragmentManager fragmentManager;
 

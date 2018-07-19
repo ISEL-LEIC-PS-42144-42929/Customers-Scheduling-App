@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,20 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
-
 import com.ps.isel.customersscheduling.objectUtils.Favourite;
+
 import com.ps.isel.customersscheduling.R;
 import com.ps.isel.customersscheduling.UserInfoContainer;
 import com.ps.isel.customersscheduling.Utis.CustomAdapterFavourites;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class FavouritesFragment extends BaseFragment
 {
@@ -74,12 +73,7 @@ public class FavouritesFragment extends BaseFragment
     {
       context = getActivity().getApplicationContext();
 
-      UserInfoContainer.getInstance().setFavourites(readFromInternalStorageAndSeparate());
-
-      if(favSearches == null)
-      {
-          favSearches = new Favourite[0];
-      }
+      readFromInternalStorageAndSeparate();
 
       toolbar = view.findViewById(R.id.app_bar);
       lv      = view.findViewById(R.id.listButtons);
@@ -100,30 +94,33 @@ public class FavouritesFragment extends BaseFragment
 
     private Favourite[] readFromInternalStorageAndSeparate()
     {
-        ArrayList<Favourite> objectsList = new ArrayList<>();
-        Favourite[] fav = null;
-        try {
-            FileInputStream fi = new FileInputStream(new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME));
-            ObjectInputStream oi = new ObjectInputStream(fi);
-            while(fi.available() > 0 ) {
-                objectsList.add((Favourite) oi.readObject());
+
+        SharedPreferences sp = getActivity().getSharedPreferences("favou", Activity.MODE_PRIVATE);
+        int count = sp.getInt("count", 0);
+        Favourite[] ret = new Favourite[count];
+
+        if(UserInfoContainer.getInstance().firstTime) {
+
+            Gson gson = new Gson();
+
+            for (int i = 0; i < ret.length; i++) {
+                --count;
+                String json = sp.getString("MyFav" + count, "");
+                ret[i] = gson.fromJson(json, Favourite.class);
+            }
+            UserInfoContainer.getInstance().firstTime = false;
+           // UserInfoContainer.getInstance().setFavourites(ret);
+
+        }else{
+            int index = 0;
+                Iterator it = UserInfoContainer.getInstance().getFavourites().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    ret[index++] = (Favourite) pair.getValue();
+                }
             }
 
-            fav = new Favourite[objectsList.size()];
-            fav = objectsList.toArray(fav);
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-        }
-        return fav;
+        return ret;
     }
 
 }

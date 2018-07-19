@@ -66,6 +66,15 @@
             android:layout_below="@+id/categoryDropDown"
             android:cursorVisible="false"
             android:hint="@string/street_and_lot_number_ex_street_2" />
+        <EditText
+            android:id="@+id/LotNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/streetandLotNumber"
+            android:cursorVisible="false"
+            android:hint="@string/insert_lot" />
 
         <EditText
             android:id="@+id/zipcode"
@@ -73,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/cityAndCountry"
+            android:layout_below="@+id/LotNumber"
             android:cursorVisible="false"
             android:hint="@string/insert_zipcode" />
 
@@ -85,7 +94,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:cursorVisible="false"
-            android:layout_below="@+id/streetandLotNumber"
+            android:layout_below="@+id/zipcode"
             android:hint="@string/ex_london_england"/>
 
     </RelativeLayout>

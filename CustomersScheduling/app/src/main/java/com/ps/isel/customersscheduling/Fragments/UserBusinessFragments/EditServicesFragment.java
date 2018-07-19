@@ -79,6 +79,7 @@ public class EditServicesFragment extends BaseFragment
         bundle = getArguments();
         serviceResourceItem = (ServiceResourceItem) bundle.getSerializable("serviceResource");
         storeResource = (StoreResourceItem) bundle.getSerializable("storeResource");
+        customersSchedulingApp = ((CustomersSchedulingApp) context);
 
         jsonBodyObj = new JSONObject();
 
@@ -151,7 +152,7 @@ public class EditServicesFragment extends BaseFragment
                             changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectServiceToEditFragment(),"storeResource", storeResource))
                     ,jsonBodyObj
                     ,serviceResourceItem);
-            changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
+            //changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
         });
     }
 

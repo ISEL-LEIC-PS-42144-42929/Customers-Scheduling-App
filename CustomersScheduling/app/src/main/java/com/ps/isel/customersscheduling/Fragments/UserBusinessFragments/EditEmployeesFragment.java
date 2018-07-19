@@ -19,8 +19,17 @@ import android.widget.EditText;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
 import com.ps.isel.customersscheduling.Fragments.BusinessRegistrationFragments.RegisterEmployeeScheduleFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StaffDto;
+import com.ps.isel.customersscheduling.HALDto.StaffOfBusinessDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StaffEmbedded;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StaffResourceItem;
 import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
+import com.ps.isel.customersscheduling.HALDto.links.StaffLinks;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -160,7 +169,30 @@ public class EditEmployeesFragment extends BaseFragment
                             changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectEmployeeToEditFragment(), "storeResource", storeResource));},
                     jsonBodyObj,
                     staffResource);
-        });
+
+        //    CategoryDto category = new CategoryDto();
+        //    AddressDto address = new AddressDto();
+        //    String storeName = "O";
+        //    String nif = "11919212";
+        //    float scoreReview = 1.3f;
+        //    String contact = "91121212";
+        //    OwnerDto owner = new OwnerDto();
+        //    Link[] links = new Link[2];
+        //    String email = "email";
+        //    String name = "name";
+        //    int gender = 0;
+//
+        //    StaffLinks links1 = new StaffLinks();
+        //    StaffDto staffDto = new StaffDto(email,name, gender, contact);
+        //    StaffResourceItem staffResourceItem = new StaffResourceItem(staffDto,links1);
+        //    StaffEmbedded emb2 = new StaffEmbedded(new StaffResourceItem[]{staffResourceItem,staffResourceItem});
+        //    SelfLink self = new SelfLink();
+        //    StaffOfBusinessDTO staff = new StaffOfBusinessDTO(emb2,self);
+//
+        //    addMultBundleToFragment("staffResource", staffResource);
+        //    changeFragment(fragmentManager, R.id.userBusinessFragment, addBundleToFragment(new SelectEmployeeToEditFragment(), "storeResource", storeResource));
+
+    });
 
     }
 
@@ -168,7 +200,6 @@ public class EditEmployeesFragment extends BaseFragment
     {
         employeeName.setHint(staffResource.getPerson().getName());
         employeeContact.setHint(staffResource.getPerson().getContact());
-        choseGender.setHint(staffResource.getPerson().getGender());
     }
 }
 

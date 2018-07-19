@@ -68,7 +68,8 @@ public class AddOtherServiceOrRegisterEmployee extends BaseFragment {
                         R.id.businessData,
                         addBundleToFragment(registerAnotherServiceFragment,"storeResource", storeResource)));
 
-        addEmployee.setOnClickListener(v ->
-                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeFragment,"storeResource", storeResource)));
+        addEmployee.setOnClickListener(v ->{
+            addMultBundleToFragment("addFromEdit", false);
+                changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(registerEmployeeFragment,"storeResource", storeResource));});
     }
 }

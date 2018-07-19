@@ -51,7 +51,8 @@ public class EditBusinessDataFragment extends BaseFragment
     private EditText storeName;
     private EditText storeNif;
     private EditText storeContact;
-    private EditText streetAndLot;
+    private EditText street;
+    private EditText lot;
     private EditText zipcode;
     private EditText cityAndCountry;
     private Button editBusiness;
@@ -115,7 +116,8 @@ public class EditBusinessDataFragment extends BaseFragment
         storeName                = view.findViewById(R.id.storeName);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
-        streetAndLot             = view.findViewById(R.id.streetandLotNumber);
+        street                   = view.findViewById(R.id.street);
+        lot                      = view.findViewById(R.id.lot);
         cityAndCountry           = view.findViewById(R.id.cityAndCountry);
         zipcode                  = view.findViewById(R.id.zipcode);
         choseCategory            = view.findViewById(R.id.categoryDropDown);
@@ -138,12 +140,13 @@ public class EditBusinessDataFragment extends BaseFragment
 
     private void putHints()
     {
-        storeName.setHint("Name:" + storeResource.getStore().getStoreName());
-        storeNif.setHint("NIF:" + storeResource.getStore().getNif());
-        storeContact.setHint("Contact:" + storeResource.getStore().getContact());
-        streetAndLot.setHint("Lot and Street:" + storeResource.getStore().getAddress().getStreet() + " " + storeResource.getStore().getAddress().getLot());
-        zipcode.setHint("Zip-code:" + storeResource.getStore().getAddress().getZip_code());
-        cityAndCountry.setHint("City and Country:" + storeResource.getStore().getAddress().getCity() + " " + storeResource.getStore().getAddress().getCountry()); //  construir string com os dois campos
+        storeName.setHint(storeResource.getStore().getStoreName());
+        storeNif.setHint(storeResource.getStore().getNif());
+        storeContact.setHint(storeResource.getStore().getContact());
+        street.setHint(storeResource.getStore().getAddress().getStreet() + " " + storeResource.getStore().getAddress().getLot());
+        lot.setHint(storeResource.getStore().getAddress().getLot());
+        zipcode.setHint(storeResource.getStore().getAddress().getZip_code());
+        cityAndCountry.setHint(storeResource.getStore().getAddress().getCity() + " " + storeResource.getStore().getAddress().getCountry()); //  construir string com os dois campos
         choseCategory.setHint(storeResource.getStore().getCategory().getName());
     }
 
@@ -175,57 +178,62 @@ public class EditBusinessDataFragment extends BaseFragment
         editBusiness.setOnClickListener(view -> {
             try
             {
+
                 String storeNIF = storeNif.getText().toString();
                 String storeCont = storeContact.getText().toString();
                 String storeNam = storeName.getText().toString();
-                String strtAndLot = streetAndLot.getText().toString();
+                String strt = street.getText().toString();
+                String lote = lot.getText().toString();
                 String zipCode = zipcode.getText().toString();
                 String cityAndCoun = cityAndCountry.getText().toString();
                 String cat = choseCategory.getText().toString();
 
-                if(storeNIF.equals(""))
-                {
-                    storeNIF = storeNif.getHint().toString();
-                }
-                if(storeCont.equals(""))
-                {
-                    storeCont = storeContact.getHint().toString();
-                }
-                if(storeNam.equals(""))
-                {
-                    storeNam = storeName.getHint().toString();
-                }
-                if(strtAndLot.equals(""))
-                {
-                    strtAndLot = streetAndLot.getHint().toString();
-                }
-                if(cat.equals(""))
-                {
-                    cat = streetAndLot.getHint().toString();
-                }
-                if(zipCode.equals(""))
-                {
-                    zipCode = zipcode.getHint().toString();
-                }
-                if(cityAndCoun.equals(""))
-                {
-                    cityAndCoun = cityAndCountry.getHint().toString();
-                }
+                if (cityAndCoun.contains(" ")) {
 
-                jsonBodyObj.put("name", storeNam);
-                jsonBodyObj.put("nif", storeNIF);
-                jsonBodyObj.put("contact", storeCont);
-                jsonBodyObj.put("category", cat);
-                jsonBodyObj.put("street", deserializeString(strtAndLot)[0]);
-                jsonBodyObj.put("zip_code", zipCode);
-                jsonBodyObj.put("lot", deserializeString(strtAndLot)[1]);
-                jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
-                jsonBodyObj.put("country",deserializeString(cityAndCoun)[1]);
+                    if (storeNIF.equals("")) {
+                        storeNIF = storeNif.getHint().toString();
+                    }
+                    if (storeCont.equals("")) {
+                        storeCont = storeContact.getHint().toString();
+                    }
+                    if (storeNam.equals("")) {
+                        storeNam = storeName.getHint().toString();
+                    }
+                    if (strt.equals("")) {
+                        strt = street.getHint().toString();
+                    }
+                    if (lote.equals("")) {
+                        lote = lot.getHint().toString();
+                    }
+                    if (cat.equals("")) {
+                        cat = choseCategory.getHint().toString();
+                    }
+                    if (zipCode.equals("")) {
+                        zipCode = zipcode.getHint().toString();
+                    }
+                    if (cityAndCoun.equals("")) {
+                        cityAndCoun = cityAndCountry.getHint().toString();
+                    }
+
+                    jsonBodyObj.put("name", storeNam);
+                    jsonBodyObj.put("nif", storeNIF);
+                    jsonBodyObj.put("contact", storeCont);
+                    jsonBodyObj.put("category", cat);
+                    jsonBodyObj.put("street", strt);
+                    jsonBodyObj.put("zip_code", zipCode);
+                    jsonBodyObj.put("lot", lote);
+                    jsonBodyObj.put("city", deserializeString(cityAndCoun)[0]);
+                    jsonBodyObj.put("country", deserializeString(cityAndCoun)[1]);
 
 
-               customersSchedulingApp.editOwnerBusinessData(elem ->
-                                        changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment())
-                                , jsonBodyObj, storeResource);
+                    customersSchedulingApp.editOwnerBusinessData(elem ->
+                                    changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment())
+                            , jsonBodyObj, storeResource);
+                   // changeFragment(fragmentManager, R.id.userBusinessFragment, new UserBusinessFragment());
+
+                }else{
+                    Toast.makeText(context, "Insert country and city has example", Toast.LENGTH_LONG).show();
+                }
             }
             catch (JSONException e) {
                 Toast.makeText(getActivity(), "Business edit went wrong!try again later",Toast.LENGTH_LONG).show();

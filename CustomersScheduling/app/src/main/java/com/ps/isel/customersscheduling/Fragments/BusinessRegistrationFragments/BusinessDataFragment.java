@@ -30,6 +30,15 @@ import android.widget.Toast;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
+import com.ps.isel.customersscheduling.HALDto.AddressDto;
+import com.ps.isel.customersscheduling.HALDto.CategoryDto;
+import com.ps.isel.customersscheduling.HALDto.Link;
+import com.ps.isel.customersscheduling.HALDto.OwnerDto;
+import com.ps.isel.customersscheduling.HALDto.StoreDto;
+import com.ps.isel.customersscheduling.HALDto.StoresOfUserDTO;
+import com.ps.isel.customersscheduling.HALDto.embeddeds.StoresOfUserEmbedded;
+import com.ps.isel.customersscheduling.HALDto.entitiesResourceList.StoreResourceItem;
+import com.ps.isel.customersscheduling.HALDto.links.SelfLink;
 import com.ps.isel.customersscheduling.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -57,7 +66,8 @@ public class BusinessDataFragment extends BaseFragment {
     private EditText storeName;
     private EditText storeNif;
     private EditText storeContact;
-    private EditText streetAndLot;
+    private EditText street;
+    private EditText lot;
     private EditText zipcode;
     private EditText cityAndCountry;
     private MaterialBetterSpinner choseCategory;
@@ -96,7 +106,8 @@ public class BusinessDataFragment extends BaseFragment {
         storeName                = view.findViewById(R.id.storeName);
         storeNif                 = view.findViewById(R.id.storeNif);
         storeContact             = view.findViewById(R.id.storeContact);
-        streetAndLot             = view.findViewById(R.id.streetandLotNumber);
+        street                   = view.findViewById(R.id.streetandLotNumber);
+        lot                      = view.findViewById(R.id.LotNumber);
         zipcode                  = view.findViewById(R.id.zipcode);
         cityAndCountry           = view.findViewById(R.id.cityAndCountry);
         choseCategory            = view.findViewById(R.id.categoryDropDown);
@@ -151,40 +162,60 @@ public class BusinessDataFragment extends BaseFragment {
     {
 
         registerBusiness.setOnClickListener(view -> {
-            try
-            {
+            try {
                 String storeNIF = storeNif.getText().toString();
                 String storeCont = storeContact.getText().toString();
                 String storeNam = storeName.getText().toString();
-                String strtAndLot = streetAndLot.getText().toString();
+                String strtAndLot = street.getText().toString();
+                String lotnumber = lot.getText().toString();
                 String zipCode = zipcode.getText().toString();
                 String cityAndCoun = cityAndCountry.getText().toString();
 
-                if(storeNIF.equals("") || storeCont.equals("") || storeNam.equals("") || strtAndLot.equals("") || zipCode.equals("") || cityAndCoun.equals("") )
-                {
-                    Toast.makeText(context, "Have to insert all store data",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    jsonBodyObj.put("name", storeNam);
-                    jsonBodyObj.put("ownerNif", "123456");
-                    jsonBodyObj.put("nif", storeNIF);
-                    jsonBodyObj.put("contact", storeCont);
-                    jsonBodyObj.put("category", choseCategoryText);
-                    jsonBodyObj.put("street", deserializeString(streetAndLot.getText().toString())[0]);
-                    jsonBodyObj.put("zip_code", zipCode);
-                    jsonBodyObj.put("lot", deserializeString(streetAndLot.getText().toString())[1]);
-                    jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
-                    jsonBodyObj.put("country",deserializeString(cityAndCountry.getText().toString())[1]);
+                if (cityAndCoun.contains(" ")) {
 
-                    customersSchedulingApp.registerStore(elem ->
-                            changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeResource", elem))
-                            , jsonBodyObj);
+                    if (storeNIF.equals("") || storeCont.equals("") || storeNam.equals("") || strtAndLot.equals("") || zipCode.equals("") || cityAndCoun.equals("")) {
+                        Toast.makeText(context, "Have to insert all store data", Toast.LENGTH_LONG).show();
+                    } else {
+                        jsonBodyObj.put("name", storeNam);
+                        jsonBodyObj.put("ownerNif", "123456");
+                        jsonBodyObj.put("nif", storeNIF);
+                        jsonBodyObj.put("contact", storeCont);
+                        jsonBodyObj.put("category", choseCategoryText);
+                        jsonBodyObj.put("street", street.getText().toString());
+                        jsonBodyObj.put("zip_code", zipCode);
+                        jsonBodyObj.put("lot", lotnumber);
+                        jsonBodyObj.put("city", deserializeString(cityAndCountry.getText().toString())[0]);
+                        jsonBodyObj.put("country", deserializeString(cityAndCountry.getText().toString())[1]);
+
+                          customersSchedulingApp.registerStore(elem ->
+                                  changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment,"storeResource", elem))
+                                  , jsonBodyObj);
+                       // CategoryDto category = new CategoryDto();
+                       // AddressDto address = new AddressDto();
+                       // String storeName = "O";
+                       // String nif = "11919212";
+                       // float scoreReview = 1.3f;
+                       // String contact = "91121212";
+                       // OwnerDto owner = new OwnerDto();
+                       // Link[] links = new Link[2];
+//
+                       // StoreDto storedto = new StoreDto(address, category, storeName, nif, scoreReview, contact, owner, links);
+                       // StoreResourceItem storeresource = new StoreResourceItem(storedto, 3.1, null);
+                       // StoresOfUserEmbedded emb = new StoresOfUserEmbedded(new StoreResourceItem[]{storeresource, storeresource});
+                       // SelfLink self = new SelfLink();
+                       // StoresOfUserDTO stores = new StoresOfUserDTO(emb, self);
+                       // changeFragment(fragmentManager, R.id.businessData, addBundleToFragment(storeScheduleFragment, "storeResource", storeresource));
+
+                    }
+                }else{
+                    Toast.makeText(context, "Insert country and city has example", Toast.LENGTH_LONG).show();
                 }
-            }
-            catch (JSONException e) {
-                Toast.makeText(getActivity(), "Business registration went wrong!try again later",Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+                }
+            catch(JSONException e){
+                    Toast.makeText(getActivity(), "Business registration went wrong!try again later", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+
 
         });
 

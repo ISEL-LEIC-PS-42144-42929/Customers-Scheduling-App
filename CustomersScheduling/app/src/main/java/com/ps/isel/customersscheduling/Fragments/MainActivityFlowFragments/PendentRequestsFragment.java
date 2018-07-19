@@ -85,18 +85,20 @@ public class PendentRequestsFragment extends BaseFragment
         toolbar = view.findViewById(R.id.app_bar);
         lv      = view.findViewById(R.id.pendentRequests);
 
-       // customersSchedulingApp.getPendentRequestsOfClients(elem ->
-       //         listViewCode(elem), storeResource);
+        customersSchedulingApp.getPendentRequestsOfClients(elem ->
+                listViewCode(elem), storeResource);
 
-        ClientEmbedded _embedded;
-        ClientLinks _links = new ClientLinks();
-        ClientDto clientdto = new ClientDto("ola@gmail.com","nome", 1, "910000000");
-        ClientResourceItem clientresource = new ClientResourceItem(clientdto,true,_links);
-        ClientEmbedded emb = new ClientEmbedded(new ClientResourceItem[]{clientresource});
-        SelfLink self = new SelfLink();
-        ClientOfStoreDTO client = new ClientOfStoreDTO(emb, self);
+     //  ClientEmbedded _embedded;
+     //  ClientLinks _links = new ClientLinks();
+     //  ClientDto clientdto = new ClientDto("ola@gmail.com","Joana", 1, "910000000");
+     //  ClientDto clientdto2 = new ClientDto("ola@gmail.com","Sergio", 1, "910000000");
+     //  ClientResourceItem clientresource = new ClientResourceItem(clientdto,true,_links);
+     //  ClientResourceItem clientresource2 = new ClientResourceItem(clientdto2,true,_links);
+     //  ClientEmbedded emb = new ClientEmbedded(new ClientResourceItem[]{clientresource, clientresource2});
+     //  SelfLink self = new SelfLink();
+     //  ClientOfStoreDTO client = new ClientOfStoreDTO(emb, self);
 
-        listViewCode(client);
+     //  listViewCode(client);
         toolbarCode();
     }
 

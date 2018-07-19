@@ -1,6 +1,8 @@
 package com.ps.isel.customersscheduling.Fragments.MainActivityFlowFragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ps.isel.customersscheduling.Activities.MainActivity;
 import com.ps.isel.customersscheduling.CustomersSchedulingApp;
 import com.ps.isel.customersscheduling.Fragments.BaseFragment;
@@ -36,6 +39,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FilterFragment extends BaseFragment {
 
@@ -179,42 +184,16 @@ public class FilterFragment extends BaseFragment {
     private void saveInInternalStorage()
     {
         Favourite toSave = new Favourite(searchName.getText().toString(), category, location);
-        UserInfoContainer.getInstance().getFavourites().put(UserInfoContainer.getInstance().getFavourites().size(),toSave);
+        SharedPreferences sp = getActivity().getSharedPreferences("favou", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        int count = sp.getInt("count", 0);
+        Gson gson = new Gson();
+        String json = gson.toJson(toSave);
+        editor.putString("MyFav" + count, json);
+        UserInfoContainer.getInstance().getFavourites().put(count,toSave);
+        count++;
+        editor.putInt("count", count);
+        editor.commit();
 
-        ObjectOutputStream oos = null;
-
-        File f =new File(new File(context.getFilesDir(),"") + File.separator + FILE_NAME);
-        try{
-            boolean isNewFile=false;
-
-            if (!f.exists()){
-                f.createNewFile();
-                isNewFile=true;
-            }
-
-            FileOutputStream fos=new FileOutputStream(f,true);
-
-            if (isNewFile) {
-                oos=new ObjectOutputStream(fos);
-            }
-            else {
-                oos=new AppendingObjectOutputStream(fos);
-            }
-            oos.writeObject(toSave);
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                oos.flush();
-                oos.close();
-
-            } catch (IOException e) {
-                Toast.makeText(getActivity(), "Favourite registration went wrong!try again later",Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
-        }
     }
 }
